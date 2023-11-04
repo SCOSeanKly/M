@@ -98,7 +98,7 @@ struct LayerObjectAppearance {
         self.showGroundReflection = false
         self.showScreenReflection = true
         self.selectedScreenReflection = "None"
-        self.screenReflectionOptions = ["None", "1", "2", "3", "4"]
+        self.screenReflectionOptions = ["None", "1", "2", "3", "4", "5"]
         self.colorMultiply = .white
         self.offsetX = 0
         self.offsetY = 0

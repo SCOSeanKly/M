@@ -12,7 +12,7 @@ struct AlertConfig {
     fileprivate var enableBackgroundBlur: Bool = true
     fileprivate var disableOutsideTap: Bool = true
     fileprivate var transitionType: TransitionType = .slide
-    fileprivate var slideEdge: Edge = .bottom
+    fileprivate var slideEdge: Edge = .top
     fileprivate var show: Bool = false
     fileprivate var showView: Bool = false
     

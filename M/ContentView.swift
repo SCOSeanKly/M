@@ -23,8 +23,10 @@ struct ContentView: View {
                 CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, obj: obj)
                     .customImageViewModifier(obj: obj, viewModel: viewModel)
                  
-                SaveImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, item: item, obj: obj)
+                ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, item: item, obj: obj)
                     .titleViewModifier(obj: obj, normalScale: 1.0)
+                
+                
                 
             } titleContent: { $item in
                 
