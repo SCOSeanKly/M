@@ -65,8 +65,9 @@ struct ShareImageButton: View {
          }
          */
         
-        Image(systemName: "square.and.arrow.up.circle.fill")
-            .font(.title)
+        Image(systemName: saveToPhotos ? "photo.circle" : "square.and.arrow.up.circle.fill")
+          
+            .font(.system(size: 30, weight: .medium))
             .symbolEffect(.pulse, value: showSymbolEffect)
             .foregroundColor(item.color)
             .onTapGesture {
