@@ -19,6 +19,8 @@ struct LayerObjectAppearance {
     var screenWidth: CGFloat
     var settingsSliderFontSize: CGFloat
     var showAverageColor: Bool
+    var easySettingsMode: Bool
+    
     /*
     var stretchContent: Bool// = false
     var importedBackground: UIImage?// = nil
@@ -30,6 +32,7 @@ struct LayerObjectAppearance {
      */
     
     // Background Variables
+    var backgroundOffsetY: CGFloat
     var backgroundColour: Color
     var pixellate: CGFloat = 1
     var blur: CGFloat
@@ -60,6 +63,7 @@ struct LayerObjectAppearance {
     var screenshotFitFill: Bool
     
     // Logo Variables
+    var showLogo: Bool
     var logoScale: CGFloat
     var logoCornerRadius: CGFloat
     var logoOffsetX: CGFloat
@@ -77,6 +81,8 @@ struct LayerObjectAppearance {
         self.screenWidth = UIScreen.main.bounds.width * 0.001525
         self.settingsSliderFontSize = 12.5
         self.showAverageColor = false
+        self.easySettingsMode = false
+        
         /*
         self.stretchContent = false
         self.importedBackground = nil
@@ -88,6 +94,7 @@ struct LayerObjectAppearance {
          */
         
         self.backgroundColour = .clear
+        self.backgroundOffsetY = 0
         self.pixellate = 1
         self.blur = 0
         self.hue = 1
@@ -113,6 +120,7 @@ struct LayerObjectAppearance {
         self.notchOptions = ["None", "1", "2", "3"]
         self.reflectionOffset = -247
         self.screenshotFitFill = false
+        self.showLogo = true
         self.logoScale = 1
         self.logoCornerRadius = 0
         self.logoOffsetX = -360
@@ -131,6 +139,8 @@ struct LayerObjectAppearance {
         screenWidth: CGFloat,
         settingsSliderFontSize: CGFloat,
         showAverageColor: Bool,
+        easySettingsMode: Bool,
+        
         /*
         stretchContent: Bool,
         importedBackground: UIImage?,
@@ -141,6 +151,7 @@ struct LayerObjectAppearance {
         showLogoPickerSheet: Bool,
          */
         
+        backgroundOffsetY: CGFloat,
         backgroundColour: Color,
         pixellate: CGFloat,
         blur: CGFloat,
@@ -168,6 +179,7 @@ struct LayerObjectAppearance {
         reflectionOffset: CGFloat,
         screenshotFitFill: Bool,
         landscapeOrientation: Bool,
+        showLogo: Bool,
         logoScale: CGFloat,
         logoCornerRadius: CGFloat,
         logoOffsetX: CGFloat,
@@ -184,6 +196,8 @@ struct LayerObjectAppearance {
         self.screenWidth = screenWidth
         self.settingsSliderFontSize = settingsSliderFontSize
         self.showAverageColor = showAverageColor
+        self.easySettingsMode = easySettingsMode
+        
         /*
         self.stretchContent = stretchContent
         self.importedBackground = importedBackground
@@ -194,6 +208,7 @@ struct LayerObjectAppearance {
         self.showLogoPickerSheet = showLogoPickerSheet
          */
         
+        self.backgroundOffsetY = backgroundOffsetY
         self.backgroundColour = backgroundColour
         self.pixellate = pixellate
         self.blur = blur
@@ -220,11 +235,13 @@ struct LayerObjectAppearance {
         self.showGroundReflection = showGroundReflection
         self.reflectionOffset = reflectionOffset
         self.screenshotFitFill = screenshotFitFill
+        self.showLogo = showLogo
         self.logoScale = logoScale
         self.logoCornerRadius = logoCornerRadius
         self.logoOffsetX = logoOffsetX
         self.logoOffsetY = logoOffsetY
         self.logoRotate = logoRotate
+        
     }
 }
 

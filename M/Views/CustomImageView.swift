@@ -42,7 +42,8 @@ struct CustomImageView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                             .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameWidth)
-                            .scaleEffect(1.04, anchor: .center)
+                            .offset(y: obj.appearance.backgroundOffsetY)
+                            .scaleEffect(1.02, anchor: .center)
                             .hueRotation(Angle(degrees: obj.appearance.hue))
                             .saturation(obj.appearance.saturation)
                             .distortionEffect(
@@ -95,8 +96,9 @@ struct CustomImageView: View {
                             view.aspectRatio(contentMode: .fit)
                         }
                         .frame(width: item.width, height: item.height)
-                       
                         .applyImageTransforms(item)
+                     
+                    
                 }
                 
                 //Mockup image
@@ -126,17 +128,21 @@ struct CustomImageView: View {
             .offset(x: obj.appearance.offsetX, y: obj.appearance.offsetY)
             
             //Imported logo image
-            if let importedLogo = importedLogo {
-                Image(uiImage: importedLogo)
-                    .resizable()
-                    .frame(width: 100, height: 100)
-                    .aspectRatio(contentMode: .fit)
-                    .cornerRadius(obj.appearance.logoCornerRadius)
-                    .scaleEffect(obj.appearance.logoScale)
-                    .rotationEffect(.degrees(obj.appearance.logoRotate))
-                    .offset(x: obj.appearance.logoOffsetX, y: obj.appearance.logoOffsetY)
-                    .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
+            
+            if obj.appearance.showLogo {
+                if let importedLogo = importedLogo {
+                    Image(uiImage: importedLogo)
+                        .resizable()
+                        .frame(width: 100, height: 100)
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(obj.appearance.logoCornerRadius)
+                        .scaleEffect(obj.appearance.logoScale)
+                        .rotationEffect(.degrees(obj.appearance.logoRotate))
+                        .offset(x: obj.appearance.logoOffsetX, y: obj.appearance.logoOffsetY)
+                        .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
+                }
             }
+            
         }
         .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameHeight)
         .clipped()
