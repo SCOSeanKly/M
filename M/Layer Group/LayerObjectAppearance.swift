@@ -57,7 +57,7 @@ struct LayerObjectAppearance {
     var notchOptions: [String]
     var showGroundReflection: Bool
     var reflectionOffset: CGFloat
-    var landscapeOrientation: Bool
+    var screenshotFitFill: Bool
     
     // Logo Variables
     var logoScale: CGFloat
@@ -112,7 +112,7 @@ struct LayerObjectAppearance {
         self.selectedNotch = "None"
         self.notchOptions = ["None", "1", "2", "3"]
         self.reflectionOffset = -247
-        self.landscapeOrientation = false
+        self.screenshotFitFill = false
         self.logoScale = 1
         self.logoCornerRadius = 0
         self.logoOffsetX = -360
@@ -166,6 +166,7 @@ struct LayerObjectAppearance {
         notchOptions: [String], // Include notch options here
         showGroundReflection: Bool,
         reflectionOffset: CGFloat,
+        screenshotFitFill: Bool,
         landscapeOrientation: Bool,
         logoScale: CGFloat,
         logoCornerRadius: CGFloat,
@@ -218,7 +219,7 @@ struct LayerObjectAppearance {
         self.notchOptions = notchOptions
         self.showGroundReflection = showGroundReflection
         self.reflectionOffset = reflectionOffset
-        self.landscapeOrientation = landscapeOrientation
+        self.screenshotFitFill = screenshotFitFill
         self.logoScale = logoScale
         self.logoCornerRadius = logoCornerRadius
         self.logoOffsetX = logoOffsetX

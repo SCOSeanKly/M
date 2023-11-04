@@ -202,7 +202,7 @@ class ContentViewModel: ObservableObject {
               rotationEffect: 0,
               width: 174.5 * 2,
               height: 215.1 * 2,
-              cornerRadius: 100,
+              cornerRadius: 80,
               notch: "",
               reflectionOffset: 500),
         //MARK: Mockup 6 - Apple Watch Ultra2
@@ -230,7 +230,7 @@ class ContentViewModel: ObservableObject {
               rotationEffect: 0,
               width: 174.5 * 2,
               height: 215.1 * 2,
-              cornerRadius: 100,
+              cornerRadius: 80,
               notch: "",
               reflectionOffset: 500),
         //MARK: Mockup 7 - iPad Pro
@@ -263,13 +263,13 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: -267)
     ]
     
-    @Published var stretchContent: Bool = false
     @Published var importedBackground: UIImage? = nil
     @Published var importedImage1: UIImage? = nil
     @Published var showImagePickerSheet1: Bool = false
     @Published var showBgPickerSheet: Bool = false
     @Published var importedLogo: UIImage? = nil
     @Published var showLogoPickerSheet: Bool = false
+     
      
 }
 

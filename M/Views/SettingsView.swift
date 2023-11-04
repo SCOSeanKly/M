@@ -161,6 +161,7 @@ struct BackgroundSettingsView: View {
             }
             .padding(.bottom, 10)
             
+        
             //MARK: Disabled for now until the average colour checker is fixed
             /*
              HStack (spacing: -5) {
@@ -307,6 +308,7 @@ struct MockupSettingsView: View {
     @StateObject var viewModel: ContentViewModel
     @StateObject var obj: Object
     
+    @State private var showPopover_AspectRatio: Bool = false
     @State private var showPopover_NotchStyle: Bool = false
     @State private var showPopover_ScreenReflection: Bool = false
     @State private var showPopover_GroundReflection: Bool = false
@@ -331,6 +333,18 @@ struct MockupSettingsView: View {
                 Spacer()
                 
             }
+            
+            HStack (spacing: -5) {
+                
+                Image(systemName: "arrow.up.right.and.arrow.down.left.square")
+                    .padding(.leading)
+                    .popOverInfo(isPresented: $showPopover_AspectRatio) {
+                        Text("Adjusts aspect ratio content mode to fit or fill the frame")
+                    }
+                
+                CustomToggle(showTitleText: true, titleText: "Aspect Ratio - Fit or Fill", bindingValue: $obj.appearance.screenshotFitFill, onSymbol: "circle", offSymbol: "xmark", rotate: true)
+            }
+            .padding(.bottom, 10)
             
             HStack (spacing: -5) {
                 

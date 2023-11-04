@@ -78,7 +78,7 @@ struct CustomImageView: View {
             ///Mockup Images and screenshot
             ZStack {
                 // Black screen when no screenshot is imported
-                RoundedRectangle(cornerRadius: 30)
+                RoundedRectangle(cornerRadius: 0)
                     .foregroundColor(.black)
                     .clipShape(Rectangle())
                     .frame(width: item.width, height: item.height)
@@ -91,8 +91,11 @@ struct CustomImageView: View {
                 if let importedImage1 = importedImage1 {
                     Image(uiImage: importedImage1)
                         .resizable()
+                        .if(obj.appearance.screenshotFitFill) { view in
+                            view.aspectRatio(contentMode: .fit)
+                        }
                         .frame(width: item.width, height: item.height)
-                        .aspectRatio(contentMode: .fill)
+                       
                         .applyImageTransforms(item)
                 }
                 

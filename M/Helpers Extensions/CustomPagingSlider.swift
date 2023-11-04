@@ -59,6 +59,9 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
         
         VStack(spacing: 20) {
             ScrollView(.horizontal) {
+                
+                Text("Test")
+                
                 HStack(spacing: 150) {
                     ForEach($data) { item in
                         VStack(spacing: 0) {
