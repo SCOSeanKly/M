@@ -43,9 +43,10 @@ struct CustomImageView: View {
                         .aspectRatio(contentMode: .fill)
                         .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameWidth)
                         .offset(y: obj.appearance.backgroundOffsetY)
-                    //    .scaleEffect(1.02, anchor: .center)
                         .hueRotation(Angle(degrees: obj.appearance.hue))
                         .saturation(obj.appearance.saturation)
+                    //MARK: Think this is responsible for the low quality background image. So removed for now
+                    /*
                         .distortionEffect(
                             .init(
                                 function: .init(library: .default, name: "pixellate"),
@@ -53,6 +54,7 @@ struct CustomImageView: View {
                             ),
                             maxSampleOffset: .zero
                         )
+                     */
                     
                     //MARK: Average colour - causes app to slow down as if the colour is being constantly checked in the background
                     /*
@@ -77,15 +79,6 @@ struct CustomImageView: View {
             
             ///Mockup Images and screenshot
             ZStack {
-                // Black screen when no screenshot is imported
-                RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(.black)
-                    .clipShape(Rectangle())
-                    .frame(width: item.width, height: item.height)
-                    .applyImageTransforms(item)
-                    .if(obj.appearance.showShadow) { view in
-                        view.shadow(color: .black.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
-                    }
                 
                 //Screenshot image
                 if let importedImage1 = importedImage1 {
@@ -96,6 +89,16 @@ struct CustomImageView: View {
                         }
                         .frame(width: item.width, height: item.height)
                         .applyImageTransforms(item)
+                } else {
+                    // Black screen when no screenshot is imported
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(.black)
+                        .clipShape(Rectangle())
+                        .frame(width: item.width, height: item.height)
+                        .applyImageTransforms(item)
+                        .if(obj.appearance.showShadow) { view in
+                            view.shadow(color: .black.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
+                        }
                 }
                 
                 //Mockup image
@@ -125,7 +128,6 @@ struct CustomImageView: View {
             .offset(x: obj.appearance.offsetX, y: obj.appearance.offsetY)
             
             //Imported logo image
-            
             if obj.appearance.showLogo {
                 if let importedLogo = importedLogo {
                     Image(uiImage: importedLogo)
@@ -148,6 +150,7 @@ struct CustomImageView: View {
 extension View {
     func applyImageTransforms(_ item: Item) -> some View {
         self
+          
             .cornerRadius(item.cornerRadius)
             .rotation3DEffect(.degrees(item.degrees), axis: (x: item.x, y: item.y, z: item.z), anchor: item.anchor, anchorZ: 0, perspective: item.perspective)
             .rotation3DEffect(.degrees(item.degrees2), axis: (x: item.x2, y: item.y2, z: item.z2), anchor: item.anchor2, anchorZ: 0, perspective: item.perspective2)

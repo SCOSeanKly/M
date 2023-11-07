@@ -11,6 +11,7 @@ import SwiftUI
 struct Item: Identifiable {
     private(set) var id: UUID = .init()
     var imageName: String // Use String for image name
+    var imageName2: String // Use String for image name
     var screenReflectionName: String
     var shadowName: String
     var color: Color
@@ -32,6 +33,8 @@ struct Item: Identifiable {
     var scale: CGFloat
     var offX: CGFloat
     var offY: CGFloat
+    var offX2: CGFloat
+    var offY2: CGFloat
     var rotationEffect: CGFloat
     var width: CGFloat
     var height: CGFloat
@@ -59,8 +62,6 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
         
         VStack(spacing: 20) {
             ScrollView(.horizontal) {
-                
-                Text("Test")
                 
                 HStack(spacing: 150) {
                     ForEach($data) { item in

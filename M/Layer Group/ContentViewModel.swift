@@ -11,6 +11,7 @@ class ContentViewModel: ObservableObject {
     @Published var items: [Item] = [
         //MARK: Mockup 1
         .init(imageName: "iP15PM_Front",
+              imageName2: "",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
               color: .red,
@@ -31,6 +32,8 @@ class ContentViewModel: ObservableObject {
               scale: 1,
               offX: 0.5,
               offY: 0,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: 0,
               width: 173.0 * 2,
               height: 373.4 * 2,
@@ -39,6 +42,7 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: -247),
         //MARK: Mockup 2
         .init(imageName: "iP15PM_3DLeft_Upright",
+              imageName2: "",
               screenReflectionName: "iP15PM_3DLeft_Upright_screen",
               shadowName: "",
               color: .teal,
@@ -59,6 +63,8 @@ class ContentViewModel: ObservableObject {
               scale: 1.0,
               offX: 50.9 * 2,
               offY: -38.5 * 2,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: -5.25,
               width: 172.4 * 2,
               height: 430.0 * 2,
@@ -67,6 +73,7 @@ class ContentViewModel: ObservableObject {
              reflectionOffset: -220),
         //MARK: Mockup 3
         .init(imageName: "iP15PM_Front_shadowLeft",
+              imageName2: "",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
               color: .blue,
@@ -87,6 +94,8 @@ class ContentViewModel: ObservableObject {
               scale: 1,
               offX: 0.5,
               offY: 0,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: 0,
               width: 173.0 * 2,
               height: 373.4 * 2,
@@ -95,6 +104,7 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: -500),
         //MARK: Mockup 4
         .init(imageName: "iP15PM_3DLeft",
+              imageName2: "",
               screenReflectionName: "iP15PM_3DLeft_screen",
               shadowName: "",
               color: .yellow,
@@ -115,6 +125,8 @@ class ContentViewModel: ObservableObject {
               scale: 1.26,
               offX: 121.5 * 2,
               offY: -68.45 * 2,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: -0.64,
               width: 157.9 * 2,
               height: 390.2 * 2,
@@ -123,6 +135,7 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: -500),
         //MARK: Mockup 5
         .init(imageName: "iP15PM_3DUpright",
+              imageName2: "",
               screenReflectionName: "iP15PM_3DUpright_screen",
               shadowName: "",
               color: .green,
@@ -143,6 +156,8 @@ class ContentViewModel: ObservableObject {
               scale: 1,
               offX: 8.1 * 2,
               offY: -8.54 * 2,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: 0.22,
               width: 108.85 * 2,
               height: 322.95 * 2,
@@ -151,6 +166,7 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: -500),
         //MARK: Mockup 6 iPX
         .init(imageName: "iPX_Front",
+              imageName2: "",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
               color: .mint,
@@ -171,6 +187,39 @@ class ContentViewModel: ObservableObject {
               scale: 1,
               offX: 0.5,
               offY: 0,
+              offX2: 0.0,
+              offY2: 0,
+              rotationEffect: 0,
+              width: 173.0 * 2,
+              height: 373.4 * 2,
+              cornerRadius: 40,
+              notch: "notch_set1_",
+              reflectionOffset: -247),
+        //MARK: Dual iP15 PM
+        .init(imageName: "Dual_iP15PM_Front",
+              imageName2: "",
+              screenReflectionName: "",
+              shadowName: "",
+              color: .black,
+              title: "iP15 PM Dual",
+              subTitle: "Dual front facing view",
+              degrees: 0,
+              degrees2: 0,
+              x: 0,
+              y: 0,
+              z: 0,
+              anchor: .bottomLeading,
+              perspective: 1.2,
+              perspective2: 0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1,
+              offX: 0.5,
+              offY: 0,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: 0,
               width: 173.0 * 2,
               height: 373.4 * 2,
@@ -179,6 +228,7 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: -247),
         //MARK: Mockup 6 - Apple Watch Ultra
         .init(imageName: "appleWatchUltra",
+              imageName2: "",
               screenReflectionName: "appleWatchUltraScreen",
               shadowName: "",
               color: .brown,
@@ -199,6 +249,8 @@ class ContentViewModel: ObservableObject {
               scale: 1,
               offX: -0.055,
               offY: 6.3,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: 0,
               width: 174.5 * 2,
               height: 215.1 * 2,
@@ -207,6 +259,7 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: 500),
         //MARK: Mockup 6 - Apple Watch Ultra2
         .init(imageName: "appleWatchUltra2",
+              imageName2: "",
               screenReflectionName: "appleWatchUltraScreen",
               shadowName: "",
               color: .gray,
@@ -227,6 +280,8 @@ class ContentViewModel: ObservableObject {
               scale: 1,
               offX: -0.055,
               offY: 6.3,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: 0,
               width: 174.5 * 2,
               height: 215.1 * 2,
@@ -235,6 +290,7 @@ class ContentViewModel: ObservableObject {
               reflectionOffset: 500),
         //MARK: Mockup 7 - iPad Pro
         .init(imageName: "iPad",
+              imageName2: "",
               screenReflectionName: "iPadScreen",
               shadowName: "",
               color: .purple,
@@ -255,6 +311,8 @@ class ContentViewModel: ObservableObject {
               scale: 1,
               offX: -0.055,
               offY: -2,
+              offX2: 0.0,
+              offY2: 0,
               rotationEffect: 0,
               width: 247.0 * 2,
               height: 353.0 * 2,
@@ -265,7 +323,9 @@ class ContentViewModel: ObservableObject {
     
     @Published var importedBackground: UIImage? = nil
     @Published var importedImage1: UIImage? = nil
+    @Published var importedImage2: UIImage? = nil
     @Published var showImagePickerSheet1: Bool = false
+    @Published var showImagePickerSheet2: Bool = false
     @Published var showBgPickerSheet: Bool = false
     @Published var importedLogo: UIImage? = nil
     @Published var showLogoPickerSheet: Bool = false

@@ -13,18 +13,18 @@ struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
     @StateObject var obj: Object
     @AppStorage("saveCount") private var saveCount: Int = 0
-    @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
-    var colorScheme: ColorScheme {
+    var colorScheme: ColorScheme? {
            switch obj.appearance.selectedAppearance {
            case .light:
                return .light
            case .dark:
                return .dark
            case .system:
-               return .dark // Set to your default color scheme for system appearance
+               return nil
            }
        }
+
     
     var body: some View {
         
@@ -54,14 +54,19 @@ struct ContentView: View {
                 .titleViewModifier(obj: obj, normalScale: 0.8)
             }
             .safeAreaPadding([.horizontal, .top], 35)
-            .fullScreenCover(isPresented: $viewModel.showBgPickerSheet) {
-                fullScreenImagePickerCover(for: $viewModel.importedBackground) { images in
-                    viewModel.importedBackground = images.first
-                }
-            }
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
                 fullScreenImagePickerCover(for: $viewModel.importedImage1) { images in
                     viewModel.importedImage1 = images.first
+                }
+            }
+            .fullScreenCover(isPresented: $viewModel.showImagePickerSheet2) {
+                fullScreenImagePickerCover(for: $viewModel.importedImage2) { images in
+                    viewModel.importedImage2 = images.first
+                }
+            }
+            .fullScreenCover(isPresented: $viewModel.showBgPickerSheet) {
+                fullScreenImagePickerCover(for: $viewModel.importedBackground) { images in
+                    viewModel.importedBackground = images.first
                 }
             }
             .fullScreenCover(isPresented: $viewModel.showLogoPickerSheet) {
@@ -75,7 +80,7 @@ struct ContentView: View {
             })
             
             // Buttons
-            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isDarkMode: $isDarkMode)
+            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
             
         }
         //MARK: Add system to mode toggle

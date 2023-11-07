@@ -13,7 +13,6 @@ struct importButtons: View {
     @StateObject var obj: Object
     @Binding var saveCount: Int
     @StateObject var viewModel:  ContentViewModel
-    @Binding var isDarkMode: Bool
     
     var body: some View {
         VStack {
@@ -21,7 +20,7 @@ struct importButtons: View {
             HStack {
                 Spacer()
                 Pill(
-                    viewModel: viewModel, obj: obj, saveCount: $saveCount, isDarkMode: $isDarkMode
+                    viewModel: viewModel, obj: obj, saveCount: $saveCount
                 )
             }
             .padding()
@@ -38,8 +37,8 @@ private struct Pill: View {
     @StateObject var viewModel:  ContentViewModel
     @StateObject var obj: Object
     @Binding var saveCount: Int
-    @Binding var isDarkMode: Bool
     @State private var isTapped: Bool = false
+    @State private var isTappedProminent: Bool = false
     
     
     var body: some View {
@@ -64,7 +63,7 @@ private struct Pill: View {
                             TextViewOne(saveCount: $saveCount)
                                 .opacity(obj.appearance.showPill ? 1 : 0)
                             
-                            TextViewTwo(obj: obj, viewModel: viewModel, isDarkMode: $isDarkMode)
+                            TextViewTwo(obj: obj, viewModel: viewModel)
                                 .opacity(obj.appearance.showPill ? 0 : 1)
                         }
                         .frame(width: 200, alignment: .leading)
@@ -79,6 +78,7 @@ private struct Pill: View {
                 }
             }
             .sensoryFeedback(.selection, trigger: isTapped)
+            .sensoryFeedback(.success, trigger: isTappedProminent)
             .onTapGesture {
                 withAnimation(.bouncy){
                     isTapped.toggle()
@@ -90,7 +90,7 @@ private struct Pill: View {
                 if !obj.appearance.showPill {
                     withAnimation(.bouncy){
                         obj.appearance.showAppSettings.toggle()
-                        isTapped.toggle()
+                        isTappedProminent.toggle()
                     }
                 }
             }
@@ -123,7 +123,7 @@ private struct TextViewTwo: View {
     
     @StateObject var obj: Object
     @StateObject var viewModel: ContentViewModel
-    @Binding var isDarkMode: Bool
+
     
     var symbolName: String {
            switch obj.appearance.selectedAppearance {
@@ -150,10 +150,18 @@ private struct TextViewTwo: View {
                             obj.appearance.showPill.toggle()
                         }
                         
-                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage1 == nil ? "plus.circle" : "xmark.circle", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
+                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage1 == nil ? "1.circle" : "xmark.circle", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
                     .padding(.horizontal, 5)
                     .padding(.leading, 5)
                     
+                    AnimatedButton(action: {
+                        
+                        viewModel.showImagePickerSheet2 = true
+                        withAnimation(.bouncy){
+                            obj.appearance.showPill.toggle()
+                        }
+                        
+                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage2 == nil ? "2.circle" : "xmark.circle", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
                     
                     AnimatedButton(action: {
                         
@@ -227,7 +235,7 @@ private struct TextViewTwoSizer: View {
     var body: some View {
         Group {
             Color.clear
-                .frame(width: obj.appearance.showAppSettings ? 80 : 180, height: 30, alignment: .center)
+                .frame(width: obj.appearance.showAppSettings ? 80 : 215, height: 30, alignment: .center)
         }
     }
 }

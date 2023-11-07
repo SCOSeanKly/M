@@ -119,13 +119,14 @@ struct ButtonsAndPopoverView: View {
                     .padding(.bottom, 15)
                     
                     List {
-                        Text("\(Image(systemName: "photo.circle")) Import background image")
                         Text("\(Image(systemName: "iphone.gen2.circle")) Single tap: Import screenshot image")
-                        Text("\(Image(systemName: "arrow.counterclockwise.circle")) Reset sliders and toggles to default")
+                        Text("\(Image(systemName: "photo.circle")) Import background image")
+                        Text("\(Image(systemName: "person.circle")) Import logo overlay image")
+                        Text("\(Image(systemName: "arrow.counterclockwise.circle")) Reset sliders and toggles to default settings")
                         Text("\(Image(systemName: "trash.circle")) Remove all imported images")
                         Text("\(Image(systemName: "ellipsis.circle")) Drag on the page indicator to move between mockups faster")
                         Text("\(Image(systemName: "hand.draw")) Drag up on the screen to show settings instead of tapping the settings gear")
-                        Text("\(Image(systemName: "hand.tap")) Long press the save icon to toggle save behaviour")
+                        Text("\(Image(systemName: "square.and.arrow.up.circle.fill")) Long press the save/share icon to toggle save behaviour")
                         Text("\(Image(systemName: "slider.horizontal.2.square.on.square")) Tap to toggle between simple or advanced settings")
                     }
                     .font(.footnote)
@@ -246,6 +247,8 @@ struct BackgroundSettingsView: View {
                     Group {
                         if !obj.appearance.easySettingsMode {
                             // Pixellate
+                            //MARK: Disabled for now until as i suspect the effect is reducing background image quality
+                            /*
                             HStack {
                                 Image(systemName: "square.grid.3x3")
                                     .popOverInfo(isPresented: $showPopover_Pixellate) {
@@ -264,6 +267,7 @@ struct BackgroundSettingsView: View {
                                     .frame(width: 40)
                             }
                             .padding()
+                             */
                         }
                         
                         // Blur
