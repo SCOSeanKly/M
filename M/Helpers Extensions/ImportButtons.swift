@@ -125,6 +125,17 @@ private struct TextViewTwo: View {
     @StateObject var viewModel: ContentViewModel
     @Binding var isDarkMode: Bool
     
+    var symbolName: String {
+           switch obj.appearance.selectedAppearance {
+           case .light:
+               return "sun.max"
+           case .dark:
+               return "moon"
+           case .system:
+               return "rays"
+           }
+       }
+    
     var body: some View {
         Group {
             
@@ -191,9 +202,18 @@ private struct TextViewTwo: View {
                     
                     AnimatedButton(action: {
                         
-                        isDarkMode.toggle()
+                       // isDarkMode.toggle()
                         
-                    }, sfSymbolName: isDarkMode ? "moon" : "sun.max", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                        switch obj.appearance.selectedAppearance {
+                          case .system:
+                              obj.appearance.selectedAppearance = .light
+                          case .light:
+                              obj.appearance.selectedAppearance = .dark
+                          case .dark:
+                              obj.appearance.selectedAppearance = .system
+                          }
+                        
+                    }, sfSymbolName: symbolName, rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
                     .padding(.horizontal, 5)
                     
                 }

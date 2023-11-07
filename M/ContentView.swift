@@ -15,7 +15,16 @@ struct ContentView: View {
     @AppStorage("saveCount") private var saveCount: Int = 0
     @AppStorage("isDarkMode") var isDarkMode: Bool = false
     
-    
+    var colorScheme: ColorScheme {
+           switch obj.appearance.selectedAppearance {
+           case .light:
+               return .light
+           case .dark:
+               return .dark
+           case .system:
+               return .dark // Set to your default color scheme for system appearance
+           }
+       }
     
     var body: some View {
         
@@ -70,7 +79,7 @@ struct ContentView: View {
             
         }
         //MARK: Add system to mode toggle
-        .preferredColorScheme(isDarkMode ? .dark : .light)
+        .preferredColorScheme(colorScheme)
         .onTapGesture {
             withAnimation(.bouncy){
                 if !obj.appearance.showPill {

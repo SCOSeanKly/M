@@ -23,6 +23,13 @@ struct LayerObjectAppearance {
     var showPill: Bool
     var showAppSettings: Bool
     var enableImportTapGestures: Bool
+    var selectedAppearance: AppearanceMode
+
+    enum AppearanceMode {
+        case light
+        case dark
+        case system
+    }
     
     /*
     var stretchContent: Bool// = false
@@ -88,6 +95,7 @@ struct LayerObjectAppearance {
         self.showPill = true
         self.showAppSettings = false
         self.enableImportTapGestures = false
+        self.selectedAppearance = .system
         
         /*
         self.stretchContent = false
@@ -149,6 +157,7 @@ struct LayerObjectAppearance {
         showPill: Bool,
         showAppSettings: Bool,
         enableImportTapGestures: Bool,
+        selectedAppearance: AppearanceMode,
         /*
         stretchContent: Bool,
         importedBackground: UIImage?,
@@ -208,6 +217,7 @@ struct LayerObjectAppearance {
         self.showPill = showPill
         self.showAppSettings = showAppSettings
         self.enableImportTapGestures = enableImportTapGestures
+        self.selectedAppearance = selectedAppearance
         
         /*
         self.stretchContent = stretchContent
