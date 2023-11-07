@@ -12,6 +12,9 @@ struct ContentView: View {
     
     @StateObject var viewModel = ContentViewModel()
     @StateObject var obj: Object
+    @AppStorage("saveCount") private var saveCount: Int = 0
+    @AppStorage("isDarkMode") var isDarkMode: Bool = false
+    
     
     
     var body: some View {
@@ -22,10 +25,9 @@ struct ContentView: View {
                 
                 CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, obj: obj)
                     .customImageViewModifier(obj: obj, viewModel: viewModel)
-                 
-                ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, item: item, obj: obj)
-                    .titleViewModifier(obj: obj, normalScale: 1.0)
                 
+                ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
+                    .titleViewModifier(obj: obj, normalScale: 1.0)
                 
                 
             } titleContent: { $item in
@@ -64,24 +66,16 @@ struct ContentView: View {
             })
             
             // Buttons
-            VStack{
-                HStack {
-                    Spacer()
-                    AnimatedButton(action: {
-                        obj.appearance.showSettingsSheet.toggle()
-                    }, sfSymbolName: "gearshape", rotationAntiClockwise: false, color: .blue, allowRotation: true)
-                    .padding(.trailing)
+            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isDarkMode: $isDarkMode)
+            
+        }
+        //MARK: Add system to mode toggle
+        .preferredColorScheme(isDarkMode ? .dark : .light)
+        .onTapGesture {
+            withAnimation(.bouncy){
+                if !obj.appearance.showPill {
+                    obj.appearance.showPill = true
                 }
-                
-                HStack {
-                    Spacer()
-                    AnimatedButton(action: {
-                        viewModel.showLogoPickerSheet.toggle()
-                    }, sfSymbolName: "photo.circle", rotationAntiClockwise: false, color: .blue, allowRotation: false)
-                    .padding(.trailing)
-                    .padding(.top)
-                }
-                Spacer()
             }
         }
         .gesture(
@@ -89,6 +83,11 @@ struct ContentView: View {
                 .onEnded { value in
                     if value.translation.height < 0 {
                         obj.appearance.showSettingsSheet.toggle()
+                        withAnimation(.bouncy){
+                            if !obj.appearance.showPill {
+                                obj.appearance.showPill = true
+                            }
+                        }
                     }
                 })
     }
@@ -121,16 +120,20 @@ extension View {
             }
             .modifier(ZoomModifier(minimum: 1.0, maximum: 1.0, obj: obj))
             .scaleEffect(obj.appearance.screenWidth, anchor: .center)
-            .onTapGesture(count: 2) {
-                viewModel.showBgPickerSheet = true
+            .if(obj.appearance.enableImportTapGestures) { view in
+                view.onTapGesture(count: 2) {
+                    viewModel.showBgPickerSheet = true
+                }
+                .onTapGesture(count: 1) {
+                    viewModel.showImagePickerSheet1 = true
+                }
             }
-            .onTapGesture(count: 1) {
-                viewModel.showImagePickerSheet1 = true
-            }
+        
+        
             .offset(y: obj.appearance.showSettingsSheet ? -110 : 0)
             .animation(.bouncy, value: obj.appearance.showSettingsSheet)
             .padding(-60)
-          
+        
     }
 }
 

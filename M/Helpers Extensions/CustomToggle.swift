@@ -17,6 +17,7 @@ struct CustomToggle: View {
     @State private var rotationAngle: Angle = .degrees(0)
     @State private var isPressing: Bool = false
     @StateObject var obj = Object()
+    @State private var isTapped: Bool = false
     
     var body: some View {
         
@@ -83,7 +84,7 @@ struct CustomToggle: View {
             }
             .onTapGesture {
                 
-                feedback()
+                isTapped.toggle()
                 isPressing.toggle()
                 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -101,6 +102,7 @@ struct CustomToggle: View {
         }
         .frame(height: 30)
         .padding(.horizontal)
+        .sensoryFeedback(.impact, trigger: isTapped)
     }
 }
 

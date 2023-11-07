@@ -13,6 +13,7 @@ struct CustomImageView: View {
     @Binding var importedImage1: UIImage?
     @Binding var importedLogo: UIImage?
     @StateObject var obj: Object
+    @State private var isDragging: Bool = false
     
     
     var body: some View {
@@ -20,7 +21,6 @@ struct CustomImageView: View {
         ///Background Images and colors
         ZStack {
             if obj.appearance.showBackground {
-                
                 if importedBackground == nil {
                     //Initial background colour
                     ZStack {
@@ -37,32 +37,31 @@ struct CustomImageView: View {
                 
                 //User imported background
                 if let importedBackground = importedBackground {
-                   
-                        Image(uiImage: importedBackground)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameWidth)
-                            .offset(y: obj.appearance.backgroundOffsetY)
-                            .scaleEffect(1.02, anchor: .center)
-                            .hueRotation(Angle(degrees: obj.appearance.hue))
-                            .saturation(obj.appearance.saturation)
-                            .distortionEffect(
-                                .init(
-                                    function: .init(library: .default, name: "pixellate"),
-                                    arguments: [.float(obj.appearance.pixellate)]
-                                ),
-                                maxSampleOffset: .zero
-                            )
+                    
+                    Image(uiImage: importedBackground)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameWidth)
+                        .offset(y: obj.appearance.backgroundOffsetY)
+                    //    .scaleEffect(1.02, anchor: .center)
+                        .hueRotation(Angle(degrees: obj.appearance.hue))
+                        .saturation(obj.appearance.saturation)
+                        .distortionEffect(
+                            .init(
+                                function: .init(library: .default, name: "pixellate"),
+                                arguments: [.float(obj.appearance.pixellate)]
+                            ),
+                            maxSampleOffset: .zero
+                        )
                     
                     //MARK: Average colour - causes app to slow down as if the colour is being constantly checked in the background
                     /*
-                    if obj.appearance.showAverageColor {
-                       let averageBG = importedBackground.averageColor
-                        
-                        RoundedRectangle(cornerRadius: 0)
-                            .foregroundColor(averageBG.map { Color($0)})
-                        
-                    }
+                     if obj.appearance.showAverageColor {
+                     let averageBG = importedBackground.averageColor
+                     
+                     RoundedRectangle(cornerRadius: 0)
+                     .foregroundColor(averageBG.map { Color($0)})
+                     }
                      */
                 }
                 
@@ -97,8 +96,6 @@ struct CustomImageView: View {
                         }
                         .frame(width: item.width, height: item.height)
                         .applyImageTransforms(item)
-                     
-                    
                 }
                 
                 //Mockup image
@@ -142,7 +139,6 @@ struct CustomImageView: View {
                         .shadow(color: .black.opacity(0.2), radius: 5, x: 0, y: 4)
                 }
             }
-            
         }
         .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameHeight)
         .clipped()

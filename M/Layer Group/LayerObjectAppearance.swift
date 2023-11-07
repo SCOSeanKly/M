@@ -20,6 +20,9 @@ struct LayerObjectAppearance {
     var settingsSliderFontSize: CGFloat
     var showAverageColor: Bool
     var easySettingsMode: Bool
+    var showPill: Bool
+    var showAppSettings: Bool
+    var enableImportTapGestures: Bool
     
     /*
     var stretchContent: Bool// = false
@@ -82,6 +85,9 @@ struct LayerObjectAppearance {
         self.settingsSliderFontSize = 12.5
         self.showAverageColor = false
         self.easySettingsMode = false
+        self.showPill = true
+        self.showAppSettings = false
+        self.enableImportTapGestures = false
         
         /*
         self.stretchContent = false
@@ -140,7 +146,9 @@ struct LayerObjectAppearance {
         settingsSliderFontSize: CGFloat,
         showAverageColor: Bool,
         easySettingsMode: Bool,
-        
+        showPill: Bool,
+        showAppSettings: Bool,
+        enableImportTapGestures: Bool,
         /*
         stretchContent: Bool,
         importedBackground: UIImage?,
@@ -197,6 +205,9 @@ struct LayerObjectAppearance {
         self.settingsSliderFontSize = settingsSliderFontSize
         self.showAverageColor = showAverageColor
         self.easySettingsMode = easySettingsMode
+        self.showPill = showPill
+        self.showAppSettings = showAppSettings
+        self.enableImportTapGestures = enableImportTapGestures
         
         /*
         self.stretchContent = stretchContent
