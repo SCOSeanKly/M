@@ -11,6 +11,7 @@ struct SaveImageButton: View {
     @Binding var showSymbolEffect: Bool
     @Binding var importedBackground: UIImage?
     @Binding var importedImage1: UIImage?
+    @Binding var importedImage2: UIImage?
     @Binding var importedLogo: UIImage?
     var item: Item
     
@@ -24,7 +25,7 @@ struct SaveImageButton: View {
             feedback()
             showSymbolEffect.toggle()
             
-            let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedLogo: $importedLogo, obj: obj)
+            let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
                 .ignoresSafeArea(.all)
                 .snapshot()
             

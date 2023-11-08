@@ -11,6 +11,7 @@ struct ShareImageButton: View {
     @Binding var showSymbolEffect: Bool
     @Binding var importedBackground: UIImage?
     @Binding var importedImage1: UIImage?
+    @Binding var importedImage2: UIImage?
     @Binding var importedLogo: UIImage?
     var item: Item
     
@@ -27,7 +28,7 @@ struct ShareImageButton: View {
         Image(systemName: "square.and.arrow.up.circle.fill")
             .font(.system(size: 30, weight: .medium))
             .symbolEffect(.pulse, value: showSymbolEffect)
-            .foregroundColor(item.color)
+            .foregroundColor(.primary)
             .rotationEffect(saveToPhotos ? .degrees(180) : .degrees(0))
             .onTapGesture {
                 feedback()
@@ -37,10 +38,9 @@ struct ShareImageButton: View {
                     obj.appearance.showPill = true
                 }
                 
-                
                 if saveToPhotos {
                     
-                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedLogo: $importedLogo, obj: obj)
+                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
                         .ignoresSafeArea(.all)
                         .snapshot()
                     
@@ -50,9 +50,10 @@ struct ShareImageButton: View {
                     }
                     
                     saveCount += 1
+                    
                 } else {
                     
-                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedLogo: $importedLogo, obj: obj)
+                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
                         .ignoresSafeArea(.all)
                         .snapshot()
                     

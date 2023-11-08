@@ -11,6 +11,7 @@ struct CustomImageView: View {
     var item: Item
     @Binding var importedBackground: UIImage?
     @Binding var importedImage1: UIImage?
+    @Binding var importedImage2: UIImage?
     @Binding var importedLogo: UIImage?
     @StateObject var obj: Object
     @State private var isDragging: Bool = false
@@ -30,6 +31,10 @@ struct CustomImageView: View {
                         //User background colour
                         RoundedRectangle(cornerRadius: 0)
                             .fill(obj.appearance.backgroundColour.gradient)
+                            .if(obj.appearance.backgroundColourOrGradient) { view in
+                                view.fill(obj.appearance.backgroundColour)
+                            }
+                        
                     }
                     .hueRotation(Angle(degrees: obj.appearance.hue))
                     .saturation(obj.appearance.saturation)
@@ -80,7 +85,17 @@ struct CustomImageView: View {
             ///Mockup Images and screenshot
             ZStack {
                 
-                //Screenshot image
+                // Black screen when no screenshot is imported
+                RoundedRectangle(cornerRadius: 0)
+                    .foregroundColor(.black)
+                    .clipShape(Rectangle())
+                    .frame(width: item.width, height: item.height)
+                    .applyImageTransforms(item)
+                    .if(obj.appearance.showShadow) { view in
+                        view.shadow(color: .black.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
+                    }
+                
+                //Screenshot image 1
                 if let importedImage1 = importedImage1 {
                     Image(uiImage: importedImage1)
                         .resizable()
@@ -89,18 +104,30 @@ struct CustomImageView: View {
                         }
                         .frame(width: item.width, height: item.height)
                         .applyImageTransforms(item)
-                } else {
-                    // Black screen when no screenshot is imported
-                    RoundedRectangle(cornerRadius: 0)
-                        .foregroundColor(.black)
-                        .clipShape(Rectangle())
-                        .frame(width: item.width, height: item.height)
-                        .applyImageTransforms(item)
-                        .if(obj.appearance.showShadow) { view in
-                            view.shadow(color: .black.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
-                        }
                 }
+                  
+         
+                // Black screen when no screenshot is imported
+                RoundedRectangle(cornerRadius: 0)
+                    .foregroundColor(.black)
+                    .clipShape(Rectangle())
+                    .frame(width: item.width, height: item.height)
+                    .applyImageTransforms2(item)
+                    .if(obj.appearance.showShadow) { view in
+                        view.shadow(color: .black.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
+                    }
                 
+                //Screenshot image 2
+                if let importedImage2 = importedImage2 {
+                    Image(uiImage: importedImage2)
+                        .resizable()
+                        .if(obj.appearance.screenshotFitFill) { view in
+                            view.aspectRatio(contentMode: .fit)
+                        }
+                        .frame(width: item.width, height: item.height)
+                        .applyImageTransforms2(item)
+                }
+                   
                 //Mockup image
                 Image(item.imageName)
                     .resizable()
@@ -161,4 +188,14 @@ extension View {
     }
 }
 
+extension View {
+    func applyImageTransforms2(_ item: Item) -> some View {
+        self
+            .cornerRadius(item.cornerRadius)
+            .offset(x: item.offX2)
+         
+          
+        
+    }
+}
 

@@ -14,6 +14,8 @@ struct CustomToggle: View {
     let onSymbol: String
     let offSymbol: String
     let rotate: Bool
+    let onColor: Color
+    let offColor: Color
     @State private var rotationAngle: Angle = .degrees(0)
     @State private var isPressing: Bool = false
     @StateObject var obj = Object()
@@ -34,7 +36,7 @@ struct CustomToggle: View {
                 
                 Capsule()
                     .frame(width: 40, height: 24)
-                    .foregroundColor(Color(bindingValue.wrappedValue ? .systemGreen : .systemGray))
+                    .foregroundColor(Color(bindingValue.wrappedValue ? onColor : offColor))
                     .animation(.easeInOut, value: bindingValue.wrappedValue)
                 
                 LinearGradient(gradient: Gradient(colors: [Color.gray.opacity(0.1), Color.white.opacity(0.1), Color.white.opacity(0.1)]), startPoint: .top, endPoint: .bottom)
@@ -110,10 +112,11 @@ struct ToggleView: View {
     
     @State private var toggleTest: Bool = false
     var body: some View {
-        CustomToggle(showTitleText: true, titleText: "Test Toggle View", bindingValue: $toggleTest, onSymbol: "circle", offSymbol: "xmark", rotate: true)
+        CustomToggle(showTitleText: true, titleText: "Test Toggle View", bindingValue: $toggleTest, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             .padding()
     }
 }
+ 
 
 
 

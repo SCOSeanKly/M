@@ -16,6 +16,7 @@ struct AnimatedButton: View {
     var action: () -> Void
     var sfSymbolName: String
     var rotationAntiClockwise: Bool
+    var rotationDegrees: Double
     var color: Color
     var allowRotation: Bool
     var showOverlaySymbol: Bool
@@ -52,7 +53,7 @@ struct AnimatedButton: View {
                     }
                     .onAppear {
                         if allowRotation {
-                            rotationAngle = .degrees(rotationAntiClockwise ? -720 : 720)
+                            rotationAngle = .degrees(rotationAntiClockwise ? -rotationDegrees : rotationDegrees)
                         }
                     }
                     .onDisappear {

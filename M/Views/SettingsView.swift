@@ -14,8 +14,6 @@ struct SettingsView: View {
     
     var body: some View {
         
-        
-        
         ScrollView {
             
             ButtonsAndPopoverView(viewModel: viewModel, obj: obj)
@@ -33,7 +31,6 @@ struct SettingsView: View {
             }
             .customPresentationWithBlur(detent: .medium, blurRadius: 40, backgroundColorOpacity: 0.3)
         }
-        
     }
 }
 
@@ -43,46 +40,32 @@ struct ButtonsAndPopoverView: View {
     @StateObject var obj: Object
     @State private var showPopover: Bool = false
     @State private var isTapped: Bool = false
+    @State private var trashIsTapped: Bool = false
     
     var body: some View {
         HStack {
             AnimatedButton(action: {
-                obj.appearance.pixellate = 1
-                obj.appearance.blur = 0
-                obj.appearance.hue = 1
-                obj.appearance.saturation = 1
-                obj.appearance.colorMultiply = .white
-                obj.appearance.selectedScreenReflection = "None"
-                obj.appearance.frameWidth = 510 * 2
-                obj.appearance.rotate = 0
-                obj.appearance.offsetX = 0
-                obj.appearance.offsetY = 0
-                obj.appearance.showShadow = false
-                obj.appearance.shadowOpacity = 0.2
-                obj.appearance.shadowRadius = 10
-                obj.appearance.shadowOffsetX = 0
-                obj.appearance.shadowOffsetY = 0
-                obj.appearance.scale = 1
-                obj.appearance.logoScale = 1
-                obj.appearance.logoCornerRadius = 0
-                obj.appearance.logoOffsetX = -360
-                obj.appearance.logoOffsetY = 360
-                obj.appearance.logoRotate = 0
-                obj.appearance.showGroundReflection = false
-                obj.appearance.backgroundColour = .clear
-                obj.appearance.showAverageColor = false
-                obj.appearance.backgroundOffsetY = 0
-                
-            }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                resetAppearance(obj)
+            }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
             .padding(.leading)
-         
-            AnimatedButton(action: {
+            
+            Button {
+                trashIsTapped.toggle()
                 viewModel.importedBackground = nil
                 viewModel.importedImage1 = nil
+                viewModel.importedImage2 = nil
                 viewModel.importedLogo = nil
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    trashIsTapped.toggle()
+                }
                 
-            }, sfSymbolName: "trash.circle", rotationAntiClockwise: true, color: .red, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-            .padding(.leading)
+            } label: {
+                Label("",systemImage: trashIsTapped ? "trash.circle.fill" : "trash.circle")
+                    .font(.title2)
+                    .padding(.leading)
+                    .tint(Color(.systemRed))
+            }
+            .contentTransition(.symbolEffect(.replace))
             
             Spacer()
             
@@ -94,7 +77,7 @@ struct ButtonsAndPopoverView: View {
                     .font(.title2)
                     .padding(.trailing)
             }
-          
+            .contentTransition(.symbolEffect(.replace))
             
             Button {
                 isTapped.toggle()
@@ -104,12 +87,10 @@ struct ButtonsAndPopoverView: View {
                     .font(.title2)
                     .padding(.trailing)
             }
-          
             .contentTransition(.symbolEffect(.replace))
             .alwaysPopover(isPresented: $showPopover) {
                 
                 VStack {
-                    
                     HStack {
                         Text("\(Image(systemName: "info.circle")) Info")
                             .font(.headline)
@@ -141,6 +122,44 @@ struct ButtonsAndPopoverView: View {
         .padding(.top)
         .frame(height: 40)
     }
+    
+    func resetAppearance(_ obj: Object) {
+        
+        // obj.appearance.pixellate = 1
+        // obj.appearance.showAverageColor = false
+        
+        // Reset Background parameters
+        obj.appearance.backgroundColour = .clear
+        obj.appearance.backgroundColourOrGradient = false
+        obj.appearance.blur = 0
+        obj.appearance.hue = 0
+        obj.appearance.saturation = 1
+        obj.appearance.backgroundOffsetY = 0
+        obj.appearance.frameWidth = 510 * 2
+        
+        // Reset Mockup parameters
+        obj.appearance.screenshotFitFill = false
+        obj.appearance.selectedNotch = "None"
+        obj.appearance.selectedScreenReflection = "None"
+        obj.appearance.showGroundReflection = false
+        obj.appearance.scale = 1
+        obj.appearance.colorMultiply = .white
+        obj.appearance.offsetX = 0
+        obj.appearance.offsetY = 0
+        obj.appearance.rotate = 0
+        obj.appearance.showShadow = false
+        obj.appearance.shadowRadius = 10
+        obj.appearance.shadowOpacity = 0.2
+        obj.appearance.shadowOffsetX = 0
+        obj.appearance.shadowOffsetY = 0
+        
+        // Reset Logo parameters
+        obj.appearance.logoScale = 1
+        obj.appearance.logoCornerRadius = 0
+        obj.appearance.logoOffsetX = -360
+        obj.appearance.logoOffsetY = 360
+        obj.appearance.logoRotate = 0
+    }
 }
 
 struct BackgroundSettingsView: View {
@@ -156,14 +175,22 @@ struct BackgroundSettingsView: View {
     @State private var showPopover_Hue: Bool = false
     @State private var showPopover_Saturation: Bool = false
     @State private var showPopover_FrameWidth: Bool = false
+    @State private var showPopover_BackgroundColourOrGradient: Bool = false
     
     var body: some View {
         Group {
+            
             HStack (spacing: -5) {
                 
                 Text("Background Settings")
                     .font(.headline)
                     .padding()
+                
+                AnimatedButton(action: {
+                    resetAppearance(obj)
+                    
+                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 360, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                .scaleEffect(0.75)
                 
                 Spacer()
             }
@@ -178,54 +205,31 @@ struct BackgroundSettingsView: View {
                     }
                 
                 
-                CustomToggle(showTitleText: true, titleText: "Show Background", bindingValue: $obj.appearance.showBackground, onSymbol: "circle", offSymbol: "xmark", rotate: true)
+                CustomToggle(showTitleText: true, titleText: "Show Background", bindingValue: $obj.appearance.showBackground, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemRed))
             }
             .padding(.bottom, 10)
             
+            //MARK: Disabled for now until the average colour checker is fixed
+            /*
+             HStack (spacing: -5) {
+             
+             Image(systemName: "rainbow")
+             .padding(.leading)
+             .popOverInfo(isPresented: $showPopover_AverageBackground) {
+             Text("Creates and overlays the average colour of the imported background")
+             }
+             
+             CustomToggle(showTitleText: true, titleText: "Average background colour", bindingValue: $obj.appearance.showAverageColor, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+             }
+             .padding(.bottom, obj.appearance.showAverageColor ? 5 : 10)
+             .disabled(viewModel.importedBackground == nil)
+             .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
+             */
+            
             if obj.appearance.showBackground {
-                //Background Offset Y
-                if !obj.appearance.easySettingsMode {
-                    HStack {
-                        Image(systemName: "arrow.up.arrow.down")
-                            .popOverInfo(isPresented: $showPopover_Pixellate) {
-                                Text("Offset the background vertically")
-                            }
-                        
-                        Text("Offset")
-                            .font(.system(size: obj.appearance.settingsSliderFontSize))
-                        
-                        CustomSlider(value: $obj.appearance.backgroundOffsetY, inRange: -300...300, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                        }
-                        .padding(.trailing, 10)
-                      
-                        ScalePercentageText(scale: obj.appearance.backgroundOffsetY, maxScale: 300 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
-                    }
-                    .padding()
-                    .disabled(viewModel.importedBackground == nil)
-                    .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
-                }
-                
-                
-                //MARK: Disabled for now until the average colour checker is fixed
-                /*
-                 HStack (spacing: -5) {
-                 
-                 Image(systemName: "rainbow")
-                 .padding(.leading)
-                 .popOverInfo(isPresented: $showPopover_AverageBackground) {
-                 Text("Creates and overlays the average colour of the imported background")
-                 }
-                 
-                 CustomToggle(showTitleText: true, titleText: "Average background colour", bindingValue: $obj.appearance.showAverageColor, onSymbol: "circle", offSymbol: "xmark", rotate: true)
-                 }
-                 .padding(.bottom, obj.appearance.showAverageColor ? 5 : 10)
-                 .disabled(viewModel.importedBackground == nil)
-                 .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
-                 */
-                
                 if !obj.appearance.showAverageColor {
-                    
                     if !obj.appearance.easySettingsMode {
+                        
                         //Background Colour Picker
                         HStack {
                             Image(systemName: "eyedropper.halffull")
@@ -242,125 +246,168 @@ struct BackgroundSettingsView: View {
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 5)
+                        
+                        HStack (spacing: -5) {
+                            Image(systemName: "circle.lefthalf.striped.horizontal")
+                                .popOverInfo(isPresented: $showPopover_BackgroundColourOrGradient) {
+                                    Text("Background colour can either be a solid colour or a subtle gradient")
+                                }
+                            
+                            CustomToggle(showTitleText: true, titleText: "Background Style" + "\(obj.appearance.backgroundColourOrGradient ? " :Solid" : " :Gradient")", bindingValue: $obj.appearance.backgroundColourOrGradient, onSymbol: "circle.righthalf.filled.inverse", offSymbol: "circle.lefthalf.striped.horizontal", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                        }
+                        .padding(.vertical, 10)
+                        .padding(.leading)
                     }
                     
-                    Group {
-                        if !obj.appearance.easySettingsMode {
-                            // Pixellate
-                            //MARK: Disabled for now until as i suspect the effect is reducing background image quality
-                            /*
-                            HStack {
-                                Image(systemName: "square.grid.3x3")
-                                    .popOverInfo(isPresented: $showPopover_Pixellate) {
-                                        Text("Create a pixellated effect on the imported background")
-                                    }
-                                
-                                Text("Pixellate")
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                
-                                CustomSlider(value: $obj.appearance.pixellate, inRange: 1...50, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                }
-                                .padding(.trailing, 10)
-                                
-                                Text("\(obj.appearance.pixellate, specifier: "%.0f")")
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                    .frame(width: 40)
+                    // Blur
+                    HStack {
+                        Image(systemName: "scribble.variable")
+                            .popOverInfo(isPresented: $showPopover_Blur) {
+                                Text("Blurs the imported background")
                             }
-                            .padding()
-                             */
-                        }
                         
-                        // Blur
+                        Text("Blur")
+                            .font(.system(size: obj.appearance.settingsSliderFontSize))
+                        
+                        CustomSlider(value: $obj.appearance.blur, inRange: 0...200, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                        }
+                        .padding(.trailing, 10)
+                        
+                        ScalePercentageText(scale: obj.appearance.blur, maxScale: 100 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
+                    }
+                    .padding()
+                    
+                    if !obj.appearance.easySettingsMode {
+                        Group {
+                            if !obj.appearance.easySettingsMode {
+                                
+                                // Pixellate
+                                //MARK: Disabled for now until as i suspect the effect is reducing background image quality
+                                /*
+                                 HStack {
+                                 Image(systemName: "square.grid.3x3")
+                                 .popOverInfo(isPresented: $showPopover_Pixellate) {
+                                 Text("Create a pixellated effect on the imported background")
+                                 }
+                                 
+                                 Text("Pixellate")
+                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                 
+                                 CustomSlider(value: $obj.appearance.pixellate, inRange: 1...50, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                                 }
+                                 .padding(.trailing, 10)
+                                 
+                                 Text("\(obj.appearance.pixellate, specifier: "%.0f")")
+                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                 .frame(width: 40)
+                                 }
+                                 .padding()
+                                 */
+                            }
+                        }
+                        .disabled(viewModel.importedBackground == nil)
+                        .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
+                        
+                        Group {
+                            if !obj.appearance.easySettingsMode {
+                                // Hue
+                                HStack {
+                                    Image(systemName: "camera.filters")
+                                        .popOverInfo(isPresented: $showPopover_Hue) {
+                                            Text("Adjusts the Hue rotation of the background")
+                                        }
+                                    
+                                    Text("Hue")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    
+                                    CustomSlider(value: $obj.appearance.hue, inRange: -180...180, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                                    }
+                                    .padding(.trailing, 10)
+                                    
+                                    Text("\(abs(obj.appearance.hue), specifier: "%.0f")°")
+                                    
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                        .frame(width: 40)
+                                }
+                                .padding()
+                                
+                                //Saturation
+                                HStack {
+                                    Image(systemName: "drop.halffull")
+                                        .popOverInfo(isPresented: $showPopover_Saturation) {
+                                            Text("Adjusts the saturation of the background")
+                                        }
+                                    
+                                    Text("Saturation")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    
+                                    CustomSlider(value: $obj.appearance.saturation, inRange: 0...2, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                                    }
+                                    .padding(.trailing, 10)
+                                    
+                                    ScalePercentageText(scale: obj.appearance.saturation, maxScale: 1, fontSize: obj.appearance.settingsSliderFontSize)
+                                }
+                                .padding()
+                            }
+                        }
+                        .disabled(!obj.appearance.showBackground)
+                        .opacity(obj.appearance.showBackground ? 1 : 0.5)
+                        
+                        //Background Offset Y
                         HStack {
-                            Image(systemName: "scribble.variable")
-                                .popOverInfo(isPresented: $showPopover_Blur) {
-                                    Text("Blurs the imported background")
+                            Image(systemName: "arrow.up.arrow.down")
+                                .popOverInfo(isPresented: $showPopover_Pixellate) {
+                                    Text("Offset the background vertically")
                                 }
                             
-                            Text("Blur")
+                            Text("Offset")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
                             
-                            CustomSlider(value: $obj.appearance.blur, inRange: 0...200, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                            CustomSlider(value: $obj.appearance.backgroundOffsetY, inRange: -300...300, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
                             }
                             .padding(.trailing, 10)
                             
-                            ScalePercentageText(scale: obj.appearance.blur, maxScale: 100 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
+                            ScalePercentageText(scale: obj.appearance.backgroundOffsetY, maxScale: 300 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
                         }
                         .padding()
+                        .disabled(viewModel.importedBackground == nil)
+                        .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
                     }
-                    .disabled(viewModel.importedBackground == nil)
-                    .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
                     
-                    Group {
-                        if !obj.appearance.easySettingsMode {
-                            // Hue
-                            HStack {
-                                Image(systemName: "camera.filters")
-                                    .popOverInfo(isPresented: $showPopover_Hue) {
-                                        Text("Adjusts the Hue rotation of the background")
-                                    }
-                                
-                                Text("Hue")
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                
-                                CustomSlider(value: $obj.appearance.hue, inRange: -180...180, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                }
-                                .padding(.trailing, 10)
-                                
-                                Text("\(abs(obj.appearance.hue), specifier: "%.0f")°")
-                                
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                    .frame(width: 40)
+                    // Frame Size
+                    HStack {
+                        Image(systemName: "square.resize")
+                            .popOverInfo(isPresented: $showPopover_FrameWidth) {
+                                Text("Adjusts the frame width of the background")
                             }
-                            .padding()
-                            
-                            //Saturation
-                            HStack {
-                                Image(systemName: "drop.halffull")
-                                    .popOverInfo(isPresented: $showPopover_Saturation) {
-                                        Text("Adjusts the saturation of the background")
-                                    }
-                                
-                                Text("Saturation")
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                
-                                CustomSlider(value: $obj.appearance.saturation, inRange: 0...2, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                }
-                                .padding(.trailing, 10)
-                                
-                                ScalePercentageText(scale: obj.appearance.saturation, maxScale: 1, fontSize: obj.appearance.settingsSliderFontSize)
-                            }
-                            .padding()
+                        
+                        Text("Frame Width")
+                            .font(.system(size: obj.appearance.settingsSliderFontSize))
+                        
+                        CustomSlider(value: $obj.appearance.frameWidth, inRange: 300...1020, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
                         }
+                        .padding(.trailing, 10)
+                        
+                        ScalePercentageText(scale: obj.appearance.frameWidth, maxScale: 510 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
+                        
                     }
-                    .disabled(!obj.appearance.showBackground)
-                    .opacity(obj.appearance.showBackground ? 1 : 0.5)
+                    .padding()
                 }
-                
-                // Frame Size
-                HStack {
-                    Image(systemName: "square.resize")
-                        .popOverInfo(isPresented: $showPopover_FrameWidth) {
-                            Text("Adjusts the frame width of the background")
-                        }
-                    
-                    Text("Frame Width")
-                        .font(.system(size: obj.appearance.settingsSliderFontSize))
-                    
-                    CustomSlider(value: $obj.appearance.frameWidth, inRange: 300...1020, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                    }
-                    .padding(.trailing, 10)
-                    
-                    ScalePercentageText(scale: obj.appearance.frameWidth, maxScale: 510 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
-                    
-                }
-                .padding()
             }
-            
             
             Divider()
                 .padding()
         }
+    }
+    func resetAppearance(_ obj: Object) {
+        // Reset Background parameters
+        obj.appearance.backgroundColour = .clear
+        obj.appearance.backgroundColourOrGradient = false
+        obj.appearance.blur = 0
+        obj.appearance.hue = 0
+        obj.appearance.saturation = 1
+        obj.appearance.backgroundOffsetY = 0
+        obj.appearance.frameWidth = 510 * 2
     }
 }
 
@@ -391,6 +438,12 @@ struct MockupSettingsView: View {
                     .font(.headline)
                     .padding()
                 
+                AnimatedButton(action: {
+                    resetAppearance(obj)
+                    
+                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 360, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                .scaleEffect(0.75)
+                
                 Spacer()
                 
             }
@@ -405,9 +458,10 @@ struct MockupSettingsView: View {
                             Text("Adjusts aspect ratio content mode to fit or fill the frame")
                         }
                     
-                    CustomToggle(showTitleText: true, titleText: "Aspect Ratio - Fit or Fill", bindingValue: $obj.appearance.screenshotFitFill, onSymbol: "circle", offSymbol: "xmark", rotate: true)
+                    CustomToggle(showTitleText: true, titleText: "Aspect Ratio - Fit or Fill", bindingValue: $obj.appearance.screenshotFitFill, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                 }
                 .padding(.bottom, 10)
+                
             }
             
             HStack (spacing: -5) {
@@ -466,11 +520,12 @@ struct MockupSettingsView: View {
                         Text("Toggle a ground reflection on and off. Note: Not for all mockups")
                     }
                 
-                CustomToggle(showTitleText: true, titleText: "Show Ground Reflection", bindingValue: $obj.appearance.showGroundReflection, onSymbol: "circle", offSymbol: "xmark", rotate: true)
+                CustomToggle(showTitleText: true, titleText: "Show Ground Reflection", bindingValue: $obj.appearance.showGroundReflection, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             }
             .padding(.bottom, 5)
             
             if !obj.appearance.easySettingsMode {
+                
                 HStack {
                     Image(systemName: "arrow.down.left.and.arrow.up.right")
                         .popOverInfo(isPresented: $showPopover_Scale) {
@@ -488,8 +543,7 @@ struct MockupSettingsView: View {
                     
                 }
                 .padding()
-                
-                
+                 
                 HStack {
                     Image(systemName: "drop.halffull")
                         .popOverInfo(isPresented: $showPopover_ColorMultiply) {
@@ -520,11 +574,12 @@ struct MockupSettingsView: View {
                     }
                     .padding(.trailing, 10)
                     
-                    
                     ScalePercentageText(scale: obj.appearance.offsetX, maxScale: 500 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
                     
                 }
                 .padding()
+                 
+                
                 
                 HStack {
                     Image(systemName: "arrow.up.arrow.down")
@@ -542,28 +597,29 @@ struct MockupSettingsView: View {
                     ScalePercentageText(scale: obj.appearance.offsetY, maxScale: 500 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
                 }
                 .padding()
+                 
                 
                 
-                HStack {
-                    Image(systemName: "arrow.circlepath")
-                        .popOverInfo(isPresented: $showPopover_Rotation) {
-                            Text("Rotate the mockup")
-                        }
-                    
-                    Text("Rotation")
-                        .font(.system(size: obj.appearance.settingsSliderFontSize))
-                    
-                    CustomSlider(value: $obj.appearance.rotate, inRange: -180...180, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                    }
-                    .padding(.trailing, 10)
-                    
-                    
-                    Text("\(abs(obj.appearance.rotate), specifier: "%.0f")°")
-                        .font(.system(size: obj.appearance.settingsSliderFontSize))
-                        .frame(width: 40)
-                }
-                .padding()
-                
+                 HStack {
+                 Image(systemName: "arrow.circlepath")
+                 .popOverInfo(isPresented: $showPopover_Rotation) {
+                 Text("Rotate the mockup")
+                 }
+                 
+                 Text("Rotation")
+                 .font(.system(size: obj.appearance.settingsSliderFontSize))
+                 
+                 CustomSlider(value: $obj.appearance.rotate, inRange: -180...180, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                 }
+                 .padding(.trailing, 10)
+                 
+                 
+                 Text("\(abs(obj.appearance.rotate), specifier: "%.0f")°")
+                 .font(.system(size: obj.appearance.settingsSliderFontSize))
+                 .frame(width: 40)
+                 }
+                 .padding()
+                 
                 
                 HStack (spacing: -5) {
                     
@@ -573,9 +629,10 @@ struct MockupSettingsView: View {
                             Text("Toggle on and off the shadow effect")
                         }
                     
-                    CustomToggle(showTitleText: true, titleText: "Show Shadow", bindingValue: $obj.appearance.showShadow, onSymbol: "circle", offSymbol: "xmark", rotate: true)
+                    CustomToggle(showTitleText: true, titleText: "Show Shadow", bindingValue: $obj.appearance.showShadow, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                 }
                 .padding(.vertical, 10)
+                
                 
                 HStack {
                     Image(systemName: "rectangle.expand.vertical")
@@ -586,13 +643,16 @@ struct MockupSettingsView: View {
                     Text("Shadow Radius")
                         .font(.system(size: obj.appearance.settingsSliderFontSize))
                     
-                    CustomSlider(value: $obj.appearance.shadowRadius, inRange: 0...100, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                    CustomSlider(value: $obj.appearance.shadowRadius, inRange: 5...100, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
                     }
                     .padding(.trailing, 10)
                     
                     ScalePercentageText(scale: obj.appearance.shadowRadius, maxScale: 100, fontSize: obj.appearance.settingsSliderFontSize)
                 }
                 .padding()
+                 
+                
+               
                 
                 HStack {
                     Image(systemName: "circle.bottomrighthalf.checkered")
@@ -610,6 +670,7 @@ struct MockupSettingsView: View {
                     ScalePercentageText(scale: obj.appearance.shadowOpacity, maxScale: 1, fontSize: obj.appearance.settingsSliderFontSize)
                 }
                 .padding()
+                 
                 
                 
                 HStack {
@@ -628,6 +689,7 @@ struct MockupSettingsView: View {
                     ScalePercentageText(scale: obj.appearance.shadowOffsetX, maxScale: 300 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
                 }
                 .padding()
+                 
                 
                 
                 HStack {
@@ -646,11 +708,31 @@ struct MockupSettingsView: View {
                     ScalePercentageText(scale: obj.appearance.shadowOffsetY, maxScale: 300 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
                 }
                 .padding()
+                 
+                
             }
         }
         
         Divider()
             .padding()
+    }
+    func resetAppearance(_ obj: Object) {
+        
+        // Reset Mockup parameters
+        obj.appearance.screenshotFitFill = false
+        obj.appearance.selectedNotch = "None"
+        obj.appearance.selectedScreenReflection = "None"
+        obj.appearance.showGroundReflection = false
+        obj.appearance.scale = 1
+        obj.appearance.colorMultiply = .white
+        obj.appearance.offsetX = 0
+        obj.appearance.offsetY = 0
+        obj.appearance.rotate = 0
+        obj.appearance.showShadow = false
+        obj.appearance.shadowRadius = 10
+        obj.appearance.shadowOpacity = 0.2
+        obj.appearance.shadowOffsetX = 0
+        obj.appearance.shadowOffsetY = 0
     }
 }
 
@@ -675,6 +757,12 @@ struct LogoSettingsView: View {
                     .font(.headline)
                     .padding()
                 
+                AnimatedButton(action: {
+                    resetAppearance(obj)
+                    
+                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 360, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                .scaleEffect(0.75)
+                
                 Spacer()
                 
             }
@@ -688,7 +776,7 @@ struct LogoSettingsView: View {
                     }
                 
                 
-                CustomToggle(showTitleText: true, titleText: "Show Logo", bindingValue: $obj.appearance.showLogo, onSymbol: "circle", offSymbol: "xmark", rotate: true)
+                CustomToggle(showTitleText: true, titleText: "Show Logo", bindingValue: $obj.appearance.showLogo, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemRed))
             }
             .padding(.bottom, 10)
             
@@ -794,6 +882,14 @@ struct LogoSettingsView: View {
         Divider()
             .padding()
     }
+    func resetAppearance(_ obj: Object) {
+        // Reset Logo parameters
+        obj.appearance.logoScale = 1
+        obj.appearance.logoCornerRadius = 0
+        obj.appearance.logoOffsetX = -360
+        obj.appearance.logoOffsetY = 360
+        obj.appearance.logoRotate = 0
+    }
 }
 
 struct ScalePercentageText: View {
@@ -802,8 +898,8 @@ struct ScalePercentageText: View {
     let fontSize: CGFloat
     
     var body: some View {
-     
-
+        
+        
         Text("\(abs(scale / maxScale * 100.0), specifier: "%.0f")%")
             .font(.system(size: fontSize))
             .frame(width: 40)
@@ -843,5 +939,46 @@ extension View {
 }
 
 
+struct CustomSliderView: View {
+    
+    @StateObject var obj: Object
+    let imageSystemName: String
+    let popOverBinding: Binding<Bool>
+    let popOverText: String
+    let toggleTitle: String
+    let sliderObjectBinding: Binding<CGFloat>
+    let sliderObject: CGFloat
+    let sliderObjectMaxScale: CGFloat
+    let sliderObjectMaxScaleDivider: CGFloat
+    let sliderRange: ClosedRange<CGFloat>
+    let usePercentageLable: Bool
+    
+    
+    
+    var body: some View {
+        HStack {
+            Image(systemName: imageSystemName)
+                .popOverInfo(isPresented: popOverBinding) {
+                    Text(popOverText)
+                }
+            
+            Text(toggleTitle)
+                .font(.system(size: obj.appearance.settingsSliderFontSize))
+            
+            CustomSlider(value: sliderObjectBinding, inRange: sliderRange, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+            }
+            .padding(.trailing, 10)
+            
+            if !usePercentageLable {
+                Text("\(abs(sliderObjectBinding.wrappedValue), specifier: "%.0f")°")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    .frame(width: 40)
+            } else {
+               ScalePercentageText(scale: sliderObject, maxScale: sliderObjectMaxScale / sliderObjectMaxScaleDivider, fontSize: obj.appearance.settingsSliderFontSize)
+            }
+        }
+        .padding()
+    }
+}
 
 

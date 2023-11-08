@@ -32,10 +32,10 @@ struct ContentView: View {
             
             CustomPagingSlider(data: $viewModel.items) { $item in
                 
-                CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, obj: obj)
+                CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
                     .customImageViewModifier(obj: obj, viewModel: viewModel)
                 
-                ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
+                ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
                     .titleViewModifier(obj: obj, normalScale: 1.0)
                 
                 
@@ -79,7 +79,7 @@ struct ContentView: View {
                 
             })
             
-            // Buttons
+            //MARK: Pill Buttons
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
             
         }
@@ -128,9 +128,9 @@ extension View {
             .frame(width: obj.appearance.frameWidth * 0.5, height: obj.appearance.frameHeight * 0.5)
             .clipped()
             .cornerRadius(15)
-            .background {
+            .overlay {
                 RoundedRectangle(cornerRadius: 15)
-                    .stroke(Color.gray.opacity(obj.appearance.showBackground ? 0 : 1), lineWidth: 0.5)
+                    .stroke(Color.gray, lineWidth: 0.5)
             }
             .modifier(ZoomModifier(minimum: 1.0, maximum: 1.0, obj: obj))
             .scaleEffect(obj.appearance.screenWidth, anchor: .center)

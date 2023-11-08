@@ -150,7 +150,7 @@ private struct TextViewTwo: View {
                             obj.appearance.showPill.toggle()
                         }
                         
-                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage1 == nil ? "1.circle" : "xmark.circle", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
+                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage1 == nil ? "1.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
                     .padding(.horizontal, 5)
                     .padding(.leading, 5)
                     
@@ -161,7 +161,7 @@ private struct TextViewTwo: View {
                             obj.appearance.showPill.toggle()
                         }
                         
-                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage2 == nil ? "2.circle" : "xmark.circle", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
+                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage2 == nil ? "2.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage2 == nil ? .primary : .red)
                     
                     AnimatedButton(action: {
                         
@@ -170,7 +170,7 @@ private struct TextViewTwo: View {
                             obj.appearance.showPill.toggle()
                         }
                         
-                    }, sfSymbolName: "photo.circle", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedBackground == nil ? "plus.circle" : "xmark.circle", overlaySymbolColor: viewModel.importedBackground == nil ? .primary : .red)
+                    }, sfSymbolName: "photo.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedBackground == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedBackground == nil ? .primary : .red)
                     .padding(.horizontal, 5)
                     
                     AnimatedButton(action: {
@@ -180,11 +180,10 @@ private struct TextViewTwo: View {
                             obj.appearance.showPill.toggle()
                         }
                         
-                    }, sfSymbolName: "person.circle", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedLogo == nil ? "plus.circle" : "xmark.circle", overlaySymbolColor: viewModel.importedLogo == nil ? .primary : .red)
+                    }, sfSymbolName: "person.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedLogo == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedLogo == nil ? .primary : .red)
                     .padding(.horizontal, 5)
                     
                     Divider()
-                    
                     
                     AnimatedButton(action: {
                         obj.appearance.showSettingsSheet.toggle()
@@ -194,7 +193,7 @@ private struct TextViewTwo: View {
                                 obj.appearance.showPill.toggle()
                             }
                         }
-                    }, sfSymbolName: "slider.horizontal.3", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                    }, sfSymbolName: "slider.horizontal.3", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
                     .padding(.horizontal, 5)
                 } else {
                     
@@ -202,7 +201,7 @@ private struct TextViewTwo: View {
                         
                         obj.appearance.enableImportTapGestures.toggle()
                         
-                    }, sfSymbolName: obj.appearance.enableImportTapGestures ? "hand.tap" : "hand.raised.slash", rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                    }, sfSymbolName: obj.appearance.enableImportTapGestures ? "hand.tap" : "hand.raised.slash", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
                     .padding(.horizontal, 5)
                     .padding(.leading, 5)
                    
@@ -221,7 +220,7 @@ private struct TextViewTwo: View {
                               obj.appearance.selectedAppearance = .system
                           }
                         
-                    }, sfSymbolName: symbolName, rotationAntiClockwise: false, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                    }, sfSymbolName: symbolName, rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
                     .padding(.horizontal, 5)
                     
                 }

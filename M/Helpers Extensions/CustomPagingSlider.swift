@@ -11,7 +11,6 @@ import SwiftUI
 struct Item: Identifiable {
     private(set) var id: UUID = .init()
     var imageName: String // Use String for image name
-    var imageName2: String // Use String for image name
     var screenReflectionName: String
     var shadowName: String
     var color: Color
