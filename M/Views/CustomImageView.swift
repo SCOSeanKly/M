@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+
 struct CustomImageView: View {
     var item: Item
     @Binding var importedBackground: UIImage?
@@ -15,7 +16,7 @@ struct CustomImageView: View {
     @Binding var importedLogo: UIImage?
     @StateObject var obj: Object
     @State private var isDragging: Bool = false
-    
+   
     
     var body: some View {
         
@@ -28,6 +29,7 @@ struct CustomImageView: View {
                         RoundedRectangle(cornerRadius: 0)
                             .fill(item.color.gradient)
                         
+                     
                         //User background colour
                         RoundedRectangle(cornerRadius: 0)
                             .fill(obj.appearance.backgroundColour.gradient)

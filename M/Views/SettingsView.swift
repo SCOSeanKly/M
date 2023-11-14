@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 struct SettingsView: View {
     
@@ -29,8 +30,7 @@ struct SettingsView: View {
                 ShowCreative()
                 
             }
-            .customPresentationWithBlur(detent: .medium, blurRadius: 40, backgroundColorOpacity: 0.3)
-           
+            .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
         }
     }
 }
@@ -121,7 +121,7 @@ struct ButtonsAndPopoverView: View {
         .sensoryFeedback(.selection, trigger: isTapped)
         .tint(.primary)
         .padding(.top)
-        .frame(height: 40)
+        .frame(height: 60)
     }
     
     func resetAppearance(_ obj: Object) {
@@ -241,12 +241,22 @@ struct BackgroundSettingsView: View {
                             Text("Background Colour")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
                             
-                            ColorPicker(selection: $obj.appearance.backgroundColour, label: {
-                                
-                            })
+                            ColorPickerBar(
+                                value: $obj.appearance.backgroundColour,
+                                colors: .colorPickerBarColors(withClearColor: true),
+                                config: .init(
+                                    addOpacityToPicker: true,
+                                    addResetButton: false,
+                                    resetButtonValue: nil
+                                )
+                            )
+                            .padding(.leading)
+                          
                         }
                         .padding(.horizontal)
                         .padding(.vertical, 5)
+                        
+                      
                         
                         HStack (spacing: -5) {
                             Image(systemName: "circle.lefthalf.striped.horizontal")

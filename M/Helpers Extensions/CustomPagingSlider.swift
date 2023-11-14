@@ -54,6 +54,7 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
     @ViewBuilder var content: (Binding<Item.Element>) -> Content
     @ViewBuilder var titleContent: (Binding<Item.Element>) -> TitleContent
     
+    
     /// View Properties
     @State private var activeID: UUID?
     

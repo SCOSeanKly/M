@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIKit
 
 enum DetentType {
     case small
@@ -15,7 +16,7 @@ enum DetentType {
     var fractionValue: CGFloat {
         switch self {
         case .small:
-            return 0.2
+            return 0.05
         case .medium:
             return 0.4
         case .large:
@@ -29,8 +30,17 @@ extension View {
         self.presentationDetents([
             .fraction(detent.fractionValue),
             .fraction(detent2.fractionValue)
+          
             
         ])
+        .presentationDetents(
+            undimmed: [
+                .fraction(detent.fractionValue),
+                .fraction(detent2.fractionValue)
+            ],
+            largestUndimmed: .fraction(detent2.fractionValue)
+        )
+      //  .interactiveDismissDisabled()
         .presentationBackground {
             TransparentBlurView(removeAllFilters: true)
                 .blur(radius: blurRadius, opaque: true)
@@ -39,7 +49,6 @@ extension View {
         .presentationCornerRadius(15)
         .presentationDragIndicator(.visible)
         .ignoresSafeArea()
-      
     }
     
     
@@ -53,6 +62,14 @@ extension View {
             .fraction(detent.fractionValue),
             .fraction(detent2.fractionValue)
         ])
+      //  .interactiveDismissDisabled()
+        .presentationDetents(
+            undimmed: [
+                .fraction(detent.fractionValue),
+                .fraction(detent2.fractionValue)
+            ],
+            largestUndimmed: .fraction(detent2.fractionValue)
+        )
         .presentationBackground {
             Color.primary.opacity(backgroundColorOpacity).colorInvert()
         }
