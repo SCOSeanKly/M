@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */; };
 		3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */; };
+		3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */; };
 		3E69AF7B2AF55875007244C1 /* MApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AF7A2AF55875007244C1 /* MApp.swift */; };
 		3E69AF7D2AF55875007244C1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AF7C2AF55875007244C1 /* ContentView.swift */; };
 		3E69AF7F2AF55876007244C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E69AF7E2AF55876007244C1 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 /* Begin PBXFileReference section */
 		3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageButton.swift; sourceTree = "<group>"; };
 		3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportButtons.swift; sourceTree = "<group>"; };
+		3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggle3Way.swift; sourceTree = "<group>"; };
 		3E69AF772AF55875007244C1 /* M.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E69AF7A2AF55875007244C1 /* MApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MApp.swift; sourceTree = "<group>"; };
 		3E69AF7C2AF55875007244C1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -176,6 +178,7 @@
 				3E69AFB42AF55A93007244C1 /* UniversalAlert.swift */,
 				3E69AFB62AF55AA7007244C1 /* BundleInfo.swift */,
 				3E69AFB82AF55AB5007244C1 /* CustomToggle.swift */,
+				3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */,
 				3E69AFBA2AF55AC7007244C1 /* PhotoPicker.swift */,
 				3E69AFBC2AF55ADD007244C1 /* CustomPagingSlider.swift */,
 				3E69AFBE2AF55AF1007244C1 /* SnapShot.swift */,
@@ -284,6 +287,7 @@
 				3E69AFA02AF55998007244C1 /* SettingsView.swift in Sources */,
 				3E69AFAB2AF55A30007244C1 /* TransparentBlurView.swift in Sources */,
 				3E69AFAF2AF55A5A007244C1 /* IfExtension.swift in Sources */,
+				3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */,
 				3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */,
 				3E69AFBB2AF55AC7007244C1 /* PhotoPicker.swift in Sources */,
 				3E69AFCD2AF55BD1007244C1 /* View+Modifiers.swift in Sources */,
@@ -446,7 +450,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -487,7 +491,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

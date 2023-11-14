@@ -30,6 +30,7 @@ struct SettingsView: View {
                 
             }
             .customPresentationWithBlur(detent: .medium, blurRadius: 40, backgroundColorOpacity: 0.3)
+           
         }
     }
 }
@@ -429,6 +430,7 @@ struct MockupSettingsView: View {
     @State private var showPopover_ShadowOpacity: Bool = false
     @State private var showPopover_ShadowOffsetX: Bool = false
     @State private var showPopover_ShadowOffsetY: Bool = false
+    @State private var showPopover_ScreenReflectionOpacity: Bool = false
     
     var body: some View {
         Group {
@@ -509,7 +511,26 @@ struct MockupSettingsView: View {
                 }
                 
             }
-            .padding(.bottom, 10)
+          //  .padding(.bottom, 5)
+            
+            HStack {
+                Image(systemName: "circle.bottomrighthalf.checkered")
+                    .popOverInfo(isPresented: $showPopover_ScreenReflectionOpacity) {
+                        Text("Adjust the opacity of the screen reflection from 50% to 100%")
+                    }
+                
+                Text("Screen Opacity")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                
+                CustomSlider(value: $obj.appearance.screenReflectionOpacity, inRange: 0.5...1, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                }
+                .padding(.trailing, 10)
+                
+                ScalePercentageText(scale: obj.appearance.screenReflectionOpacity, maxScale: 1, fontSize: obj.appearance.settingsSliderFontSize)
+                
+            }
+            .padding()
+            
             
             
             HStack (spacing: -5) {
@@ -937,7 +958,6 @@ extension View {
         
     }
 }
-
 
 struct CustomSliderView: View {
     

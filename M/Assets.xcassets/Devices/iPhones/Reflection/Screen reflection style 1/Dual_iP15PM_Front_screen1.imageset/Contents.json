@@ -1,6 +1,7 @@
 {
   "images" : [
     {
+      "filename" : "Dual_iP15PM_Front_screen.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
@@ -9,7 +10,6 @@
       "scale" : "2x"
     },
     {
-      "filename" : "Dual_iP15PM_Front_screen1.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

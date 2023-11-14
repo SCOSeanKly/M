@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LayerObjectAppearance {
-    // Global Variables
+    // App Variables
     var showSaveAlert: Bool
     var showSymbolEffect: Bool
     var showSettingsSheet: Bool
@@ -57,6 +57,7 @@ struct LayerObjectAppearance {
     var showScreenReflection: Bool
     var selectedScreenReflection: String
     var screenReflectionOptions: [String]
+    var screenReflectionOpacity: CGFloat
     var colorMultiply: Color
     var offsetX: CGFloat
     var offsetY: CGFloat
@@ -123,6 +124,7 @@ struct LayerObjectAppearance {
         self.showScreenReflection = true
         self.selectedScreenReflection = "None"
         self.screenReflectionOptions = ["None", "1", "2", "3", "4", "5"]
+        self.screenReflectionOpacity = 1.0
         self.colorMultiply = .white
         self.offsetX = 0
         self.offsetY = 0
@@ -185,6 +187,7 @@ struct LayerObjectAppearance {
         showScreenReflection: Bool,
         selectedScreenReflection: String,
         screenReflectionOptions: [String],
+        screenReflectionOpacity: CGFloat,
         colorMultiply: Color,
         offsetX: CGFloat,
         offsetY: CGFloat,
@@ -248,6 +251,7 @@ struct LayerObjectAppearance {
         self.showScreenReflection = showScreenReflection
         self.selectedScreenReflection = selectedScreenReflection
         self.screenReflectionOptions = screenReflectionOptions
+        self.screenReflectionOpacity = screenReflectionOpacity
         self.colorMultiply = colorMultiply
         self.offsetX = offsetX
         self.offsetY = offsetY

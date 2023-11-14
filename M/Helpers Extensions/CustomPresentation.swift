@@ -29,6 +29,7 @@ extension View {
         self.presentationDetents([
             .fraction(detent.fractionValue),
             .fraction(detent2.fractionValue)
+            
         ])
         .presentationBackground {
             TransparentBlurView(removeAllFilters: true)
@@ -38,6 +39,7 @@ extension View {
         .presentationCornerRadius(15)
         .presentationDragIndicator(.visible)
         .ignoresSafeArea()
+      
     }
     
     

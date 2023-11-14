@@ -85,7 +85,7 @@ struct CustomImageView: View {
             ///Mockup Images and screenshot
             ZStack {
                 
-                // Black screen when no screenshot is imported
+                // Black screen when no screenshot image 1 is imported
                 RoundedRectangle(cornerRadius: 0)
                     .foregroundColor(.black)
                     .clipShape(Rectangle())
@@ -107,7 +107,7 @@ struct CustomImageView: View {
                 }
                   
          
-                // Black screen when no screenshot is imported
+                // Black screen when no screenshot image 2 is imported
                 RoundedRectangle(cornerRadius: 0)
                     .foregroundColor(.black)
                     .clipShape(Rectangle())
@@ -145,6 +145,12 @@ struct CustomImageView: View {
                     Image(item.screenReflectionName + obj.appearance.selectedScreenReflection)
                         .resizable()
                         .aspectRatio(contentMode: .fill)
+                        .opacity(obj.appearance.screenReflectionOpacity)
+                    
+                    Image(item.screenReflectionName + obj.appearance.selectedScreenReflection)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .opacity(obj.appearance.screenReflectionOpacity)
                 }
             }   //Ground reflection of mockup layers
             .if(obj.appearance.showGroundReflection) { view in
@@ -184,7 +190,6 @@ extension View {
             .offset(x: item.offX, y: item.offY)
             .scaleEffect(item.scale)
             .rotationEffect(.degrees(item.rotationEffect))
-        
     }
 }
 
