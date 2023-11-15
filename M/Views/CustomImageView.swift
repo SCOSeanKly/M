@@ -49,11 +49,10 @@ struct CustomImageView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameWidth)
+                        .scaleEffect(obj.appearance.pixellate > 1.01 ? 1.01 : 1.0)
                         .offset(y: obj.appearance.backgroundOffsetY)
                         .hueRotation(Angle(degrees: obj.appearance.hue))
                         .saturation(obj.appearance.saturation)
-                    //MARK: Think this is responsible for the low quality background image. So removed for now
-                    /*
                         .distortionEffect(
                             .init(
                                 function: .init(library: .default, name: "pixellate"),
@@ -61,7 +60,7 @@ struct CustomImageView: View {
                             ),
                             maxSampleOffset: .zero
                         )
-                     */
+                     
                     
                     //MARK: Average colour - causes app to slow down as if the colour is being constantly checked in the background
                     /*
@@ -75,13 +74,16 @@ struct CustomImageView: View {
                 }
                 
                 //Blur overlay
-                RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(.clear)
-                    .background {
-                        TransparentBlurView(removeAllFilters: true)
-                            .blur(radius: obj.appearance.blur, opaque: true)
-                    }
-                    .clipShape(Rectangle())
+            
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(.clear)
+                        .background {
+                            TransparentBlurView(removeAllFilters: true)
+                                .blur(radius: obj.appearance.blur, opaque: true)
+                        }
+                        .clipShape(Rectangle())
+                        .opacity(obj.appearance.blur > 0.01 ? 1 : 0)
+                
             }
             
             ///Mockup Images and screenshot
@@ -185,7 +187,6 @@ struct CustomImageView: View {
 extension View {
     func applyImageTransforms(_ item: Item) -> some View {
         self
-          
             .cornerRadius(item.cornerRadius)
             .rotation3DEffect(.degrees(item.degrees), axis: (x: item.x, y: item.y, z: item.z), anchor: item.anchor, anchorZ: 0, perspective: item.perspective)
             .rotation3DEffect(.degrees(item.degrees2), axis: (x: item.x2, y: item.y2, z: item.z2), anchor: item.anchor2, anchorZ: 0, perspective: item.perspective2)
@@ -200,9 +201,6 @@ extension View {
         self
             .cornerRadius(item.cornerRadius)
             .offset(x: item.offX2)
-         
-          
-        
     }
 }
 

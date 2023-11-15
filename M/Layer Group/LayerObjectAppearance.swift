@@ -8,6 +8,7 @@
 import SwiftUI
 
 struct LayerObjectAppearance {
+    
     // App Variables
     var showSaveAlert: Bool
     var showSymbolEffect: Bool
@@ -124,7 +125,7 @@ struct LayerObjectAppearance {
         self.showScreenReflection = true
         self.selectedScreenReflection = "None"
         self.screenReflectionOptions = ["None", "1", "2", "3", "4", "5"]
-        self.screenReflectionOpacity = 1.0
+        self.screenReflectionOpacity = 0.5
         self.colorMultiply = .white
         self.offsetX = 0
         self.offsetY = 0
@@ -139,6 +140,7 @@ struct LayerObjectAppearance {
         self.notchOptions = ["None", "1", "2", "3"]
         self.reflectionOffset = -247
         self.screenshotFitFill = false
+        
         self.showLogo = true
         self.logoScale = 1
         self.logoCornerRadius = 0

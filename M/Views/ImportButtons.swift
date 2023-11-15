@@ -44,7 +44,6 @@ private struct Pill: View {
     var body: some View {
         ZStack(alignment: .leading) {
             HStack {
-                
                 Circle()
                     .fill(.clear)
                     .frame(width: 30, height: 30)
@@ -94,11 +93,13 @@ private struct Pill: View {
                     }
                 }
             }
+            .padding(8)
+            .padding(.trailing, 4)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .pillModifier(obj: obj, normalScale: 1.0)
         }
-        .padding(8)
-        .padding(.trailing, 4)
-        .background(.ultraThinMaterial)
-        .clipShape(RoundedRectangle(cornerRadius: 24))
+      
     }
 }
 

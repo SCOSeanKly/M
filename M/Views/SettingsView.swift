@@ -14,24 +14,26 @@ struct SettingsView: View {
     @StateObject var obj: Object
     
     var body: some View {
-        
-        ScrollView {
-            
-            ButtonsAndPopoverView(viewModel: viewModel, obj: obj)
-            
-            VStack (spacing: -5){
+     
+            ScrollView {
                 
-                BackgroundSettingsView(viewModel: viewModel, obj: obj)
+                ButtonsAndPopoverView(viewModel: viewModel, obj: obj)
                 
-                MockupSettingsView(viewModel: viewModel, obj: obj)
-                
-                LogoSettingsView(viewModel: viewModel, obj: obj)
-                
-                ShowCreative()
-                
+                VStack (spacing: -5){
+                    
+                    BackgroundSettingsView(viewModel: viewModel, obj: obj)
+                    
+                    MockupSettingsView(viewModel: viewModel, obj: obj)
+                    
+                    LogoSettingsView(viewModel: viewModel, obj: obj)
+                    
+                    ShowCreative()
+                    
+                }
+                .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
             }
-            .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
-        }
+            .padding(.top, 30)
+
     }
 }
 
@@ -120,13 +122,11 @@ struct ButtonsAndPopoverView: View {
         }
         .sensoryFeedback(.selection, trigger: isTapped)
         .tint(.primary)
-        .padding(.top)
-        .frame(height: 60)
     }
     
     func resetAppearance(_ obj: Object) {
         
-        // obj.appearance.pixellate = 1
+         obj.appearance.pixellate = 1
         // obj.appearance.showAverageColor = false
         
         // Reset Background parameters
@@ -145,6 +145,7 @@ struct ButtonsAndPopoverView: View {
         obj.appearance.showGroundReflection = false
         obj.appearance.scale = 1
         obj.appearance.colorMultiply = .white
+        obj.appearance.screenReflectionOpacity = 0.5
         obj.appearance.offsetX = 0
         obj.appearance.offsetY = 0
         obj.appearance.rotate = 0
@@ -293,8 +294,6 @@ struct BackgroundSettingsView: View {
                             if !obj.appearance.easySettingsMode {
                                 
                                 // Pixellate
-                                //MARK: Disabled for now until as i suspect the effect is reducing background image quality
-                                /*
                                  HStack {
                                  Image(systemName: "square.grid.3x3")
                                  .popOverInfo(isPresented: $showPopover_Pixellate) {
@@ -313,7 +312,7 @@ struct BackgroundSettingsView: View {
                                  .frame(width: 40)
                                  }
                                  .padding()
-                                 */
+                                 
                             }
                         }
                         .disabled(viewModel.importedBackground == nil)
@@ -584,9 +583,16 @@ struct MockupSettingsView: View {
                     Text("Colour Multiply")
                         .font(.system(size: obj.appearance.settingsSliderFontSize))
                     
-                    ColorPicker(selection: $obj.appearance.colorMultiply, label: {
-                        
-                    })
+                    ColorPickerBar(
+                        value: $obj.appearance.colorMultiply,
+                        colors: .colorPickerBarColors(withClearColor: true),
+                        config: .init(
+                            addOpacityToPicker: true,
+                            addResetButton: false,
+                            resetButtonValue: nil
+                        )
+                    )
+                    .padding(.leading)
                 }
                 .padding(.horizontal)
                 .padding(.vertical, 5)

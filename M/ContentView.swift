@@ -82,6 +82,7 @@ struct ContentView: View {
             
             //MARK: Pill Buttons
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
+              
             
         }
         //MARK: Add system to mode toggle
@@ -156,6 +157,15 @@ extension View {
             .scaleEffect(obj.appearance.showSettingsSheet || obj.appearance.isZoomActive ? 0 : normalScale)
             .opacity(obj.appearance.showSettingsSheet || obj.appearance.isZoomActive ? 0 : 1)
             .animation(.bouncy, value: obj.appearance.showSettingsSheet || obj.appearance.isZoomActive)
+    }
+}
+
+extension View {
+    func pillModifier(obj: Object, normalScale: CGFloat) -> some View {
+        self
+            .opacity(obj.appearance.showSettingsSheet ? 0.3 : 1)
+            .animation(.bouncy, value: obj.appearance.showSettingsSheet)
+            .disabled(obj.appearance.showSettingsSheet)
     }
 }
 
