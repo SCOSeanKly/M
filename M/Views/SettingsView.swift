@@ -745,8 +745,6 @@ struct MockupSettingsView: View {
                     ScalePercentageText(scale: obj.appearance.shadowOffsetY, maxScale: 300 / 0.5, fontSize: obj.appearance.settingsSliderFontSize)
                 }
                 .padding()
-                 
-                
             }
         }
         
@@ -759,6 +757,7 @@ struct MockupSettingsView: View {
         obj.appearance.screenshotFitFill = false
         obj.appearance.selectedNotch = "None"
         obj.appearance.selectedScreenReflection = "None"
+        obj.appearance.screenReflectionOpacity = 0.5
         obj.appearance.showGroundReflection = false
         obj.appearance.scale = 1
         obj.appearance.colorMultiply = .white

@@ -17,6 +17,7 @@ struct Item: Identifiable {
     var title: String
     var subTitle: String
     
+    // 1st Device
     var degrees: CGFloat
     var degrees2: CGFloat
     var x: CGFloat
@@ -32,14 +33,33 @@ struct Item: Identifiable {
     var scale: CGFloat
     var offX: CGFloat
     var offY: CGFloat
-    var offX2: CGFloat
-    var offY2: CGFloat
     var rotationEffect: CGFloat
     var width: CGFloat
     var height: CGFloat
     var cornerRadius: CGFloat
     var notch: String
     var reflectionOffset: CGFloat
+    
+    // 2nd Device
+    var degrees_b: CGFloat
+    var degrees2_b: CGFloat
+    var x_b: CGFloat
+    var y_b: CGFloat
+    var z_b: CGFloat
+    var anchor_b: UnitPoint
+    var perspective_b: CGFloat
+    var perspective2_b: CGFloat
+    var x2_b: CGFloat
+    var y2_b: CGFloat
+    var z2_b: CGFloat
+    var offX_b: CGFloat
+    var offY_b: CGFloat
+    var anchor2_b: UnitPoint
+    var scale_b: CGFloat
+    var rotationEffect_b: CGFloat
+    var width_b: CGFloat
+    var height_b: CGFloat
+    var cornerRadius_b: CGFloat
 
     // Convenience property to convert imageName to Image
     var image: Image {

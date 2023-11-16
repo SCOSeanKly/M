@@ -56,6 +56,7 @@ struct CustomSlider<T: BinaryFloatingPoint>: View {
 
                         }
                         .frame(height: height * 2, alignment: .center)
+                        .scaleEffect(1.4)
                         .position(x: bounds.size.width * CGFloat(localRealProgress), y: bounds.size.height / 2)
                         .gesture(DragGesture(minimumDistance: 0)
                             .updating($isActive) { value, state, transaction in

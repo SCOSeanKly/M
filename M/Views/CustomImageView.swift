@@ -201,8 +201,12 @@ extension View {
 extension View {
     func applyImageTransforms2(_ item: Item) -> some View {
         self
-            .cornerRadius(item.cornerRadius)
-            .offset(x: item.offX2)
+            .cornerRadius(item.cornerRadius_b)
+            .rotation3DEffect(.degrees(item.degrees_b), axis: (x: item.x_b, y: item.y_b, z: item.z_b), anchor: item.anchor_b, anchorZ: 0, perspective: item.perspective_b)
+            .rotation3DEffect(.degrees(item.degrees2_b), axis: (x: item.x2_b, y: item.y2_b, z: item.z2_b), anchor: item.anchor2_b, anchorZ: 0, perspective: item.perspective2_b)
+            .offset(x: item.offX_b, y: item.offY_b)
+            .scaleEffect(item.scale_b)
+            .rotationEffect(.degrees(item.rotationEffect_b))
     }
 }
 
