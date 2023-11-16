@@ -191,7 +191,7 @@ class ContentViewModel: ObservableObject {
               height: 430.0 * 2,
               cornerRadius: 42,
               notch: "notch_set7_",
-              reflectionOffset: -220,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: -43,
@@ -243,7 +243,7 @@ class ContentViewModel: ObservableObject {
               height: 373.4 * 2,
               cornerRadius: 40,
               notch: "notch_set3_",
-              reflectionOffset: -500,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,
@@ -294,7 +294,7 @@ class ContentViewModel: ObservableObject {
               height: 390.2 * 2,
               cornerRadius: 50,
               notch: "notch_set4_",
-              reflectionOffset: -500,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,
@@ -345,7 +345,7 @@ class ContentViewModel: ObservableObject {
               height: 322.95 * 2,
               cornerRadius: 25,
               notch: "notch_set5_",
-              reflectionOffset: -500,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,
@@ -498,7 +498,7 @@ class ContentViewModel: ObservableObject {
               height: 215.1 * 2,
               cornerRadius: 80,
               notch: "",
-              reflectionOffset: 500,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,
@@ -549,7 +549,7 @@ class ContentViewModel: ObservableObject {
               height: 215.1 * 2,
               cornerRadius: 80,
               notch: "",
-              reflectionOffset: 500,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,
