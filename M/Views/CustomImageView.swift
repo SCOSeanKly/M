@@ -53,6 +53,7 @@ struct CustomImageView: View {
                         .offset(y: obj.appearance.backgroundOffsetY)
                         .hueRotation(Angle(degrees: obj.appearance.hue))
                         .saturation(obj.appearance.saturation)
+                    /*
                         .distortionEffect(
                             .init(
                                 function: .init(library: .default, name: "pixellate"),
@@ -60,6 +61,7 @@ struct CustomImageView: View {
                             ),
                             maxSampleOffset: .zero
                         )
+                     */
                      
                     
                     //MARK: Average colour - causes app to slow down as if the colour is being constantly checked in the background
@@ -145,16 +147,16 @@ struct CustomImageView: View {
                 
                 //Screen reflection image
                 if obj.appearance.selectedScreenReflection != "None" {
-                    
-                    Image(item.screenReflectionName + obj.appearance.selectedScreenReflection)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .opacity(obj.appearance.screenReflectionOpacity)
-                    
-                    Image(item.screenReflectionName + obj.appearance.selectedScreenReflection)
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .opacity(obj.appearance.screenReflectionOpacity)
+                    ZStack {
+                        Image(item.screenReflectionName + obj.appearance.selectedScreenReflection)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                         
+                        Image(item.screenReflectionName + obj.appearance.selectedScreenReflection)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    }
+                    .opacity(obj.appearance.screenReflectionOpacity)
                 }
             }   //Ground reflection of mockup layers
             .if(obj.appearance.showGroundReflection) { view in

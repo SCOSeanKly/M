@@ -292,7 +292,7 @@ struct BackgroundSettingsView: View {
                     if !obj.appearance.easySettingsMode {
                         Group {
                             if !obj.appearance.easySettingsMode {
-                                
+                                /*
                                 // Pixellate
                                  HStack {
                                  Image(systemName: "square.grid.3x3")
@@ -312,6 +312,7 @@ struct BackgroundSettingsView: View {
                                  .frame(width: 40)
                                  }
                                  .padding()
+                                */
                                  
                             }
                         }
@@ -520,7 +521,6 @@ struct MockupSettingsView: View {
                 }
                 
             }
-          //  .padding(.bottom, 5)
             
             HStack {
                 Image(systemName: "circle.bottomrighthalf.checkered")

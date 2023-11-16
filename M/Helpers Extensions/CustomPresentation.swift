@@ -33,14 +33,13 @@ extension View {
           
             
         ])
-        .presentationDetents(
+        .customPresentationDetents(
             undimmed: [
                 .fraction(detent.fractionValue),
                 .fraction(detent2.fractionValue)
             ],
             largestUndimmed: .fraction(detent2.fractionValue)
         )
-      //  .interactiveDismissDisabled()
         .presentationBackground {
             TransparentBlurView(removeAllFilters: true)
                 .blur(radius: blurRadius, opaque: true)
@@ -62,8 +61,7 @@ extension View {
             .fraction(detent.fractionValue),
             .fraction(detent2.fractionValue)
         ])
-      //  .interactiveDismissDisabled()
-        .presentationDetents(
+        .customPresentationDetents(
             undimmed: [
                 .fraction(detent.fractionValue),
                 .fraction(detent2.fractionValue)
@@ -83,3 +81,21 @@ extension View {
         self.customPresentationWithPrimaryBackground(detent: detent, detent2: detent, backgroundColorOpacity: backgroundColorOpacity)
     }
 }
+
+public extension View {
+    
+    func customPresentationDetents(
+        undimmed detents: [PresentationDetentReference],
+        largestUndimmed: PresentationDetentReference,
+        selection: Binding<PresentationDetent>? = nil
+    ) -> some View {
+        self.modifier(
+            PresentationDetentsViewModifier(
+                presentationDetents: detents,
+                largestUndimmed: largestUndimmed,
+                selection: selection
+            )
+        )
+    }
+}
+

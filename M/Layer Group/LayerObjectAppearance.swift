@@ -5,6 +5,7 @@
 //  Created by Sean Kelly on 03/11/2023.
 //
 
+
 import SwiftUI
 
 struct LayerObjectAppearance {
@@ -32,16 +33,6 @@ struct LayerObjectAppearance {
         case system
     }
     
-    /*
-    var stretchContent: Bool// = false
-    var importedBackground: UIImage?// = nil
-    var importedImage1: UIImage?// = nil
-    var showImagePickerSheet1: Bool// = false
-    var showBgPickerSheet: Bool// = false
-    var importedLogo: UIImage?// = nil
-    var showLogoPickerSheet: Bool// = false
-     */
-    
     // Background Variables
     var backgroundOffsetY: CGFloat
     var backgroundColour: Color
@@ -59,6 +50,7 @@ struct LayerObjectAppearance {
     var selectedScreenReflection: String
     var screenReflectionOptions: [String]
     var screenReflectionOpacity: CGFloat
+    var screenReflectionFlipHorizontal: Bool
     var colorMultiply: Color
     var offsetX: CGFloat
     var offsetY: CGFloat
@@ -99,17 +91,7 @@ struct LayerObjectAppearance {
         self.showAppSettings = false
         self.enableImportTapGestures = false
         self.selectedAppearance = .system
-        
-        /*
-        self.stretchContent = false
-        self.importedBackground = nil
-        self.importedImage1 = nil
-        self.showImagePickerSheet1  = false
-        self.showBgPickerSheet  = false
-        self.importedLogo = nil
-        self.showLogoPickerSheet = false
-         */
-        
+     
         self.backgroundColour = .clear
         self.backgroundOffsetY = 0
         self.pixellate = 1
@@ -126,6 +108,7 @@ struct LayerObjectAppearance {
         self.selectedScreenReflection = "None"
         self.screenReflectionOptions = ["None", "1", "2", "3", "4", "5"]
         self.screenReflectionOpacity = 0.5
+        self.screenReflectionFlipHorizontal = false
         self.colorMultiply = .white
         self.offsetX = 0
         self.offsetY = 0
@@ -141,7 +124,7 @@ struct LayerObjectAppearance {
         self.reflectionOffset = -247
         self.screenshotFitFill = false
         
-        self.showLogo = true
+        self.showLogo = false
         self.logoScale = 1
         self.logoCornerRadius = 0
         self.logoOffsetX = -360
@@ -165,15 +148,6 @@ struct LayerObjectAppearance {
         showAppSettings: Bool,
         enableImportTapGestures: Bool,
         selectedAppearance: AppearanceMode,
-        /*
-        stretchContent: Bool,
-        importedBackground: UIImage?,
-        importedImage1: UIImage?,
-        showImagePickerSheet1: Bool,
-        showBgPickerSheet: Bool,
-        importedLogo: UIImage?,
-        showLogoPickerSheet: Bool,
-         */
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -190,6 +164,7 @@ struct LayerObjectAppearance {
         selectedScreenReflection: String,
         screenReflectionOptions: [String],
         screenReflectionOpacity: CGFloat,
+        screenReflectionFlipHorizontal:Bool,
         colorMultiply: Color,
         offsetX: CGFloat,
         offsetY: CGFloat,
@@ -229,16 +204,6 @@ struct LayerObjectAppearance {
         self.enableImportTapGestures = enableImportTapGestures
         self.selectedAppearance = selectedAppearance
         
-        /*
-        self.stretchContent = stretchContent
-        self.importedBackground = importedBackground
-        self.importedImage1 = importedImage1
-        self.showImagePickerSheet1 = showImagePickerSheet1
-        self.showBgPickerSheet = showBgPickerSheet
-        self.importedLogo = importedLogo
-        self.showLogoPickerSheet = showLogoPickerSheet
-         */
-        
         self.backgroundOffsetY = backgroundOffsetY
         self.backgroundColour = backgroundColour
         self.pixellate = pixellate
@@ -254,6 +219,7 @@ struct LayerObjectAppearance {
         self.selectedScreenReflection = selectedScreenReflection
         self.screenReflectionOptions = screenReflectionOptions
         self.screenReflectionOpacity = screenReflectionOpacity
+        self.screenReflectionFlipHorizontal = screenReflectionFlipHorizontal
         self.colorMultiply = colorMultiply
         self.offsetX = offsetX
         self.offsetY = offsetY
@@ -278,6 +244,3 @@ struct LayerObjectAppearance {
         
     }
 }
-
-
-

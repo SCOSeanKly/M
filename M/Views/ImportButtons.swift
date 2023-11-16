@@ -16,7 +16,6 @@ struct importButtons: View {
     
     var body: some View {
         VStack {
-            
             HStack {
                 Spacer()
                 Pill(
@@ -26,13 +25,11 @@ struct importButtons: View {
             .padding()
             
             Spacer()
-            
         }
     }
 }
 
 private struct Pill: View {
-    
     
     @StateObject var viewModel:  ContentViewModel
     @StateObject var obj: Object
@@ -209,8 +206,6 @@ private struct TextViewTwo: View {
                     
                     
                     AnimatedButton(action: {
-                        
-                       // isDarkMode.toggle()
                         
                         switch obj.appearance.selectedAppearance {
                           case .system:

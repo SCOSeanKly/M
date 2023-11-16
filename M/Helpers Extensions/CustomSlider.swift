@@ -74,9 +74,9 @@ struct CustomSlider<T: BinaryFloatingPoint>: View {
                 .animation(animation, value: isActive)
             }
             .frame(width: bounds.size.width, height: bounds.size.height, alignment: .center)
-            .onChange(of: value) { newValue in
-                withAnimation(.bouncy){
-                    localRealProgress = getPrgPercentage(newValue)
+            .onChange(of: value) {
+                withAnimation(.bouncy) {
+                    localRealProgress = getPrgPercentage(value)
                     onEditingChanged(isActive)
                 }
             }

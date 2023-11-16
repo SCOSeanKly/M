@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct ShareImageButton: View {
     @Binding var showSymbolEffect: Bool
@@ -21,6 +22,9 @@ struct ShareImageButton: View {
     @StateObject var obj: Object
     @AppStorage("saveToPhotos") private var saveToPhotos: Bool = true
     @Binding var saveCount: Int
+    @AppStorage("requestReview") private var requestReviewCount: Int = 0
+    
+    @Environment(\.requestReview) var requestReview
     
     
     var body: some View {
@@ -50,6 +54,8 @@ struct ShareImageButton: View {
                     }
                     
                     saveCount += 1
+                    
+                    requestReviewPrompt()
                     
                 } else {
                     
@@ -121,6 +127,7 @@ struct ShareImageButton: View {
                     .onAppear(perform: {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
                             alert.dismiss()
+                            
                         }
                     })
                     .onTapGesture {
@@ -152,4 +159,15 @@ struct ShareImageButton: View {
                 }
             }
     }
+    
+    func requestReviewPrompt() {
+        requestReviewCount += 1
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
+            if self.requestReviewCount == 10 || self.requestReviewCount == 50 || self.requestReviewCount == 100 {
+                self.requestReview()
+            }
+        }
+    }
+    
 }
