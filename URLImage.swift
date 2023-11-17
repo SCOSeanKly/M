@@ -43,17 +43,25 @@ struct URLImages: View {
                 }
             }
         }
-        .sheet(isPresented: $isSheetPresented) {
-            if let image = selectedImage {
-                SheetContentView(image: image, isSheetPresented: $isSheetPresented, saveState: $saveState)
-                    .onChange(of: saveState) { newState in
-                        // Close the sheet when the state transitions to .saved
-                        if newState == .saved {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                                isSheetPresented = false
-                            }
+        .sheet(item: $selectedImage) { image in
+            SheetContentView(image: image, saveState: $saveState)
+                .id(image) // Ensure image is used for id
+                .onDisappear {
+                    selectedImage = nil
+                }
+                .onChange(of: saveState) { newState in
+                    if newState == .saved {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                            selectedImage = nil
+                            saveState = .idle // Reset saveState
                         }
                     }
+                }
+
+        }
+        .onChange(of: selectedImage) { newImage in
+            if newImage != nil {
+                isSheetPresented = true
             }
         }
         .onAppear {
@@ -69,7 +77,6 @@ struct URLImages: View {
 
 struct SheetContentView: View {
     let image: ImageModel
-    @Binding var isSheetPresented: Bool
     @Binding var saveState: URLImages.SaveState
     
     
@@ -91,10 +98,11 @@ struct SheetContentView: View {
                 }
             }
             .padding()
-            .background(Color.blue)
+            .background(saveState == .saved ? Color.green : Color.blue)
             .foregroundColor(.white)
             .cornerRadius(10)
             .padding()
+            .animation(.bouncy, value: saveState)
         }
     }
     
@@ -219,10 +227,11 @@ struct URLImageView: View {
     }
 }
 
-struct ImageModel: Identifiable {
+struct ImageModel: Identifiable, Hashable {
     let id = UUID()
     let image: String
 }
+
 
 class DataViewModel: ObservableObject {
     @Published var images: [ImageModel] = []
@@ -236,10 +245,7 @@ class DataViewModel: ObservableObject {
     
     func loadImages() {
         
-        // let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/headerImages/"
         let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/Wallpapers/"
-        
-        // let urlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/scrollingHeaderImages.json"
         let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/JSON/wallpaperImages.json"
         
         guard let url = URL(string: urlString) else {
