@@ -203,8 +203,6 @@ private struct TextViewTwo: View {
                     .padding(.horizontal, 5)
                     .padding(.leading, 5)
                    
-                    
-                    
                     AnimatedButton(action: {
                         
                         switch obj.appearance.selectedAppearance {

@@ -23,7 +23,6 @@ struct CustomToggle: View {
     
     var body: some View {
         
-        
         HStack {
             if showTitleText {
                 Text(titleText)

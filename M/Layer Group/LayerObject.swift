@@ -16,8 +16,6 @@ class LayerObject: Identifiable, ObservableObject {
     /// The unique identifier of the object
     var id = UUID()
     
-    
-    
     /// The class which defines the objects appearance on the screen
     @Published var appearance: LayerObjectAppearance = .init()
      

@@ -162,7 +162,7 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Dual iP15 PM
+        //MARK: Dual 3D iP15 PM
         .init(imageName: "iP15PM_Twin3D",
               screenReflectionName: "Dual_iP15PM_3DLeft_screen",
               shadowName: "",
@@ -213,7 +213,6 @@ class ContentViewModel: ObservableObject {
               width_b: 172.4 * 2,
               height_b: 430.0 * 2,
               cornerRadius_b: 40),
-        
         //MARK: Mockup 3
         .init(imageName: "iP15PM_Front_shadowLeft",
               screenReflectionName: "iP15PM_Front_screen",

@@ -20,7 +20,6 @@ struct LayerObjectAppearance {
     var editModeActive: Bool
     var screenWidth: CGFloat
     var settingsSliderFontSize: CGFloat
-    var showAverageColor: Bool
     var easySettingsMode: Bool
     var showPill: Bool
     var showAppSettings: Bool
@@ -36,7 +35,6 @@ struct LayerObjectAppearance {
     // Background Variables
     var backgroundOffsetY: CGFloat
     var backgroundColour: Color
-    var pixellate: CGFloat = 1
     var blur: CGFloat
     var hue: CGFloat
     var saturation: CGFloat
@@ -50,7 +48,6 @@ struct LayerObjectAppearance {
     var selectedScreenReflection: String
     var screenReflectionOptions: [String]
     var screenReflectionOpacity: CGFloat
-    var screenReflectionFlipHorizontal: Bool
     var colorMultiply: Color
     var offsetX: CGFloat
     var offsetY: CGFloat
@@ -59,6 +56,7 @@ struct LayerObjectAppearance {
     var shadowOffsetX: CGFloat
     var shadowOffsetY: CGFloat
     var showShadow: Bool
+    var shadowColor: Color
     var shadowOpacity: CGFloat
     var scale: CGFloat
     var selectedNotch: String
@@ -85,7 +83,6 @@ struct LayerObjectAppearance {
         self.editModeActive = false
         self.screenWidth = UIScreen.main.bounds.width * 0.001525
         self.settingsSliderFontSize = 12.5
-        self.showAverageColor = false
         self.easySettingsMode = false
         self.showPill = true
         self.showAppSettings = false
@@ -94,7 +91,6 @@ struct LayerObjectAppearance {
      
         self.backgroundColour = .clear
         self.backgroundOffsetY = 0
-        self.pixellate = 1
         self.blur = 0
         self.hue = 1
         self.saturation = 1
@@ -108,7 +104,6 @@ struct LayerObjectAppearance {
         self.selectedScreenReflection = "None"
         self.screenReflectionOptions = ["None", "1", "2", "3", "4", "5"]
         self.screenReflectionOpacity = 0.5
-        self.screenReflectionFlipHorizontal = false
         self.colorMultiply = .white
         self.offsetX = 0
         self.offsetY = 0
@@ -117,6 +112,7 @@ struct LayerObjectAppearance {
         self.shadowOffsetX = 0
         self.shadowOffsetY = 0
         self.showShadow = false
+        self.shadowColor = .black
         self.shadowOpacity = 0.2
         self.scale = 1
         self.selectedNotch = "None"
@@ -173,6 +169,7 @@ struct LayerObjectAppearance {
         shadowOffsetX: CGFloat,
         shadowOffsetY: CGFloat,
         showShadow: Bool,
+        shadowColor: Color,
         shadowOpacity: CGFloat,
         scale: CGFloat,
         selectedNotch: String,
@@ -197,7 +194,6 @@ struct LayerObjectAppearance {
         self.editModeActive = editModeActive
         self.screenWidth = screenWidth
         self.settingsSliderFontSize = settingsSliderFontSize
-        self.showAverageColor = showAverageColor
         self.easySettingsMode = easySettingsMode
         self.showPill = showPill
         self.showAppSettings = showAppSettings
@@ -206,7 +202,6 @@ struct LayerObjectAppearance {
         
         self.backgroundOffsetY = backgroundOffsetY
         self.backgroundColour = backgroundColour
-        self.pixellate = pixellate
         self.blur = blur
         self.hue = hue
         self.saturation = saturation
@@ -219,7 +214,6 @@ struct LayerObjectAppearance {
         self.selectedScreenReflection = selectedScreenReflection
         self.screenReflectionOptions = screenReflectionOptions
         self.screenReflectionOpacity = screenReflectionOpacity
-        self.screenReflectionFlipHorizontal = screenReflectionFlipHorizontal
         self.colorMultiply = colorMultiply
         self.offsetX = offsetX
         self.offsetY = offsetY
@@ -228,6 +222,7 @@ struct LayerObjectAppearance {
         self.shadowOffsetX = shadowOffsetX
         self.shadowOffsetY = shadowOffsetY
         self.showShadow = showShadow
+        self.shadowColor = shadowColor
         self.shadowOpacity = shadowOpacity
         self.scale = scale
         self.selectedNotch = selectedNotch

@@ -33,7 +33,6 @@ struct SettingsView: View {
                 .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
             }
             .padding(.top, 30)
-
     }
 }
 
@@ -125,18 +124,16 @@ struct ButtonsAndPopoverView: View {
     }
     
     func resetAppearance(_ obj: Object) {
-        
-         obj.appearance.pixellate = 1
-        // obj.appearance.showAverageColor = false
-        
+       
         // Reset Background parameters
+        obj.appearance.backgroundOffsetY = 0
         obj.appearance.backgroundColour = .clear
         obj.appearance.backgroundColourOrGradient = false
         obj.appearance.blur = 0
         obj.appearance.hue = 0
         obj.appearance.saturation = 1
-        obj.appearance.backgroundOffsetY = 0
         obj.appearance.frameWidth = 510 * 2
+        obj.appearance.showBackground = true
         
         // Reset Mockup parameters
         obj.appearance.screenshotFitFill = false
@@ -154,8 +151,10 @@ struct ButtonsAndPopoverView: View {
         obj.appearance.shadowOpacity = 0.2
         obj.appearance.shadowOffsetX = 0
         obj.appearance.shadowOffsetY = 0
+        obj.appearance.shadowColor = .black
         
         // Reset Logo parameters
+        obj.appearance.showLogo = false
         obj.appearance.logoScale = 1
         obj.appearance.logoCornerRadius = 0
         obj.appearance.logoOffsetX = -360
@@ -172,12 +171,12 @@ struct BackgroundSettingsView: View {
     @State private var showPopover_ShowBackground: Bool = false
     @State private var showPopover_AverageBackground: Bool = false
     @State private var showPopover_BackgroundColour: Bool = false
-    @State private var showPopover_Pixellate: Bool = false
     @State private var showPopover_Blur: Bool = false
     @State private var showPopover_Hue: Bool = false
     @State private var showPopover_Saturation: Bool = false
     @State private var showPopover_FrameWidth: Bool = false
     @State private var showPopover_BackgroundColourOrGradient: Bool = false
+    @State private var showPopover_offset: Bool = false
     
     var body: some View {
         Group {
@@ -211,25 +210,8 @@ struct BackgroundSettingsView: View {
             }
             .padding(.bottom, 10)
             
-            //MARK: Disabled for now until the average colour checker is fixed
-            /*
-             HStack (spacing: -5) {
-             
-             Image(systemName: "rainbow")
-             .padding(.leading)
-             .popOverInfo(isPresented: $showPopover_AverageBackground) {
-             Text("Creates and overlays the average colour of the imported background")
-             }
-             
-             CustomToggle(showTitleText: true, titleText: "Average background colour", bindingValue: $obj.appearance.showAverageColor, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
-             }
-             .padding(.bottom, obj.appearance.showAverageColor ? 5 : 10)
-             .disabled(viewModel.importedBackground == nil)
-             .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
-             */
-            
+           
             if obj.appearance.showBackground {
-                if !obj.appearance.showAverageColor {
                     if !obj.appearance.easySettingsMode {
                         
                         //Background Colour Picker
@@ -290,35 +272,7 @@ struct BackgroundSettingsView: View {
                     .padding()
                     
                     if !obj.appearance.easySettingsMode {
-                        Group {
-                            if !obj.appearance.easySettingsMode {
-                                /*
-                                // Pixellate
-                                 HStack {
-                                 Image(systemName: "square.grid.3x3")
-                                 .popOverInfo(isPresented: $showPopover_Pixellate) {
-                                 Text("Create a pixellated effect on the imported background")
-                                 }
-                                 
-                                 Text("Pixellate")
-                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                 
-                                 CustomSlider(value: $obj.appearance.pixellate, inRange: 1...50, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                 }
-                                 .padding(.trailing, 10)
-                                 
-                                 Text("\(obj.appearance.pixellate, specifier: "%.0f")")
-                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                 .frame(width: 40)
-                                 }
-                                 .padding()
-                                */
-                                 
-                            }
-                        }
-                        .disabled(viewModel.importedBackground == nil)
-                        .opacity(viewModel.importedBackground == nil ? 0.5 : 1)
-                        
+                       
                         Group {
                             if !obj.appearance.easySettingsMode {
                                 // Hue
@@ -367,7 +321,7 @@ struct BackgroundSettingsView: View {
                         //Background Offset Y
                         HStack {
                             Image(systemName: "arrow.up.arrow.down")
-                                .popOverInfo(isPresented: $showPopover_Pixellate) {
+                                .popOverInfo(isPresented: $showPopover_offset) {
                                     Text("Offset the background vertically")
                                 }
                             
@@ -403,7 +357,6 @@ struct BackgroundSettingsView: View {
                         
                     }
                     .padding()
-                }
             }
             
             Divider()
@@ -421,7 +374,7 @@ struct BackgroundSettingsView: View {
         obj.appearance.frameWidth = 510 * 2
     }
 }
-
+ 
 struct MockupSettingsView: View {
     
     @StateObject var viewModel: ContentViewModel
@@ -441,6 +394,7 @@ struct MockupSettingsView: View {
     @State private var showPopover_ShadowOffsetX: Bool = false
     @State private var showPopover_ShadowOffsetY: Bool = false
     @State private var showPopover_ScreenReflectionOpacity: Bool = false
+    @State private var showPopover_ShadowColor: Bool = false
     
     var body: some View {
         Group {
@@ -539,8 +493,6 @@ struct MockupSettingsView: View {
                 
             }
             .padding()
-            
-            
             
             HStack (spacing: -5) {
                 
@@ -670,6 +622,29 @@ struct MockupSettingsView: View {
                 }
                 .padding(.vertical, 10)
                 
+                HStack {
+                    Image(systemName: "drop.halffull")
+                        .popOverInfo(isPresented: $showPopover_ShadowColor) {
+                            Text("Select the colour of the shadow effect")
+                        }
+                    
+                    Text("Shadow Colour")
+                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    
+                    ColorPickerBar(
+                        value: $obj.appearance.shadowColor,
+                        colors: .colorPickerBarColors(withClearColor: true),
+                        config: .init(
+                            addOpacityToPicker: true,
+                            addResetButton: false,
+                            resetButtonValue: nil
+                        )
+                    )
+                    .padding(.leading)
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 10)
+                
                 
                 HStack {
                     Image(systemName: "rectangle.expand.vertical")
@@ -769,6 +744,7 @@ struct MockupSettingsView: View {
         obj.appearance.shadowOpacity = 0.2
         obj.appearance.shadowOffsetX = 0
         obj.appearance.shadowOffsetY = 0
+        obj.appearance.shadowColor = .black
     }
 }
 

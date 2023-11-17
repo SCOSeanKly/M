@@ -15,16 +15,16 @@ struct ContentView: View {
     @AppStorage("saveCount") private var saveCount: Int = 0
     
     var colorScheme: ColorScheme? {
-           switch obj.appearance.selectedAppearance {
-           case .light:
-               return .light
-           case .dark:
-               return .dark
-           case .system:
-               return nil
-           }
-       }
-
+        switch obj.appearance.selectedAppearance {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        case .system:
+            return nil
+        }
+    }
+    
     
     var body: some View {
         
@@ -34,11 +34,9 @@ struct ContentView: View {
                 
                 CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
                     .customImageViewModifier(obj: obj, viewModel: viewModel)
-                    
                 
                 ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
                     .titleViewModifier(obj: obj, normalScale: 1.0)
-                
                 
             } titleContent: { $item in
                 
@@ -82,7 +80,6 @@ struct ContentView: View {
             
             //MARK: Pill Buttons
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
-              
             
         }
         //MARK: Add system to mode toggle
@@ -147,7 +144,6 @@ extension View {
             .offset(y: obj.appearance.showSettingsSheet ? -110 : 0)
             .animation(.bouncy, value: obj.appearance.showSettingsSheet)
             .padding(-60)
-        
     }
 }
 
