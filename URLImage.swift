@@ -71,6 +71,7 @@ struct SheetContentView: View {
     let image: ImageModel
     @Binding var isSheetPresented: Bool
     @Binding var saveState: URLImages.SaveState
+    
 
     var body: some View {
         VStack {
@@ -83,7 +84,8 @@ struct SheetContentView: View {
                 case .idle:
                     Text("Save Image")
                 case .saving:
-                    Text("Saving...")
+                  ProgressView()
+                        .tint(.white)
                 case .saved:
                     Text("Saved")
                 }
@@ -232,9 +234,17 @@ class DataViewModel: ObservableObject {
         }
     }
     
-    func loadImages() {
+    func loadImages() {/*
         let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/headerImages/"
-        let urlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/scrollingHeaderImages.json"
+                        */
+        let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/Wallpapers/"
+        
+        /*
+         wallpaperImages
+         */
+        
+      //  let urlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/scrollingHeaderImages.json"
+        let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/wallpaperImages/wallpaperImages.json"
         
         guard let url = URL(string: urlString) else {
             return
