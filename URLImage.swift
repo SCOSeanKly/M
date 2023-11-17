@@ -12,13 +12,13 @@ struct URLImages: View {
     @State private var selectedImage: ImageModel?
     @State private var isSheetPresented = false
     @State private var saveState: SaveState = .idle
-
+    
     enum SaveState {
         case idle
         case saving
         case saved
     }
-
+    
     var body: some View {
         ZStack {
             VStack {
@@ -72,11 +72,11 @@ struct SheetContentView: View {
     @Binding var isSheetPresented: Bool
     @Binding var saveState: URLImages.SaveState
     
-
+    
     var body: some View {
         VStack {
             LargeImageView(image: image)
-
+            
             Button {
                 saveImage()
             } label: {
@@ -84,7 +84,7 @@ struct SheetContentView: View {
                 case .idle:
                     Text("Save Image")
                 case .saving:
-                  ProgressView()
+                    ProgressView()
                         .tint(.white)
                 case .saved:
                     Text("Saved")
@@ -97,15 +97,15 @@ struct SheetContentView: View {
             .padding()
         }
     }
-
+    
     private func saveImage() {
         saveState = .saving
-
+        
         guard var urlComponents = URLComponents(string: image.image) else {
             saveState = .idle
             return
         }
-
+        
         // Assuming the image name is part of the path, e.g., "images/123.png"
         if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
             if let imageName = pathComponents.last {
@@ -119,16 +119,16 @@ struct SheetContentView: View {
                     // If the file extension is not ".png" or ".jpg", skip modification
                     modifiedImageName = imageName
                 }
-
+                
                 pathComponents[pathComponents.count - 1] = modifiedImageName
                 urlComponents.path = pathComponents.joined(separator: "/")
-
+                
                 // Set the modified URL
                 guard let modifiedURL = urlComponents.url else {
                     saveState = .idle
                     return
                 }
-
+                
                 // Use URLSession for asynchronous loading
                 URLSession.shared.dataTask(with: modifiedURL) { data, response, error in
                     if let data = data, let uiImage = UIImage(data: data) {
@@ -234,17 +234,13 @@ class DataViewModel: ObservableObject {
         }
     }
     
-    func loadImages() {/*
-        let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/headerImages/"
-                        */
+    func loadImages() {
+        
+        // let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/headerImages/"
         let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/Wallpapers/"
         
-        /*
-         wallpaperImages
-         */
-        
-      //  let urlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/scrollingHeaderImages.json"
-        let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/wallpaperImages/wallpaperImages.json"
+        // let urlString = "https://raw.githubusercontent.com/SCOSeanKly/kerrandsmith/main/scrollingHeaderImages/scrollingHeaderImages.json"
+        let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/JSON/wallpaperImages.json"
         
         guard let url = URL(string: urlString) else {
             return
