@@ -27,7 +27,8 @@ struct ContentView: View {
     
     
     var body: some View {
-        
+        URLImages()
+        /*
         ZStack {
             
             CustomPagingSlider(data: $viewModel.items) { $item in
@@ -103,6 +104,7 @@ struct ContentView: View {
                         }
                     }
                 })
+         */
     }
     
     private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
