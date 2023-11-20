@@ -17,6 +17,21 @@ struct importButtons: View {
     var body: some View {
         VStack {
             HStack {
+                Button {
+                    obj.appearance.showWallpapers.toggle()
+                } label: {
+                    Circle()
+                        .fill(.blue.opacity(0.5))
+                        .frame(width: 30, height: 30)
+                        .overlay {
+                            Image(systemName: "photo.circle")
+                                .font(.system(.body, design: .rounded).weight(.medium))
+                                .foregroundColor(.white)
+                        }
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                }
                 Spacer()
                 Pill(
                     viewModel: viewModel, obj: obj, saveCount: $saveCount
@@ -26,6 +41,7 @@ struct importButtons: View {
             
             Spacer()
         }
+ 
     }
 }
 

@@ -27,84 +27,89 @@ struct ContentView: View {
     
     
     var body: some View {
-        URLImages()
-        /*
-        ZStack {
+        if obj.appearance.showWallpapers {
             
-            CustomPagingSlider(data: $viewModel.items) { $item in
+            URLImages(obj: obj)
+                .preferredColorScheme(colorScheme)
+              
+        } else {
+            
+            ZStack {
                 
-                CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
-                    .customImageViewModifier(obj: obj, viewModel: viewModel)
-                
-                ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
-                    .titleViewModifier(obj: obj, normalScale: 1.0)
-                
-            } titleContent: { $item in
-                
-                VStack(spacing: 5) {
+                CustomPagingSlider(data: $viewModel.items) { $item in
                     
-                    Text(item.title)
-                        .font(.largeTitle.bold())
+                    CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
+                        .customImageViewModifier(obj: obj, viewModel: viewModel)
                     
-                    Text(item.subTitle)
-                        .foregroundStyle(.gray)
-                        .multilineTextAlignment(.center)
-                        .frame(height: 45)
+                    ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
+                        .titleViewModifier(obj: obj, normalScale: 1.0)
+                    
+                } titleContent: { $item in
+                    
+                    VStack(spacing: 5) {
+                        
+                        Text(item.title)
+                            .font(.largeTitle.bold())
+                        
+                        Text(item.subTitle)
+                            .foregroundStyle(.gray)
+                            .multilineTextAlignment(.center)
+                            .frame(height: 45)
+                    }
+                    .titleViewModifier(obj: obj, normalScale: 0.8)
                 }
-                .titleViewModifier(obj: obj, normalScale: 0.8)
-            }
-            .safeAreaPadding([.horizontal, .top], 35)
-            .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
-                fullScreenImagePickerCover(for: $viewModel.importedImage1) { images in
-                    viewModel.importedImage1 = images.first
+                .safeAreaPadding([.horizontal, .top], 35)
+                .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
+                    fullScreenImagePickerCover(for: $viewModel.importedImage1) { images in
+                        viewModel.importedImage1 = images.first
+                    }
                 }
-            }
-            .fullScreenCover(isPresented: $viewModel.showImagePickerSheet2) {
-                fullScreenImagePickerCover(for: $viewModel.importedImage2) { images in
-                    viewModel.importedImage2 = images.first
+                .fullScreenCover(isPresented: $viewModel.showImagePickerSheet2) {
+                    fullScreenImagePickerCover(for: $viewModel.importedImage2) { images in
+                        viewModel.importedImage2 = images.first
+                    }
                 }
-            }
-            .fullScreenCover(isPresented: $viewModel.showBgPickerSheet) {
-                fullScreenImagePickerCover(for: $viewModel.importedBackground) { images in
-                    viewModel.importedBackground = images.first
+                .fullScreenCover(isPresented: $viewModel.showBgPickerSheet) {
+                    fullScreenImagePickerCover(for: $viewModel.importedBackground) { images in
+                        viewModel.importedBackground = images.first
+                    }
                 }
-            }
-            .fullScreenCover(isPresented: $viewModel.showLogoPickerSheet) {
-                fullScreenImagePickerCover(for: $viewModel.importedLogo) { images in
-                    viewModel.importedLogo = images.first
+                .fullScreenCover(isPresented: $viewModel.showLogoPickerSheet) {
+                    fullScreenImagePickerCover(for: $viewModel.importedLogo) { images in
+                        viewModel.importedLogo = images.first
+                    }
                 }
-            }
-            .sheet(isPresented: $obj.appearance.showSettingsSheet, content: {
-                SettingsView(viewModel: viewModel, obj: obj)
+                .sheet(isPresented: $obj.appearance.showSettingsSheet, content: {
+                    SettingsView(viewModel: viewModel, obj: obj)
+                    
+                })
                 
-            })
-            
-            //MARK: Pill Buttons
-            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
-            
-        }
-        //MARK: Add system to mode toggle
-        .preferredColorScheme(colorScheme)
-        .onTapGesture {
-            withAnimation(.bouncy){
-                if !obj.appearance.showPill {
-                    obj.appearance.showPill = true
+                //MARK: Pill Buttons
+                importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
+                
+            }
+            //MARK: Add system to mode toggle
+            .preferredColorScheme(colorScheme)
+            .onTapGesture {
+                withAnimation(.bouncy){
+                    if !obj.appearance.showPill {
+                        obj.appearance.showPill = true
+                    }
                 }
             }
-        }
-        .gesture(
-            DragGesture(minimumDistance: 30, coordinateSpace: .global)
-                .onEnded { value in
-                    if value.translation.height < 0 {
-                        obj.appearance.showSettingsSheet.toggle()
-                        withAnimation(.bouncy){
-                            if !obj.appearance.showPill {
-                                obj.appearance.showPill = true
+            .gesture(
+                DragGesture(minimumDistance: 30, coordinateSpace: .global)
+                    .onEnded { value in
+                        if value.translation.height < 0 {
+                            obj.appearance.showSettingsSheet.toggle()
+                            withAnimation(.bouncy){
+                                if !obj.appearance.showPill {
+                                    obj.appearance.showPill = true
+                                }
                             }
                         }
-                    }
-                })
-         */
+                    })
+        }
     }
     
     private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
@@ -166,6 +171,3 @@ extension View {
             .disabled(obj.appearance.showSettingsSheet)
     }
 }
-
-
-

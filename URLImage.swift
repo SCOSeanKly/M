@@ -12,6 +12,7 @@ struct URLImages: View {
     @State private var selectedImage: ImageModel?
     @State private var isSheetPresented = false
     @State private var saveState: SaveState = .idle
+    @StateObject var obj: Object
     
     enum SaveState {
         case idle
@@ -19,12 +20,92 @@ struct URLImages: View {
         case saved
     }
     
+    var totalFilesCount: Int {
+        return viewModel.images.count
+    }
+    @State private var showCount: Bool = false
+    
     var body: some View {
         ZStack {
             VStack {
+                HStack {
+                    Button {
+                     
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+                            withAnimation(.bouncy) {
+                                showCount = false
+                            }
+                        }
+                        
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            obj.appearance.showWallpapers.toggle()
+                        }
+                        
+                    } label: {
+                        HStack{
+                            Circle()
+                                .fill(.red)
+                                .frame(width: 30, height: 30)
+                                .overlay {
+                                    Image(systemName: "xmark.circle")
+                                        .font(.system(.body, design: .rounded).weight(.medium))
+                                        .foregroundColor(.white)
+                                }
+                            
+                            if showCount {
+                                Text("\(totalFilesCount)")
+                                    .font(.system(.body, design: .rounded).weight(.medium))
+                                    .padding(.horizontal, 5)
+                                    .tint(.primary)
+                            }
+                        }
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                    }
+                    
+                    Spacer()
+                    
+                }
+                .disabled(selectedImage != nil)
+                .opacity(selectedImage != nil ? 0.5 : 1.0)
+                .padding()
+                .onAppear{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
+                        withAnimation(.bouncy) {
+                            showCount = true
+                        }
+                    }
+                }
+                .onDisappear{
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        withAnimation(.bouncy) {
+                            showCount = false
+                        }
+                    }
+                }
+                
+                HStack {
+                        Text("Wallpapers")
+                            .font(.largeTitle.bold())
+                          
+                    Spacer()
+                    
+                }
+                .padding(.horizontal)
+              
+                HStack {
+                    Text("A collection of wallpapers")
+                        .foregroundStyle(.gray)
+                      
+                    Spacer()
+                    
+                }
+                .padding(.horizontal)
+                
                 if !viewModel.images.isEmpty {
                     ScrollView(.vertical, showsIndicators: false) {
-                        LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 10) {
+                        LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 30) {
                             ForEach(viewModel.images.indices, id: \.self) { index in
                                 Button {
                                     selectedImage = viewModel.images[index]
@@ -41,23 +122,25 @@ struct URLImages: View {
                 } else {
                     Text("Loading images...")
                 }
+                
+                Spacer()
             }
         }
+        .edgesIgnoringSafeArea(.bottom)
         .sheet(item: $selectedImage) { image in
-            SheetContentView(image: image, saveState: $saveState)
+            SheetContentView(image: image, saveState: $saveState, obj: obj)
                 .id(image) // Ensure image is used for id
                 .onDisappear {
                     selectedImage = nil
                 }
                 .onChange(of: saveState) { newState in
                     if newState == .saved {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                             selectedImage = nil
                             saveState = .idle // Reset saveState
                         }
                     }
                 }
-
         }
         .onChange(of: selectedImage) { newImage in
             if newImage != nil {
@@ -78,32 +161,140 @@ struct URLImages: View {
 struct SheetContentView: View {
     let image: ImageModel
     @Binding var saveState: URLImages.SaveState
-    
-    
+    @StateObject var obj: Object
+    @State private var imageSize: String = "Fetching file size..."
+    @State private var imageFileFormat: String = ""
+
     var body: some View {
         VStack {
+            
             LargeImageView(image: image)
             
+            HStack(alignment: .center){
+                Text(imageSize)
+                    .foregroundColor(.gray)
+                    .font(.caption)
+                    .padding(.top, 4)
+                
+                if imageSize != "Fetching file size..." {
+                    Text(imageFileFormat.dropFirst(1))
+                        .foregroundColor(.gray)
+                        .font(.caption)
+                        .padding(.vertical, 4)
+                        .padding(.horizontal, 8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 50))
+                        .offset(y: 2)
+                }
+            }
+                .offset(y: 50)
+
             Button {
                 saveImage()
             } label: {
                 switch saveState {
                 case .idle:
-                    Text("Save Image")
+                    Circle()
+                        .fill(.ultraThinMaterial)
+                        .frame(width: 30, height: 30)
+                        .overlay {
+                            Image(systemName: "square.and.arrow.up.circle.fill")
+                                .font(.system(.body, design: .rounded).weight(.medium))
+                                .foregroundColor(.primary)
+                                .rotationEffect(Angle(degrees: 180))
+                                .scaleEffect(1.5)
+                        }
                 case .saving:
-                    ProgressView()
-                        .tint(.white)
+                    
+                    HStack {
+                        Circle()
+                            .fill(.ultraThinMaterial)
+                            .frame(width: 30, height: 30)
+                            .overlay {
+                               ProgressView()
+                                    .font(.system(.body, design: .rounded).weight(.medium))
+                                    .foregroundColor(.primary)
+                            }
+                        Text("Downloading")
+                            .padding(.horizontal)
+                            .foregroundColor(.primary)
+                    }
+                    .padding(.horizontal, 5)
+                    
+                    
                 case .saved:
-                    Text("Saved")
+                    HStack {
+                        Circle()
+                            .fill(.green)
+                            .frame(width: 30, height: 30)
+                            .overlay {
+                                Image(systemName: "checkmark.circle")
+                                    .font(.system(.body, design: .rounded).weight(.medium))
+                                    .foregroundColor(.white)
+                            }
+                        Text("Saved")
+                            .padding(.horizontal)
+                            .foregroundColor(.primary)
+                    }
+                    .padding(.horizontal, 5)
                 }
             }
-            .padding()
-            .background(saveState == .saved ? Color.green : Color.blue)
-            .foregroundColor(.white)
-            .cornerRadius(10)
-            .padding()
+            .padding(8)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
             .animation(.bouncy, value: saveState)
+            .offset(y: -40)
         }
+        .onAppear {
+            fetchImageSize()
+        }
+    }
+
+    private func fetchImageSize() {
+        guard var urlComponents = URLComponents(string: image.image) else {
+            return
+        }
+        
+        if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
+            if let imageName = pathComponents.last {
+                _ = (imageName as NSString).pathExtension
+
+                var modifiedImageName: String
+                if imageName.lowercased().hasSuffix(".png") {
+                    modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.PNG", options: .caseInsensitive)
+                } else if imageName.lowercased().hasSuffix(".jpg") {
+                    modifiedImageName = imageName.replacingOccurrences(of: ".jpg", with: "_fullRes.PNG", options: .caseInsensitive)
+                } else {
+                    modifiedImageName = imageName
+                }
+
+                let modifiedExtension = (modifiedImageName as NSString).pathExtension
+                pathComponents[pathComponents.count - 1] = modifiedImageName
+                urlComponents.path = pathComponents.joined(separator: "/")
+
+                guard let modifiedURL = urlComponents.url else {
+                    return
+                }
+
+                var request = URLRequest(url: modifiedURL)
+                request.httpMethod = "HEAD"
+
+                URLSession.shared.dataTask(with: request) { _, response, _ in
+                    if let httpResponse = response as? HTTPURLResponse {
+                        if let contentLength = httpResponse.allHeaderFields["Content-Length"] as? String,
+                            let size = Int(contentLength) {
+                            let formattedSize = ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
+                            let fileFormat = modifiedExtension.isEmpty ? "" : ".\(modifiedExtension)"
+                            DispatchQueue.main.async {
+                                imageSize = "Size: \(formattedSize)"
+                                imageFileFormat = " \(fileFormat)"
+                            }
+                        }
+                    }
+                }.resume()
+            }
+        }
+
     }
     
     private func saveImage() {
@@ -114,7 +305,7 @@ struct SheetContentView: View {
             return
         }
         
-        // Assuming the image name is part of the path, e.g., "images/123.png"
+     
         if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
             if let imageName = pathComponents.last {
                 // Check the file extension and append "_fullRes" accordingly
@@ -122,7 +313,7 @@ struct SheetContentView: View {
                 if imageName.lowercased().hasSuffix(".png") {
                     modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.png", options: .caseInsensitive)
                 } else if imageName.lowercased().hasSuffix(".jpg") {
-                    modifiedImageName = imageName.replacingOccurrences(of: ".jpg", with: "_fullRes.jpg", options: .caseInsensitive)
+                    modifiedImageName = imageName.replacingOccurrences(of: ".jpg", with: "_fullRes.PNG", options: .caseInsensitive)
                 } else {
                     // If the file extension is not ".png" or ".jpg", skip modification
                     modifiedImageName = imageName
@@ -157,7 +348,6 @@ struct SheetContentView: View {
     }
 }
 
-
 struct LargeImageView: View {
     let image: ImageModel
     
@@ -167,18 +357,30 @@ struct LargeImageView: View {
             AsyncImage(url: URL(string: image.image)) { phase in
                 switch phase {
                 case .empty:
-                    ProgressView()
+                    ZStack {
+                        Color.clear
+                            .frame(width: 250, height: 550)
+                        
+                        ProgressView()
+                    }
                 case .success(let loadedImage):
                     loadedImage
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .frame(width: 250, height: 550)
-                        .cornerRadius(15)
+                        .cornerRadius(30)
                         .clipped()
+                      
                 case .failure:
-                    Image(systemName: "xmark.circle")
-                        .foregroundColor(.red)
-                        .font(.system(size: 60))
+                    ZStack {
+                        
+                        Color.clear
+                            .frame(width: 250, height: 550)
+                        
+                        Image(systemName: "xmark.circle")
+                            .foregroundColor(.red)
+                            .font(.system(size: 60))
+                    }
                 @unknown default:
                     EmptyView()
                 }
@@ -194,10 +396,10 @@ struct LargeImageView: View {
 
 struct URLImageView: View {
     let image: ImageModel
+    @State private var imageSize: String = "Fetching size..."
     
     var body: some View {
         VStack {
-            
             AsyncImage(url: URL(string: image.image)) { phase in
                 switch phase {
                 case .empty:
@@ -223,7 +425,35 @@ struct URLImageView: View {
                 }
             }
             .customFrame()
+            
+            Text(imageSize)
+                .foregroundColor(.gray)
+                .font(.caption)
+                .padding(.top, 4)
+                .onAppear {
+                    fetchImageSize()
+                }
         }
+    }
+    
+    private func fetchImageSize() {
+        guard let imageUrl = URL(string: image.image) else {
+            return
+        }
+        
+        let request = URLRequest(url: imageUrl, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
+        
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let response = response as? HTTPURLResponse {
+                let contentLength = response.allHeaderFields["Content-Length"] as? String
+                if let contentLength = contentLength, let size = Int(contentLength) {
+                    let formattedSize = ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
+                    DispatchQueue.main.async {
+                        imageSize = "Size: \(formattedSize)"
+                    }
+                }
+            }
+        }.resume()
     }
 }
 
@@ -231,7 +461,6 @@ struct ImageModel: Identifiable, Hashable {
     let id = UUID()
     let image: String
 }
-
 
 class DataViewModel: ObservableObject {
     @Published var images: [ImageModel] = []
@@ -289,12 +518,3 @@ extension View {
             .clipped()
     }
 }
-
-
-struct URLImages_Previews: PreviewProvider {
-    static var previews: some View {
-        URLImages()
-    }
-}
-
-

@@ -25,6 +25,8 @@ struct LayerObjectAppearance {
     var showAppSettings: Bool
     var enableImportTapGestures: Bool
     var selectedAppearance: AppearanceMode
+    var showWallpapers: Bool
+    var imageFormatPNG: Bool
 
     enum AppearanceMode {
         case light
@@ -88,6 +90,8 @@ struct LayerObjectAppearance {
         self.showAppSettings = false
         self.enableImportTapGestures = false
         self.selectedAppearance = .system
+        self.showWallpapers = false
+        self.imageFormatPNG = false
      
         self.backgroundColour = .clear
         self.backgroundOffsetY = 0
@@ -144,6 +148,8 @@ struct LayerObjectAppearance {
         showAppSettings: Bool,
         enableImportTapGestures: Bool,
         selectedAppearance: AppearanceMode,
+        showWallpapers: Bool,
+        imageFormatPNG: Bool,
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -199,6 +205,8 @@ struct LayerObjectAppearance {
         self.showAppSettings = showAppSettings
         self.enableImportTapGestures = enableImportTapGestures
         self.selectedAppearance = selectedAppearance
+        self.showWallpapers = showWallpapers
+        self.imageFormatPNG = imageFormatPNG
         
         self.backgroundOffsetY = backgroundOffsetY
         self.backgroundColour = backgroundColour
