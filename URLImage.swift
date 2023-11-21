@@ -25,12 +25,19 @@ struct URLImages: View {
     }
     @State private var showCount: Bool = false
     
+    @State private var scrollID: Int?
+    @State private var scrollPosition: CGFloat = 0.0
+    @State private var isTapped: Bool = false
+    
+    
     var body: some View {
         ZStack {
             VStack {
                 HStack {
                     Button {
-                     
+                        
+                        isTapped.toggle()
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
                             withAnimation(.bouncy) {
                                 showCount = false
@@ -47,9 +54,9 @@ struct URLImages: View {
                                 .fill(.red)
                                 .frame(width: 30, height: 30)
                                 .overlay {
-                                    Image(systemName: "xmark.circle")
-                                        .font(.system(.body, design: .rounded).weight(.medium))
-                                        .foregroundColor(.white)
+                                        Image(systemName: "xmark.circle")
+                                            .font(.system(.body, design: .rounded).weight(.medium))
+                                            .foregroundColor(.white)
                                 }
                             
                             if showCount {
@@ -65,8 +72,9 @@ struct URLImages: View {
                     }
                     
                     Spacer()
-                    
+                     
                 }
+                .sensoryFeedback(.selection, trigger: isTapped)
                 .disabled(selectedImage != nil)
                 .opacity(selectedImage != nil ? 0.5 : 1.0)
                 .padding()
@@ -86,31 +94,33 @@ struct URLImages: View {
                 }
                 
                 HStack {
-                        Text("Wallpapers")
-                            .font(.largeTitle.bold())
-                          
+                    Text("Wallpapers")
+                        .font(.largeTitle.bold())
+                    
                     Spacer()
                     
                 }
                 .padding(.horizontal)
-              
+                
                 HStack {
                     Text("A collection of wallpapers")
                         .foregroundStyle(.gray)
-                      
+                    
                     Spacer()
                     
                 }
                 .padding(.horizontal)
                 
                 if !viewModel.images.isEmpty {
-                    ScrollView(.vertical, showsIndicators: false) {
+                    ScrollView(.vertical, showsIndicators: true) {
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 30) {
-                            ForEach(viewModel.images.indices, id: \.self) { index in
+                            ForEach(viewModel.images.indices.reversed(), id: \.self) { index in
                                 Button {
+                                    isTapped.toggle()
                                     selectedImage = viewModel.images[index]
                                     isSheetPresented = true
                                     saveState = .idle
+                                    
                                 } label: {
                                     URLImageView(image: viewModel.images[index])
                                         .customFrame()
@@ -118,6 +128,11 @@ struct URLImages: View {
                             }
                         }
                         .padding(10)
+                        .scrollTargetLayout()
+                    }
+                    .scrollPosition(id: $scrollID)
+                    .onChange(of: scrollID) { oldValue, newValue in
+                        print(newValue ?? "")
                     }
                 } else {
                     Text("Loading images...")
@@ -164,12 +179,13 @@ struct SheetContentView: View {
     @StateObject var obj: Object
     @State private var imageSize: String = "Fetching file size..."
     @State private var imageFileFormat: String = ""
-
+    @State private var isTapped: Bool = false
+    
     var body: some View {
         VStack {
             
             LargeImageView(image: image)
-            
+              
             HStack(alignment: .center){
                 Text(imageSize)
                     .foregroundColor(.gray)
@@ -187,10 +203,12 @@ struct SheetContentView: View {
                         .offset(y: 2)
                 }
             }
-                .offset(y: 50)
-
+            .offset(y: 50)
+            
             Button {
+                isTapped.toggle()
                 saveImage()
+                
             } label: {
                 switch saveState {
                 case .idle:
@@ -211,7 +229,7 @@ struct SheetContentView: View {
                             .fill(.ultraThinMaterial)
                             .frame(width: 30, height: 30)
                             .overlay {
-                               ProgressView()
+                                ProgressView()
                                     .font(.system(.body, design: .rounded).weight(.medium))
                                     .foregroundColor(.primary)
                             }
@@ -220,7 +238,6 @@ struct SheetContentView: View {
                             .foregroundColor(.primary)
                     }
                     .padding(.horizontal, 5)
-                    
                     
                 case .saved:
                     HStack {
@@ -243,13 +260,14 @@ struct SheetContentView: View {
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .animation(.bouncy, value: saveState)
-            .offset(y: -40)
+            .offset(y: -50)
         }
+        .sensoryFeedback(.selection, trigger: isTapped)
         .onAppear {
             fetchImageSize()
         }
     }
-
+    
     private func fetchImageSize() {
         guard var urlComponents = URLComponents(string: image.image) else {
             return
@@ -258,7 +276,7 @@ struct SheetContentView: View {
         if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
             if let imageName = pathComponents.last {
                 _ = (imageName as NSString).pathExtension
-
+                
                 var modifiedImageName: String
                 if imageName.lowercased().hasSuffix(".png") {
                     modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.PNG", options: .caseInsensitive)
@@ -267,22 +285,22 @@ struct SheetContentView: View {
                 } else {
                     modifiedImageName = imageName
                 }
-
+                
                 let modifiedExtension = (modifiedImageName as NSString).pathExtension
                 pathComponents[pathComponents.count - 1] = modifiedImageName
                 urlComponents.path = pathComponents.joined(separator: "/")
-
+                
                 guard let modifiedURL = urlComponents.url else {
                     return
                 }
-
+                
                 var request = URLRequest(url: modifiedURL)
                 request.httpMethod = "HEAD"
-
+                
                 URLSession.shared.dataTask(with: request) { _, response, _ in
                     if let httpResponse = response as? HTTPURLResponse {
                         if let contentLength = httpResponse.allHeaderFields["Content-Length"] as? String,
-                            let size = Int(contentLength) {
+                           let size = Int(contentLength) {
                             let formattedSize = ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
                             let fileFormat = modifiedExtension.isEmpty ? "" : ".\(modifiedExtension)"
                             DispatchQueue.main.async {
@@ -294,7 +312,7 @@ struct SheetContentView: View {
                 }.resume()
             }
         }
-
+        
     }
     
     private func saveImage() {
@@ -305,7 +323,7 @@ struct SheetContentView: View {
             return
         }
         
-     
+        
         if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
             if let imageName = pathComponents.last {
                 // Check the file extension and append "_fullRes" accordingly
@@ -332,12 +350,14 @@ struct SheetContentView: View {
                 URLSession.shared.dataTask(with: modifiedURL) { data, response, error in
                     if let data = data, let uiImage = UIImage(data: data) {
                         UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                        provideSuccessFeedback()
                         saveState = .saved
                     } else {
                         // Fallback to the original image if the modified image loading fails
                         URLSession.shared.dataTask(with: urlComponents.url!) { data, response, error in
                             if let data = data, let uiImage = UIImage(data: data) {
                                 UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
+                                provideSuccessFeedback()
                                 saveState = .saved
                             }
                         }.resume()
@@ -350,6 +370,7 @@ struct SheetContentView: View {
 
 struct LargeImageView: View {
     let image: ImageModel
+    let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.7)
     
     var body: some View {
         VStack {
@@ -359,7 +380,7 @@ struct LargeImageView: View {
                 case .empty:
                     ZStack {
                         Color.clear
-                            .frame(width: 250, height: 550)
+                            .frame(width: frameSize.width, height: frameSize.height)
                         
                         ProgressView()
                     }
@@ -367,15 +388,17 @@ struct LargeImageView: View {
                     loadedImage
                         .resizable()
                         .aspectRatio(contentMode: .fill)
-                        .frame(width: 250, height: 550)
-                        .cornerRadius(30)
+                        .frame(width: frameSize.width, height: frameSize.height)
+                        .cornerRadius(40)
                         .clipped()
-                      
+                        .shadow(radius: 10)
+                    
+                    
                 case .failure:
                     ZStack {
                         
                         Color.clear
-                            .frame(width: 250, height: 550)
+                            .frame(width: frameSize.width, height: frameSize.height)
                         
                         Image(systemName: "xmark.circle")
                             .foregroundColor(.red)
@@ -385,7 +408,6 @@ struct LargeImageView: View {
                     EmptyView()
                 }
             }
-            .padding()
             .padding(.top, 50)
             
             Spacer()
@@ -516,5 +538,6 @@ extension View {
             .scaledToFill()
             .cornerRadius(15)
             .clipped()
+         
     }
 }

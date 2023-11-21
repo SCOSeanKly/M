@@ -20,7 +20,7 @@ enum DetentType {
         case .medium:
             return 0.4
         case .large:
-            return 0.9
+            return 0.995
         }
     }
 }

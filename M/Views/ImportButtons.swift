@@ -13,12 +13,15 @@ struct importButtons: View {
     @StateObject var obj: Object
     @Binding var saveCount: Int
     @StateObject var viewModel:  ContentViewModel
+    @State private var isTapped: Bool = false
     
     var body: some View {
         VStack {
             HStack {
                 Button {
+                    isTapped.toggle()
                     obj.appearance.showWallpapers.toggle()
+                   
                 } label: {
                     Circle()
                         .fill(.blue.opacity(0.5))
@@ -38,6 +41,7 @@ struct importButtons: View {
                 )
             }
             .padding()
+            .sensoryFeedback(.selection, trigger: isTapped)
             
             Spacer()
         }
