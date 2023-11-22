@@ -31,7 +31,7 @@ struct ContentView: View {
             
             URLImages(obj: obj)
                 .preferredColorScheme(colorScheme)
-              
+             
         } else {
             
             ZStack {
@@ -110,6 +110,7 @@ struct ContentView: View {
                         }
                     })
         }
+          
     }
     
     private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {

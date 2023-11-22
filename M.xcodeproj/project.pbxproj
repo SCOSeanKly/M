@@ -10,7 +10,10 @@
 		3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */; };
 		3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */; };
 		3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */; };
-		3E5FF5932B078C0D0007AF8D /* URLImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImage.swift */; };
+		3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImageView.swift */; };
+		3E611AD62B0DFDA6007A1714 /* URLUnused.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD52B0DFDA6007A1714 /* URLUnused.swift */; };
+		3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */; };
+		3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD92B0E196B007A1714 /* URLButtonView.swift */; };
 		3E69AF7B2AF55875007244C1 /* MApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AF7A2AF55875007244C1 /* MApp.swift */; };
 		3E69AF7D2AF55875007244C1 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AF7C2AF55875007244C1 /* ContentView.swift */; };
 		3E69AF7F2AF55876007244C1 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E69AF7E2AF55876007244C1 /* Assets.xcassets */; };
@@ -44,13 +47,17 @@
 		3E69AFCB2AF55BBD007244C1 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFCA2AF55BBD007244C1 /* UIView+Extension.swift */; };
 		3E69AFCD2AF55BD1007244C1 /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFCC2AF55BD1007244C1 /* View+Modifiers.swift */; };
 		3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */; };
+		3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageButton.swift; sourceTree = "<group>"; };
 		3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportButtons.swift; sourceTree = "<group>"; };
 		3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggle3Way.swift; sourceTree = "<group>"; };
-		3E5FF5922B078C0D0007AF8D /* URLImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImage.swift; sourceTree = "<group>"; };
+		3E5FF5922B078C0D0007AF8D /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
+		3E611AD52B0DFDA6007A1714 /* URLUnused.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUnused.swift; sourceTree = "<group>"; };
+		3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSaveStateViews.swift; sourceTree = "<group>"; };
+		3E611AD92B0E196B007A1714 /* URLButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLButtonView.swift; sourceTree = "<group>"; };
 		3E69AF772AF55875007244C1 /* M.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = M.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E69AF7A2AF55875007244C1 /* MApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MApp.swift; sourceTree = "<group>"; };
 		3E69AF7C2AF55875007244C1 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -94,6 +101,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */,
 				3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -101,10 +109,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E611ADD2B0E4C04007A1714 /* URL Image Views */ = {
+			isa = PBXGroup;
+			children = (
+				3E5FF5922B078C0D0007AF8D /* URLImageView.swift */,
+				3E611AD92B0E196B007A1714 /* URLButtonView.swift */,
+				3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */,
+				3E611AD52B0DFDA6007A1714 /* URLUnused.swift */,
+			);
+			path = "URL Image Views";
+			sourceTree = "<group>";
+		};
 		3E69AF6E2AF55875007244C1 = {
 			isa = PBXGroup;
 			children = (
-				3E5FF5922B078C0D0007AF8D /* URLImage.swift */,
 				3E69AF792AF55875007244C1 /* M */,
 				3E69AF782AF55875007244C1 /* Products */,
 			);
@@ -121,6 +139,7 @@
 		3E69AF792AF55875007244C1 /* M */ = {
 			isa = PBXGroup;
 			children = (
+				3E611ADD2B0E4C04007A1714 /* URL Image Views */,
 				3E69AFC52AF55B83007244C1 /* PopOver */,
 				3E69AFA52AF559F8007244C1 /* Helpers Extensions */,
 				3E69AF9A2AF55945007244C1 /* Views */,
@@ -221,6 +240,7 @@
 			name = M;
 			packageProductDependencies = (
 				3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */,
+				3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */,
 			);
 			productName = M;
 			productReference = 3E69AF772AF55875007244C1 /* M.app */;
@@ -252,6 +272,7 @@
 			mainGroup = 3E69AF6E2AF55875007244C1;
 			packageReferences = (
 				3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
+				3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 			);
 			productRefGroup = 3E69AF782AF55875007244C1 /* Products */;
 			projectDirPath = "";
@@ -284,13 +305,15 @@
 				3E69AFC12AF55B08007244C1 /* CustomPresentation.swift in Sources */,
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
 				3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */,
+				3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */,
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
 				3E69AFC72AF55B93007244C1 /* AlwaysPopoverModifier.swift in Sources */,
 				3E69AF8C2AF55884007244C1 /* Shaders.metal in Sources */,
 				3E69AFAD2AF55A40007244C1 /* GroundReflectionViewModifier.swift in Sources */,
+				3E611AD62B0DFDA6007A1714 /* URLUnused.swift in Sources */,
 				3E69AFBD2AF55ADD007244C1 /* CustomPagingSlider.swift in Sources */,
-				3E5FF5932B078C0D0007AF8D /* URLImage.swift in Sources */,
+				3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */,
 				3E69AFB12AF55A67007244C1 /* ZoomModifier.swift in Sources */,
 				3E69AFB32AF55A7B007244C1 /* CustomUniversalAlertApp.swift in Sources */,
 				3E69AF7D2AF55875007244C1 /* ContentView.swift in Sources */,
@@ -307,6 +330,7 @@
 				3E69AF932AF558DC007244C1 /* ImageObject.swift in Sources */,
 				3E69AFA72AF55A0A007244C1 /* CustomSlider.swift in Sources */,
 				3E69AFB92AF55AB5007244C1 /* CustomToggle.swift in Sources */,
+				3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */,
 				3E69AFCB2AF55BBD007244C1 /* UIView+Extension.swift in Sources */,
 				3E69AFA92AF55A1D007244C1 /* SaveImageButton.swift in Sources */,
 				3E69AFA22AF559B0007244C1 /* CustomImageView.swift in Sources */,
@@ -440,7 +464,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -481,7 +505,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -547,6 +571,14 @@
 				minimumVersion = 3.9.0;
 			};
 		};
+		3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.2.4;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -554,6 +586,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */;
 			productName = SwiftUIKit;
+		};
+		3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
+			productName = SDWebImageSwiftUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

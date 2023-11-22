@@ -1,11 +1,13 @@
 //
-//  URLImage.swift
+//  URLImageView.swift
 //  M
 //
 //  Created by Sean Kelly on 17/11/2023.
 //
 
 import SwiftUI
+import SDWebImageSwiftUI
+
 
 struct URLImages: View {
     @ObservedObject var viewModel = DataViewModel()
@@ -29,116 +31,109 @@ struct URLImages: View {
     @State private var scrollPosition: CGFloat = 0.0
     @State private var isTapped: Bool = false
     
+    @State var scrollerHeight: CGFloat = 0
+    @State var indicatorOffset: CGFloat = 0
+    @State var startOffset: CGFloat = 0
+    @State var hideIndicatorLabel: Bool = true
+    @State var timeOut: CGFloat = 0.3
+    
     
     var body: some View {
         ZStack {
             VStack {
-                HStack {
-                    Button {
-                        
-                        isTapped.toggle()
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
-                            withAnimation(.bouncy) {
-                                showCount = false
-                            }
-                        }
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                            obj.appearance.showWallpapers.toggle()
-                        }
-                        
-                    } label: {
-                        HStack{
-                            Circle()
-                                .fill(.red)
-                                .frame(width: 30, height: 30)
-                                .overlay {
-                                        Image(systemName: "xmark.circle")
-                                            .font(.system(.body, design: .rounded).weight(.medium))
-                                            .foregroundColor(.white)
-                                }
-                            
-                            if showCount {
-                                Text("\(totalFilesCount)")
-                                    .font(.system(.body, design: .rounded).weight(.medium))
-                                    .padding(.horizontal, 5)
-                                    .tint(.primary)
-                            }
-                        }
-                        .padding(8)
-                        .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                    }
-                    
-                    Spacer()
-                     
-                }
-                .sensoryFeedback(.selection, trigger: isTapped)
-                .disabled(selectedImage != nil)
-                .opacity(selectedImage != nil ? 0.5 : 1.0)
-                .padding()
-                .onAppear{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.2) {
-                        withAnimation(.bouncy) {
-                            showCount = true
-                        }
-                    }
-                }
-                .onDisappear{
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        withAnimation(.bouncy) {
-                            showCount = false
-                        }
-                    }
-                }
                 
-                HStack {
-                    Text("Wallpapers")
-                        .font(.largeTitle.bold())
-                    
-                    Spacer()
-                    
-                }
-                .padding(.horizontal)
-                
-                HStack {
-                    Text("A collection of wallpapers")
-                        .foregroundStyle(.gray)
-                    
-                    Spacer()
-                    
-                }
-                .padding(.horizontal)
+                ButtonView(obj: obj, viewModel: viewModel)
                 
                 if !viewModel.images.isEmpty {
-                    ScrollView(.vertical, showsIndicators: true) {
-                        LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 30) {
-                            ForEach(viewModel.images.indices.reversed(), id: \.self) { index in
-                                Button {
-                                    isTapped.toggle()
-                                    selectedImage = viewModel.images[index]
-                                    isSheetPresented = true
-                                    saveState = .idle
+                    
+                    GeometryReader{
+                        let size = $0.size
+                        
+                        ScrollViewReader(content: { proxy in
+                            ScrollView(.vertical, showsIndicators: true) {
+                                LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 30) {
                                     
-                                } label: {
-                                    URLImageView(image: viewModel.images[index])
-                                        .customFrame()
+                                    ForEach(viewModel.images.indices.reversed(), id: \.self) { index in
+                                        Button {
+                                            isTapped.toggle()
+                                            selectedImage = viewModel.images[index]
+                                            isSheetPresented = true
+                                            saveState = .idle
+                                        } label: {
+                                            WebImage(url: URL(string: viewModel.images[index].image))
+                                                .resizable()
+                                                .customFrame()
+                                        }
+                                    }
                                 }
+                                .padding(10)
+                                .scrollTargetLayout()
+                                
+                                .offset { rect in
+                                    
+                                    if hideIndicatorLabel && rect.minY < 0{
+                                        timeOut = 0
+                                        hideIndicatorLabel = false
+                                    }
+                                    
+                                    let rectHeight = rect.height
+                                    let viewHeight = size.height + (startOffset / 2)
+                                    let scrollerHeight = (viewHeight / rectHeight) * viewHeight
+                                    self.scrollerHeight = scrollerHeight
+                                    let progress = rect.minY / (rectHeight - size.height)
+                                    self.indicatorOffset = -progress * (size.height * 0.88 - scrollerHeight)
+                                }
+                                
+                                Spacer()
+                                    .frame(height: 100)
                             }
+                        })
+                        .frame(maxWidth: .infinity,maxHeight: .infinity)
+                        .overlay(alignment: .topTrailing, content: {
+                            Rectangle()
+                                .fill(.clear)
+                                .frame(width: 2, height: scrollerHeight)
+                                .overlay(alignment: .trailing, content: {
+                                    Text("\(scrollID ?? 0)")
+                                        .font(.system(size: 12, design: .rounded).weight(.medium))
+                                        .foregroundColor(.primary)
+                                        .frame(width: 40, height: 20)
+                                        .padding(3)
+                                        .background(Color.primary.colorInvert())
+                                        .clipShape(RoundedRectangle(cornerRadius: 10))
+                                        .offset(x: hideIndicatorLabel ? 65 : -13)
+                                        .animation(.bouncy, value: hideIndicatorLabel)
+                                })
+                                .padding(.trailing,5)
+                                .offset(y: indicatorOffset + 40)
+                                .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 1)
+                        })
+                    }
+                    .offset { rect in
+                        if startOffset != rect.minY{
+                            startOffset = rect.minY
                         }
-                        .padding(10)
-                        .scrollTargetLayout()
                     }
                     .scrollPosition(id: $scrollID)
                     .onChange(of: scrollID) { oldValue, newValue in
                         print(newValue ?? "")
                     }
                 } else {
-                    Text("Loading images...")
+                    LoadingImagesView()
                 }
                 
                 Spacer()
+            }
+            .onReceive(Timer.publish(every: 0.01, on: .main, in: .default).autoconnect()) { _ in
+                if timeOut < 0.3{
+                    timeOut += 0.01
+                }else{
+                    // MARK: Scrolling is Finished
+                    if !hideIndicatorLabel{
+                        print("Scrolling is Finished")
+                        hideIndicatorLabel = true
+                    }
+                }
             }
         }
         .edgesIgnoringSafeArea(.bottom)
@@ -148,8 +143,8 @@ struct URLImages: View {
                 .onDisappear {
                     selectedImage = nil
                 }
-                .onChange(of: saveState) { newState in
-                    if newState == .saved {
+                .onChange(of: saveState) {
+                    if saveState == .saved {
                         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                             selectedImage = nil
                             saveState = .idle // Reset saveState
@@ -157,8 +152,8 @@ struct URLImages: View {
                     }
                 }
         }
-        .onChange(of: selectedImage) { newImage in
-            if newImage != nil {
+        .onChange(of: selectedImage) {
+            if selectedImage != nil {
                 isSheetPresented = true
             }
         }
@@ -170,6 +165,33 @@ struct URLImages: View {
                 viewModel.loadImages()
             }
         }
+    }
+}
+
+// MARK: Offset Reader
+extension View{
+    @ViewBuilder
+    func offset(completion: @escaping (CGRect)->())->some View{
+        self
+            .overlay {
+                GeometryReader{
+                    let rect = $0.frame(in: .named("SCROLLER"))
+                    Color.clear
+                        .preference(key: OffsetKey.self, value: rect)
+                        .onPreferenceChange(OffsetKey.self) { value in
+                            completion(value)
+                        }
+                }
+            }
+    }
+}
+
+// MARK: Offset Key
+struct OffsetKey: PreferenceKey{
+    static var defaultValue: CGRect = .zero
+    
+    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
+        value = nextValue()
     }
 }
 
@@ -185,7 +207,7 @@ struct SheetContentView: View {
         VStack {
             
             LargeImageView(image: image)
-              
+            
             HStack(alignment: .center){
                 Text(imageSize)
                     .foregroundColor(.gray)
@@ -193,7 +215,7 @@ struct SheetContentView: View {
                     .padding(.top, 4)
                 
                 if imageSize != "Fetching file size..." {
-                    Text(imageFileFormat.dropFirst(1))
+                    Text(imageFileFormat.dropFirst(2))
                         .foregroundColor(.gray)
                         .font(.caption)
                         .padding(.vertical, 4)
@@ -212,48 +234,11 @@ struct SheetContentView: View {
             } label: {
                 switch saveState {
                 case .idle:
-                    Circle()
-                        .fill(.ultraThinMaterial)
-                        .frame(width: 30, height: 30)
-                        .overlay {
-                            Image(systemName: "square.and.arrow.up.circle.fill")
-                                .font(.system(.body, design: .rounded).weight(.medium))
-                                .foregroundColor(.primary)
-                                .rotationEffect(Angle(degrees: 180))
-                                .scaleEffect(1.5)
-                        }
+                    SaveStateIdle()
                 case .saving:
-                    
-                    HStack {
-                        Circle()
-                            .fill(.ultraThinMaterial)
-                            .frame(width: 30, height: 30)
-                            .overlay {
-                                ProgressView()
-                                    .font(.system(.body, design: .rounded).weight(.medium))
-                                    .foregroundColor(.primary)
-                            }
-                        Text("Downloading")
-                            .padding(.horizontal)
-                            .foregroundColor(.primary)
-                    }
-                    .padding(.horizontal, 5)
-                    
+                    SaveStateSaving()
                 case .saved:
-                    HStack {
-                        Circle()
-                            .fill(.green)
-                            .frame(width: 30, height: 30)
-                            .overlay {
-                                Image(systemName: "checkmark.circle")
-                                    .font(.system(.body, design: .rounded).weight(.medium))
-                                    .foregroundColor(.white)
-                            }
-                        Text("Saved")
-                            .padding(.horizontal)
-                            .foregroundColor(.primary)
-                    }
-                    .padding(.horizontal, 5)
+                    SaveStateSaved()
                 }
             }
             .padding(8)
@@ -312,7 +297,6 @@ struct SheetContentView: View {
                 }.resume()
             }
         }
-        
     }
     
     private func saveImage() {
@@ -374,41 +358,13 @@ struct LargeImageView: View {
     
     var body: some View {
         VStack {
-            
-            AsyncImage(url: URL(string: image.image)) { phase in
-                switch phase {
-                case .empty:
-                    ZStack {
-                        Color.clear
-                            .frame(width: frameSize.width, height: frameSize.height)
-                        
-                        ProgressView()
-                    }
-                case .success(let loadedImage):
-                    loadedImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .frame(width: frameSize.width, height: frameSize.height)
-                        .cornerRadius(40)
-                        .clipped()
-                        .shadow(radius: 10)
-                    
-                    
-                case .failure:
-                    ZStack {
-                        
-                        Color.clear
-                            .frame(width: frameSize.width, height: frameSize.height)
-                        
-                        Image(systemName: "xmark.circle")
-                            .foregroundColor(.red)
-                            .font(.system(size: 60))
-                    }
-                @unknown default:
-                    EmptyView()
-                }
-            }
-            .padding(.top, 50)
+            WebImage(url: URL(string: image.image))
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: frameSize.width, height: frameSize.height)
+                .cornerRadius(40)
+                .clipped()
+                .padding(.top, 50)
             
             Spacer()
         }
@@ -418,64 +374,13 @@ struct LargeImageView: View {
 
 struct URLImageView: View {
     let image: ImageModel
-    @State private var imageSize: String = "Fetching size..."
     
     var body: some View {
         VStack {
-            AsyncImage(url: URL(string: image.image)) { phase in
-                switch phase {
-                case .empty:
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .customFrame()
-                        ProgressView()
-                    }
-                case .success(let loadedImage):
-                    loadedImage
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                case .failure:
-                    ZStack {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .customFrame()
-                        Image(systemName: "xmark.circle")
-                    }
-                @unknown default:
-                    EmptyView()
-                }
-            }
-            .customFrame()
-            
-            Text(imageSize)
-                .foregroundColor(.gray)
-                .font(.caption)
-                .padding(.top, 4)
-                .onAppear {
-                    fetchImageSize()
-                }
+            WebImage(url: URL(string: image.image))
+                .resizable()
+                .customFrame()
         }
-    }
-    
-    private func fetchImageSize() {
-        guard let imageUrl = URL(string: image.image) else {
-            return
-        }
-        
-        let request = URLRequest(url: imageUrl, cachePolicy: .returnCacheDataElseLoad, timeoutInterval: 10)
-        
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let response = response as? HTTPURLResponse {
-                let contentLength = response.allHeaderFields["Content-Length"] as? String
-                if let contentLength = contentLength, let size = Int(contentLength) {
-                    let formattedSize = ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
-                    DispatchQueue.main.async {
-                        imageSize = "Size: \(formattedSize)"
-                    }
-                }
-            }
-        }.resume()
     }
 }
 
@@ -535,9 +440,22 @@ extension View {
     func customFrame(width: CGFloat = UIScreen.main.bounds.width / 4 , height: CGFloat = UIScreen.main.bounds.height / 4) -> some View {
         self
             .frame(width: width, height: height)
-            .scaledToFill()
+            .aspectRatio(contentMode: .fill)
             .cornerRadius(15)
             .clipped()
-         
+            .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
+                           content
+                             //.opacity(phase.isIdentity ? 1 : 0)
+                               .scaleEffect(phase.isIdentity ? 1 : 0.75)
+                             //.blur(radius: phase.isIdentity ? 0 : 10)
+                       }
+        
+        
     }
 }
+
+
+
+
+
+
