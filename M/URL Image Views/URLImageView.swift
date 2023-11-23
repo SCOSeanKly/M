@@ -150,7 +150,7 @@ struct URLImages: View {
         .sheet(item: $selectedImage) { image in
             ZStack {
                 SheetContentView(image: image, saveState: $saveState, obj: obj)
-                    .addPinchZoom()
+                  
             }
              
                 .id(image) // Ensure image is used for id
@@ -235,6 +235,7 @@ struct SheetContentView: View {
                 VStack {
                    
                         LargeImageView(image: image)
+                      
                      
                     Group {
                         HStack(alignment: .center){
@@ -264,8 +265,6 @@ struct SheetContentView: View {
                         Button {
                             isTapped.toggle()
                             saveImage()
-                            saveTip.invalidate(reason: .actionPerformed)
-                            
                         } label: {
                             switch saveState {
                             case .idle:
@@ -290,8 +289,10 @@ struct SheetContentView: View {
                 .onAppear {
                     fetchImageSize()
                 }
+              //  .sensoryFeedback(.selection, trigger: imageSize != "Fetching file size...")
             }
         }
+     
     }
     private func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
@@ -402,6 +403,7 @@ struct SheetContentView: View {
 struct LargeImageView: View {
     let image: ImageModel
     let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.7)
+    let canvasSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
     
     var body: some View {
         VStack {
@@ -412,10 +414,13 @@ struct LargeImageView: View {
                 .cornerRadius(40)
                 .clipped()
                 .padding(.top, 50)
+                .addPinchZoom()
             
             
             Spacer()
         }
+        .frame(width: canvasSize.width)
+        .ignoresSafeArea()
         .customPresentationWithPrimaryBackground(detent: .large, backgroundColorOpacity: 1.0)
     }
 }
