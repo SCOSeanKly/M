@@ -66,7 +66,7 @@ struct URLImages: View {
                                                     .customFrame()
                                             }
                                             Text(getFileName(from: viewModel.images[index].image))
-                                                .font(.caption)
+                                                .font(.system(size: 10))
                                                 .foregroundColor(.primary.opacity(0.5))
                                                 .lineLimit(1)
                                                 .multilineTextAlignment(.center)
@@ -148,7 +148,11 @@ struct URLImages: View {
         }
         .edgesIgnoringSafeArea(.bottom)
         .sheet(item: $selectedImage) { image in
-            SheetContentView(image: image, saveState: $saveState, obj: obj)
+            ZStack {
+                SheetContentView(image: image, saveState: $saveState, obj: obj)
+                    .addPinchZoom()
+            }
+             
                 .id(image) // Ensure image is used for id
                 .onDisappear {
                     selectedImage = nil
@@ -222,68 +226,70 @@ struct SheetContentView: View {
     @State private var imageSize: String = "Fetching file size..."
     @State private var imageFileFormat: String = ""
     @State private var isTapped: Bool = false
-    
     let saveTip = SaveWallpaperTip()
+    @SceneStorage("isZooming") var isZooming: Bool = false
     
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
-                    /*
-                     Text(getFileName(from: image.image))
-                     .font(.largeTitle.bold())
-                     */
-                    
-                    LargeImageView(image: image)
-                    
-                    
-                    HStack(alignment: .center){
-                        Text(imageSize)
-                            .foregroundColor(.gray)
-                            .font(.caption)
-                            .padding(.top, 4)
-                        
-                        if imageSize != "Fetching file size..." {
-                            Text(imageFileFormat.dropFirst(2))
-                                .foregroundColor(.gray)
-                                .font(.caption)
-                                .padding(.vertical, 4)
-                                .padding(.horizontal, 8)
-                                .background(.ultraThinMaterial)
-                                .clipShape(RoundedRectangle(cornerRadius: 50))
-                                .offset(y: 2)
+                   
+                        LargeImageView(image: image)
+                     
+                    Group {
+                        HStack(alignment: .center){
+                            
+                            Text(getFileName(from: image.image))
+                                .padding(.top, 6)
+                            
+                            Text(" • ")
+                                .padding(.top, 6)
+                            
+                            Text(imageSize)
+                                .padding(.top, 6)
+                            
+                            if imageSize != "Fetching file size..." {
+                                Text(imageFileFormat.dropFirst(2))
+                                    .padding(.vertical, 4)
+                                    .padding(.horizontal, 8)
+                                    .background(.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 50))
+                                    .offset(y: 2)
+                            }
                         }
-                    }
-                    .offset(y: 50)
-                    
-                    Button {
-                        isTapped.toggle()
-                        saveImage()
-                        saveTip.invalidate(reason: .actionPerformed)
+                        .foregroundColor(.gray)
+                        .font(.caption)
+                        .offset(y: 50)
                         
-                    } label: {
-                        switch saveState {
-                        case .idle:
-                            SaveStateIdle()
-                        case .saving:
-                            SaveStateSaving()
-                        case .saved:
-                            SaveStateSaved()
+                        Button {
+                            isTapped.toggle()
+                            saveImage()
+                            saveTip.invalidate(reason: .actionPerformed)
+                            
+                        } label: {
+                            switch saveState {
+                            case .idle:
+                                SaveStateIdle()
+                            case .saving:
+                                SaveStateSaving()
+                            case .saved:
+                                SaveStateSaved()
+                            }
                         }
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                        .animation(.bouncy, value: saveState)
+                        .offset(y: -30)
                     }
-                    .padding(8)
-                    .background(.ultraThinMaterial)
-                    .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .animation(.bouncy, value: saveState)
-                    .offset(y: -30)
+                    .opacity(isZooming ? 0 : 1)
+                    .animation(.bouncy, value: isZooming)
+                  
                 }
                 .sensoryFeedback(.selection, trigger: isTapped)
                 .onAppear {
                     fetchImageSize()
                 }
-                //MARK: Show image qaulity tip
-                TipView(saveTip)
-                    .padding()
             }
         }
     }
@@ -406,6 +412,7 @@ struct LargeImageView: View {
                 .cornerRadius(40)
                 .clipped()
                 .padding(.top, 50)
+            
             
             Spacer()
         }

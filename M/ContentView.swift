@@ -113,7 +113,7 @@ struct ContentView: View {
                     })
             // MARK: Show Tips
             .task {
-              //  try? Tips.resetDatastore() // Remove this once tested
+             //   try? Tips.resetDatastore() //MARK:  Remove this once tested - shows tips all the time
                 try? Tips.configure([
                     .displayFrequency(.immediate),
                     .datastoreLocation(.applicationDefault)])
@@ -148,7 +148,7 @@ extension View {
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(Color.gray, lineWidth: 0.5)
             }
-            .modifier(ZoomModifier(minimum: 1.0, maximum: 1.0, obj: obj))
+            .addPinchZoom()
             .scaleEffect(obj.appearance.screenWidth, anchor: .center)
             .if(obj.appearance.enableImportTapGestures) { view in
                 view.onTapGesture(count: 2) {
