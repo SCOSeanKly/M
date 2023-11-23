@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */; };
 		3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */; };
+		3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E9092B0F5D1800DE4460 /* Tip Views.swift */; };
+		3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */; };
 		3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */; };
 		3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImageView.swift */; };
 		3E611AD62B0DFDA6007A1714 /* URLUnused.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD52B0DFDA6007A1714 /* URLUnused.swift */; };
@@ -53,6 +55,8 @@
 /* Begin PBXFileReference section */
 		3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageButton.swift; sourceTree = "<group>"; };
 		3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportButtons.swift; sourceTree = "<group>"; };
+		3E23E9092B0F5D1800DE4460 /* Tip Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tip Views.swift"; sourceTree = "<group>"; };
+		3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatWalpaperCount.swift; sourceTree = "<group>"; };
 		3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggle3Way.swift; sourceTree = "<group>"; };
 		3E5FF5922B078C0D0007AF8D /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		3E611AD52B0DFDA6007A1714 /* URLUnused.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLUnused.swift; sourceTree = "<group>"; };
@@ -109,6 +113,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E23E9082B0F5D0600DE4460 /* Tips */ = {
+			isa = PBXGroup;
+			children = (
+				3E23E9092B0F5D1800DE4460 /* Tip Views.swift */,
+			);
+			path = Tips;
+			sourceTree = "<group>";
+		};
 		3E611ADD2B0E4C04007A1714 /* URL Image Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -116,6 +128,7 @@
 				3E611AD92B0E196B007A1714 /* URLButtonView.swift */,
 				3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */,
 				3E611AD52B0DFDA6007A1714 /* URLUnused.swift */,
+				3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */,
 			);
 			path = "URL Image Views";
 			sourceTree = "<group>";
@@ -139,6 +152,7 @@
 		3E69AF792AF55875007244C1 /* M */ = {
 			isa = PBXGroup;
 			children = (
+				3E23E9082B0F5D0600DE4460 /* Tips */,
 				3E611ADD2B0E4C04007A1714 /* URL Image Views */,
 				3E69AFC52AF55B83007244C1 /* PopOver */,
 				3E69AFA52AF559F8007244C1 /* Helpers Extensions */,
@@ -306,6 +320,7 @@
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
 				3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */,
 				3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */,
+				3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */,
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
 				3E69AFC72AF55B93007244C1 /* AlwaysPopoverModifier.swift in Sources */,
@@ -324,6 +339,7 @@
 				3E69AFAF2AF55A5A007244C1 /* IfExtension.swift in Sources */,
 				3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */,
 				3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */,
+				3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */,
 				3E69AFBB2AF55AC7007244C1 /* PhotoPicker.swift in Sources */,
 				3E69AFCD2AF55BD1007244C1 /* View+Modifiers.swift in Sources */,
 				3E69AFB52AF55A93007244C1 /* UniversalAlert.swift in Sources */,
@@ -464,7 +480,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -505,7 +521,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 1.0.0;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;

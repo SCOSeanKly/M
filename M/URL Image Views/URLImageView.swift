@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import TipKit
 
 
 struct URLImages: View {
@@ -52,23 +53,28 @@ struct URLImages: View {
                         ScrollViewReader(content: { proxy in
                             ScrollView(.vertical, showsIndicators: true) {
                                 LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 30) {
-                                    
                                     ForEach(viewModel.images.indices.reversed(), id: \.self) { index in
-                                        Button {
-                                            isTapped.toggle()
-                                            selectedImage = viewModel.images[index]
-                                            isSheetPresented = true
-                                            saveState = .idle
-                                        } label: {
-                                            WebImage(url: URL(string: viewModel.images[index].image))
-                                                .resizable()
-                                                .customFrame()
+                                        VStack {
+                                            Button {
+                                                isTapped.toggle()
+                                                selectedImage = viewModel.images[index]
+                                                isSheetPresented = true
+                                                saveState = .idle
+                                            } label: {
+                                                WebImage(url: URL(string: viewModel.images[index].image))
+                                                    .resizable()
+                                                    .customFrame()
+                                            }
+                                            Text(getFileName(from: viewModel.images[index].image))
+                                                .font(.caption)
+                                                .foregroundColor(.primary.opacity(0.5))
+                                                .lineLimit(1)
+                                                .multilineTextAlignment(.center)
                                         }
                                     }
                                 }
                                 .padding(10)
                                 .scrollTargetLayout()
-                                
                                 .offset { rect in
                                     
                                     if hideIndicatorLabel && rect.minY < 0{
@@ -86,6 +92,10 @@ struct URLImages: View {
                                 
                                 Spacer()
                                     .frame(height: 100)
+                            }
+                            .refreshable {
+                                // Handle pull-to-refresh here
+                                viewModel.forceRefresh.toggle()
                             }
                         })
                         .frame(maxWidth: .infinity,maxHeight: .infinity)
@@ -166,6 +176,16 @@ struct URLImages: View {
             }
         }
     }
+    
+    func getFileName(from urlString: String) -> String {
+        if let url = URL(string: urlString) {
+            let fileName = url.deletingPathExtension().lastPathComponent
+            return fileName
+        }
+        return ""
+    }
+    
+    
 }
 
 // MARK: Offset Reader
@@ -203,54 +223,75 @@ struct SheetContentView: View {
     @State private var imageFileFormat: String = ""
     @State private var isTapped: Bool = false
     
+    let saveTip = SaveWallpaperTip()
+    
     var body: some View {
-        VStack {
-            
-            LargeImageView(image: image)
-            
-            HStack(alignment: .center){
-                Text(imageSize)
-                    .foregroundColor(.gray)
-                    .font(.caption)
-                    .padding(.top, 4)
-                
-                if imageSize != "Fetching file size..." {
-                    Text(imageFileFormat.dropFirst(2))
-                        .foregroundColor(.gray)
-                        .font(.caption)
-                        .padding(.vertical, 4)
-                        .padding(.horizontal, 8)
-                        .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 50))
-                        .offset(y: 2)
+        ZStack {
+            ScrollView {
+                VStack {
+                    /*
+                     Text(getFileName(from: image.image))
+                     .font(.largeTitle.bold())
+                     */
+                    
+                    LargeImageView(image: image)
+                    
+                    
+                    HStack(alignment: .center){
+                        Text(imageSize)
+                            .foregroundColor(.gray)
+                            .font(.caption)
+                            .padding(.top, 4)
+                        
+                        if imageSize != "Fetching file size..." {
+                            Text(imageFileFormat.dropFirst(2))
+                                .foregroundColor(.gray)
+                                .font(.caption)
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 8)
+                                .background(.ultraThinMaterial)
+                                .clipShape(RoundedRectangle(cornerRadius: 50))
+                                .offset(y: 2)
+                        }
+                    }
+                    .offset(y: 50)
+                    
+                    Button {
+                        isTapped.toggle()
+                        saveImage()
+                        saveTip.invalidate(reason: .actionPerformed)
+                        
+                    } label: {
+                        switch saveState {
+                        case .idle:
+                            SaveStateIdle()
+                        case .saving:
+                            SaveStateSaving()
+                        case .saved:
+                            SaveStateSaved()
+                        }
+                    }
+                    .padding(8)
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                    .animation(.bouncy, value: saveState)
+                    .offset(y: -30)
                 }
-            }
-            .offset(y: 50)
-            
-            Button {
-                isTapped.toggle()
-                saveImage()
-                
-            } label: {
-                switch saveState {
-                case .idle:
-                    SaveStateIdle()
-                case .saving:
-                    SaveStateSaving()
-                case .saved:
-                    SaveStateSaved()
+                .sensoryFeedback(.selection, trigger: isTapped)
+                .onAppear {
+                    fetchImageSize()
                 }
+                //MARK: Show image qaulity tip
+                TipView(saveTip)
+                    .padding()
             }
-            .padding(8)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-            .animation(.bouncy, value: saveState)
-            .offset(y: -50)
         }
-        .sensoryFeedback(.selection, trigger: isTapped)
-        .onAppear {
-            fetchImageSize()
+    }
+    private func getFileName(from urlString: String) -> String {
+        if let url = URL(string: urlString) {
+            return url.deletingPathExtension().lastPathComponent
         }
+        return ""
     }
     
     private func fetchImageSize() {
@@ -444,11 +485,11 @@ extension View {
             .cornerRadius(15)
             .clipped()
             .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
-                           content
-                             //.opacity(phase.isIdentity ? 1 : 0)
-                               .scaleEffect(phase.isIdentity ? 1 : 0.75)
-                             //.blur(radius: phase.isIdentity ? 0 : 10)
-                       }
+                content
+                //.opacity(phase.isIdentity ? 1 : 0)
+                    .scaleEffect(phase.isIdentity ? 1 : 0.75)
+                //.blur(radius: phase.isIdentity ? 0 : 10)
+            }
         
         
     }

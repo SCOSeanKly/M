@@ -19,7 +19,6 @@ struct ButtonView: View {
         return viewModel.images.count
     }
     
-    
     var body: some View {
         HStack {
             Button {
@@ -31,7 +30,7 @@ struct ButtonView: View {
                         showCount = false
                     }
                 }
-                
+
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                     obj.appearance.showWallpapers.toggle()
                 }
@@ -46,9 +45,10 @@ struct ButtonView: View {
                                     .font(.system(.body, design: .rounded).weight(.medium))
                                     .foregroundColor(.white)
                         }
+                      
                     
                     if showCount {
-                        Text("\(totalFilesCount)")
+                        Text("\(formattedCount(totalFilesCount))")
                             .font(.system(.body, design: .rounded).weight(.medium))
                             .padding(.horizontal, 5)
                             .tint(.primary)
@@ -58,6 +58,7 @@ struct ButtonView: View {
                 .background(.ultraThinMaterial)
                 .clipShape(RoundedRectangle(cornerRadius: 24))
             }
+          
             
             Spacer()
              

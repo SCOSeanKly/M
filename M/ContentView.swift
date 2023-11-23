@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import TipKit
 
 
 struct ContentView: View {
@@ -29,6 +30,7 @@ struct ContentView: View {
     var body: some View {
         if obj.appearance.showWallpapers {
             
+            // MARK: Wallpaper View
             URLImages(obj: obj)
                 .preferredColorScheme(colorScheme)
              
@@ -36,6 +38,7 @@ struct ContentView: View {
             
             ZStack {
                 
+                // MARK: Wallpaper View
                 CustomPagingSlider(data: $viewModel.items) { $item in
                     
                     CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
@@ -81,10 +84,9 @@ struct ContentView: View {
                 }
                 .sheet(isPresented: $obj.appearance.showSettingsSheet, content: {
                     SettingsView(viewModel: viewModel, obj: obj)
-                    
                 })
                 
-                //MARK: Pill Buttons
+                //MARK: Pill Buttons for importing images etc
                 importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
                 
             }
@@ -97,7 +99,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .gesture(
+            .gesture( // MARK: Drag up gesture to show settings sheet
                 DragGesture(minimumDistance: 30, coordinateSpace: .global)
                     .onEnded { value in
                         if value.translation.height < 0 {
@@ -109,6 +111,13 @@ struct ContentView: View {
                             }
                         }
                     })
+            // MARK: Show Tips
+            .task {
+              //  try? Tips.resetDatastore() // Remove this once tested
+                try? Tips.configure([
+                    .displayFrequency(.immediate),
+                    .datastoreLocation(.applicationDefault)])
+            }
         }
           
     }

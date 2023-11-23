@@ -14,6 +14,7 @@ struct importButtons: View {
     @Binding var saveCount: Int
     @StateObject var viewModel:  ContentViewModel
     @State private var isTapped: Bool = false
+    let showWallpaperTip = NewWallpapersSectionTip()
     
     var body: some View {
         VStack {
@@ -21,6 +22,7 @@ struct importButtons: View {
                 Button {
                     isTapped.toggle()
                     obj.appearance.showWallpapers.toggle()
+                    showWallpaperTip.invalidate(reason: .actionPerformed)
                    
                 } label: {
                     Circle()
@@ -35,7 +37,10 @@ struct importButtons: View {
                         .background(.ultraThinMaterial)
                         .clipShape(RoundedRectangle(cornerRadius: 24))
                 }
+                .popoverTip(showWallpaperTip)
+                
                 Spacer()
+                
                 Pill(
                     viewModel: viewModel, obj: obj, saveCount: $saveCount
                 )
