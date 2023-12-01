@@ -23,7 +23,7 @@ struct CustomImageView: View {
         ZStack {
             BackgroundView(obj: obj, importedBackground: $importedBackground, item: item)
             
-            MockupView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item)
+            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item)
             
             LogoView(obj: obj, importedLogo: $importedLogo)
         }
@@ -82,7 +82,7 @@ struct BackgroundView: View {
     }
 }
 
-struct MockupView: View {
+struct MockupLayersView: View {
     @StateObject var obj: Object
     @Binding var importedImage1: UIImage?
     @Binding var importedImage2: UIImage?

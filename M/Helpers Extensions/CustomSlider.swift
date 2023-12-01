@@ -43,20 +43,24 @@ struct CustomSlider<T: BinaryFloatingPoint>: View {
                             })
 
                         ZStack {
+                            
                             Circle()
-                                .frame(width: 20)
+                                .frame(width: 100)
+                                .foregroundColor(.white.opacity(0.00001))
+                            
+                            Circle()
+                                .frame(width: 26)
                                 .foregroundColor(.white)
                                 .shadow(color: .black.opacity(0.15), radius: 1.25, x: 1, y: 1)
-
+                            
                             Circle()
-                                .frame(width: 16)
+                                .frame(width: 22)
                                 .foregroundColor(.clear)
                                 .background(LinearGradient(gradient: Gradient(colors: [.gray.opacity(0.1), .white.opacity(0.1), .white]), startPoint: .top, endPoint: .bottom))
                                 .clipShape(Circle())
 
                         }
-                        .frame(height: height * 2, alignment: .center)
-                        .scaleEffect(1.2)
+                        .frame(height: height * 5.0, alignment: .center)
                         .position(x: bounds.size.width * CGFloat(localRealProgress), y: bounds.size.height / 2)
                         .gesture(DragGesture(minimumDistance: 0)
                             .updating($isActive) { value, state, transaction in

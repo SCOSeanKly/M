@@ -16,7 +16,7 @@ enum DetentType {
     var fractionValue: CGFloat {
         switch self {
         case .small:
-            return 0.05
+            return 0.2
         case .medium:
             return 0.4
         case .large:

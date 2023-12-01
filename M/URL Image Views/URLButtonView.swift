@@ -32,7 +32,7 @@ struct ButtonView: View {
                 }
 
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    obj.appearance.showWallpapers.toggle()
+                    obj.appearance.showWallpapersView.toggle()
                 }
                 
             } label: {
@@ -59,8 +59,9 @@ struct ButtonView: View {
                 .clipShape(RoundedRectangle(cornerRadius: 24))
             }
           
-            
             Spacer()
+            
+         
              
         }
         .sensoryFeedback(.selection, trigger: isTapped)

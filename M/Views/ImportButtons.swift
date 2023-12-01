@@ -16,28 +16,66 @@ struct importButtons: View {
     @State private var isTapped: Bool = false
     let showWallpaperTip = NewWallpapersSectionTip()
     
+  
+    
+    
     var body: some View {
         VStack {
             HStack {
-                Button {
-                    isTapped.toggle()
-                    obj.appearance.showWallpapers.toggle()
-                    showWallpaperTip.invalidate(reason: .actionPerformed)
-                   
-                } label: {
-                    Circle()
-                        .fill(.blue.opacity(0.5))
-                        .frame(width: 30, height: 30)
-                        .overlay {
-                            Image(systemName: "photo.circle")
-                                .font(.system(.body, design: .rounded).weight(.medium))
-                                .foregroundColor(.white)
+                HStack {
+                    
+                    Group { //MARK: Show Wallpaper Button
+                        Button {
+                            
+                            isTapped.toggle()
+                            withAnimation(.bouncy) {
+                                obj.appearance.showPill = true
+                            }
+                            obj.appearance.showWallpapersView.toggle()
+                            showWallpaperTip.invalidate(reason: .actionPerformed)
+                            
+                        } label: {
+                            Circle()
+                                .fill(.blue.opacity(0.5))
+                                .frame(width: 30, height: 30)
+                                .overlay {
+                                    Image(systemName: "photo.circle")
+                                        .font(.system(.body, design: .rounded).weight(.medium))
+                                        .foregroundColor(.white)
+                                }
+                                .padding(8)
+                                .background(.ultraThinMaterial)
+                                .clipShape(RoundedRectangle(cornerRadius: 24))
                         }
-                        .padding(8)
-                        .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                    }
+                    
+                    Group { //MARK: Show Application Settings
+                        Button {
+                            
+                            isTapped.toggle()
+                            withAnimation(.bouncy) {
+                                obj.appearance.showPill = true
+                            }
+                            obj.appearance.showApplicationSettings.toggle()
+                          
+                        } label: {
+                            Circle()
+                                .fill(.blue.opacity(0.5))
+                                .frame(width: 30, height: 30)
+                                .overlay {
+                                    Image(systemName: "gearshape")
+                                        .font(.system(.body, design: .rounded).weight(.medium))
+                                        .foregroundColor(.white)
+                                }
+                                .padding(8)
+                                .background(.ultraThinMaterial)
+                                .clipShape(RoundedRectangle(cornerRadius: 24))
+                        }
+                    }
                 }
-                .popoverTip(showWallpaperTip)
+                .opacity(obj.appearance.showPill ? 1: 0)
+                .offset(x: obj.appearance.showPill ?  0 : -100)
+                .pillModifier(obj: obj, normalScale: 1)
                 
                 Spacer()
                 
@@ -104,15 +142,6 @@ private struct Pill: View {
                 withAnimation(.bouncy){
                     isTapped.toggle()
                     obj.appearance.showPill.toggle()
-                    obj.appearance.showAppSettings = false
-                }
-            }
-            .onLongPressGesture(minimumDuration: 0.5){
-                if !obj.appearance.showPill {
-                    withAnimation(.bouncy){
-                        obj.appearance.showAppSettings.toggle()
-                        isTappedProminent.toggle()
-                    }
                 }
             }
             .padding(8)
@@ -148,24 +177,12 @@ private struct TextViewTwo: View {
     @StateObject var viewModel: ContentViewModel
 
     
-    var symbolName: String {
-           switch obj.appearance.selectedAppearance {
-           case .light:
-               return "sun.max"
-           case .dark:
-               return "moon"
-           case .system:
-               return "rays"
-           }
-       }
+  
     
     var body: some View {
         Group {
             
             HStack {
-                
-                if !obj.appearance.showAppSettings {
-                    
                     AnimatedButton(action: {
                         
                         viewModel.showImagePickerSheet1 = true
@@ -211,6 +228,7 @@ private struct TextViewTwo: View {
                     AnimatedButton(action: {
                         obj.appearance.showSettingsSheet.toggle()
                         
+                        
                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
                             withAnimation(.bouncy){
                                 obj.appearance.showPill.toggle()
@@ -218,31 +236,6 @@ private struct TextViewTwo: View {
                         }
                     }, sfSymbolName: "slider.horizontal.3", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
                     .padding(.horizontal, 5)
-                } else {
-                    
-                    AnimatedButton(action: {
-                        
-                        obj.appearance.enableImportTapGestures.toggle()
-                        
-                    }, sfSymbolName: obj.appearance.enableImportTapGestures ? "hand.tap" : "hand.raised.slash", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .padding(.horizontal, 5)
-                    .padding(.leading, 5)
-                   
-                    AnimatedButton(action: {
-                        
-                        switch obj.appearance.selectedAppearance {
-                          case .system:
-                              obj.appearance.selectedAppearance = .light
-                          case .light:
-                              obj.appearance.selectedAppearance = .dark
-                          case .dark:
-                              obj.appearance.selectedAppearance = .system
-                          }
-                        
-                    }, sfSymbolName: symbolName, rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .padding(.horizontal, 5)
-                    
-                }
             }
         }
     }

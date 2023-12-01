@@ -632,6 +632,5 @@ class ContentViewModel: ObservableObject {
     @Published var importedLogo: UIImage? = nil
     @Published var showLogoPickerSheet: Bool = false
     
-    
 }
 

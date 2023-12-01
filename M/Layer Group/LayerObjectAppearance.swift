@@ -23,10 +23,13 @@ struct LayerObjectAppearance {
     var easySettingsMode: Bool
     var showPill: Bool
     var showAppSettings: Bool
-    var enableImportTapGestures: Bool
+    @AppStorage("enableImportTapGestures") var enableImportTapGestures: Bool = false
     var selectedAppearance: AppearanceMode
-    var showWallpapers: Bool
+    var showWallpapersView: Bool
     var imageFormatPNG: Bool
+    var showWallpaperButton: Bool
+    var showApplicationSettings: Bool
+    @AppStorage("showTwoWallpapers") var showTwoWallpapers: Bool = false
 
     enum AppearanceMode {
         case light
@@ -90,8 +93,12 @@ struct LayerObjectAppearance {
         self.showAppSettings = false
         self.enableImportTapGestures = false
         self.selectedAppearance = .system
-        self.showWallpapers = false
+        self.showWallpapersView = false
         self.imageFormatPNG = false
+        self.showWallpaperButton = false
+        self.showApplicationSettings = false
+        self.showTwoWallpapers = false
+        
      
         self.backgroundColour = .clear
         self.backgroundOffsetY = 0
@@ -148,8 +155,11 @@ struct LayerObjectAppearance {
         showAppSettings: Bool,
         enableImportTapGestures: Bool,
         selectedAppearance: AppearanceMode,
-        showWallpapers: Bool,
+        showWallpapersView: Bool,
         imageFormatPNG: Bool,
+        showWallpaperButton: Bool,
+        showApplicationSettings: Bool,
+        showTwoWallpapers: Bool,
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -205,8 +215,11 @@ struct LayerObjectAppearance {
         self.showAppSettings = showAppSettings
         self.enableImportTapGestures = enableImportTapGestures
         self.selectedAppearance = selectedAppearance
-        self.showWallpapers = showWallpapers
+        self.showWallpapersView = showWallpapersView
         self.imageFormatPNG = imageFormatPNG
+        self.showWallpaperButton = showWallpaperButton
+        self.showApplicationSettings = showApplicationSettings
+        self.showTwoWallpapers = showTwoWallpapers
         
         self.backgroundOffsetY = backgroundOffsetY
         self.backgroundColour = backgroundColour

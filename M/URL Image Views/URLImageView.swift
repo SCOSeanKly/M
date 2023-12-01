@@ -15,6 +15,7 @@ struct URLImages: View {
     @State private var selectedImage: ImageModel?
     @State private var isSheetPresented = false
     @State private var saveState: SaveState = .idle
+    
     @StateObject var obj: Object
     
     enum SaveState {
@@ -38,21 +39,35 @@ struct URLImages: View {
     @State var hideIndicatorLabel: Bool = true
     @State var timeOut: CGFloat = 0.3
     
+
+    var colorScheme: ColorScheme? {
+        switch obj.appearance.selectedAppearance {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        case .system:
+            return nil
+        }
+    }
+    
     
     var body: some View {
         ZStack {
             VStack {
-                
-                ButtonView(obj: obj, viewModel: viewModel)
-                
+            
+                    ButtonView(obj: obj, viewModel: viewModel)
+                  
+             
                 if !viewModel.images.isEmpty {
                     
                     GeometryReader{
                         let size = $0.size
                         
                         ScrollViewReader(content: { proxy in
-                            ScrollView(.vertical, showsIndicators: true) {
-                                LazyVGrid(columns: Array(repeating: GridItem(), count: 3), spacing: 30) {
+                            ScrollView(.vertical, showsIndicators: false) {
+                                LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
+                                    
                                     ForEach(viewModel.images.indices.reversed(), id: \.self) { index in
                                         VStack {
                                             Button {
@@ -61,10 +76,44 @@ struct URLImages: View {
                                                 isSheetPresented = true
                                                 saveState = .idle
                                             } label: {
-                                                WebImage(url: URL(string: viewModel.images[index].image))
-                                                    .resizable()
-                                                    .customFrame()
+                                                ZStack {
+                                                    WebImage(url: URL(string: viewModel.images[index].image))
+                                                        .resizable()
+                                                        .if(obj.appearance.showTwoWallpapers) { view in
+                                                            view.customFrameTwoColumns()
+                                                        }
+                                                        .if(!obj.appearance.showTwoWallpapers) { view in
+                                                            view.customFrameThreeColumns()
+                                                        }
+                                                    
+                                                       if viewModel.images[index].isNew {
+                                                           
+                                                           ZStack {
+                                                               VStack {
+                                                                   
+                                                                   Spacer()
+                                                                   
+                                                                   Text("NEW")
+                                                                       .font(.system(size: 10))
+                                                                       .foregroundColor(.primary)
+                                                                       .padding(4)
+                                                                       .background(Color.primary.colorInvert())
+                                                                       .cornerRadius(5)
+                                                                       .frame(width: 50, height: 20, alignment: .center)
+                                                                       .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 1)
+                                                                       .padding()
+                                                               }     
+                                                           }
+                                                           .if(obj.appearance.showTwoWallpapers) { view in
+                                                               view.customFrameTwoColumns()
+                                                           }
+                                                           .if(!obj.appearance.showTwoWallpapers) { view in
+                                                               view.customFrameThreeColumns()
+                                                           }
+                                                     }
+                                                }
                                             }
+                                            
                                             Text(getFileName(from: viewModel.images[index].image))
                                                 .font(.system(size: 10))
                                                 .foregroundColor(.primary.opacity(0.5))
@@ -105,18 +154,18 @@ struct URLImages: View {
                                 .frame(width: 2, height: scrollerHeight)
                                 .overlay(alignment: .trailing, content: {
                                     Text("\(scrollID ?? 0)")
-                                        .font(.system(size: 12, design: .rounded).weight(.medium))
+                                        .font(.system(size: 14, design: .rounded).weight(.medium))
                                         .foregroundColor(.primary)
-                                        .frame(width: 40, height: 20)
+                                        .frame(width: 45, height: 20)
                                         .padding(3)
                                         .background(Color.primary.colorInvert())
                                         .clipShape(RoundedRectangle(cornerRadius: 10))
-                                        .offset(x: hideIndicatorLabel ? 65 : -13)
+                                        .offset(x: hideIndicatorLabel ? 65 : -6)
                                         .animation(.bouncy, value: hideIndicatorLabel)
                                 })
                                 .padding(.trailing,5)
                                 .offset(y: indicatorOffset + 40)
-                                .shadow(color: .black.opacity(0.2), radius: 3, x: 0, y: 1)
+                                .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 1)
                         })
                     }
                     .offset { rect in
@@ -146,25 +195,25 @@ struct URLImages: View {
                 }
             }
         }
+        .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
         .sheet(item: $selectedImage) { image in
             ZStack {
                 SheetContentView(image: image, saveState: $saveState, obj: obj)
-                  
+                
             }
-             
-                .id(image) // Ensure image is used for id
-                .onDisappear {
-                    selectedImage = nil
-                }
-                .onChange(of: saveState) {
-                    if saveState == .saved {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                            selectedImage = nil
-                            saveState = .idle // Reset saveState
-                        }
+            .id(image) // Ensure image is used for id
+            .onDisappear {
+                selectedImage = nil
+            }
+            .onChange(of: saveState) {
+                if saveState == .saved {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        selectedImage = nil
+                        saveState = .idle // Reset saveState
                     }
                 }
+            }
         }
         .onChange(of: selectedImage) {
             if selectedImage != nil {
@@ -188,8 +237,6 @@ struct URLImages: View {
         }
         return ""
     }
-    
-    
 }
 
 // MARK: Offset Reader
@@ -233,10 +280,9 @@ struct SheetContentView: View {
         ZStack {
             ScrollView {
                 VStack {
-                   
-                        LargeImageView(image: image)
-                      
-                     
+                    
+                    LargeImageView(image: image)
+                    
                     Group {
                         HStack(alignment: .center){
                             
@@ -283,16 +329,16 @@ struct SheetContentView: View {
                     }
                     .opacity(isZooming ? 0 : 1)
                     .animation(.bouncy, value: isZooming)
-                  
+                    
                 }
                 .sensoryFeedback(.selection, trigger: isTapped)
                 .onAppear {
                     fetchImageSize()
                 }
-              //  .sensoryFeedback(.selection, trigger: imageSize != "Fetching file size...")
+                //  .sensoryFeedback(.selection, trigger: imageSize != "Fetching file size...")
             }
         }
-     
+        
     }
     private func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
@@ -416,7 +462,6 @@ struct LargeImageView: View {
                 .padding(.top, 50)
                 .addPinchZoom()
             
-            
             Spacer()
         }
         .frame(width: canvasSize.width)
@@ -425,22 +470,16 @@ struct LargeImageView: View {
     }
 }
 
-struct URLImageView: View {
-    let image: ImageModel
-    
-    var body: some View {
-        VStack {
-            WebImage(url: URL(string: image.image))
-                .resizable()
-                .customFrame()
-        }
-    }
-}
-
 struct ImageModel: Identifiable, Hashable {
     let id = UUID()
     let image: String
+    var baseName: String {
+        let fileName = URL(string: image)?.deletingPathExtension().lastPathComponent ?? ""
+        return fileName
+    }
+    var isNew: Bool = false
 }
+
 
 class DataViewModel: ObservableObject {
     @Published var images: [ImageModel] = []
@@ -452,8 +491,9 @@ class DataViewModel: ObservableObject {
         }
     }
     
+    @AppStorage("seenImages") var seenImages: [String] = []
+    
     func loadImages() {
-        
         let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/Wallpapers/"
         let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/JSON/wallpaperImages.json"
         
@@ -478,7 +518,18 @@ class DataViewModel: ObservableObject {
                     self.images = imageNames.indices.map { index in
                         let imageName = imageNames[index]
                         let imageUrlString = baseUrlString + imageName
-                        let image = ImageModel(image: imageUrlString)
+                        var image = ImageModel(image: imageUrlString)
+                        
+                        // Check if the base name of the image has been seen before
+                        let isNew = !self.seenImages.contains(image.baseName)
+                        
+                        // If it's a new image, mark it as seen
+                        if isNew {
+                            self.seenImages.append(image.baseName)
+                        }
+                        
+                        image.isNew = isNew
+                        
                         return image
                     }
                 }
@@ -489,23 +540,46 @@ class DataViewModel: ObservableObject {
     }
 }
 
+
 extension View {
-    func customFrame(width: CGFloat = UIScreen.main.bounds.width / 4 , height: CGFloat = UIScreen.main.bounds.height / 4) -> some View {
+    func customFrameThreeColumns(width: CGFloat = UIScreen.main.bounds.width / 4 , height: CGFloat = UIScreen.main.bounds.height / 4, borderThickness: CGFloat = 0.5, borderColor: Color = .primary) -> some View {
         self
             .frame(width: width, height: height)
             .aspectRatio(contentMode: .fill)
             .cornerRadius(15)
             .clipped()
+            .overlay(
+                RoundedRectangle(cornerRadius: 15)
+                    .stroke(borderColor, lineWidth: borderThickness)
+                    .opacity(0.4)
+                   
+            )
             .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
                 content
-                //.opacity(phase.isIdentity ? 1 : 0)
                     .scaleEffect(phase.isIdentity ? 1 : 0.75)
-                //.blur(radius: phase.isIdentity ? 0 : 10)
+                  
             }
-        
-        
+    }
+    
+    func customFrameTwoColumns(width: CGFloat = UIScreen.main.bounds.width / 2.5 , height: CGFloat = UIScreen.main.bounds.height / 2.5, borderThickness: CGFloat = 0.5, borderColor: Color = .primary) -> some View {
+        self
+            .frame(width: width, height: height)
+            .aspectRatio(contentMode: .fill)
+            .cornerRadius(25)
+            .clipped()
+            .overlay(
+                RoundedRectangle(cornerRadius: 25)
+                    .stroke(borderColor, lineWidth: borderThickness)
+                    .opacity(0.4)
+                   
+            )
+            .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
+                content
+                    .scaleEffect(phase.isIdentity ? 1 : 0.75)
+            }
     }
 }
+
 
 
 

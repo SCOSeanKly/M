@@ -27,7 +27,7 @@ struct SettingsView: View {
                     
                     LogoSettingsView(viewModel: viewModel, obj: obj)
                     
-                    ShowCreative()
+                 
                     
                 }
                 .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
@@ -247,7 +247,7 @@ struct BackgroundSettingsView: View {
                                     Text("Background colour can either be a solid colour or a subtle gradient")
                                 }
                             
-                            CustomToggle(showTitleText: true, titleText: "Background Style" + "\(obj.appearance.backgroundColourOrGradient ? " :Solid" : " :Gradient")", bindingValue: $obj.appearance.backgroundColourOrGradient, onSymbol: "circle.righthalf.filled.inverse", offSymbol: "circle.lefthalf.striped.horizontal", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                            CustomToggle(showTitleText: true, titleText: "Background Style" + "\(obj.appearance.backgroundColourOrGradient ? " :SOLID" : " :GRADIENT")", bindingValue: $obj.appearance.backgroundColourOrGradient, onSymbol: "circle.righthalf.filled.inverse", offSymbol: "circle.lefthalf.striped.horizontal", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                         }
                         .padding(.vertical, 10)
                         .padding(.leading)

@@ -11,12 +11,17 @@ struct ShowCreative: View {
     @Environment(\.openURL) var openURL
     
     let showCreativeURL = URL(string: "https://twitter.com/SeanKly")!
- 
+    
+    var currentYear: String {
+        let calendar = Calendar.current
+        let year = calendar.component(.year, from: Date())
+        return "\(year)"
+    }
+
     var body: some View {
         ZStack {
-   
             VStack {
-                Link("© ShowCreative 2024", destination: showCreativeURL)
+                Link("© ShowCreative \(currentYear)", destination: showCreativeURL)
                 
                 HStack {
                     Text("Ver. \(Bundle.main.appVersion!)")
@@ -26,13 +31,8 @@ struct ShowCreative: View {
                 
             }
             .font(.footnote)
-            .frame(maxWidth: .infinity)
-        }
-        .scaleEffect(0.8)
-        
-        Spacer()
-        
-        Spacer()
             .frame(height: 50)
+        }
     }
 }
+

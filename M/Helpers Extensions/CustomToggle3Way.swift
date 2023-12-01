@@ -19,7 +19,7 @@ struct CustomToggle3Way: View {
     let rotate: Bool
     let colors: [Color]
     @State private var xOffset: CGFloat = -10
-    @StateObject var obj = Object()
+    var obj: Object
     @State private var isTapped: Bool = false
     @State private var rotationAngle: Angle = .degrees(0)
     
@@ -120,27 +120,5 @@ struct CustomToggle3Way: View {
         updatedStates.append(first)
         
         return updatedStates
-    }
-}
-
-struct ToggleView2: View {
-    @State private var toggleStates: [ToggleState] = [.first, .second, .third]
-    
-    var body: some View {
-        CustomToggle3Way(
-            showTitleText: true,
-            titleText: "Test Toggle View",
-            bindingValues: $toggleStates,
-            symbols: ["circle.lefthalf.filled", "circle.righthalf.filled", "xmark.circle"],
-            rotate: false,
-            colors: [.green, .red, .gray]
-        )
-        .padding()
-    }
-}
-
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ToggleView2()
     }
 }
