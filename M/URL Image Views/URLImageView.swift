@@ -272,47 +272,66 @@ struct SheetContentView: View {
                     
                     Group {
                         HStack(alignment: .center){
+                            if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                                Text(getFileName(from: image.image))
+                                    .padding(.top, 6)
+                                
+                                Text(" • ")
+                                    .padding(.top, 6)
+                            }
                             
-                            Text(getFileName(from: image.image))
-                                .padding(.top, 6)
-                            
-                            Text(" • ")
-                                .padding(.top, 6)
-                            
-                            Text(imageSize)
-                                .padding(.top, 6)
+                            if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                                Text(imageSize)
+                                    .padding(.top, 6)
+                            } else {
+                                
+                                VStack {
+                                    
+                                    Image(systemName: "exclamationmark.triangle.fill")
+                                        .foregroundColor(.yellow)
+                                        .font(.title2)
+                                    Text(imageSize)
+                                        .foregroundStyle(.red)
+                                        .padding(.top, 6)
+                                }
+                                    
+                            }
                             
                             if imageSize != "Fetching file size..." {
-                                Text(imageFileFormat.dropFirst(2))
-                                    .padding(.vertical, 4)
-                                    .padding(.horizontal, 8)
-                                    .background(.ultraThinMaterial)
-                                    .clipShape(RoundedRectangle(cornerRadius: 50))
-                                    .offset(y: 2)
+                                if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                                    Text(imageFileFormat.dropFirst(2))
+                                        .padding(.vertical, 3)
+                                        .padding(.horizontal, 6)
+                                        .background(.ultraThinMaterial)
+                                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                                        .offset(y: 2)
+                                }
                             }
                         }
                         .foregroundColor(.gray)
                         .font(.caption)
                         .offset(y: 50)
                         
-                        Button {
-                            isTapped.toggle()
-                            saveImage()
-                        } label: {
-                            switch saveState {
-                            case .idle:
-                                SaveStateIdle()
-                            case .saving:
-                                SaveStateSaving()
-                            case .saved:
-                                SaveStateSaved()
+                        if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                            Button {
+                                isTapped.toggle()
+                                saveImage()
+                            } label: {
+                                switch saveState {
+                                case .idle:
+                                    SaveStateIdle()
+                                case .saving:
+                                    SaveStateSaving()
+                                case .saved:
+                                    SaveStateSaved()
+                                }
                             }
+                            .padding(8)
+                            .background(.ultraThinMaterial)
+                            .clipShape(RoundedRectangle(cornerRadius: 24))
+                            .animation(.bouncy, value: saveState)
+                            .offset(y: -30)
                         }
-                        .padding(8)
-                        .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                        .animation(.bouncy, value: saveState)
-                        .offset(y: -30)
                     }
                     .opacity(isZooming ? 0 : 1)
                     .animation(.bouncy, value: isZooming)
@@ -338,11 +357,11 @@ struct SheetContentView: View {
         guard var urlComponents = URLComponents(string: image.image) else {
             return
         }
-        
+
         if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
             if let imageName = pathComponents.last {
                 _ = (imageName as NSString).pathExtension
-                
+
                 var modifiedImageName: String
                 if imageName.lowercased().hasSuffix(".png") {
                     modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.PNG", options: .caseInsensitive)
@@ -351,34 +370,49 @@ struct SheetContentView: View {
                 } else {
                     modifiedImageName = imageName
                 }
-                
+
                 let modifiedExtension = (modifiedImageName as NSString).pathExtension
                 pathComponents[pathComponents.count - 1] = modifiedImageName
                 urlComponents.path = pathComponents.joined(separator: "/")
-                
+
                 guard let modifiedURL = urlComponents.url else {
                     return
                 }
-                
+
                 var request = URLRequest(url: modifiedURL)
                 request.httpMethod = "HEAD"
-                
-                URLSession.shared.dataTask(with: request) { _, response, _ in
+
+                URLSession.shared.dataTask(with: request) { _, response, error in
                     if let httpResponse = response as? HTTPURLResponse {
                         if let contentLength = httpResponse.allHeaderFields["Content-Length"] as? String,
                            let size = Int(contentLength) {
                             let formattedSize = ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
-                            let fileFormat = modifiedExtension.isEmpty ? "" : ".\(modifiedExtension)"
+
+                            // Show "ERROR" if the file size is less than 0.1 MB
+                            let fileSizeInMB = Double(size) / (1024 * 1024)
+                            let showError = fileSizeInMB < 0.1
+
                             DispatchQueue.main.async {
-                                imageSize = "Size: \(formattedSize)"
-                                imageFileFormat = " \(fileFormat)"
+                                if showError {
+                                    imageSize = "ERROR - FILE DOES NOT EXIST"
+                                } else {
+                                    imageSize = "Size: \(formattedSize)"
+                                }
+                                imageFileFormat = " \(modifiedExtension.isEmpty ? "" : ".\(modifiedExtension)")"
                             }
+                        }
+                    } else {
+                        // Handle the case where the file does not exist
+                        DispatchQueue.main.async {
+                            imageSize = "ERROR - FILE DOES NOT EXIST"
                         }
                     }
                 }.resume()
             }
         }
     }
+
+
     
     private func saveImage() {
         saveState = .saving
