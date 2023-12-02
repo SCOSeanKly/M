@@ -38,7 +38,6 @@ struct URLImages: View {
     @State var hideIndicatorLabel: Bool = true
     @State var timeOut: CGFloat = 0.3
     
-
     var colorScheme: ColorScheme? {
         switch obj.appearance.selectedAppearance {
         case .light:
@@ -56,7 +55,8 @@ struct URLImages: View {
             VStack {
             
                     ButtonView(obj: obj, viewModel: viewModel)
-                  
+                
+                
                 if !viewModel.images.isEmpty {
                     
                     GeometryReader{
@@ -212,6 +212,10 @@ struct URLImages: View {
         }
     }
     
+    func totalNewWallpapers() -> Int {
+            return viewModel.images.filter { $0.isNew }.count
+        }
+    
     func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
             let fileName = url.deletingPathExtension().lastPathComponent
@@ -220,6 +224,7 @@ struct URLImages: View {
         return ""
     }
 }
+
 
 // MARK: Offset Reader
 extension View{
@@ -461,6 +466,8 @@ struct ImageModel: Identifiable, Hashable {
     }
     var isNew: Bool = false
 }
+
+
 
 
 class DataViewModel: ObservableObject {

@@ -13,6 +13,9 @@ struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
     @StateObject var obj: Object
     
+    @State private var totalNewWallpapersCount = 0
+
+    
     var body: some View {
         if obj.appearance.showWallpapersView {
             
