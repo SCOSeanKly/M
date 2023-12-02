@@ -64,6 +64,7 @@ struct ButtonView: View {
          
              
         }
+     
         .sensoryFeedback(.selection, trigger: isTapped)
         .padding()
         .onAppear{
@@ -81,22 +82,24 @@ struct ButtonView: View {
             }
         }
         
-        HStack {
-            Text("Wallpapers")
-                .font(.largeTitle.bold())
+        VStack {
+            HStack {
+                Text("Wallpapers")
+                    .font(.largeTitle.bold())
+                
+                Spacer()
+                
+            }
+            .padding(.horizontal)
             
-            Spacer()
-            
+            HStack {
+                Text("A collection of wallpapers")
+                    .foregroundStyle(.gray)
+                
+                Spacer()
+                
+            }
+            .padding(.horizontal)
         }
-        .padding(.horizontal)
-        
-        HStack {
-            Text("A collection of wallpapers")
-                .foregroundStyle(.gray)
-            
-            Spacer()
-            
-        }
-        .padding(.horizontal)
     }
 }

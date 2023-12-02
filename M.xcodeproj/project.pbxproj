@@ -13,6 +13,8 @@
 		3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */; };
 		3E23E90E2B0F997700DE4460 /* ZoomGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */; };
 		3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */; };
+		3E2D61622B1B213100C83E14 /* New.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2D61612B1B213100C83E14 /* New.swift */; };
+		3E2D61642B1B26D700C83E14 /* NewWallAddedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */; };
 		3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImageView.swift */; };
 		3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */; };
 		3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD92B0E196B007A1714 /* URLButtonView.swift */; };
@@ -63,6 +65,8 @@
 		3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatWalpaperCount.swift; sourceTree = "<group>"; };
 		3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomGesture.swift; sourceTree = "<group>"; };
 		3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggle3Way.swift; sourceTree = "<group>"; };
+		3E2D61612B1B213100C83E14 /* New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = New.swift; sourceTree = "<group>"; };
+		3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWallAddedView.swift; sourceTree = "<group>"; };
 		3E5FF5922B078C0D0007AF8D /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSaveStateViews.swift; sourceTree = "<group>"; };
 		3E611AD92B0E196B007A1714 /* URLButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLButtonView.swift; sourceTree = "<group>"; };
@@ -136,6 +140,7 @@
 				3E611AD92B0E196B007A1714 /* URLButtonView.swift */,
 				3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */,
 				3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */,
+				3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */,
 			);
 			path = "URL Image Views";
 			sourceTree = "<group>";
@@ -143,6 +148,7 @@
 		3E69AF6E2AF55875007244C1 = {
 			isa = PBXGroup;
 			children = (
+				3E2D61612B1B213100C83E14 /* New.swift */,
 				3E69AF792AF55875007244C1 /* M */,
 				3E69AF782AF55875007244C1 /* Products */,
 			);
@@ -331,6 +337,7 @@
 				3E69AF912AF558C6007244C1 /* ContentViewModel.swift in Sources */,
 				3E69AFC12AF55B08007244C1 /* CustomPresentation.swift in Sources */,
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
+				3E2D61622B1B213100C83E14 /* New.swift in Sources */,
 				3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */,
 				3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */,
 				3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */,
@@ -367,6 +374,7 @@
 				3E69AFCB2AF55BBD007244C1 /* UIView+Extension.swift in Sources */,
 				3E69AFA92AF55A1D007244C1 /* SaveImageButton.swift in Sources */,
 				3E69AFA22AF559B0007244C1 /* CustomImageView.swift in Sources */,
+				3E2D61642B1B26D700C83E14 /* NewWallAddedView.swift in Sources */,
 				3E69AF972AF55913007244C1 /* LayerObjectAppearance.swift in Sources */,
 				3E69AF952AF558F4007244C1 /* LayerObject.swift in Sources */,
 				3E69AF7B2AF55875007244C1 /* MApp.swift in Sources */,

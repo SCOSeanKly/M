@@ -27,12 +27,11 @@ struct URLImages: View {
     var totalFilesCount: Int {
         return viewModel.images.count
     }
-    @State private var showCount: Bool = false
     
+    @State private var showCount: Bool = false
     @State private var scrollID: Int?
     @State private var scrollPosition: CGFloat = 0.0
     @State private var isTapped: Bool = false
-    
     @State var scrollerHeight: CGFloat = 0
     @State var indicatorOffset: CGFloat = 0
     @State var startOffset: CGFloat = 0
@@ -58,7 +57,6 @@ struct URLImages: View {
             
                     ButtonView(obj: obj, viewModel: viewModel)
                   
-             
                 if !viewModel.images.isEmpty {
                     
                     GeometryReader{
@@ -67,7 +65,6 @@ struct URLImages: View {
                         ScrollViewReader(content: { proxy in
                             ScrollView(.vertical, showsIndicators: false) {
                                 LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
-                                    
                                     ForEach(viewModel.images.indices.reversed(), id: \.self) { index in
                                         VStack {
                                             Button {
@@ -88,22 +85,7 @@ struct URLImages: View {
                                                     
                                                        if viewModel.images[index].isNew {
                                                            
-                                                           ZStack {
-                                                               VStack {
-                                                                   
-                                                                   Spacer()
-                                                                   
-                                                                   Text("NEW")
-                                                                       .font(.system(size: 10))
-                                                                       .foregroundColor(.primary)
-                                                                       .padding(4)
-                                                                       .background(Color.primary.colorInvert())
-                                                                       .cornerRadius(5)
-                                                                       .frame(width: 50, height: 20, alignment: .center)
-                                                                       .shadow(color: .black.opacity(0.15), radius: 3, x: 0, y: 1)
-                                                                       .padding()
-                                                               }     
-                                                           }
+                                                           NewWallAddedView()
                                                            .if(obj.appearance.showTwoWallpapers) { view in
                                                                view.customFrameTwoColumns()
                                                            }
@@ -579,10 +561,6 @@ extension View {
             }
     }
 }
-
-
-
-
 
 
 
