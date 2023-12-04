@@ -12,7 +12,7 @@ struct UnlockPremiumView: View {
     @StateObject var obj: Object
     @State var iapPrice: String = ""
     @State var iapID: String
-    
+    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
     
     var body: some View {
        
@@ -43,29 +43,48 @@ struct UnlockPremiumView: View {
                     Spacer()
                 }
                 
-                HStack {
-                    Spacer()
-                    
-                    Button {
+                if !showPremiumContent {
+                    HStack {
+                        Spacer()
                         
-                        feedback()
-                        
-                        IAP.shared.purchase(iapID) { _ in
+                        Button {
+                            
+                            feedback()
+                            
+                            IAP.shared.purchase(iapID) { _ in
+                            }
+                            
+                        } label: {
+                            
+                            Text(iapPrice)
+                                .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
+                                .foregroundStyle(.primary)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(.ultraThinMaterial)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: 100))
                         }
-                         
-                    } label: {
-                        Text(iapPrice)
-                            .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
-                            .foregroundStyle(.primary)
-                            .padding(.horizontal, 10)
-                            .padding(.vertical, 5)
-                            .background(.ultraThinMaterial)
-                            .clipShape(
-                                RoundedRectangle(cornerRadius: 100))
                     }
+                    .buttonStyle(.plain)
+                    .padding(.vertical)
+                } else {
+                    HStack {
+                        Spacer()
+                    
+                            Text("Premium Unlocked")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
+                                .foregroundStyle(.yellow)
+                                .padding(.horizontal, 10)
+                                .padding(.vertical, 5)
+                                .background(.ultraThinMaterial)
+                                .clipShape(
+                                    RoundedRectangle(cornerRadius: 100))
+                        
+                    }
+                  
+                    .padding(.vertical)
                 }
-                .buttonStyle(.plain)
-                .padding(.vertical)
                 
                 Spacer()
             }

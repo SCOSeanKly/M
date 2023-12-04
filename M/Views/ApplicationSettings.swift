@@ -229,6 +229,7 @@ struct ApplicationSettings: View {
                     .padding(.bottom, 50)
             }
         }
+        .ignoresSafeArea(edges: .bottom)
         .sensoryFeedback(.selection, trigger: isTapped)
         .customPresentationWithBlur(detent: .large, blurRadius: 0, backgroundColorOpacity: 1.0)
         .frame(height: UIScreen.main.bounds.height * 0.875)

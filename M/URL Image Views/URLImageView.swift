@@ -57,7 +57,6 @@ struct URLImages: View {
                 
                 ButtonView(obj: obj, viewModel: viewModel)
                 
-                
                 if !viewModel.images.isEmpty {
                     
                     GeometryReader{
@@ -120,7 +119,6 @@ struct URLImages: View {
                                                 .foregroundColor(.primary.opacity(0.5))
                                                 .lineLimit(1)
                                                 .multilineTextAlignment(.center)
-
                                         }
                                     }
                                 }
@@ -236,7 +234,6 @@ struct URLImages: View {
         return viewModel.images.filter { $0.isNew }.count
     }
     
-    
     func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
             let fileName = url.deletingPathExtension().lastPathComponent
@@ -296,6 +293,13 @@ struct SheetContentView: View {
                         
                         HStack(alignment: .center){
                             if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                                
+                                if getFileName(from: image.image).contains("p_") {
+                                    Image(systemName: "star.square")
+                                        .padding(.top, 6)
+                                        .foregroundStyle(.yellow)
+                                }
+                                
                                 Text(getFileName(from: image.image)
                                     .replacingOccurrences(of: "p_", with: ""))
                                     .padding(.top, 6)
@@ -338,13 +342,13 @@ struct SheetContentView: View {
                         
                         if imageSize != "ERROR - FILE DOES NOT EXIST" {
                             //MARK:  Check if the filename contains "p_" for premium
-                            if getFileName(from: image.image).contains("p_") && showPremiumContent {
+                            if getFileName(from: image.image).contains("p_") && !showPremiumContent {
                                 HStack {
                                     Image(systemName: "star.square")
                                         .font(.title3)
                                         .foregroundStyle(.yellow)
                                     
-                                    Text("Unlock Premium Content In Settings")
+                                    Text("Premium Required. Unlock In Settings")
                                         .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
                                     
                                 }
