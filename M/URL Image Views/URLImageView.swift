@@ -84,7 +84,7 @@ struct URLImages: View {
                                                             view.customFrameThreeColumns()
                                                         }.overlay{
                                                             //MARK: Add a star if wallpaper is premium
-                                                              if viewModel.images[index].image.contains("premium_") {
+                                                              if viewModel.images[index].image.contains("p_") {
                                                             VStack {
                                                                 HStack {
                                                                     
@@ -114,11 +114,13 @@ struct URLImages: View {
                                                 }
                                             }
                                             
-                                            Text(getFileName(from: viewModel.images[index].image))
+                                            Text(getFileName(from: viewModel.images[index].image)
+                                                .replacingOccurrences(of: "p_", with: ""))
                                                 .font(.system(size: 10))
                                                 .foregroundColor(.primary.opacity(0.5))
                                                 .lineLimit(1)
                                                 .multilineTextAlignment(.center)
+
                                         }
                                     }
                                 }
@@ -234,6 +236,7 @@ struct URLImages: View {
         return viewModel.images.filter { $0.isNew }.count
     }
     
+    
     func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
             let fileName = url.deletingPathExtension().lastPathComponent
@@ -293,9 +296,10 @@ struct SheetContentView: View {
                         
                         HStack(alignment: .center){
                             if imageSize != "ERROR - FILE DOES NOT EXIST" {
-                                Text(getFileName(from: image.image))
+                                Text(getFileName(from: image.image)
+                                    .replacingOccurrences(of: "p_", with: ""))
                                     .padding(.top, 6)
-                                
+
                                 Text(" • ")
                                     .padding(.top, 6)
                             }
@@ -333,8 +337,8 @@ struct SheetContentView: View {
                         .offset(y: 50)
                         
                         if imageSize != "ERROR - FILE DOES NOT EXIST" {
-                            // Check if the filename contains "_premium"
-                            if getFileName(from: image.image).contains("_premium") && showPremiumContent {
+                            //MARK:  Check if the filename contains "p_" for premium
+                            if getFileName(from: image.image).contains("p_") && showPremiumContent {
                                 HStack {
                                     Image(systemName: "star.square")
                                         .font(.title3)
@@ -549,15 +553,14 @@ class DataViewModel: ObservableObject {
     @AppStorage("seenImages") var seenImages: [String] = []
     
     func loadImages() {
-        /*
+        
         let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/Wallpapers/"
         let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/JSON/wallpaperImages.json"
-         */
-        
-        
+         
+        /*
          let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Wallpapers/"
          let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/wallpaperImages.json"
-         
+         */
         
         guard let url = URL(string: urlString) else {
             return
