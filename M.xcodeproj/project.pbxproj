@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */; };
 		3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */; };
+		3E1927502B1DF1DC0029B011 /* UnlockPremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */; };
 		3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E9092B0F5D1800DE4460 /* Tip Views.swift */; };
 		3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */; };
 		3E23E90E2B0F997700DE4460 /* ZoomGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */; };
@@ -61,6 +62,7 @@
 /* Begin PBXFileReference section */
 		3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageButton.swift; sourceTree = "<group>"; };
 		3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportButtons.swift; sourceTree = "<group>"; };
+		3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPremiumView.swift; sourceTree = "<group>"; };
 		3E23E9092B0F5D1800DE4460 /* Tip Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tip Views.swift"; sourceTree = "<group>"; };
 		3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatWalpaperCount.swift; sourceTree = "<group>"; };
 		3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomGesture.swift; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 				3E72A08B2B17A01B00797359 /* MockupView.swift */,
 				3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */,
 				3EC0D5B32B18B9B700365B38 /* DonationView.swift */,
+				3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -376,6 +379,7 @@
 				3E69AFA22AF559B0007244C1 /* CustomImageView.swift in Sources */,
 				3E2D61642B1B26D700C83E14 /* NewWallAddedView.swift in Sources */,
 				3E69AF972AF55913007244C1 /* LayerObjectAppearance.swift in Sources */,
+				3E1927502B1DF1DC0029B011 /* UnlockPremiumView.swift in Sources */,
 				3E69AF952AF558F4007244C1 /* LayerObject.swift in Sources */,
 				3E69AF7B2AF55875007244C1 /* MApp.swift in Sources */,
 			);

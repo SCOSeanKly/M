@@ -15,12 +15,6 @@ struct DonationView: View {
     
     var body: some View {
         
-        ZStack {
-            RoundedRectangle(cornerRadius: 20)
-                .strokeBorder(.primary,  lineWidth: 1)
-                .frame(height: 150)
-                .padding()
-            
             VStack {
                 
                 Spacer()
@@ -30,7 +24,7 @@ struct DonationView: View {
                         .font(.title3)
                     
                     Text("Show Your Support")
-                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                        .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
                     
                     Spacer()
                 }
@@ -42,6 +36,7 @@ struct DonationView: View {
                     Text("Your support means the world to us. Every contribution, no matter the amount, goes a long way in helping us continue creating and improving M App for you. Thank you for being a part of our journey!")
                         .font(.system(size: obj.appearance.settingsSliderFontSize))
                         .foregroundStyle(.gray)
+                        .fixedSize(horizontal: false, vertical: true)
                     
                     Spacer()
                 }
@@ -64,12 +59,17 @@ struct DonationView: View {
                     }
                 }
                 .buttonStyle(.plain)
-                .padding(.bottom)
+                .padding(.vertical)
                 
                 Spacer()
             }
-            .frame(width: UIScreen.main.bounds.width * 0.85, height: 180)
-        }
+            .padding(.horizontal)
+            .padding(.horizontal)
+            .background{
+                RoundedRectangle(cornerRadius: 20)
+                    .strokeBorder(.primary,  lineWidth: 1)
+                    .padding()
+            }
         
         .alert(alertConfig: $showDonation) {
             ZStack {

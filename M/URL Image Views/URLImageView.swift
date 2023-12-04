@@ -49,12 +49,13 @@ struct URLImages: View {
         }
     }
     
+    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
     
     var body: some View {
         ZStack {
             VStack {
-            
-                    ButtonView(obj: obj, viewModel: viewModel)
+                
+                ButtonView(obj: obj, viewModel: viewModel)
                 
                 
                 if !viewModel.images.isEmpty {
@@ -81,18 +82,35 @@ struct URLImages: View {
                                                         }
                                                         .if(!obj.appearance.showTwoWallpapers) { view in
                                                             view.customFrameThreeColumns()
+                                                        }.overlay{
+                                                            //MARK: Add a star if wallpaper is premium
+                                                              if viewModel.images[index].image.contains("premium_") {
+                                                            VStack {
+                                                                HStack {
+                                                                    
+                                                                    Spacer()
+                                                                    
+                                                                    Image(systemName: "star.square")
+                                                                        .font(.title3)
+                                                                        .foregroundStyle(.yellow)
+                                                                        .padding()
+                                                                    
+                                                                }
+                                                                
+                                                                Spacer()
+                                                            }
+                                                                }
                                                         }
                                                     
-                                                       if viewModel.images[index].isNew {
-                                                           
-                                                           NewWallAddedView()
-                                                           .if(obj.appearance.showTwoWallpapers) { view in
-                                                               view.customFrameTwoColumns()
-                                                           }
-                                                           .if(!obj.appearance.showTwoWallpapers) { view in
-                                                               view.customFrameThreeColumns()
-                                                           }
-                                                     }
+                                                    if viewModel.images[index].isNew {
+                                                        NewWallAddedView()
+                                                            .if(obj.appearance.showTwoWallpapers) { view in
+                                                                view.customFrameTwoColumns()
+                                                            }
+                                                            .if(!obj.appearance.showTwoWallpapers) { view in
+                                                                view.customFrameThreeColumns()
+                                                            }
+                                                    }
                                                 }
                                             }
                                             
@@ -181,7 +199,7 @@ struct URLImages: View {
         .edgesIgnoringSafeArea(.bottom)
         .sheet(item: $selectedImage) { image in
             ZStack {
-                SheetContentView(image: image, saveState: $saveState, obj: obj)
+                SheetContentView(image: image, saveState: $saveState, obj: obj, showPremiumContent: $showPremiumContent)
                 
             }
             .id(image) // Ensure image is used for id
@@ -213,8 +231,8 @@ struct URLImages: View {
     }
     
     func totalNewWallpapers() -> Int {
-            return viewModel.images.filter { $0.isNew }.count
-        }
+        return viewModel.images.filter { $0.isNew }.count
+    }
     
     func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
@@ -262,6 +280,7 @@ struct SheetContentView: View {
     @State private var isTapped: Bool = false
     let saveTip = SaveWallpaperTip()
     @SceneStorage("isZooming") var isZooming: Bool = false
+    @Binding var showPremiumContent: Bool
     
     var body: some View {
         ZStack {
@@ -271,6 +290,7 @@ struct SheetContentView: View {
                     LargeImageView(image: image)
                     
                     Group {
+                        
                         HStack(alignment: .center){
                             if imageSize != "ERROR - FILE DOES NOT EXIST" {
                                 Text(getFileName(from: image.image))
@@ -294,7 +314,7 @@ struct SheetContentView: View {
                                         .foregroundStyle(.red)
                                         .padding(.top, 6)
                                 }
-                                    
+                                
                             }
                             
                             if imageSize != "Fetching file size..." {
@@ -313,24 +333,40 @@ struct SheetContentView: View {
                         .offset(y: 50)
                         
                         if imageSize != "ERROR - FILE DOES NOT EXIST" {
-                            Button {
-                                isTapped.toggle()
-                                saveImage()
-                            } label: {
-                                switch saveState {
-                                case .idle:
-                                    SaveStateIdle()
-                                case .saving:
-                                    SaveStateSaving()
-                                case .saved:
-                                    SaveStateSaved()
+                            // Check if the filename contains "_premium"
+                            if getFileName(from: image.image).contains("_premium") && showPremiumContent {
+                                HStack {
+                                    Image(systemName: "star.square")
+                                        .font(.title3)
+                                        .foregroundStyle(.yellow)
+                                    
+                                    Text("Unlock Premium Content In Settings")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
+                                    
                                 }
+                                .padding()
+                                .offset(y: -30)
+                                
+                            } else {
+                                Button {
+                                    isTapped.toggle()
+                                    saveImage()
+                                } label: {
+                                    switch saveState {
+                                    case .idle:
+                                        SaveStateIdle()
+                                    case .saving:
+                                        SaveStateSaving()
+                                    case .saved:
+                                        SaveStateSaved()
+                                    }
+                                }
+                                .padding(8)
+                                .background(.ultraThinMaterial)
+                                .clipShape(RoundedRectangle(cornerRadius: 24))
+                                .animation(.bouncy, value: saveState)
+                                .offset(y: -30)
                             }
-                            .padding(8)
-                            .background(.ultraThinMaterial)
-                            .clipShape(RoundedRectangle(cornerRadius: 24))
-                            .animation(.bouncy, value: saveState)
-                            .offset(y: -30)
                         }
                     }
                     .opacity(isZooming ? 0 : 1)
@@ -341,7 +377,6 @@ struct SheetContentView: View {
                 .onAppear {
                     fetchImageSize()
                 }
-                //  .sensoryFeedback(.selection, trigger: imageSize != "Fetching file size...")
             }
         }
         
@@ -357,11 +392,11 @@ struct SheetContentView: View {
         guard var urlComponents = URLComponents(string: image.image) else {
             return
         }
-
+        
         if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
             if let imageName = pathComponents.last {
                 _ = (imageName as NSString).pathExtension
-
+                
                 var modifiedImageName: String
                 if imageName.lowercased().hasSuffix(".png") {
                     modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.PNG", options: .caseInsensitive)
@@ -370,28 +405,28 @@ struct SheetContentView: View {
                 } else {
                     modifiedImageName = imageName
                 }
-
+                
                 let modifiedExtension = (modifiedImageName as NSString).pathExtension
                 pathComponents[pathComponents.count - 1] = modifiedImageName
                 urlComponents.path = pathComponents.joined(separator: "/")
-
+                
                 guard let modifiedURL = urlComponents.url else {
                     return
                 }
-
+                
                 var request = URLRequest(url: modifiedURL)
                 request.httpMethod = "HEAD"
-
+                
                 URLSession.shared.dataTask(with: request) { _, response, error in
                     if let httpResponse = response as? HTTPURLResponse {
                         if let contentLength = httpResponse.allHeaderFields["Content-Length"] as? String,
                            let size = Int(contentLength) {
                             let formattedSize = ByteCountFormatter.string(fromByteCount: Int64(size), countStyle: .file)
-
+                            
                             // Show "ERROR" if the file size is less than 0.1 MB
                             let fileSizeInMB = Double(size) / (1024 * 1024)
                             let showError = fileSizeInMB < 0.1
-
+                            
                             DispatchQueue.main.async {
                                 if showError {
                                     imageSize = "ERROR - FILE DOES NOT EXIST"
@@ -411,8 +446,8 @@ struct SheetContentView: View {
             }
         }
     }
-
-
+    
+    
     
     private func saveImage() {
         saveState = .saving
@@ -501,9 +536,6 @@ struct ImageModel: Identifiable, Hashable {
     var isNew: Bool = false
 }
 
-
-
-
 class DataViewModel: ObservableObject {
     @Published var images: [ImageModel] = []
     @Published var forceRefresh: Bool = false {
@@ -563,7 +595,6 @@ class DataViewModel: ObservableObject {
     }
 }
 
-
 extension View {
     func customFrameThreeColumns(width: CGFloat = UIScreen.main.bounds.width / 4 , height: CGFloat = UIScreen.main.bounds.height / 4, borderThickness: CGFloat = 0.5, borderColor: Color = .primary) -> some View {
         self
@@ -575,12 +606,12 @@ extension View {
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(borderColor, lineWidth: borderThickness)
                     .opacity(0.4)
-                   
+                
             )
             .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
                 content
                     .scaleEffect(phase.isIdentity ? 1 : 0.75)
-                  
+                
             }
     }
     
@@ -594,7 +625,7 @@ extension View {
                 RoundedRectangle(cornerRadius: 25)
                     .stroke(borderColor, lineWidth: borderThickness)
                     .opacity(0.4)
-                   
+                
             )
             .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
                 content

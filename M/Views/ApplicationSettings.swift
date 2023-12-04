@@ -71,6 +71,9 @@ struct ApplicationSettings: View {
             .padding(.top)
           
             //MARK: Donation View
+            
+           UnlockPremiumView(obj: obj, iapID: IAP.purchaseID_UnlockPremium)
+            
            DonationView(obj: obj)
             
             Divider()
