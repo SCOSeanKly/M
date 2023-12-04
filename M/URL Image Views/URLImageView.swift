@@ -549,13 +549,15 @@ class DataViewModel: ObservableObject {
     @AppStorage("seenImages") var seenImages: [String] = []
     
     func loadImages() {
+        /*
         let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/Wallpapers/"
         let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/JSON/wallpaperImages.json"
+         */
         
-        /*
+        
          let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Wallpapers/"
          let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/wallpaperImages.json"
-         */
+         
         
         guard let url = URL(string: urlString) else {
             return
