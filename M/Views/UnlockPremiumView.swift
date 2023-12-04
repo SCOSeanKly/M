@@ -40,8 +40,6 @@ struct UnlockPremiumView: View {
                         .foregroundStyle(.gray)
                         .fixedSize(horizontal: false, vertical: true)
                     
-                    
-                    
                     Spacer()
                 }
                 
@@ -64,7 +62,6 @@ struct UnlockPremiumView: View {
                             .background(.ultraThinMaterial)
                             .clipShape(
                                 RoundedRectangle(cornerRadius: 100))
-                        
                     }
                 }
                 .buttonStyle(.plain)
