@@ -72,7 +72,7 @@ struct ApplicationSettings: View {
           
             //MARK: Donation View
             
-            ScrollView {
+            ScrollView(.vertical, showsIndicators: false) {
                 UnlockPremiumView(obj: obj, iapID: IAP.purchaseID_UnlockPremium)
                 
                 DonationView(obj: obj)
@@ -92,7 +92,6 @@ struct ApplicationSettings: View {
                             .font(.system(size: obj.appearance.settingsSliderFontSize))
                         + Text("\(obj.appearance.enableImportTapGestures ? " Enabled" : " Disabled")")
                             .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
-                        
                         
                         Spacer()
                         
@@ -161,10 +160,6 @@ struct ApplicationSettings: View {
                 .padding(.horizontal)
                 .padding(.vertical, 2.5)
                 
-                
-                
-                
-                
                 VStack {
                     HStack {
                         
@@ -228,6 +223,9 @@ struct ApplicationSettings: View {
                 ShowCreative()
                     .padding(.bottom, 50)
             }
+        }
+        .onAppear {
+            let _ = IAP.shared
         }
         .ignoresSafeArea(edges: .bottom)
         .sensoryFeedback(.selection, trigger: isTapped)

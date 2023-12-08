@@ -632,5 +632,8 @@ class ContentViewModel: ObservableObject {
     @Published var importedLogo: UIImage? = nil
     @Published var showLogoPickerSheet: Bool = false
     
+    @Published var importedOverlay: UIImage? = nil
+    @Published var showOverlayPickerSheet: Bool = false
+    
 }
 

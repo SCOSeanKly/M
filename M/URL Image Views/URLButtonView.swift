@@ -16,8 +16,17 @@ struct ButtonView: View {
     @ObservedObject var viewModel = DataViewModel()
     
     var totalFilesCount: Int {
-        return viewModel.images.count
+        if obj.appearance.showPremiumWallpapersOnly {
+            // Count only images with "p_" in the name
+            return viewModel.images.filter { $0.image.contains("p_") }.count
+        } else {
+            // Count all images
+            return viewModel.images.count
+        }
     }
+
+    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
+    
     
     var body: some View {
         HStack {
@@ -48,10 +57,12 @@ struct ButtonView: View {
                       
                     
                     if showCount {
-                        Text("\(formattedCount(totalFilesCount))")
-                            .font(.system(.body, design: .rounded).weight(.medium))
-                            .padding(.horizontal, 5)
-                            .tint(.primary)
+                        if totalFilesCount != 0 {
+                            Text("\(formattedCount(totalFilesCount))")
+                                .font(.system(.body, design: .rounded).weight(.medium))
+                                .padding(.horizontal, 5)
+                                .tint(.primary)
+                        }
                     }
                 }
                 .padding(8)
@@ -61,10 +72,18 @@ struct ButtonView: View {
           
             Spacer()
             
-         
-             
+            if showPremiumContent {
+                
+                Image(systemName: "star.square")
+                    .font(.title3)
+                    .foregroundStyle(.yellow)
+                
+                Text("Premium")
+                    .font(.subheadline)
+                    .foregroundStyle(.yellow)
+            }
+            
         }
-     
         .sensoryFeedback(.selection, trigger: isTapped)
         .padding()
         .onAppear{
@@ -88,12 +107,15 @@ struct ButtonView: View {
                     .font(.largeTitle.bold())
                 
                 Spacer()
-                
+                /*
+                CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showPremiumWallpapersOnly, onSymbol: "star", offSymbol: "line.3.horizontal.decrease", rotate: false, onColor: .yellow, offColor: .gray, obj: obj)
+                */
             }
             .padding(.horizontal)
             
             HStack {
-                Text("A collection of wallpapers")
+                Text("A collection of premium wallpapers")
+                    .font(.subheadline)
                     .foregroundStyle(.gray)
                 
                 Spacer()

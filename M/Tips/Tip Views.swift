@@ -53,3 +53,18 @@ struct GoBackToMockupViewTip: Tip {
           
     }
 }
+
+struct ImportOverlayTip: Tip {
+    var title: Text {
+        Text("Import Overlay")
+    }
+    
+    var message: Text? {
+        Text("Tap here to import a transparent PNG image to overlay on the wallpaper image")
+    }
+    
+    var image: Image? {
+        Image(systemName: "info.circle")
+          
+    }
+}

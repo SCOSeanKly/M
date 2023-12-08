@@ -99,9 +99,9 @@ struct DonationView: View {
                     
                     HStack (spacing: 50) {
                       
-                        IAPButton(iapText: "Bronze", iapID: IAP.purchaseID_bronze, color: .brown)
-                        IAPButton(iapText: "Silver", iapID: IAP.purchaseID_silver, color: .gray)
-                        IAPButton(iapText: "Gold", iapID: IAP.purchaseID_gold, color: .yellow)
+                        IAPButton(iapText: "Bronze", subText: "", iapID: IAP.purchaseID_bronze, color: .brown, systemImage: "bag.circle", cornerradius: 24)
+                        IAPButton(iapText: "Silver", subText: "", iapID: IAP.purchaseID_silver, color: .gray, systemImage: "bag.circle", cornerradius: 24)
+                        IAPButton(iapText: "Gold", subText: "", iapID: IAP.purchaseID_gold, color: .yellow, systemImage: "bag.circle", cornerradius: 24)
                          
                     }
                     
@@ -119,16 +119,27 @@ struct DonationView: View {
 struct IAPButton: View {
     
     @State var iapText: String = "Silver"
+    let subText: String
     @State var iapPrice: String = ""
     @State var iapID: String
     let color: Color
+    let systemImage: String
+    let cornerradius: CGFloat
+    
     
     var body: some View {
         VStack {
             
             Text(iapText)
-                .font(.system(size: 10))
+                .font(.system(size: 12))
                 .padding(.bottom, 5)
+            
+            if subText != "" {
+                Text(subText)
+                    .font(.system(size: 10))
+                    .foregroundStyle(.gray)
+                    .padding(.bottom, 5)
+            }
             
             Button {
                 
@@ -142,16 +153,16 @@ struct IAPButton: View {
                     VStack{
                         ZStack {
                             
-                            Circle()
+                            RoundedRectangle(cornerRadius: cornerradius)
                                 .fill(color.opacity(1.0))
                                 .frame(width: 30, height: 30)
                                 .overlay {
-                                    Image(systemName: "bag.circle")
+                                    Image(systemName: systemImage)
                                         .foregroundColor(.white)
                                 }
                                 .padding(8)
                                 .background(.ultraThinMaterial)
-                                .clipShape(RoundedRectangle(cornerRadius: 24))
+                                .clipShape(RoundedRectangle(cornerRadius: cornerradius))
                                 .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
                             
                         }

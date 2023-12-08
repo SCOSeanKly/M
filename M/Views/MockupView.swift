@@ -83,6 +83,9 @@ struct MockupView: View {
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
             
         }
+        .onAppear {
+            let _ = IAP.shared
+        }
         //MARK: Add system to mode toggle
         .preferredColorScheme(colorScheme)
         .onTapGesture {

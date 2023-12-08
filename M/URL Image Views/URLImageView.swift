@@ -12,10 +12,10 @@ import TipKit
 
 struct URLImages: View {
     @ObservedObject var viewModel = DataViewModel()
+    @StateObject var viewModelContent: ContentViewModel
     @State private var selectedImage: ImageModel?
     @State private var isSheetPresented = false
     @State private var saveState: SaveState = .idle
-    
     @StateObject var obj: Object
     
     enum SaveState {
@@ -65,7 +65,9 @@ struct URLImages: View {
                         ScrollViewReader(content: { proxy in
                             ScrollView(.vertical, showsIndicators: false) {
                                 LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
+                                    
                                     ForEach(viewModel.images.indices.reversed(), id: \.self) { index in
+                                        
                                         VStack {
                                             Button {
                                                 isTapped.toggle()
@@ -73,52 +75,28 @@ struct URLImages: View {
                                                 isSheetPresented = true
                                                 saveState = .idle
                                             } label: {
-                                                ZStack {
-                                                    WebImage(url: URL(string: viewModel.images[index].image))
-                                                        .resizable()
-                                                        .if(obj.appearance.showTwoWallpapers) { view in
-                                                            view.customFrameTwoColumns()
+                                                WebImage(url: URL(string: viewModel.images[index].image))
+                                                    .resizable()
+                                                    .customFrameBasedOnCondition(obj: obj)
+                                                    .overlay {
+                                                        //MARK: Add a star if wallpaper is premium
+                                                        if viewModel.images[index].image.contains("p_") {
+                                                            StarView(text: "")
                                                         }
-                                                        .if(!obj.appearance.showTwoWallpapers) { view in
-                                                            view.customFrameThreeColumns()
-                                                        }.overlay{
-                                                            //MARK: Add a star if wallpaper is premium
-                                                              if viewModel.images[index].image.contains("p_") {
-                                                            VStack {
-                                                                HStack {
-                                                                    
-                                                                    Spacer()
-                                                                    
-                                                                    Image(systemName: "star.square")
-                                                                        .font(.title3)
-                                                                        .foregroundStyle(.yellow)
-                                                                        .padding()
-                                                                    
-                                                                }
-                                                                
-                                                                Spacer()
-                                                            }
-                                                                }
+                                                        
+                                                        if viewModel.images[index].isNew {
+                                                            NewWallAddedView()
+                                                                .customFrameBasedOnCondition(obj: obj)
                                                         }
-                                                    
-                                                    if viewModel.images[index].isNew {
-                                                        NewWallAddedView()
-                                                            .if(obj.appearance.showTwoWallpapers) { view in
-                                                                view.customFrameTwoColumns()
-                                                            }
-                                                            .if(!obj.appearance.showTwoWallpapers) { view in
-                                                                view.customFrameThreeColumns()
-                                                            }
                                                     }
-                                                }
                                             }
                                             
                                             Text(getFileName(from: viewModel.images[index].image)
                                                 .replacingOccurrences(of: "p_", with: ""))
-                                                .font(.system(size: 10))
-                                                .foregroundColor(.primary.opacity(0.5))
-                                                .lineLimit(1)
-                                                .multilineTextAlignment(.center)
+                                            .font(.system(size: 10))
+                                            .foregroundColor(.primary.opacity(0.5))
+                                            .lineLimit(1)
+                                            .multilineTextAlignment(.center)
                                         }
                                     }
                                 }
@@ -195,14 +173,19 @@ struct URLImages: View {
                 }
             }
         }
+        .onAppear {
+            let _ = IAP.shared
+        }
         .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
         .sheet(item: $selectedImage) { image in
             ZStack {
-                SheetContentView(image: image, saveState: $saveState, obj: obj, showPremiumContent: $showPremiumContent)
-                
+                SheetContentView(viewModel: viewModel, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, showPremiumContent: $showPremiumContent)
+                    .onDisappear{
+                        viewModel.loadImages()
+                    }
             }
-            .id(image) // Ensure image is used for id
+            .id(image)
             .onDisappear {
                 selectedImage = nil
             }
@@ -221,6 +204,9 @@ struct URLImages: View {
             }
         }
         .onAppear {
+            viewModel.loadImages()
+        }
+        .onChange(of: obj.appearance.showPremiumWallpapersOnly){
             viewModel.loadImages()
         }
         .onReceive(viewModel.$forceRefresh) { refresh in
@@ -243,36 +229,10 @@ struct URLImages: View {
     }
 }
 
-
-// MARK: Offset Reader
-extension View{
-    @ViewBuilder
-    func offset(completion: @escaping (CGRect)->())->some View{
-        self
-            .overlay {
-                GeometryReader{
-                    let rect = $0.frame(in: .named("SCROLLER"))
-                    Color.clear
-                        .preference(key: OffsetKey.self, value: rect)
-                        .onPreferenceChange(OffsetKey.self) { value in
-                            completion(value)
-                        }
-                }
-            }
-    }
-}
-
-// MARK: Offset Key
-struct OffsetKey: PreferenceKey{
-    static var defaultValue: CGRect = .zero
-    
-    static func reduce(value: inout CGRect, nextValue: () -> CGRect) {
-        value = nextValue()
-    }
-}
-
 struct SheetContentView: View {
+    @ObservedObject var viewModel: DataViewModel
     let image: ImageModel
+    @StateObject var viewModelContent: ContentViewModel
     @Binding var saveState: URLImages.SaveState
     @StateObject var obj: Object
     @State private var imageSize: String = "Fetching file size..."
@@ -282,12 +242,13 @@ struct SheetContentView: View {
     @SceneStorage("isZooming") var isZooming: Bool = false
     @Binding var showPremiumContent: Bool
     
+    
     var body: some View {
         ZStack {
             ScrollView {
                 VStack {
                     
-                    LargeImageView(image: image)
+                    LargeImageView(image: image, viewModelContent: viewModelContent, importedOverlay: $viewModelContent.importedOverlay)
                     
                     Group {
                         
@@ -302,8 +263,9 @@ struct SheetContentView: View {
                                 
                                 Text(getFileName(from: image.image)
                                     .replacingOccurrences(of: "p_", with: ""))
-                                    .padding(.top, 6)
-
+                                .padding(.top, 6)
+                                .foregroundStyle(getFileName(from: image.image).contains("p_") ? .yellow : .primary)
+                                
                                 Text(" • ")
                                     .padding(.top, 6)
                             }
@@ -358,7 +320,7 @@ struct SheetContentView: View {
                             } else {
                                 Button {
                                     isTapped.toggle()
-                                    saveImage()
+                                    saveImage(importedOverlay: viewModelContent.importedOverlay)
                                 } label: {
                                     switch saveState {
                                     case .idle:
@@ -387,8 +349,8 @@ struct SheetContentView: View {
                 }
             }
         }
-        
     }
+    
     private func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
             return url.deletingPathExtension().lastPathComponent
@@ -457,7 +419,7 @@ struct SheetContentView: View {
     
     
     
-    private func saveImage() {
+    private func saveImage(importedOverlay: UIImage?) {
         saveState = .saving
         
         guard var urlComponents = URLComponents(string: image.image) else {
@@ -465,44 +427,47 @@ struct SheetContentView: View {
             return
         }
         
-        
         if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
             if let imageName = pathComponents.last {
-                // Check the file extension and append "_fullRes" accordingly
                 let modifiedImageName: String
                 if imageName.lowercased().hasSuffix(".png") {
-                    modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.png", options: .caseInsensitive)
+                    modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.PNG", options: .caseInsensitive)
                 } else if imageName.lowercased().hasSuffix(".jpg") {
                     modifiedImageName = imageName.replacingOccurrences(of: ".jpg", with: "_fullRes.PNG", options: .caseInsensitive)
                 } else {
-                    // If the file extension is not ".png" or ".jpg", skip modification
                     modifiedImageName = imageName
                 }
                 
                 pathComponents[pathComponents.count - 1] = modifiedImageName
                 urlComponents.path = pathComponents.joined(separator: "/")
                 
-                // Set the modified URL
                 guard let modifiedURL = urlComponents.url else {
                     saveState = .idle
                     return
                 }
                 
-                // Use URLSession for asynchronous loading
                 URLSession.shared.dataTask(with: modifiedURL) { data, response, error in
-                    if let data = data, let uiImage = UIImage(data: data) {
-                        UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
-                        provideSuccessFeedback()
-                        saveState = .saved
+                    if let data = data, let originalUIImage = UIImage(data: data) {
+                        var combinedImage: UIImage
+                        
+                        if let overlayImage = importedOverlay {
+                            // Combine original image and imported overlay with resizing
+                            combinedImage = originalUIImage.combineWithOverlay(overlayImage, screenSize: UIScreen.main.bounds.size)
+                        } else {
+                            combinedImage = originalUIImage
+                        }
+                        
+                        // Save the combined image as PNG
+                        if let pngData = combinedImage.pngData() {
+                            UIImage(data: pngData)?.writeToPhotosAlbum()
+                            provideSuccessFeedback()
+                            saveState = .saved
+                            viewModel.loadImages()
+                        } else {
+                            saveState = .idle
+                        }
                     } else {
-                        // Fallback to the original image if the modified image loading fails
-                        URLSession.shared.dataTask(with: urlComponents.url!) { data, response, error in
-                            if let data = data, let uiImage = UIImage(data: data) {
-                                UIImageWriteToSavedPhotosAlbum(uiImage, nil, nil, nil)
-                                provideSuccessFeedback()
-                                saveState = .saved
-                            }
-                        }.resume()
+                        saveState = .idle
                     }
                 }.resume()
             }
@@ -510,136 +475,181 @@ struct SheetContentView: View {
     }
 }
 
+extension UIImage {
+    func writeToPhotosAlbum() {
+        UIImageWriteToSavedPhotosAlbum(self, nil, nil, nil)
+    }
+    
+    func combineWithOverlay(_ overlayImage: UIImage, screenSize: CGSize) -> UIImage {
+        let size = CGSize(width: screenSize.width, height: screenSize.height)
+        
+        UIGraphicsBeginImageContextWithOptions(size, false, UIScreen.main.scale)
+        
+        self.draw(in: CGRect(origin: .zero, size: size))
+        overlayImage.draw(in: CGRect(origin: .zero, size: size))
+        
+        let combinedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+        
+        return combinedImage ?? self
+    }
+}
+
 struct LargeImageView: View {
     let image: ImageModel
     let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.7)
     let canvasSize: CGSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+    @SceneStorage("isZooming") var isZooming: Bool = false
+    @StateObject var viewModelContent: ContentViewModel
+    @Binding var importedOverlay: UIImage?
+    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
+    
+    var fullResImageURL: URL {
+        guard var urlComponents = URLComponents(string: image.image) else {
+            return URL(string: "")!
+        }
+        
+        if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
+            if let imageName = pathComponents.last {
+                let modifiedImageName: String
+                if imageName.lowercased().hasSuffix(".png") {
+                    modifiedImageName = imageName.replacingOccurrences(of: ".png", with: "_fullRes.PNG", options: .caseInsensitive)
+                } else if imageName.lowercased().hasSuffix(".jpg") {
+                    modifiedImageName = imageName.replacingOccurrences(of: ".jpg", with: "_fullRes.PNG", options: .caseInsensitive)
+                } else {
+                    modifiedImageName = imageName
+                }
+                
+                pathComponents[pathComponents.count - 1] = modifiedImageName
+                urlComponents.path = pathComponents.joined(separator: "/")
+                
+                guard let modifiedURL = urlComponents.url else {
+                    return URL(string: "")!
+                }
+                
+                return modifiedURL
+            }
+        }
+        
+        return URL(string: "")!
+    }
     
     var body: some View {
         VStack {
-            WebImage(url: URL(string: image.image))
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: frameSize.width, height: frameSize.height)
-                .cornerRadius(40)
-                .clipped()
-                .padding(.top, 50)
-                .addPinchZoom()
+            ZStack {
+                // Low resolution image loaded first
+                WebImage(url: URL(string: image.image))
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: frameSize.width, height: frameSize.height)
+                
+                // Full resolution image loaded
+                WebImage(url: fullResImageURL) // Use the full-res image URL
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: frameSize.width, height: frameSize.height)
+                
+                //Overlay image if imported
+                if let importedOverlay = importedOverlay {
+                    Image(uiImage: importedOverlay)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            }
+            .frame(width: frameSize.width, height: frameSize.height)
+            .cornerRadius(40)
+            .clipped()
+            .overlay(
+                RoundedRectangle(cornerRadius: 40)
+                    .stroke(.primary, lineWidth: 0.5)
+                    .opacity(0.4)
+            )
+            .padding(.top, 50)
+            .addPinchZoom()
+            .overlay{
+                if showPremiumContent {
+                    VStack{
+                        HStack {
+                            
+                            Spacer()
+                            
+                            Button {
+                                if importedOverlay == nil {
+                                    viewModelContent.showOverlayPickerSheet.toggle()
+                                } else {
+                                    importedOverlay = nil
+                                }
+                            } label: {
+                                Image(systemName: importedOverlay == nil ? "plus.circle.fill" : "trash.circle.fill")
+                                    .font(.title)
+                                    .foregroundStyle(importedOverlay == nil ? .white : .red)
+                                    .shadow(radius: 2)
+                                    .padding(5)
+                                    .background{
+                                        Circle()
+                                            .fill(.ultraThinMaterial)
+                                    }
+                            }
+                            .padding(.top, 50)
+                            .padding()
+                            .padding(.trailing, 5)
+                        }
+                        
+                        Spacer()
+                        
+                    }
+                    .opacity(isZooming ? 0 : 1)
+                    .animation(.bouncy, value: isZooming)
+                }
+            }
+            .fullScreenCover(isPresented: $viewModelContent.showOverlayPickerSheet) {
+                fullScreenImagePickerCover(for: $viewModelContent.importedOverlay) { images in
+                    viewModelContent.importedOverlay = images.first
+                }
+            }
+            .frame(width: canvasSize.width)
+            .ignoresSafeArea()
+            .customPresentationWithPrimaryBackground(detent: .large, backgroundColorOpacity: 1.0)
             
             Spacer()
         }
-        .frame(width: canvasSize.width)
-        .ignoresSafeArea()
-        .customPresentationWithPrimaryBackground(detent: .large, backgroundColorOpacity: 1.0)
-    }
-}
-
-struct ImageModel: Identifiable, Hashable {
-    let id = UUID()
-    let image: String
-    var baseName: String {
-        let fileName = URL(string: image)?.deletingPathExtension().lastPathComponent ?? ""
-        return fileName
-    }
-    var isNew: Bool = false
-}
-
-class DataViewModel: ObservableObject {
-    @Published var images: [ImageModel] = []
-    @Published var forceRefresh: Bool = false {
-        didSet {
-            if forceRefresh {
-                loadImages()
-            }
-        }
     }
     
-    @AppStorage("seenImages") var seenImages: [String] = []
-    
-    func loadImages() {
-        
-        let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/Wallpapers/"
-        let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M/main/M/JSON/wallpaperImages.json"
-         
-        /*
-         let baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Wallpapers/"
-         let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/wallpaperImages.json"
-         */
-        
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        
-        let config = URLSessionConfiguration.default
-        config.timeoutIntervalForRequest = 10
-        config.timeoutIntervalForResource = 10
-        
-        let session = URLSession(configuration: config)
-        
-        session.dataTask(with: url) { data, response, error in
-            guard let data = data else {
-                return
-            }
-            
-            do {
-                let imageNames = try JSONDecoder().decode([String].self, from: data)
-                DispatchQueue.main.async {
-                    self.images = imageNames.indices.map { index in
-                        let imageName = imageNames[index]
-                        let imageUrlString = baseUrlString + imageName
-                        var image = ImageModel(image: imageUrlString)
-                        
-                        // Check if the base name of the image has been seen before
-                        let isNew = !self.seenImages.contains(image.baseName)
-                        
-                        // If it's a new image, mark it as seen
-                        if isNew {
-                            self.seenImages.append(image.baseName)
-                        }
-                        
-                        image.isNew = isNew
-                        
-                        return image
-                    }
+    private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
+        PhotoPicker(filter: .images, limit: 1) { results in
+            PhotoPicker.convertToUIImageArray(fromResults: results) { (imagesOrNil, errorOrNil) in
+                if let error = errorOrNil {
+                    print(error)
                 }
-            } catch {
-                print(error.localizedDescription)
+                if let images = imagesOrNil {
+                    completion(images)
+                }
             }
-        }.resume()
+        }
+        .edgesIgnoringSafeArea(.bottom)
     }
 }
 
 extension View {
-    func customFrameThreeColumns(width: CGFloat = UIScreen.main.bounds.width / 4 , height: CGFloat = UIScreen.main.bounds.height / 4, borderThickness: CGFloat = 0.5, borderColor: Color = .primary) -> some View {
-        self
-            .frame(width: width, height: height)
-            .aspectRatio(contentMode: .fill)
-            .cornerRadius(15)
-            .clipped()
-            .overlay(
-                RoundedRectangle(cornerRadius: 15)
-                    .stroke(borderColor, lineWidth: borderThickness)
-                    .opacity(0.4)
-                
-            )
-            .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
-                content
-                    .scaleEffect(phase.isIdentity ? 1 : 0.75)
-                
-            }
+    @ViewBuilder
+    func customFrameBasedOnCondition(obj: Object) -> some View {
+        let columns: CGFloat = obj.appearance.showTwoWallpapers ? 2.5 : 4
+        customFrame(columns: columns)
     }
     
-    func customFrameTwoColumns(width: CGFloat = UIScreen.main.bounds.width / 2.5 , height: CGFloat = UIScreen.main.bounds.height / 2.5, borderThickness: CGFloat = 0.5, borderColor: Color = .primary) -> some View {
-        self
+    func customFrame(columns: CGFloat, borderThickness: CGFloat = 0.5, borderColor: Color = .primary) -> some View {
+        let width = UIScreen.main.bounds.width / columns
+        let height = UIScreen.main.bounds.height / columns
+        
+        return self
             .frame(width: width, height: height)
             .aspectRatio(contentMode: .fill)
-            .cornerRadius(25)
+            .cornerRadius(columns == 2.5 ? 25 : 15)
             .clipped()
             .overlay(
-                RoundedRectangle(cornerRadius: 25)
+                RoundedRectangle(cornerRadius: columns == 2.5 ? 25 : 15)
                     .stroke(borderColor, lineWidth: borderThickness)
                     .opacity(0.4)
-                
             )
             .scrollTransition(.animated.threshold(.visible(0.1))) { content, phase in
                 content
@@ -647,6 +657,7 @@ extension View {
             }
     }
 }
+
 
 
 

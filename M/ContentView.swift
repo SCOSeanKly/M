@@ -20,7 +20,7 @@ struct ContentView: View {
         if obj.appearance.showWallpapersView {
             
             // MARK: Wallpaper View
-            URLImages(obj: obj)
+            URLImages(viewModelContent: viewModel, obj: obj)
                 .onAppear {
                     let _ = IAP.shared
                 }
@@ -35,5 +35,6 @@ struct ContentView: View {
                 }
         }
     }
+    
 }
 

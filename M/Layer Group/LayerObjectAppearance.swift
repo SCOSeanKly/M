@@ -30,6 +30,7 @@ struct LayerObjectAppearance {
     var showWallpaperButton: Bool
     var showApplicationSettings: Bool
     @AppStorage("showTwoWallpapers") var showTwoWallpapers: Bool = false
+    var showPremiumWallpapersOnly: Bool
 
     enum AppearanceMode {
         case light
@@ -78,6 +79,12 @@ struct LayerObjectAppearance {
     var logoOffsetY: CGFloat
     var logoRotate: CGFloat
     
+    // Wallpaper Variables
+    var wallHue: CGFloat
+    var wallSaturation: CGFloat
+    var wallBrightness: CGFloat
+    var wallContrast: CGFloat
+    
     init() {
         self.showSaveAlert = false
         self.showSymbolEffect = false
@@ -98,6 +105,7 @@ struct LayerObjectAppearance {
         self.showWallpaperButton = false
         self.showApplicationSettings = false
         self.showTwoWallpapers = false
+        self.showPremiumWallpapersOnly = false
         
      
         self.backgroundColour = .clear
@@ -137,6 +145,11 @@ struct LayerObjectAppearance {
         self.logoOffsetX = -360
         self.logoOffsetY = 360
         self.logoRotate = 0
+        
+        self.wallHue = 0
+        self.wallSaturation = 5
+        self.wallBrightness = 1
+        self.wallContrast = 5
     }
     
     init(
@@ -160,6 +173,7 @@ struct LayerObjectAppearance {
         showWallpaperButton: Bool,
         showApplicationSettings: Bool,
         showTwoWallpapers: Bool,
+        showPremiumWallpapersOnly: Bool,
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -199,7 +213,12 @@ struct LayerObjectAppearance {
         logoCornerRadius: CGFloat,
         logoOffsetX: CGFloat,
         logoOffsetY: CGFloat,
-        logoRotate: CGFloat
+        logoRotate: CGFloat,
+        
+       wallHue: CGFloat,
+       wallSaturation: CGFloat,
+       wallBrightness: CGFloat,
+       wallContrast: CGFloat
     ) {
         self.showSaveAlert = showSaveAlert
         self.showSymbolEffect = showSymbolEffect
@@ -220,6 +239,7 @@ struct LayerObjectAppearance {
         self.showWallpaperButton = showWallpaperButton
         self.showApplicationSettings = showApplicationSettings
         self.showTwoWallpapers = showTwoWallpapers
+        self.showPremiumWallpapersOnly = showPremiumWallpapersOnly
         
         self.backgroundOffsetY = backgroundOffsetY
         self.backgroundColour = backgroundColour
@@ -258,5 +278,10 @@ struct LayerObjectAppearance {
         self.logoOffsetY = logoOffsetY
         self.logoRotate = logoRotate
         
+        self.wallHue = wallHue
+        self.wallSaturation = wallSaturation
+        self.wallBrightness = wallBrightness
+        self.wallContrast = wallContrast
+       
     }
 }

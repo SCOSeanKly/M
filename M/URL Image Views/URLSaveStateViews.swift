@@ -66,7 +66,13 @@ struct LoadingImagesView: View {
     var body: some View {
         VStack {
             Spacer()
-            Text("Loading images...")
+            HStack {
+                
+                ProgressView()
+                    .padding(.trailing, 5)
+                
+                Text("Loading images...")
+            }
             Spacer()
         }
     }

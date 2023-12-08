@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -16,6 +16,9 @@
 		3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */; };
 		3E2D61622B1B213100C83E14 /* New.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2D61612B1B213100C83E14 /* New.swift */; };
 		3E2D61642B1B26D700C83E14 /* NewWallAddedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */; };
+		3E3DFA3E2B21F70600A4097E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3D2B21F70600A4097E /* DataModel.swift */; };
+		3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3F2B21F73700A4097E /* ImageModel.swift */; };
+		3E3DFA422B21F77A00A4097E /* OffsetReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA412B21F77A00A4097E /* OffsetReader.swift */; };
 		3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImageView.swift */; };
 		3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */; };
 		3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD92B0E196B007A1714 /* URLButtonView.swift */; };
@@ -56,6 +59,8 @@
 		3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */; };
 		3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */; };
 		3EC0D5B42B18B9B700365B38 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B32B18B9B700365B38 /* DonationView.swift */; };
+		3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* StarView.swift */; };
+		3ED67EC42B1F6BF5008CFD61 /* Shimmer in Frameworks */ = {isa = PBXBuildFile; productRef = 3ED67EC32B1F6BF5008CFD61 /* Shimmer */; };
 		3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */; };
 /* End PBXBuildFile section */
 
@@ -69,6 +74,9 @@
 		3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggle3Way.swift; sourceTree = "<group>"; };
 		3E2D61612B1B213100C83E14 /* New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = New.swift; sourceTree = "<group>"; };
 		3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWallAddedView.swift; sourceTree = "<group>"; };
+		3E3DFA3D2B21F70600A4097E /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
+		3E3DFA3F2B21F73700A4097E /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
+		3E3DFA412B21F77A00A4097E /* OffsetReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OffsetReader.swift; sourceTree = "<group>"; };
 		3E5FF5922B078C0D0007AF8D /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSaveStateViews.swift; sourceTree = "<group>"; };
 		3E611AD92B0E196B007A1714 /* URLButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLButtonView.swift; sourceTree = "<group>"; };
@@ -112,6 +120,7 @@
 		3E8ED9532AFB92AC004F87EF /* SwiftUI-Shimmer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "SwiftUI-Shimmer"; path = "../../../../../Library/Developer/Xcode/DerivedData/screenshotSL-hlbihqdhqjcigifxwrohccejlkan/SourcePackages/checkouts/SwiftUI-Shimmer"; sourceTree = "<group>"; };
 		3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettings.swift; sourceTree = "<group>"; };
 		3EC0D5B32B18B9B700365B38 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
+		3ED67EC12B1F677D008CFD61 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +128,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3ED67EC42B1F6BF5008CFD61 /* Shimmer in Frameworks */,
 				3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */,
 				3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */,
 			);
@@ -139,10 +149,14 @@
 			isa = PBXGroup;
 			children = (
 				3E5FF5922B078C0D0007AF8D /* URLImageView.swift */,
+				3E3DFA3D2B21F70600A4097E /* DataModel.swift */,
+				3E3DFA3F2B21F73700A4097E /* ImageModel.swift */,
 				3E611AD92B0E196B007A1714 /* URLButtonView.swift */,
 				3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */,
 				3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */,
 				3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */,
+				3ED67EC12B1F677D008CFD61 /* StarView.swift */,
+				3E3DFA412B21F77A00A4097E /* OffsetReader.swift */,
 			);
 			path = "URL Image Views";
 			sourceTree = "<group>";
@@ -276,6 +290,7 @@
 			packageProductDependencies = (
 				3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */,
 				3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */,
+				3ED67EC32B1F6BF5008CFD61 /* Shimmer */,
 			);
 			productName = M;
 			productReference = 3E69AF772AF55875007244C1 /* M.app */;
@@ -308,7 +323,6 @@
 			packageReferences = (
 				3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
 				3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				3EC0D5B52B18C9F600365B38 /* XCLocalSwiftPackageReference "../../Developer/SwiftUI Resources/SwiftUI-Shimmer" */,
 			);
 			productRefGroup = 3E69AF782AF55875007244C1 /* Products */;
 			projectDirPath = "";
@@ -339,12 +353,14 @@
 			files = (
 				3E69AF912AF558C6007244C1 /* ContentViewModel.swift in Sources */,
 				3E69AFC12AF55B08007244C1 /* CustomPresentation.swift in Sources */,
+				3E3DFA422B21F77A00A4097E /* OffsetReader.swift in Sources */,
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
 				3E2D61622B1B213100C83E14 /* New.swift in Sources */,
 				3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */,
 				3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */,
 				3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */,
 				3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */,
+				3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */,
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
 				3E69AFC72AF55B93007244C1 /* AlwaysPopoverModifier.swift in Sources */,
@@ -367,6 +383,7 @@
 				3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */,
 				3E69AFBB2AF55AC7007244C1 /* PhotoPicker.swift in Sources */,
 				3E69AFCD2AF55BD1007244C1 /* View+Modifiers.swift in Sources */,
+				3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */,
 				3E69AFB52AF55A93007244C1 /* UniversalAlert.swift in Sources */,
 				3E72A08C2B17A01B00797359 /* MockupView.swift in Sources */,
 				3E7EC1F42B18CF05006CA403 /* IAP.swift in Sources */,
@@ -375,6 +392,7 @@
 				3E69AFB92AF55AB5007244C1 /* CustomToggle.swift in Sources */,
 				3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */,
 				3E69AFCB2AF55BBD007244C1 /* UIView+Extension.swift in Sources */,
+				3E3DFA3E2B21F70600A4097E /* DataModel.swift in Sources */,
 				3E69AFA92AF55A1D007244C1 /* SaveImageButton.swift in Sources */,
 				3E69AFA22AF559B0007244C1 /* CustomImageView.swift in Sources */,
 				3E2D61642B1B26D700C83E14 /* NewWallAddedView.swift in Sources */,
@@ -509,7 +527,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -531,7 +549,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -550,7 +568,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -572,7 +590,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.1;
+				MARKETING_VERSION = 2.0.2;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -607,13 +625,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		3EC0D5B52B18C9F600365B38 /* XCLocalSwiftPackageReference "../../Developer/SwiftUI Resources/SwiftUI-Shimmer" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = "../../Developer/SwiftUI Resources/SwiftUI-Shimmer";
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -638,6 +649,10 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */;
 			productName = SwiftUIKit;
+		};
+		3ED67EC32B1F6BF5008CFD61 /* Shimmer */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = Shimmer;
 		};
 		3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

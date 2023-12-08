@@ -17,8 +17,6 @@ struct importButtons: View {
     let showWallpaperTip = NewWallpapersSectionTip()
     
   
-    
-    
     var body: some View {
         VStack {
             HStack {
@@ -165,9 +163,11 @@ private struct TextViewOne: View {
 private struct TextViewOneSizer: View {
     @Binding var saveCount: Int
     var body: some View {
-        Text("\(saveCount)")
-            .font(.system(.body, design: .rounded).weight(.medium))
-            .foregroundColor(.clear)
+        VStack {
+            Text("\(saveCount)")
+                .font(.system(.body, design: .rounded).weight(.medium))
+                .foregroundColor(.clear)
+        }
     }
 }
 
