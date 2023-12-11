@@ -12,10 +12,14 @@ struct UnlockPremiumView: View {
     @StateObject var obj: Object
     @State var iapPrice: String = ""
     @State var iapID: String
-    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
     @State private var retryCount = 4
     @State private var unlockPremium: AlertConfig = .init(disableOutsideTap: false)
     
+    let premiumUnlockedImages = ["premiumUnlocked", "premiumUnlocked2", "premiumUnlocked3"]
+    @Binding var showPremiumContent: Bool
+    @Binding var buyClicked: Bool
+    
+  
     var body: some View {
        
             VStack {
@@ -29,11 +33,13 @@ struct UnlockPremiumView: View {
                     
                     Text("Unlock Premium Content")
                         .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
+                       
                     
                     Spacer()
                 }
                 .padding(.top, 15)
                 .padding(.bottom, 5)
+                .opacity(showPremiumContent ? 0 : 1)
                 
                 HStack {
                     
@@ -44,38 +50,17 @@ struct UnlockPremiumView: View {
                     
                     Spacer()
                 }
+                .opacity(showPremiumContent ? 0 : 1)
                 
                 if !showPremiumContent {
                     HStack {
                         Spacer()
                         
                         Button {
-                            
                             feedback()
-                            
-                            /*
-                            IAP.shared.purchase(iapID) { _ in
-                            }
-                             */
-                            
                             unlockPremium.present()
                             
                         } label: {
-                            /*
-                            if iapPrice == "Fetching Price" {
-                                HStack {
-                                    ProgressView()
-                                        .padding(.trailing, 5)
-                                       
-                                    Text("Fetching Price")
-                                }
-                             
-                            } else {
-                                Text(iapPrice)
-                                  
-                            }
-                             */
-                            
                             Text("Unlock Premium")
                         }
                         .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
@@ -85,14 +70,20 @@ struct UnlockPremiumView: View {
                         .background(.ultraThinMaterial)
                         .clipShape(
                             RoundedRectangle(cornerRadius: 100))
+                        
                     }
                     .buttonStyle(.plain)
                     .padding(.vertical)
                     
                 } else {
                     HStack {
+                        
                         Spacer()
-                    
+                        Button {
+                            unlockPremium.present()
+                            
+                            feedback()
+                        } label: {
                             Text("Premium Unlocked!")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
                                 .foregroundStyle(.yellow)
@@ -101,9 +92,11 @@ struct UnlockPremiumView: View {
                                 .background(.ultraThinMaterial)
                                 .clipShape(
                                     RoundedRectangle(cornerRadius: 100))
+                        }
+                          
+                            
                         
                     }
-                  
                     .padding(.vertical)
                 }
                 
@@ -136,12 +129,38 @@ struct UnlockPremiumView: View {
                         
                         HStack (spacing: 50) {
                           
-                            IAPButton(iapText: "Unlock Premium", subText: "Unlock all premium wallpapers", iapID: IAP.purchaseID_UnlockPremium, color: .yellow, systemImage: "star.square", cornerradius: 4)
+                            IAPButton(iapText: "Unlock Premium", subText: "Unlock all premium wallpapers and features", iapID: IAP.purchaseID_UnlockPremium, color: .yellow, systemImage: "star.square", cornerradius: 4)
                            
-                             
                         }
                         
                         Spacer()
+                            .frame(height: 50)
+                        
+                         Button {
+                             buyClicked = true
+                             
+                             IAP.shared.restorePurchases { _ in
+                                 buyClicked = false
+                                 
+                             } failed: { _ in
+                                 buyClicked = false
+                             }
+                             
+                             feedback()
+                         
+                         } label: {
+                                 Text("Restore Purchase")
+                                 .font(.system(size: 12).bold())
+                         }
+                         .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
+                         .foregroundStyle(.primary)
+                         .padding(.horizontal, 10)
+                         .padding(.vertical, 5)
+                         .background(.ultraThinMaterial)
+                         .clipShape(
+                             RoundedRectangle(cornerRadius: 100))
+                         .disabled(buyClicked)
+                         
                     }
                     .padding()
                 }
@@ -155,9 +174,30 @@ struct UnlockPremiumView: View {
             .padding(.horizontal)
             .padding(.horizontal)
             .background{
-                RoundedRectangle(cornerRadius: 20)
-                    .strokeBorder(.primary,  lineWidth: 1)
+                if showPremiumContent {
+                    
+                    ZStack {
+                        Image(premiumUnlockedImages.randomElement() ?? "premiumUnlocked")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                          
+                          
+                        
+                        HeartAnimationView()
+                        
+                    }
+                    
+                    .mask{
+                        RoundedRectangle(cornerRadius: 20)
+                            .padding(.horizontal, 25)
+                        
+                    }
                     .padding()
+                } else {
+                    RoundedRectangle(cornerRadius: 20)
+                        .strokeBorder(.primary,  lineWidth: 1)
+                        .padding()
+                }
             }
             .onAppear {
                        fetchIAPPrice()

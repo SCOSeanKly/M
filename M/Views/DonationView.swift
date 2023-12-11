@@ -125,18 +125,19 @@ struct IAPButton: View {
     let color: Color
     let systemImage: String
     let cornerradius: CGFloat
+    @State private var shine: Bool = false
     
     
     var body: some View {
         VStack {
             
             Text(iapText)
-                .font(.system(size: 12))
+                .font(.system(size: 12).bold())
                 .padding(.bottom, 5)
             
             if subText != "" {
                 Text(subText)
-                    .font(.system(size: 10))
+                    .font(.system(size: 12))
                     .foregroundStyle(.gray)
                     .padding(.bottom, 5)
             }
@@ -160,17 +161,26 @@ struct IAPButton: View {
                                     Image(systemName: systemImage)
                                         .foregroundColor(.white)
                                 }
+                               
                                 .padding(8)
                                 .background(.ultraThinMaterial)
                                 .clipShape(RoundedRectangle(cornerRadius: cornerradius))
                                 .shadow(color: .black.opacity(0.2), radius: 2, x: 0, y: 2)
+                                .shine(shine, duration: 1, clipShape: .rect(cornerRadius: cornerradius))
                             
                         }
                         
                         Text(iapPrice) // IAP price goes here
-                            .font(.system(size: 10))
+                            .font(.system(size: 12).bold())
                             .padding(.top, 5)
                     }
+                    .onAppear {
+                        // Start a timer to toggle shine every 2 seconds
+                        Timer.scheduledTimer(withTimeInterval: 2, repeats: true) { timer in
+                            shine.toggle()
+                        }
+                    }
+
             }
         }
         .onAppear {

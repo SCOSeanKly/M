@@ -25,7 +25,7 @@ struct ButtonView: View {
         }
     }
 
-    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
+    @Binding var showPremiumContent: Bool
     
     
     var body: some View {
@@ -107,6 +107,7 @@ struct ButtonView: View {
                     .font(.largeTitle.bold())
                 
                 Spacer()
+                
                 /*
                 CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showPremiumWallpapersOnly, onSymbol: "star", offSymbol: "line.3.horizontal.decrease", rotate: false, onColor: .yellow, offColor: .gray, obj: obj)
                 */

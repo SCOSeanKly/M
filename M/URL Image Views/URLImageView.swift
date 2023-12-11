@@ -49,13 +49,13 @@ struct URLImages: View {
         }
     }
     
-    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
+    @Binding var showPremiumContent: Bool
     
     var body: some View {
         ZStack {
             VStack {
                 
-                ButtonView(obj: obj, viewModel: viewModel)
+                ButtonView(obj: obj, viewModel: viewModel, showPremiumContent: $showPremiumContent)
                 
                 if !viewModel.images.isEmpty {
                     
@@ -91,8 +91,12 @@ struct URLImages: View {
                                                     }
                                             }
                                             
-                                            Text(getFileName(from: viewModel.images[index].image)
-                                                .replacingOccurrences(of: "p_", with: ""))
+                                            let fileName = getFileName(from: viewModel.images[index].image)
+
+                                            // Check if the fileName starts with "p_"
+                                            let updatedFileName = fileName.hasPrefix("p_") ? String(fileName.dropFirst(2)) : fileName
+
+                                            Text(updatedFileName)
                                             .font(.system(size: 10))
                                             .foregroundColor(.primary.opacity(0.5))
                                             .lineLimit(1)
@@ -248,7 +252,7 @@ struct SheetContentView: View {
             ScrollView {
                 VStack {
                     
-                    LargeImageView(image: image, viewModelContent: viewModelContent, importedOverlay: $viewModelContent.importedOverlay)
+                    LargeImageView(image: image, viewModelContent: viewModelContent, importedOverlay: $viewModelContent.importedOverlay, showPremiumContent: $showPremiumContent)
                     
                     Group {
                         
@@ -502,7 +506,8 @@ struct LargeImageView: View {
     @SceneStorage("isZooming") var isZooming: Bool = false
     @StateObject var viewModelContent: ContentViewModel
     @Binding var importedOverlay: UIImage?
-    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
+    
+    @Binding var showPremiumContent: Bool
     
     var fullResImageURL: URL {
         guard var urlComponents = URLComponents(string: image.image) else {
@@ -543,7 +548,7 @@ struct LargeImageView: View {
                     .aspectRatio(contentMode: .fill)
                     .frame(width: frameSize.width, height: frameSize.height)
                 
-                // Full resolution image loaded
+                  // Full resolution image loaded
                 WebImage(url: fullResImageURL) // Use the full-res image URL
                     .resizable()
                     .aspectRatio(contentMode: .fill)

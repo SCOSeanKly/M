@@ -25,6 +25,9 @@ struct MockupView: View {
         }
     }
     
+    @Binding var showPremiumContent: Bool
+    @Binding var buyClicked: Bool
+    
     var body: some View {
         ZStack {
             
@@ -76,7 +79,7 @@ struct MockupView: View {
                 SettingsView(viewModel: viewModel, obj: obj)
             })
             .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
-                ApplicationSettings(obj: obj)
+                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked)
             })
             
             //MARK: Pill Buttons for importing images etc

@@ -27,6 +27,7 @@ struct StarView: View {
                     .foregroundStyle(.yellow)
             }
             .padding()
+          
             
             Spacer()
         }

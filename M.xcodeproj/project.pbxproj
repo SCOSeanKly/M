@@ -56,7 +56,9 @@
 		3E69AFCD2AF55BD1007244C1 /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFCC2AF55BD1007244C1 /* View+Modifiers.swift */; };
 		3E72A08C2B17A01B00797359 /* MockupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72A08B2B17A01B00797359 /* MockupView.swift */; };
 		3E7EC1F42B18CF05006CA403 /* IAP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7EC1F32B18CF05006CA403 /* IAP.swift */; };
+		3E81CA4B2B271AE400D01A39 /* Shine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E81CA4A2B271AE400D01A39 /* Shine.swift */; };
 		3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */; };
+		3EAFEB3E2B23644900D57F5C /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAFEB3D2B23644900D57F5C /* Heart.swift */; };
 		3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */; };
 		3EC0D5B42B18B9B700365B38 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B32B18B9B700365B38 /* DonationView.swift */; };
 		3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* StarView.swift */; };
@@ -116,8 +118,10 @@
 		3E69AFCC2AF55BD1007244C1 /* View+Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Modifiers.swift"; sourceTree = "<group>"; };
 		3E72A08B2B17A01B00797359 /* MockupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupView.swift; sourceTree = "<group>"; };
 		3E7EC1F32B18CF05006CA403 /* IAP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAP.swift; sourceTree = "<group>"; };
+		3E81CA4A2B271AE400D01A39 /* Shine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shine.swift; sourceTree = "<group>"; };
 		3E8ED9522AFB92A0004F87EF /* SwiftUI-Shimmer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "SwiftUI-Shimmer"; path = "../../../../../Library/Developer/Xcode/DerivedData/screenshotSL-hlbihqdhqjcigifxwrohccejlkan/SourcePackages/checkouts/SwiftUI-Shimmer"; sourceTree = "<group>"; };
 		3E8ED9532AFB92AC004F87EF /* SwiftUI-Shimmer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "SwiftUI-Shimmer"; path = "../../../../../Library/Developer/Xcode/DerivedData/screenshotSL-hlbihqdhqjcigifxwrohccejlkan/SourcePackages/checkouts/SwiftUI-Shimmer"; sourceTree = "<group>"; };
+		3EAFEB3D2B23644900D57F5C /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
 		3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettings.swift; sourceTree = "<group>"; };
 		3EC0D5B32B18B9B700365B38 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		3ED67EC12B1F677D008CFD61 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
@@ -232,6 +236,7 @@
 				3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */,
 				3EC0D5B32B18B9B700365B38 /* DonationView.swift */,
 				3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */,
+				3EAFEB3D2B23644900D57F5C /* Heart.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 				3E69AFBC2AF55ADD007244C1 /* CustomPagingSlider.swift */,
 				3E69AFBE2AF55AF1007244C1 /* SnapShot.swift */,
 				3E69AFC02AF55B08007244C1 /* CustomPresentation.swift */,
+				3E81CA4A2B271AE400D01A39 /* Shine.swift */,
 			);
 			path = "Helpers Extensions";
 			sourceTree = "<group>";
@@ -355,6 +361,7 @@
 				3E69AFC12AF55B08007244C1 /* CustomPresentation.swift in Sources */,
 				3E3DFA422B21F77A00A4097E /* OffsetReader.swift in Sources */,
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
+				3E81CA4B2B271AE400D01A39 /* Shine.swift in Sources */,
 				3E2D61622B1B213100C83E14 /* New.swift in Sources */,
 				3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */,
 				3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */,
@@ -373,6 +380,7 @@
 				3E69AFB32AF55A7B007244C1 /* CustomUniversalAlertApp.swift in Sources */,
 				3E69AF7D2AF55875007244C1 /* ContentView.swift in Sources */,
 				3E69AF9E2AF55963007244C1 /* AnimatedButton.swift in Sources */,
+				3EAFEB3E2B23644900D57F5C /* Heart.swift in Sources */,
 				3E69AFC92AF55BA7007244C1 /* ContentViewController.swift in Sources */,
 				3E69AFA02AF55998007244C1 /* SettingsView.swift in Sources */,
 				3E69AFAB2AF55A30007244C1 /* TransparentBlurView.swift in Sources */,
@@ -527,7 +535,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.0.1;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -549,12 +557,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -568,7 +577,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.0.1;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
@@ -590,12 +599,13 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.2;
+				MARKETING_VERSION = 2.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;

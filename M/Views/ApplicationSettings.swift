@@ -12,6 +12,8 @@ struct ApplicationSettings: View {
     @StateObject var obj: Object
     @State private var isTapped: Bool = false
     @State private var toggleStates: [ToggleState] = [.first, .second, .third]
+    @Binding var showPremiumContent: Bool
+    @Binding var buyClicked: Bool
     
     var symbolName: String {
            switch obj.appearance.selectedAppearance {
@@ -73,7 +75,7 @@ struct ApplicationSettings: View {
             //MARK: Donation View
             
             ScrollView(.vertical, showsIndicators: false) {
-                UnlockPremiumView(obj: obj, iapID: IAP.purchaseID_UnlockPremium)
+                UnlockPremiumView(obj: obj, iapID: IAP.purchaseID_UnlockPremium, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked)
                 
                 DonationView(obj: obj)
                     .offset(y: -10)
