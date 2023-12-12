@@ -16,7 +16,7 @@ typealias BoolClosure = (Bool) -> Void
 
 class IAP: NSObject {
     static let shared = IAP()
-    static let purchaseID_UnlockPremium = "MPremium"
+    static let purchaseID_UnlockPremium = "MUnlockPremium"
     static let purchaseID_silver = "MSilver"
     static let purchaseID_gold = "MGold"
     static let purchaseID_bronze = "MBronze"

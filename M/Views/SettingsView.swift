@@ -504,7 +504,7 @@ struct MockupSettingsView: View {
                 
                 CustomToggle(showTitleText: true, titleText: "Show Ground Reflection", bindingValue: $obj.appearance.showGroundReflection, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             }
-            .padding(.bottom, 5)
+            .padding(.vertical, 5)
             
             if !obj.appearance.easySettingsMode {
                 

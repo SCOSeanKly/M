@@ -88,6 +88,11 @@ struct URLImages: View {
                                                             NewWallAddedView()
                                                                 .customFrameBasedOnCondition(obj: obj)
                                                         }
+                                                        /*
+                                                        if viewModel.images[index].image.contains("f_") {
+                                                            //MARK: Add overlay showing that this is a file download
+                                                        }
+                                                         */
                                                     }
                                             }
                                             

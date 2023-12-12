@@ -9,6 +9,10 @@ import SwiftUI
 
 class ContentViewModel: ObservableObject {
     @Published var items: [Item] = [
+        
+      
+        
+        
         //MARK: Mockup 1
         .init(imageName: "iP15PM_Front",
               screenReflectionName: "iP15PM_Front_screen",
@@ -39,6 +43,110 @@ class ContentViewModel: ObservableObject {
               cornerRadius: 40,
               notch: "notch_set1_",
               reflectionOffset: -247,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
+        
+        //MARK: Mockup 2
+        .init(imageName: "iP15CryptoMatte",
+              screenReflectionName: "iP15_3DLeft_screen",
+              shadowName: "",
+              color: .white,
+              title: "Front & Back CryptoMatte",
+              subTitle: "iPhone 15 in Crypto Matte",
+              
+              // MARK: 1st mockup image
+              degrees: -37.1,
+              degrees2: 0,
+              x: 1,
+              y: 1.0,
+              z: 0,
+              anchor: .leading,
+              perspective: -0.09,
+              perspective2: 0.0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1.0,
+              offX: 132.0,
+              offY: 49.0,
+              rotationEffect: -5.45,
+              width: 155.0 * 2,
+              height: 406.0 * 2,
+              cornerRadius: 43,
+              notch: "None",
+              reflectionOffset: -220,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
+        
+        //MARK: Mockup 2
+        .init(imageName: "iP15_3DLeft",
+              screenReflectionName: "iP15_3DLeft_screen",
+              shadowName: "",
+              color: .gray,
+              title: "Front & Back 3D Left",
+              subTitle: "iPhone 15 front and back 3D view",
+              
+              // MARK: 1st mockup image
+              degrees: -37.1,
+              degrees2: 0,
+              x: 1,
+              y: 1.0,
+              z: 0,
+              anchor: .leading,
+              perspective: -0.09,
+              perspective2: 0.0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1.0,
+              offX: 131.5,
+              offY: 51.0,
+              rotationEffect: -5.70,
+              width: 155.9 * 2,
+              height: 406.0 * 2,
+              cornerRadius: 43,
+              notch: "None",
+              reflectionOffset: -220,
               
               // MARK: 2nd mockup image
               degrees_b: 0,

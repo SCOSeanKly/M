@@ -103,69 +103,8 @@ struct UnlockPremiumView: View {
                 Spacer()
             }
             .alert(alertConfig: $unlockPremium) {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 20)
-                        .colorInvert()
-                    
-                    VStack {
-                        HStack {
-                            Image(systemName: "star.square")
-                                .font(.title3)
-                            
-                            Text("Unlock Premium")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            
-                            Spacer()
-                            
-                            Button {
-                                unlockPremium.dismiss()
-                            } label: {
-                                Image(systemName: "xmark.circle")
-                                    .font(.title3)
-                            }
-                            
-                        }
-                        .padding(.bottom, 20)
-                        
-                        HStack (spacing: 50) {
-                          
-                            IAPButton(iapText: "Unlock Premium", subText: "Unlock all premium wallpapers and features", iapID: IAP.purchaseID_UnlockPremium, color: .yellow, systemImage: "star.square", cornerradius: 4)
-                           
-                        }
-                        
-                        Spacer()
-                            .frame(height: 50)
-                        
-                         Button {
-                             buyClicked = true
-                             
-                             IAP.shared.restorePurchases { _ in
-                                 buyClicked = false
-                                 
-                             } failed: { _ in
-                                 buyClicked = false
-                             }
-                             
-                             feedback()
-                         
-                         } label: {
-                                 Text("Restore Purchase")
-                                 .font(.system(size: 12).bold())
-                         }
-                         .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
-                         .foregroundStyle(.primary)
-                         .padding(.horizontal, 10)
-                         .padding(.vertical, 5)
-                         .background(.ultraThinMaterial)
-                         .clipShape(
-                             RoundedRectangle(cornerRadius: 100))
-                         .disabled(buyClicked)
-                         
-                    }
-                    .padding()
-                }
-                .buttonStyle(.plain)
-                .frame(width: UIScreen.main.bounds.width * 0.9, height: 180)
+                
+                UnlockPremiumSheet(obj: obj, buyClicked: $buyClicked, unlockPremium: $unlockPremium)
                 
             }
             .onAppear {
@@ -181,8 +120,6 @@ struct UnlockPremiumView: View {
                             .resizable()
                             .aspectRatio(contentMode: .fill)
                           
-                          
-                        
                         HeartAnimationView()
                         
                     }
@@ -229,4 +166,77 @@ struct UnlockPremiumView: View {
                 iapPrice = "Error Fetching Price"
             }
         }
+}
+
+struct UnlockPremiumSheet: View {
+    
+    @StateObject var obj: Object
+    @Binding var buyClicked: Bool
+    @Binding var unlockPremium: AlertConfig
+    
+    var body: some View {
+        ZStack {
+            RoundedRectangle(cornerRadius: 20)
+                .colorInvert()
+            
+            VStack {
+                HStack {
+                    Image(systemName: "star.square")
+                        .font(.title3)
+                    
+                    Text("Unlock Premium")
+                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    
+                    Spacer()
+                    
+                    Button {
+                        unlockPremium.dismiss()
+                    } label: {
+                        Image(systemName: "xmark.circle")
+                            .font(.title3)
+                    }
+                    
+                }
+                .padding(.bottom, 20)
+                
+                HStack (spacing: 50) {
+                  
+                    IAPButton(iapText: "Unlock Premium", subText: "Unlock all premium wallpapers and features", iapID: IAP.purchaseID_UnlockPremium, color: .yellow, systemImage: "star.square", cornerradius: 4)
+                   
+                }
+                
+                Spacer()
+                    .frame(height: 50)
+                
+                 Button {
+                     buyClicked = true
+                     
+                     IAP.shared.restorePurchases { _ in
+                         buyClicked = false
+                         
+                     } failed: { _ in
+                         buyClicked = false
+                     }
+                     
+                     feedback()
+                 
+                 } label: {
+                         Text("Restore Purchase")
+                         .font(.system(size: 12).bold())
+                 }
+                 .font(.system(size: obj.appearance.settingsSliderFontSize).weight(.bold))
+                 .foregroundStyle(.primary)
+                 .padding(.horizontal, 10)
+                 .padding(.vertical, 5)
+                 .background(.ultraThinMaterial)
+                 .clipShape(
+                     RoundedRectangle(cornerRadius: 100))
+                 .disabled(buyClicked)
+                 
+            }
+            .padding()
+        }
+        .buttonStyle(.plain)
+        .frame(width: UIScreen.main.bounds.width * 0.9, height: 180)
+    }
 }
