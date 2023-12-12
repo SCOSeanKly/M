@@ -93,7 +93,7 @@ class ContentViewModel: ObservableObject {
               width: 155.0 * 2,
               height: 406.0 * 2,
               cornerRadius: 43,
-              notch: "None",
+              notch: "",
               reflectionOffset: -220,
               
               // MARK: 2nd mockup image
@@ -145,7 +145,7 @@ class ContentViewModel: ObservableObject {
               width: 155.9 * 2,
               height: 406.0 * 2,
               cornerRadius: 43,
-              notch: "None",
+              notch: "",
               reflectionOffset: -220,
               
               // MARK: 2nd mockup image
