@@ -16,26 +16,26 @@ struct ApplicationSettings: View {
     @Binding var buyClicked: Bool
     
     var symbolName: String {
-           switch obj.appearance.selectedAppearance {
-           case .light:
-               return "sun.max"
-           case .dark:
-               return "moon"
-           case .system:
-               return "rays"
-           }
-       }
+        switch obj.appearance.selectedAppearance {
+        case .light:
+            return "sun.max"
+        case .dark:
+            return "moon"
+        case .system:
+            return "rays"
+        }
+    }
     
     var appearanceName: String {
-           switch obj.appearance.selectedAppearance {
-           case .light:
-               return " Light"
-           case .dark:
-               return " Dark"
-           case .system:
-               return " System"
-           }
-       }
+        switch obj.appearance.selectedAppearance {
+        case .light:
+            return " Light"
+        case .dark:
+            return " Dark"
+        case .system:
+            return " System"
+        }
+    }
     
     var colorScheme: ColorScheme? {
         switch obj.appearance.selectedAppearance {
@@ -57,21 +57,23 @@ struct ApplicationSettings: View {
         }
     }
     
-  
+    
+    
+    
     var body: some View {
-      
+        
         VStack {
             
             //MARK: Title
             HStack {
                 Text("Application Settings")
                     .font(.headline)
-                 
+                
                 Spacer()
             }
             .padding([.horizontal, .top])
             .padding(.top)
-          
+            
             //MARK: Donation View
             
             ScrollView(.vertical, showsIndicators: false) {
@@ -195,6 +197,8 @@ struct ApplicationSettings: View {
                 .padding(.horizontal)
                 .padding(.vertical, 2.5)
                 
+                SelectIconView(obj: obj)
+                
                 Divider()
                     .padding([.horizontal, .top])
                 
@@ -229,12 +233,86 @@ struct ApplicationSettings: View {
         .onAppear {
             let _ = IAP.shared
         }
-        .ignoresSafeArea(edges: .bottom)
         .sensoryFeedback(.selection, trigger: isTapped)
         .customPresentationWithBlur(detent: .large, blurRadius: 0, backgroundColorOpacity: 1.0)
-        .frame(height: UIScreen.main.bounds.height * 0.875)
         .preferredColorScheme(colorScheme)
+        .ignoresSafeArea()
     }
+}
+
+func changeAppIcon(to iconName: String) {
+    UIApplication.shared.setAlternateIconName(iconName) { error in
+        if let error = error {
+            print("Error setting alternate icon \(error.localizedDescription)")
+        }
+    }
+}
+
+struct SelectIconView: View {
+    @StateObject var obj: Object
+    @State private var isTapped: Bool = false
+    @AppStorage ("AppIconSelection") var selectedIcon: String = "IconBlueM"
+    let buttonSize: CGFloat = 38
     
-    
+    var body: some View {
+        VStack {
+            HStack {
+                
+                Image(systemName: "apps.iphone")
+                    .font(.title3)
+                
+                Text("Application Icon")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                
+                Spacer()
+                
+                HStack {
+                    
+                    Spacer()
+                    ForEach(["IconBlueM", "IconBlueM_White", "IconWhiteM"], id: \.self) { iconName in
+                        Button {
+                            changeAppIcon(to: iconName)
+                            selectedIcon = iconName
+                            
+                        } label: {
+                            
+                            ZStack {
+                                
+                                RoundedRectangle(cornerRadius: 10)
+                                    .foregroundColor(.clear)
+                                    .background(.ultraThinMaterial)
+                                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                                
+                                Image("\(iconName)_preview")
+                                
+                                    .resizable()
+                                    .cornerRadius(10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(selectedIcon == iconName ? Color(.link).opacity(1.0) : Color.clear, lineWidth: 1.0)
+                                    )
+                            }
+                            .frame(width: buttonSize, height: buttonSize)
+                            .scaleEffect(selectedIcon == iconName ? 1.0 : 0.85)
+                        }
+                    }
+                }
+                .frame(width: UIScreen.main.bounds.width * 0.50)
+                .offset(y: 10)
+             
+                .sensoryFeedback(.selection, trigger: isTapped)
+            }
+            
+            HStack {
+                Text("Select the application icon style")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    .foregroundStyle(.gray)
+                    .offset(y: -5)
+                
+                Spacer()
+                
+            }
+        }
+        .padding(.horizontal)
+    }
 }
