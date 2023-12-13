@@ -94,7 +94,7 @@ class ContentViewModel: ObservableObject {
               height: 406.0 * 2,
               cornerRadius: 43,
               notch: "",
-              reflectionOffset: -220,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,
@@ -146,7 +146,7 @@ class ContentViewModel: ObservableObject {
               height: 406.0 * 2,
               cornerRadius: 43,
               notch: "",
-              reflectionOffset: -220,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,

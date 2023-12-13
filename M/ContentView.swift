@@ -14,7 +14,7 @@ struct ContentView: View {
     @StateObject var obj: Object
     @State private var totalNewWallpapersCount = 0
     
-    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = true
+    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
     @State var buyClicked: Bool = false
 
     
