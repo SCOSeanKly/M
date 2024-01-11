@@ -27,8 +27,6 @@ struct SettingsView: View {
                     
                     LogoSettingsView(viewModel: viewModel, obj: obj)
                     
-                 
-                    
                 }
                 .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
             }
@@ -414,7 +412,7 @@ struct MockupSettingsView: View {
                 
             }
             
-            /*
+            
             // Aspect Ratio
             if !obj.appearance.easySettingsMode {
                 HStack (spacing: -5) {
@@ -430,7 +428,7 @@ struct MockupSettingsView: View {
                 .padding(.bottom, 10)
                 
             }
-             */
+             
             
             HStack (spacing: -5) {
                 
@@ -481,13 +479,13 @@ struct MockupSettingsView: View {
             HStack {
                 Image(systemName: "circle.bottomrighthalf.checkered")
                     .popOverInfo(isPresented: $showPopover_ScreenReflectionOpacity) {
-                        Text("Adjust the opacity of the screen reflection from 50% to 100%")
+                        Text("Adjust the opacity of the screen reflection from 20% to 100%")
                     }
                 
                 Text("Screen Opacity")
                     .font(.system(size: obj.appearance.settingsSliderFontSize))
                 
-                CustomSlider(value: $obj.appearance.screenReflectionOpacity, inRange: 0.5...1, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                CustomSlider(value: $obj.appearance.screenReflectionOpacity, inRange: 0.2...1, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
                 }
                 .padding(.trailing, 10)
                 

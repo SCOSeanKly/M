@@ -111,7 +111,7 @@ struct MockupLayersView: View {
                 Image(uiImage: importedImage1)
                     .resizable()
                     .if(obj.appearance.screenshotFitFill) { view in
-                        view.aspectRatio(contentMode: .fit)
+                        view.aspectRatio(contentMode: .fill)
                     }
                     .frame(width: item.width, height: item.height)
                     .applyImageTransformsImage1(item)
@@ -124,7 +124,7 @@ struct MockupLayersView: View {
                 .frame(width: item.width, height: item.height)
                 .applyImageTransformsImage2(item)
                 .if(obj.appearance.showShadow) { view in
-                    view.shadow(color: .black.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
+                    view.shadow(color: obj.appearance.shadowColor.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
                 }
             
             //Screenshot image 2
@@ -132,7 +132,7 @@ struct MockupLayersView: View {
                 Image(uiImage: importedImage2)
                     .resizable()
                     .if(obj.appearance.screenshotFitFill) { view in
-                        view.aspectRatio(contentMode: .fit)
+                        view.aspectRatio(contentMode: .fill)
                     }
                     .frame(width: item.width, height: item.height)
                     .applyImageTransformsImage2(item)

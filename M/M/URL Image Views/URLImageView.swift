@@ -47,10 +47,6 @@ struct URLImages: View {
     
     var body: some View {
         ZStack {
-            
-           
-             
-            
             VStack {
                 
                 ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent)
@@ -121,6 +117,7 @@ struct URLImages: View {
         }
         .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
+        /*
         .alert(alertConfig: $alert) {
             
             Text("\(Image(systemName: "face.smiling")) New Images Available!")
@@ -136,6 +133,7 @@ struct URLImages: View {
                 }
                
         }
+         */
         .sheet(item: $selectedImage) { image in
             ZStack {
                 SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, showPremiumContent: $showPremiumContent)
@@ -168,10 +166,13 @@ struct URLImages: View {
         }
         .onAppear {
             viewModelData.loadImages()
-          
+          /*
             if viewModelData.newImagesCount > 0 {
                 alert.present()
+                
+                viewModelData.newImagesCount = 0 // reset the new images count to 0 so that we only see the alert once
             }
+           */
         }
         .onReceive(viewModelData.$forceRefresh) { refresh in
             if refresh {
