@@ -149,9 +149,9 @@ struct LayerObjectAppearance {
         self.logoRotate = 0
         
         self.wallHue = 0
-        self.wallSaturation = 5
-        self.wallBrightness = 1
-        self.wallContrast = 5
+        self.wallSaturation = 1
+        self.wallBrightness = 0
+        self.wallContrast = 1
     }
     
     init(

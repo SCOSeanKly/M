@@ -30,7 +30,7 @@ struct ShareImageButton: View {
     var body: some View {
         
         Image(systemName: "square.and.arrow.up.circle.fill")
-            .font(.system(size: 30, weight: .medium))
+            .font(.system(size: 35, weight: .medium))
             .symbolEffect(.pulse, value: showSymbolEffect)
             .foregroundColor(.primary)
             .rotationEffect(saveToPhotos ? .degrees(180) : .degrees(0))
@@ -99,6 +99,7 @@ struct ShareImageButton: View {
                 }
             }
             .padding()
+            .background(Color.white.opacity(0.000001))
             .alert(alertConfig: $saveImage_showSheet) {
                 Text(saveToPhotos ? "\(Image(systemName: "info.circle")) Saving to Photos Album" : "\(Image(systemName: "info.circle")) Changed to Share Sheet")
                     .foregroundStyle(item.alertTextColor)

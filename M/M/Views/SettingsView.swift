@@ -132,6 +132,8 @@ struct ButtonsAndPopoverView: View {
         obj.appearance.saturation = 1
         obj.appearance.frameWidth = 510 * 2
         obj.appearance.showBackground = true
+        obj.appearance.wallBrightness = 0
+        obj.appearance.wallContrast = 1
         
         // Reset Mockup parameters
         obj.appearance.screenshotFitFill = false
@@ -288,7 +290,6 @@ struct BackgroundSettingsView: View {
                                     .padding(.trailing, 10)
                                     
                                     Text("\(abs(obj.appearance.hue), specifier: "%.0f")°")
-                                    
                                         .font(.system(size: obj.appearance.settingsSliderFontSize))
                                         .frame(width: 40)
                                 }
@@ -309,6 +310,40 @@ struct BackgroundSettingsView: View {
                                     .padding(.trailing, 10)
                                     
                                     ScalePercentageText(scale: obj.appearance.saturation, maxScale: 1, fontSize: obj.appearance.settingsSliderFontSize)
+                                }
+                                .padding()
+                                
+                                HStack {
+                                    Image(systemName: "circle.lefthalf.striped.horizontal")
+                                        .popOverInfo(isPresented: $showPopover_Saturation) {
+                                            Text("Adjusts the contrast of the background")
+                                        }
+                                    
+                                    Text("Contrast")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    
+                                    CustomSlider(value: $obj.appearance.wallContrast, inRange: 0...2, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                                    }
+                                    .padding(.trailing, 10)
+                                    
+                                    ScalePercentageText(scale: obj.appearance.wallContrast, maxScale: 1, fontSize: obj.appearance.settingsSliderFontSize)
+                                }
+                                .padding()
+                                
+                                HStack {
+                                    Image(systemName: "sun.max")
+                                        .popOverInfo(isPresented: $showPopover_Saturation) {
+                                            Text("Adjusts the brightness of the background")
+                                        }
+                                    
+                                    Text("Brightness")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    
+                                    CustomSlider(value: $obj.appearance.wallBrightness, inRange: -1...1, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                                    }
+                                    .padding(.trailing, 10)
+                                    
+                                    ScalePercentageText(scale: obj.appearance.wallBrightness, maxScale: 1, fontSize: obj.appearance.settingsSliderFontSize)
                                 }
                                 .padding()
                             }

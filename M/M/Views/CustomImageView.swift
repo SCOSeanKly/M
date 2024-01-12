@@ -55,6 +55,8 @@ struct BackgroundView: View {
                 }
                 .hueRotation(Angle(degrees: obj.appearance.hue))
                 .saturation(obj.appearance.saturation)
+                .contrast(obj.appearance.wallContrast)
+                .brightness(obj.appearance.wallBrightness)
             }
             
             //User imported background
@@ -66,12 +68,18 @@ struct BackgroundView: View {
                     .offset(y: obj.appearance.backgroundOffsetY)
                     .hueRotation(Angle(degrees: obj.appearance.hue))
                     .saturation(obj.appearance.saturation)
+                    .contrast(obj.appearance.wallContrast)
+                    .brightness(obj.appearance.wallBrightness)
 //                    .overlay{
 //                        HexagonGrid(rows: 34, columns: 10)
 //                            .offset(x: -17.5, y: 350)
 //                            .scaleEffect(2.75)
 //                             
 //                    }
+                /*
+                 var wallBrightness: CGFloat
+                 var wallContrast: CGFloat
+                 */
             }
             
             //Blur overlay - disabled until blur value is > 0.01

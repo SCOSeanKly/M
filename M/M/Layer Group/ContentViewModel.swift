@@ -10,10 +10,7 @@ import SwiftUI
 class ContentViewModel: ObservableObject {
     @Published var items: [Item] = [
         
-      
-        
-        
-        //MARK: Mockup 1
+        //MARK: Mockup 1 - iP15PM_Front
         .init(imageName: "iP15PM_Front",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
@@ -66,7 +63,7 @@ class ContentViewModel: ObservableObject {
               height_b: 373,
               cornerRadius_b: 40),
         
-        //MARK: Mockup 2
+        //MARK: Mockup 2 - iP15CryptoMatte
         .init(imageName: "iP15CryptoMatte",
               screenReflectionName: "iP15_3DLeft_screen",
               shadowName: "",
@@ -119,7 +116,7 @@ class ContentViewModel: ObservableObject {
               height_b: 373,
               cornerRadius_b: 40),
         
-        //MARK: Mockup 2
+        //MARK: Mockup 3 - iP15_3DLeft
         .init(imageName: "iP15_3DLeft",
               screenReflectionName: "iP15_3DLeft_screen",
               shadowName: "",
@@ -171,7 +168,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Dual iP15 PM
+        
+        //MARK: Mockup 4 - Dual_iP15PM_Front
         .init(imageName: "Dual_iP15PM_Front",
               screenReflectionName: "Dual_iP15PM_Front_screen",
               shadowName: "",
@@ -223,7 +221,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Mockup 2
+        
+        //MARK: Mockup 5 - iP15PM_3DLeft_Upright
         .init(imageName: "iP15PM_3DLeft_Upright",
               screenReflectionName: "iP15PM_3DLeft_Upright_screen",
               shadowName: "",
@@ -275,7 +274,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Dual 3D iP15 PM
+        
+        //MARK: Mockup 6 - iP15PM_Twin3D
         .init(imageName: "iP15PM_Twin3D",
               screenReflectionName: "Dual_iP15PM_3DLeft_screen",
               shadowName: "",
@@ -327,7 +327,8 @@ class ContentViewModel: ObservableObject {
               width_b: 172.4 * 2,
               height_b: 430.0 * 2,
               cornerRadius_b: 40),
-        //MARK: Mockup 3
+        
+        //MARK: Mockup 7 - iP15PM_Front_shadowLeft
         .init(imageName: "iP15PM_Front_shadowLeft",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
@@ -379,7 +380,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Mockup 4
+        
+        //MARK: Mockup 8 - iP15PM_3DLeft
         .init(imageName: "iP15PM_3DLeft",
               screenReflectionName: "iP15PM_3DLeft_screen",
               shadowName: "",
@@ -431,7 +433,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Mockup 5
+        
+        //MARK: Mockup 9 - iP15PM_3DUpright
         .init(imageName: "iP15PM_3DUpright",
               screenReflectionName: "iP15PM_3DUpright_screen",
               shadowName: "",
@@ -483,7 +486,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Mockup 6 iPX
+        
+        //MARK: Mockup 10 - iPX
         .init(imageName: "iPX_Front",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
@@ -535,7 +539,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40),
-        //MARK: Dual iPX
+        
+        //MARK: Mockup 11 - Dual iPX
         .init(imageName: "iPX_Front_Dual",
               screenReflectionName: "Dual_iP15PM_Front_screen",
               shadowName: "",
@@ -588,8 +593,219 @@ class ContentViewModel: ObservableObject {
               height_b: 373,
               cornerRadius_b: 40),
         
+        //MARK: Mockup 12 - iP15PM Dark Concept
+        .init(imageName: "iP15PM_DarkDesign_Front",
+              screenReflectionName: "iP15PM_Front_screen",
+              shadowName: "",
+              color: .black,
+              alertTextColor: .white,
+              title: "Dark Concept",
+              subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max in a dark concept",
+              
+              // MARK: 1st mockup image
+              degrees: 0,
+              degrees2: 0,
+              x: 0,
+              y: 0,
+              z: 0,
+              anchor: .bottomLeading,
+              perspective: 1.2,
+              perspective2: 0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1,
+              offX: 0.5,
+              offY: 0,
+              rotationEffect: 0,
+              width: 173.0 * 2,
+              height: 373.4 * 2,
+              cornerRadius: 40,
+              notch: "notch_set1_",
+              reflectionOffset: -247,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
         
-        //MARK: Mockup 6 - Apple Watch Ultra2
+        //MARK: Mockup 13 - iP15PM Olive Concept
+        .init(imageName: "iP15PM_GreenDesign_Front",
+              screenReflectionName: "iP15PM_Front_screen",
+              shadowName: "",
+              color: .green,
+              alertTextColor: .white,
+              title: "Olive Concept",
+              subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max in a green concept",
+              
+              // MARK: 1st mockup image
+              degrees: 0,
+              degrees2: 0,
+              x: 0,
+              y: 0,
+              z: 0,
+              anchor: .bottomLeading,
+              perspective: 1.2,
+              perspective2: 0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1,
+              offX: 0.5,
+              offY: 0,
+              rotationEffect: 0,
+              width: 173.0 * 2,
+              height: 373.4 * 2,
+              cornerRadius: 40,
+              notch: "notch_set1_",
+              reflectionOffset: 10000,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
+        
+        //MARK: Mockup 14 - iP15PM Case Concept
+        .init(imageName: "iP15PM_CaseDesign_Front",
+              screenReflectionName: "iP15PM_Front_screen",
+              shadowName: "",
+              color: .gray,
+              alertTextColor: .white,
+              title: "Case Concept",
+              subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max with a case concept",
+              
+              // MARK: 1st mockup image
+              degrees: 0,
+              degrees2: 0,
+              x: 0,
+              y: 0,
+              z: 0,
+              anchor: .bottomLeading,
+              perspective: 1.2,
+              perspective2: 0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1,
+              offX: 0.5,
+              offY: 0,
+              rotationEffect: 0,
+              width: 173.0 * 2,
+              height: 373.4 * 2,
+              cornerRadius: 40,
+              notch: "notch_set1_",
+              reflectionOffset: 10000,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
+        
+        //MARK: Mockup 15 - iP15PM Cutout Concept
+        .init(imageName: "iP15PM_CutoutDesign_Front",
+              screenReflectionName: "iP15PM_Front_screen",
+              shadowName: "",
+              color: .black,
+              alertTextColor: .black,
+              title: "Cutout Concept",
+              subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max with a cutout concept",
+              
+              // MARK: 1st mockup image
+              degrees: 0,
+              degrees2: 0,
+              x: 0,
+              y: 0,
+              z: 0,
+              anchor: .bottomLeading,
+              perspective: 1.2,
+              perspective2: 0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1,
+              offX: 0.5,
+              offY: 0,
+              rotationEffect: 0,
+              width: 173.0 * 2,
+              height: 373.4 * 2,
+              cornerRadius: 40,
+              notch: "notch_set1_",
+              reflectionOffset: 10000,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
+        
+        //MARK: Mockup 16 - Apple Watch Ultra2
         .init(imageName: "appleWatchUltra2",
               screenReflectionName: "appleWatchUltraScreen",
               shadowName: "",
@@ -641,6 +857,8 @@ class ContentViewModel: ObservableObject {
               width_b: 173,
               height_b: 373,
               cornerRadius_b: 40)
+        
+        //MARK: DISABLED
         /*
         //MARK: Mockup 6 - Apple Watch Ultra
         .init(imageName: "appleWatchUltra",
