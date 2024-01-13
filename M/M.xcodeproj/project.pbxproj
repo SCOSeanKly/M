@@ -66,6 +66,7 @@
 		3EA6C7BB2B29BAA700C7CC89 /* toggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA6C7BA2B29BAA700C7CC89 /* toggle.swift */; };
 		3EAFEB3E2B23644900D57F5C /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAFEB3D2B23644900D57F5C /* Heart.swift */; };
 		3EB858BD2B4FEA24001C8A68 /* RollingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB858BC2B4FEA24001C8A68 /* RollingText.swift */; };
+		3EB858BF2B51A49F001C8A68 /* GridOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */; };
 		3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */; };
 		3EC0D5B42B18B9B700365B38 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B32B18B9B700365B38 /* DonationView.swift */; };
 		3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* StarView.swift */; };
@@ -135,6 +136,7 @@
 		3EA6C7BA2B29BAA700C7CC89 /* toggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = toggle.swift; sourceTree = "<group>"; };
 		3EAFEB3D2B23644900D57F5C /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
 		3EB858BC2B4FEA24001C8A68 /* RollingText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollingText.swift; sourceTree = "<group>"; };
+		3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridOverlay.swift; sourceTree = "<group>"; };
 		3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettings.swift; sourceTree = "<group>"; };
 		3EC0D5B32B18B9B700365B38 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		3ED67EC12B1F677D008CFD61 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
@@ -262,6 +264,7 @@
 		3E69AFA52AF559F8007244C1 /* Helpers Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */,
 				3EB858BC2B4FEA24001C8A68 /* RollingText.swift */,
 				3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */,
 				3E69AFA62AF55A0A007244C1 /* CustomSlider.swift */,
@@ -390,6 +393,7 @@
 				3EA6C7BB2B29BAA700C7CC89 /* toggle.swift in Sources */,
 				3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */,
 				3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */,
+				3EB858BF2B51A49F001C8A68 /* GridOverlay.swift in Sources */,
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
 				3E69AFC72AF55B93007244C1 /* AlwaysPopoverModifier.swift in Sources */,

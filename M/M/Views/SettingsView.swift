@@ -134,6 +134,7 @@ struct ButtonsAndPopoverView: View {
         obj.appearance.showBackground = true
         obj.appearance.wallBrightness = 0
         obj.appearance.wallContrast = 1
+        obj.appearance.showGrid = false
         
         // Reset Mockup parameters
         obj.appearance.screenshotFitFill = false
@@ -208,7 +209,17 @@ struct BackgroundSettingsView: View {
                 
                 CustomToggle(showTitleText: true, titleText: "Show Background", bindingValue: $obj.appearance.showBackground, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemRed))
             }
-            .padding(.bottom, 10)
+            .padding(.bottom, 5)
+            
+            //Show Grid
+            HStack (spacing: -5) {
+                Image(systemName: "grid")
+                
+                
+                CustomToggle(showTitleText: true, titleText: "Show Alignment Grid", bindingValue: $obj.appearance.showGrid, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+            }
+            .padding(.vertical, 10)
+            .padding(.leading)
             
            
             if obj.appearance.showBackground {
@@ -405,6 +416,9 @@ struct BackgroundSettingsView: View {
         obj.appearance.saturation = 1
         obj.appearance.backgroundOffsetY = 0
         obj.appearance.frameWidth = 510 * 2
+        obj.appearance.wallBrightness = 0
+        obj.appearance.wallContrast = 1
+        obj.appearance.showGrid = false
     }
 }
  

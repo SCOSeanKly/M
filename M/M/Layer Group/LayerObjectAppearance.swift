@@ -49,6 +49,7 @@ struct LayerObjectAppearance {
     var frameHeight: CGFloat
     var showBackground: Bool
     var backgroundColourOrGradient: Bool
+    var showGrid: Bool
     
     // Mockup Variables
     var showScreenReflection: Bool
@@ -108,6 +109,7 @@ struct LayerObjectAppearance {
         self.showTwoWallpapers = false
         self.showPremiumWallpapersOnly = false
         self.showWidgetsOnly = false
+        self.showGrid = false
         
      
         self.backgroundColour = .clear
@@ -177,6 +179,7 @@ struct LayerObjectAppearance {
         showTwoWallpapers: Bool,
         showPremiumWallpapersOnly: Bool,
         showWidgetsOnly: Bool,
+        showGrid: Bool,
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -253,6 +256,7 @@ struct LayerObjectAppearance {
         self.frameHeight = frameHeight
         self.showBackground = showBackground
         self.backgroundColourOrGradient = backgroundColourOrGradient
+        self.showGrid = showGrid
         
         self.showScreenReflection = showScreenReflection
         self.selectedScreenReflection = selectedScreenReflection

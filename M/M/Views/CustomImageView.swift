@@ -27,6 +27,10 @@ struct CustomImageView: View {
             LogoView(obj: obj, importedLogo: $importedLogo)
         }
         .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameHeight)
+        .overlay{
+            GridOverlay()
+                .opacity(obj.appearance.showGrid ? 1 : 0)
+        }
         .clipped()
     }
 }

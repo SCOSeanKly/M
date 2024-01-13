@@ -38,6 +38,15 @@ struct ShareImageButton: View {
                 feedback()
                 showSymbolEffect.toggle()
                 
+                if obj.appearance.showGrid {
+                    obj.appearance.showGrid.toggle()
+                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        obj.appearance.showGrid.toggle()
+                    }
+                }
+                
+
                 withAnimation(.bouncy){
                     obj.appearance.showPill = true
                 }
