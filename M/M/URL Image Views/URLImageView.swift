@@ -62,6 +62,7 @@ struct URLImages: View {
                                             selectedImage = viewModelData.images[index]
                                             isSheetPresented = true
                                             saveState = .idle
+                                          
                                         } label: {
                                             WebImage(url: URL(string: viewModelData.images[index].image))
                                                 .resizable()
@@ -82,8 +83,11 @@ struct URLImages: View {
                                         let fileName = getFileName(from: viewModelData.images[index].image)
                                         
                                         // Check if the fileName starts with "p_" or "w_" and replace with nil
-                                        let updatedFileName = fileName.replacingOccurrences(of: "p_", with: "").replacingOccurrences(of: "w_", with: "")
-                                        
+                                        let updatedFileName = fileName
+                                            .replacingOccurrences(of: "p_", with: "")
+                                            .replacingOccurrences(of: "w_", with: "")
+                                            .uppercased()
+
                                         Text(updatedFileName)
                                             .font(.system(size: 10))
                                             .foregroundColor(.primary.opacity(0.5))
@@ -131,7 +135,6 @@ struct URLImages: View {
                 .onTapGesture {
                     alert.dismiss()
                 }
-               
         }
          */
         .sheet(item: $selectedImage) { image in
@@ -159,11 +162,12 @@ struct URLImages: View {
                 isSheetPresented = true
             }
         }
-        .onReceive(viewModelData.$showWidgys.combineLatest(viewModelData.$forceRefresh)) { showWidgys, forceRefresh in
+        /*
+       .onReceive(viewModelData.$showWidgys.combineLatest(viewModelData.$forceRefresh)) { showWidgys, forceRefresh in
             if showWidgys || forceRefresh {
                 viewModelData.loadImages()
             }
-        }
+         */
         .onAppear {
             viewModelData.loadImages()
           /*
@@ -206,7 +210,6 @@ struct SheetContentView: View {
     let saveTip = SaveWallpaperTip()
     @SceneStorage("isZooming") var isZooming: Bool = false
     @Binding var showPremiumContent: Bool
-    
     
     
     var body: some View {

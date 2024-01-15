@@ -102,11 +102,11 @@ struct LayerObjectAppearance {
         self.showAppSettings = false
         self.enableImportTapGestures = false
         self.selectedAppearance = .system
-        self.showWallpapersView = false
+        self.showWallpapersView = false 
         self.imageFormatPNG = false
         self.showWallpaperButton = false
         self.showApplicationSettings = false
-        self.showTwoWallpapers = false
+        self.showTwoWallpapers = true
         self.showPremiumWallpapersOnly = false
         self.showWidgetsOnly = false
         self.showGrid = false

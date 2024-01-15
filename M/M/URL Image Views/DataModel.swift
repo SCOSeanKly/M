@@ -17,7 +17,8 @@ class DataViewModel: ObservableObject {
         }
     }
     
-    @Published var showWidgys: Bool = false
+    @Published var creatorName: String = "SeanKly"
+  //  @Published var updateURL: Bool = false
     @AppStorage("seenImages") var seenImages: [String] = []
     @Published var newImagesCount: Int = 0
     
@@ -26,12 +27,18 @@ class DataViewModel: ObservableObject {
         var baseUrlString = ""
         var urlString = ""
         
-        if showWidgys {
+        if creatorName == "widgy" {
             baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Widgys/"
             urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/widgyImages.json"
-        } else {
+        } else if creatorName == "SeanKly" {
             baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Wallpapers/"
             urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/wallpaperImages.json"
+        } else if creatorName == "ElijahCreative" {
+            baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/elijahCreative_Wallpapers/"
+            urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/elijahCreative.json"
+        } else if creatorName == "timetravelr2025" {
+            baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/timetravelr2025_Wallpapers/"
+            urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/timetravelr2025.json"
         }
         
         guard let url = URL(string: urlString) else {

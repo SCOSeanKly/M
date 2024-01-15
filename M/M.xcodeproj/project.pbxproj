@@ -71,6 +71,7 @@
 		3EC0D5B42B18B9B700365B38 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B32B18B9B700365B38 /* DonationView.swift */; };
 		3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* StarView.swift */; };
 		3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */; };
+		3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF74DA52B552FE4002E1D8D /* URLPill.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +141,7 @@
 		3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettings.swift; sourceTree = "<group>"; };
 		3EC0D5B32B18B9B700365B38 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		3ED67EC12B1F677D008CFD61 /* StarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StarView.swift; sourceTree = "<group>"; };
+		3EF74DA52B552FE4002E1D8D /* URLPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLPill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -175,6 +177,7 @@
 				3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */,
 				3ED67EC12B1F677D008CFD61 /* StarView.swift */,
 				3E3DFA412B21F77A00A4097E /* OffsetReader.swift */,
+				3EF74DA52B552FE4002E1D8D /* URLPill.swift */,
 			);
 			path = "URL Image Views";
 			sourceTree = "<group>";
@@ -394,6 +397,7 @@
 				3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */,
 				3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */,
 				3EB858BF2B51A49F001C8A68 /* GridOverlay.swift in Sources */,
+				3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */,
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
 				3E69AFC72AF55B93007244C1 /* AlwaysPopoverModifier.swift in Sources */,
@@ -568,7 +572,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -613,7 +617,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.2;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;

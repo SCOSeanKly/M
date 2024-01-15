@@ -307,7 +307,7 @@ struct InfoView: View {
                 Spacer()
             }
             HStack {
-                Text("All the wallpapers shown in the wallpaper section are property of ShowCreative and can be used for personal use only. Any distrbution or sharing is not allowed without permission of the owner")
+                Text("All the wallpapers shown in the wallpaper section are property of the res[ective owners and can be used for personal use only. Any distrbution or sharing is not allowed without permission of the owner")
                     .font(.system(size: obj.appearance.settingsSliderFontSize))
                     .foregroundStyle(.gray)
                     .fixedSize(horizontal: false, vertical: true)
@@ -324,6 +324,17 @@ struct InfoView: View {
                     .onTapGesture {
                         openURL(URL(string: "https://apps.apple.com/gb/app/widgy-widgets-home-lock-watch/id1524540481")!)
                     }
+                
+                Spacer()
+            }
+            
+            HStack {
+                Text("Special thanks to @ElijahCreative and @timetravelr2025 for giving permission to include their wallpapers")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    .foregroundStyle(.gray)
+                    .fixedSize(horizontal: false, vertical: true)
+                    .padding(.top, 2.5)
+                   
                 
                 Spacer()
             }

@@ -5,129 +5,131 @@
 //  Created by Sean Kelly on 22/11/2023.
 //
 
-import SwiftUI
 
-struct ButtonView: View {
-    
-    @State private var isTapped: Bool = false
-    @State private var showCount: Bool = false
-    @StateObject var obj: Object
-    
-    @StateObject var viewModelData: DataViewModel
-    
-    var totalFilesCount: Int {
-        if obj.appearance.showWidgetsOnly {
-            // Count only images with "w_" in the name
-            return viewModelData.images.filter { $0.image.contains("w_") }.count
-        } else {
-            // Count all images
-            return viewModelData.images.count
-        }
-    }
 
-    @Binding var showPremiumContent: Bool
-  
 
-    var body: some View {
-        HStack {
-            Button {
-                
-                isTapped.toggle()
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
-                    withAnimation(.bouncy) {
-                        showCount = false
-                    }
-                }
 
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                    obj.appearance.showWallpapersView.toggle()
-                }
-                
-            } label: {
-                HStack{
-                    Circle()
-                        .fill(.red)
-                        .frame(width: 30, height: 30)
-                        .overlay {
-                                Image(systemName: "xmark.circle")
-                                    .font(.system(.body, design: .rounded).weight(.medium))
-                                    .foregroundColor(.white)
-                        }
-                      
-                    
-                    if showCount {
-                        if totalFilesCount != 0 {
-                            Text("\(formattedCount(totalFilesCount))")
-                                .font(.system(.body, design: .rounded).weight(.medium))
-                                .padding(.horizontal, 5)
-                                .tint(.primary)
-                        }
-                    }
-                }
-                .padding(8)
-                .background(.ultraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 24))
-            }
-          
-            Spacer()
+ import SwiftUI
+
+ struct ButtonView: View {
+     
+     @State private var isTapped: Bool = false
+     @State private var showCount: Bool = false
+     @StateObject var obj: Object
+     @StateObject var viewModelData: DataViewModel
+     @Binding var showPremiumContent: Bool
+     @Environment(\.openURL) var openURL
+     
+     let showCreativeURL = URL(string: "https://twitter.com/SeanKly")!
+     let timetravelr2025URL = URL(string: "https://twitter.com/timetravelr2025")!
+     let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
+
+     var body: some View {
+         HStack {
+             Button {
+                 
+                 isTapped.toggle()
+                 
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.0) {
+                     withAnimation(.bouncy) {
+                         showCount = false
+                     }
+                 }
+
+                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                     obj.appearance.showWallpapersView.toggle()
+                 }
+                 
+             } label: {
+ HStack{
+     Circle()
+         .fill(.red)
+         .frame(width: 30, height: 30)
+         .overlay {
+                 Image(systemName: "xmark.circle")
+                     .font(.system(.body, design: .rounded).weight(.medium))
+                     .foregroundColor(.white)
+         }
+       
+     
+     if showCount {
+         if viewModelData.images.count != 0 {
+             Text("\(formattedCount(viewModelData.images.count))")
+                 .font(.system(.body, design: .rounded).weight(.medium))
+                 .padding(.horizontal, 5)
+                 .tint(.primary)
+         }
+     }
+ }
+ .padding(8)
+ .background(.ultraThinMaterial)
+ .clipShape(RoundedRectangle(cornerRadius: 24))
+             }
+             .opacity(obj.appearance.showPill ? 1: 0)
+             .offset(x: obj.appearance.showPill ?  0 : -100)
+           
+             Spacer()
             
-            if showPremiumContent {
-                
-                VStack {
-                 CrownView()
-                       
-                    Text("Unlocked")
-                }
-                .font(.system(size: 16, weight: .regular))
-                .foregroundStyle(.yellow.gradient)
-               
-            }
-            
-        }
-        .sensoryFeedback(.selection, trigger: isTapped)
-        .padding()
-        .onAppear{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                withAnimation(.bouncy) {
-                    showCount = true
-                }
-            }
-        }
-        .onDisappear{
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
-                withAnimation(.bouncy) {
-                    showCount = false
-                }
-            }
-        }
-        
-        VStack {
-            HStack {
-                Text(viewModelData.showWidgys ? "Widgets" : "Wallpapers")
-                    .font(.largeTitle.bold())
-                    .onChange(of: viewModelData.showWidgys) {
-                        viewModelData.forceRefresh.toggle()
-                    }
+             URLPill(obj: obj, viewModelData: viewModelData)
+         }
+         .sensoryFeedback(.selection, trigger: isTapped)
+         .padding()
+         .onAppear{
+             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                 withAnimation(.bouncy) {
+                     showCount = true
+                 }
+             }
+         }
+         .onDisappear{
+             DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                 withAnimation(.bouncy) {
+                     showCount = false
+                 }
+             }
+         }
+         
+         VStack {
+             HStack {
+                 Text(viewModelData.creatorName == "widgy" ? "Widgets" : "Wallpapers")
+                     .font(.largeTitle.bold())
+                     .onChange(of: viewModelData.creatorName) {
+                         viewModelData.forceRefresh.toggle()
+                     }
 
-                Spacer()
-                
-                CustomToggle(showTitleText: false, titleText: "", bindingValue: $viewModelData.showWidgys, onSymbol: "diamond", offSymbol: "square", rotate: true, onColor: .mint, offColor: .teal, obj: obj)
-               
-            }
-            .padding(.horizontal)
-            
-            HStack {
-                Text(viewModelData.showWidgys ? "A collection of premium widgets" : "A collection of premium wallpapers")
-                    .font(.subheadline)
-                    .foregroundStyle(.gray)
-                
-                Spacer()
-                
-            }
-            .padding(.horizontal)
-        }
-    }
-}
+                 Spacer()
+                 
+             }
+             .padding(.horizontal)
+             
+             HStack(spacing: 0) {
+                 if viewModelData.creatorName == "widgy" {
+                     Text("A collection of premium widgy widgets")
+                 } else {
+                     Text("Premium wallpapers by ")
+                     
+                     Text("@\(viewModelData.creatorName)")
+                         .fontWeight(.bold)
+                         .onTapGesture {
+                             switch viewModelData.creatorName {
+                             case "SeanKly":
+                                 openURL(showCreativeURL)
+                             case "timetravelr2025":
+                                 openURL(timetravelr2025URL)
+                             case "ElijahCreative":
+                                 openURL(elijahCreativeURL)
+                             default:
+                                 break
+                             }
+                         }
+                 }
 
-
+                 Spacer()
+             }
+             .font(.subheadline)
+             .foregroundStyle(.gray)
+             .padding(.horizontal)
+         }
+     }
+ }
+ 

@@ -80,3 +80,59 @@ struct AnimatedButton: View {
         
     }
 }
+
+struct AvatarAnimatedButton: View {
+    
+    @State private var rotationAngle: Angle = .degrees(0)
+    @State private var isAnimating: Bool = false
+    @State private var isTapped: Bool = false
+ 
+    var action: () -> Void
+    var avatarName: String
+    var rotationAntiClockwise: Bool
+    var rotationDegrees: Double
+    var color: Color
+    var allowRotation: Bool
+  
+    
+    
+    var body: some View {
+        
+        Button {
+            isTapped.toggle()
+            isAnimating.toggle()
+            action()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                isAnimating.toggle()
+            }
+            
+        } label: {
+            if isAnimating {
+                Image(avatarName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(Circle())
+                    .rotationEffect(rotationAngle)
+                    .animation(.easeInOut(duration: 1.5), value: rotationAngle)
+                    .onAppear {
+                        if allowRotation {
+                            rotationAngle = .degrees(rotationAntiClockwise ? -rotationDegrees : rotationDegrees)
+                        }
+                    }
+                    .onDisappear {
+                        rotationAngle = .degrees(0)
+                    }
+            } else {
+                Image(avatarName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(Circle())
+            }
+        }
+        .tint(color)
+        .sensoryFeedback(.selection, trigger: isTapped)
+        
+    }
+}
