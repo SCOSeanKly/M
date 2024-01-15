@@ -162,12 +162,6 @@ struct URLImages: View {
                 isSheetPresented = true
             }
         }
-        /*
-       .onReceive(viewModelData.$showWidgys.combineLatest(viewModelData.$forceRefresh)) { showWidgys, forceRefresh in
-            if showWidgys || forceRefresh {
-                viewModelData.loadImages()
-            }
-         */
         .onAppear {
             viewModelData.loadImages()
           /*

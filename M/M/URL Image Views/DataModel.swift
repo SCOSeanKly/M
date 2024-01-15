@@ -16,11 +16,11 @@ class DataViewModel: ObservableObject {
             }
         }
     }
-    
+
     @Published var creatorName: String = "SeanKly"
     @AppStorage("seenImages") var seenImages: [String] = []
     @Published var newImagesCount: Int = 0
-    
+
     private let commonBaseUrl = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main"
 
     private let creatorURLs: [String: (subPath: String, jsonFile: String)] = [
@@ -43,54 +43,46 @@ class DataViewModel: ObservableObject {
     ]
 
     func loadImages() {
-        guard let urls = creatorURLs[creatorName] else {
+        guard let urls = creatorURLs[creatorName],
+              let url = URL(string: commonBaseUrl + urls.jsonFile) else {
             return
         }
-        
-        let baseUrlString = commonBaseUrl + urls.subPath
-        let urlString = commonBaseUrl + urls.jsonFile
-        
-        guard let url = URL(string: urlString) else {
-            return
-        }
-        
+
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
-        
+
         let session = URLSession(configuration: config)
-        
+
         session.dataTask(with: url) { data, response, error in
             guard let data = data else {
                 return
             }
-            
+
             do {
                 let imageNames = try JSONDecoder().decode([String].self, from: data)
-                DispatchQueue.main.async {
-                    
+                DispatchQueue.global().async {
                     let newImages = imageNames.filter { imageName in
                         !self.seenImages.contains(imageName)
                     }
-                    
-                    self.newImagesCount = newImages.count
-                    
-                    self.images = imageNames.indices.map { index in
-                        let imageName = imageNames[index]
-                        let imageUrlString = baseUrlString + imageName
-                        var image = ImageModel(image: imageUrlString)
-                        
-                        // Check if the base name of the image has been seen before
-                        let isNew = !self.seenImages.contains(image.baseName)
-                        
-                        // If it's a new image, mark it as seen
-                        if isNew {
-                            self.seenImages.append(image.baseName)
+
+                    DispatchQueue.main.async {
+                        self.newImagesCount = newImages.count
+
+                        self.images = imageNames.map { imageName in
+                            let imageUrlString = self.commonBaseUrl + urls.subPath + imageName
+                            var image = ImageModel(image: imageUrlString)
+
+                            let isNew = !self.seenImages.contains(image.baseName)
+
+                            if isNew {
+                                self.seenImages.append(image.baseName)
+                            }
+
+                            image.isNew = isNew
+
+                            return image
                         }
-                        
-                        image.isNew = isNew
-                        
-                        return image
                     }
                 }
             } catch {
