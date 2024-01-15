@@ -18,28 +18,37 @@ class DataViewModel: ObservableObject {
     }
     
     @Published var creatorName: String = "SeanKly"
-  //  @Published var updateURL: Bool = false
     @AppStorage("seenImages") var seenImages: [String] = []
     @Published var newImagesCount: Int = 0
     
+    private let commonBaseUrl = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main"
+
+    private let creatorURLs: [String: (subPath: String, jsonFile: String)] = [
+        "widgy": (
+            subPath: "/Widgys/",
+            jsonFile: "/JSON/widgyImages.json"
+        ),
+        "SeanKly": (
+            subPath: "/Wallpapers/",
+            jsonFile: "/JSON/wallpaperImages.json"
+        ),
+        "ElijahCreative": (
+            subPath: "/elijahCreative_Wallpapers/",
+            jsonFile: "/JSON/elijahCreative.json"
+        ),
+        "timetravelr2025": (
+            subPath: "/timetravelr2025_Wallpapers/",
+            jsonFile: "/JSON/timetravelr2025.json"
+        )
+    ]
+
     func loadImages() {
-        
-        var baseUrlString = ""
-        var urlString = ""
-        
-        if creatorName == "widgy" {
-            baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Widgys/"
-            urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/widgyImages.json"
-        } else if creatorName == "SeanKly" {
-            baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Wallpapers/"
-            urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/wallpaperImages.json"
-        } else if creatorName == "ElijahCreative" {
-            baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/elijahCreative_Wallpapers/"
-            urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/elijahCreative.json"
-        } else if creatorName == "timetravelr2025" {
-            baseUrlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/timetravelr2025_Wallpapers/"
-            urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/timetravelr2025.json"
+        guard let urls = creatorURLs[creatorName] else {
+            return
         }
+        
+        let baseUrlString = commonBaseUrl + urls.subPath
+        let urlString = commonBaseUrl + urls.jsonFile
         
         guard let url = URL(string: urlString) else {
             return
@@ -90,4 +99,3 @@ class DataViewModel: ObservableObject {
         }.resume()
     }
 }
-
