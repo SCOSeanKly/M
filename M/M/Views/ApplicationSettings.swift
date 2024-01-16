@@ -329,15 +329,28 @@ struct InfoView: View {
             }
             
             HStack {
-                Text("Special thanks to @ElijahCreative and @timetravelr2025 for giving permission to include their wallpapers")
+                
+                Image(systemName: "person.circle")
+                    .font(.title3)
+                
+                Text("Contributors")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    .padding(.bottom, 5)
+                    .padding(.top, 5)
+                Spacer()
+            }
+            .padding(.top)
+            
+            HStack {
+                Text("Thank you to all the contributors who have included their wallapers. Visit them on social media by tapping below.")
                     .font(.system(size: obj.appearance.settingsSliderFontSize))
                     .foregroundStyle(.gray)
                     .fixedSize(horizontal: false, vertical: true)
-                    .padding(.top, 2.5)
-                   
                 
                 Spacer()
             }
+            
+            CreatorProfiles(obj: obj)
         }
         .padding(.horizontal)
         .padding(.vertical, 2.5)

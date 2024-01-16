@@ -121,22 +121,6 @@ struct URLImages: View {
         }
         .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
-        /*
-        .alert(alertConfig: $alert) {
-            
-            Text("\(Image(systemName: "face.smiling")) New Images Available!")
-                .foregroundStyle(.white)
-                .foregroundStyle(.white)
-                .padding(15)
-                .background{
-                    RoundedRectangle(cornerRadius: 15)
-                        .fill(.green.gradient)
-                }
-                .onTapGesture {
-                    alert.dismiss()
-                }
-        }
-         */
         .sheet(item: $selectedImage) { image in
             ZStack {
                 SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, showPremiumContent: $showPremiumContent)
@@ -164,13 +148,6 @@ struct URLImages: View {
         }
         .onAppear {
             viewModelData.loadImages()
-          /*
-            if viewModelData.newImagesCount > 0 {
-                alert.present()
-                
-                viewModelData.newImagesCount = 0 // reset the new images count to 0 so that we only see the alert once
-            }
-           */
         }
         .onReceive(viewModelData.$forceRefresh) { refresh in
             if refresh {
@@ -204,6 +181,7 @@ struct SheetContentView: View {
     let saveTip = SaveWallpaperTip()
     @SceneStorage("isZooming") var isZooming: Bool = false
     @Binding var showPremiumContent: Bool
+    let error: String = "ERROR - FILE DOES NOT EXIST"
     
     
     var body: some View {
@@ -215,7 +193,7 @@ struct SheetContentView: View {
                     
                     Group {
                         HStack(alignment: .center){
-                            if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                            if imageSize != error {
                                 
                                 // Shows premium star symbol when image contains "p_"
                                 if getFileName(from: image.image).contains("p_") {
@@ -224,7 +202,7 @@ struct SheetContentView: View {
                                         .foregroundStyle(.yellow.gradient)
                                 }
                                 
-                                Text(getFileName(from: image.image)
+                                Text(getFileName(from: image.image.uppercased())
                                     .replacingOccurrences(of: "p_", with: "")
                                     .replacingOccurrences(of: "w_", with: ""))
                                 .padding(.top, 6)
@@ -234,7 +212,7 @@ struct SheetContentView: View {
                                     .padding(.top, 6)
                             }
                             
-                            if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                            if imageSize != error {
                                 Text(getFileName(from: image.image).contains("w_") ?
                                      "Download QR Code" : imageSize)
                                 .padding(.top, 6)
@@ -250,7 +228,7 @@ struct SheetContentView: View {
                             }
                             
                             if imageSize != "Fetching file size..." {
-                                if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                                if imageSize != error {
                                     
                                     if !getFileName(from: image.image).contains("w_") {
                                         Text(imageFileFormat.dropFirst(2))
@@ -267,7 +245,7 @@ struct SheetContentView: View {
                         .font(.caption)
                         .offset(y: 50)
                         
-                        if imageSize != "ERROR - FILE DOES NOT EXIST" {
+                        if imageSize != error {
                             //MARK:  Check if the filename contains "p_" for premium
                             if getFileName(from: image.image).contains("p_") && !showPremiumContent {
                                 HStack {

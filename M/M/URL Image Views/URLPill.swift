@@ -97,11 +97,9 @@ private struct URLTextViewTwo: View {
     @StateObject var obj: Object
     @StateObject var viewModelData: DataViewModel
     
-    let avatarNames = ["SeanKly", "ElijahCreative", "timetravelr2025", "widgy"]
-    
     var body: some View {
         HStack {
-            ForEach(avatarNames, id: \.self) { avatarName in
+            ForEach(obj.appearance.avatarNames, id: \.self) { avatarName in
                 AvatarButton(avatarName: avatarName, viewModelData: viewModelData, obj: obj)
                     .padding(.horizontal, 5)
             }

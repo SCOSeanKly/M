@@ -32,6 +32,7 @@ struct LayerObjectAppearance {
     @AppStorage("showTwoWallpapers") var showTwoWallpapers: Bool = false
     var showPremiumWallpapersOnly: Bool
     var showWidgetsOnly: Bool
+    let avatarNames: [String]
 
     enum AppearanceMode {
         case light
@@ -110,6 +111,7 @@ struct LayerObjectAppearance {
         self.showPremiumWallpapersOnly = false
         self.showWidgetsOnly = false
         self.showGrid = false
+        self.avatarNames = ["SeanKly", "ElijahCreative", "timetravelr2025", "patricialeveq", "widgy"]
         
      
         self.backgroundColour = .clear
@@ -180,6 +182,7 @@ struct LayerObjectAppearance {
         showPremiumWallpapersOnly: Bool,
         showWidgetsOnly: Bool,
         showGrid: Bool,
+        avatarNames: [String],
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -257,6 +260,7 @@ struct LayerObjectAppearance {
         self.showBackground = showBackground
         self.backgroundColourOrGradient = backgroundColourOrGradient
         self.showGrid = showGrid
+        self.avatarNames = avatarNames
         
         self.showScreenReflection = showScreenReflection
         self.selectedScreenReflection = selectedScreenReflection
