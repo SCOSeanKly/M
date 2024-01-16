@@ -757,7 +757,7 @@ class ContentViewModel: ObservableObject {
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
               color: .black,
-              alertTextColor: .black,
+              alertTextColor: .white,
               title: "Cutout Concept",
               subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max with a cutout concept",
               

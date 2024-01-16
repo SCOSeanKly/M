@@ -23,6 +23,7 @@
      let showCreativeURL = URL(string: "https://twitter.com/SeanKly")!
      let timetravelr2025URL = URL(string: "https://twitter.com/timetravelr2025")!
      let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
+     let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
 
      var body: some View {
          HStack {
@@ -118,6 +119,8 @@
                                  openURL(timetravelr2025URL)
                              case "ElijahCreative":
                                  openURL(elijahCreativeURL)
+                             case "patricialeveq":
+                                 openURL(patricialeveqURL)
                              default:
                                  break
                              }

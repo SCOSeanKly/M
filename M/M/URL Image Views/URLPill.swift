@@ -130,7 +130,7 @@ private struct URLTextViewTwoSizer: View {
     var body: some View {
         Group {
             Color.clear
-                .frame(width: 184, height: 30, alignment: .center)
+                .frame(width: 226, height: 30, alignment: .center)
         }
     }
 }

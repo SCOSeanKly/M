@@ -39,6 +39,10 @@ class DataViewModel: ObservableObject {
         "timetravelr2025": (
             subPath: "/timetravelr2025_Wallpapers/",
             jsonFile: "/JSON/timetravelr2025.json"
+        ),
+        "patricialeveq": (
+            subPath: "/patricialeveq_Wallpapers/",
+            jsonFile: "/JSON/patricialeveq.json"
         )
     ]
 

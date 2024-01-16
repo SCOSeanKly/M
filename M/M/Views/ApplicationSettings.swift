@@ -81,7 +81,8 @@ struct ApplicationSettings: View {
                     .offset(y: -10)
                 
                 Divider()
-                    .padding([.horizontal, .bottom])
+                    .padding(.horizontal)
+                    .padding(.vertical, 5)
                 
                 //MARK: Application settings
                 VStack {
@@ -270,7 +271,7 @@ struct SelectIconView: View {
                         }
                     }
                 }
-                .frame(width: UIScreen.main.bounds.width * 0.5)
+                .frame(width: UIScreen.main.bounds.width * 0.45)
                 .offset(y: 10)
                 .sensoryFeedback(.selection, trigger: isTapped)
             }
@@ -297,13 +298,38 @@ struct InfoView: View {
         VStack {
             HStack {
                 
+                Image(systemName: "person.circle")
+                    .font(.title3)
+                
+                Text("Contributors")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    .padding(.bottom, 5)
+                  
+                Spacer()
+            }
+            .padding(.top)
+            HStack {
+                Text("Thank you to all the contributors who have included their wallapers. Visit them on social media by tapping below.")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                    .foregroundStyle(.gray)
+                    .fixedSize(horizontal: false, vertical: true)
+                
+                Spacer()
+            }
+            CreatorProfiles(obj: obj)
+            
+            Divider()
+                .padding(.vertical)
+            
+            HStack {
+                
                 Image(systemName: "info.circle")
                     .font(.title3)
                 
                 Text("Information")
                     .font(.system(size: obj.appearance.settingsSliderFontSize))
                     .padding(.bottom, 5)
-                    .padding(.top, 2.5)
+                    .padding(.top, 5)
                 Spacer()
             }
             HStack {
@@ -314,7 +340,6 @@ struct InfoView: View {
                 
                 Spacer()
             }
-           
             HStack {
                 Text("Widgy App is required to use the widgets shown in M. Download Widgy from the Appstore **HERE**")
                     .font(.system(size: obj.appearance.settingsSliderFontSize))
@@ -327,30 +352,7 @@ struct InfoView: View {
                 
                 Spacer()
             }
-            
-            HStack {
-                
-                Image(systemName: "person.circle")
-                    .font(.title3)
-                
-                Text("Contributors")
-                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                    .padding(.bottom, 5)
-                    .padding(.top, 5)
-                Spacer()
-            }
-            .padding(.top)
-            
-            HStack {
-                Text("Thank you to all the contributors who have included their wallapers. Visit them on social media by tapping below.")
-                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                    .foregroundStyle(.gray)
-                    .fixedSize(horizontal: false, vertical: true)
-                
-                Spacer()
-            }
-            
-            CreatorProfiles(obj: obj)
+          
         }
         .padding(.horizontal)
         .padding(.vertical, 2.5)
