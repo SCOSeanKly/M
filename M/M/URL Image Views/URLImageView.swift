@@ -203,8 +203,8 @@ struct SheetContentView: View {
                                 }
                                 
                                 Text(getFileName(from: image.image.uppercased())
-                                    .replacingOccurrences(of: "p_", with: "")
-                                    .replacingOccurrences(of: "w_", with: ""))
+                                    .replacingOccurrences(of: "P_", with: "")
+                                    .replacingOccurrences(of: "W_", with: ""))
                                 .padding(.top, 6)
                                 .foregroundStyle(getFileName(from: image.image).contains("p_") ? .yellow : .primary)
                                 

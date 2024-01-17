@@ -57,6 +57,7 @@
          if viewModelData.images.count != 0 {
              Text("\(formattedCount(viewModelData.images.count))")
                  .font(.system(.body, design: .rounded).weight(.medium))
+                 .lineLimit(1)
                  .padding(.horizontal, 5)
                  .tint(.primary)
          }
