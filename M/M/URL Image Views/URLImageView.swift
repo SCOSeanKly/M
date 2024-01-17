@@ -8,6 +8,7 @@
 import SwiftUI
 import SDWebImageSwiftUI
 import TipKit
+import SwiftUIX
 
 
 struct URLImages: View {
@@ -62,7 +63,7 @@ struct URLImages: View {
                                             selectedImage = viewModelData.images[index]
                                             isSheetPresented = true
                                             saveState = .idle
-                                          
+                                            
                                         } label: {
                                             WebImage(url: URL(string: viewModelData.images[index].image))
                                                 .resizable()
@@ -87,7 +88,7 @@ struct URLImages: View {
                                             .replacingOccurrences(of: "p_", with: "")
                                             .replacingOccurrences(of: "w_", with: "")
                                             .uppercased()
-
+                                        
                                         Text(updatedFileName)
                                             .font(.system(size: 10))
                                             .foregroundColor(.primary.opacity(0.5))
@@ -282,7 +283,6 @@ struct SheetContentView: View {
                     }
                     .opacity(isZooming ? 0 : 1)
                     .animation(.bouncy, value: isZooming)
-                    
                 }
                 .sensoryFeedback(.selection, trigger: isTapped)
                 .onAppear {
@@ -444,6 +444,9 @@ struct LargeImageView: View {
     
     @Binding var showPremiumContent: Bool
     
+    @StateObject private var metadataViewModel = ImageMetadataViewModel()
+    @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
+    
     var fullResImageURL: URL {
         guard var urlComponents = URLComponents(string: image.image) else {
             return URL(string: "")!
@@ -482,6 +485,10 @@ struct LargeImageView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .frame(width: frameSize.width, height: frameSize.height)
+                    .onAppear {
+                        // Fetch metadata when the premium content image appears
+                        metadataViewModel.fetchImageMetadata(from: fullResImageURL)
+                    }
                 // Dont load full res image if image is Widgy
                 if !image.image.contains("w_") {
                     // Show Full Res Image if Premium is unlocked with IAP
@@ -504,6 +511,10 @@ struct LargeImageView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                 }
+            }
+            .onDisappear {
+                // Reset metadata when the view disappears to avoid showing old metadata when reappearing
+                metadataViewModel.imageMetadata = nil
             }
             .frame(width: frameSize.width, height: frameSize.height)
             .cornerRadius(40)
@@ -562,22 +573,108 @@ struct LargeImageView: View {
             .ignoresSafeArea()
             .customPresentationWithPrimaryBackground(detent: .large, backgroundColorOpacity: 1.0)
             
+            if let metadata = metadataViewModel.imageMetadata {
+            VStack {
+                    let sortedKeys = metadata.keys.sorted(by: { ($0 as String).compare($1 as String) == .orderedAscending })
+                    ForEach(sortedKeys, id: \.self) { key in
+                        if let value = metadata[key] {
+                            Text("\(String(describing: value))")
+                                .font(.footnote)
+                                .foregroundColor(.primary)
+                                .padding(5)
+                                .background(.ultraThinMaterial.opacity(0.7))
+                                .cornerRadius(10)
+                                .multilineTextAlignment(.center)
+                                .fixedSize(horizontal: false, vertical: true)
+                                .onTapGesture{
+                                    // COPY TEXT TO CLIPBOARD
+                                    UIPasteboard.general.string = "\(String(describing: value))"
+                                    alert.present()
+                                }
+                        }
+                    }
+                }
+            .alert(alertConfig: $alert) {
+                alertPreferences(title: "Copied to Clipboard!",
+                                            imageName: "checkmark.circle")
+            }
+            .padding()
+            }
+           
+            
             Spacer()
         }
     }
     
-    private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
-        PhotoPicker(filter: .images, limit: 1) { results in
-            PhotoPicker.convertToUIImageArray(fromResults: results) { (imagesOrNil, errorOrNil) in
-                if let error = errorOrNil {
-                    print(error)
-                }
-                if let images = imagesOrNil {
-                    completion(images)
-                }
+  private  func alertPreferences(title: String, imageName: String) -> some View {
+           Text("\(Image(systemName: imageName)) \(title)")
+            .foregroundStyle(.primary)
+               .padding(15)
+               .background {
+                   RoundedRectangle(cornerRadius: 15)
+                       .fill(Color.primary.colorInvert())
+               }
+               .onAppear(perform: {
+                   DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                       alert.dismiss()
+                   }
+               })
+               .onTapGesture {
+                   alert.dismiss()
+               }
+       }
+    
+  private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
+    PhotoPicker(filter: .images, limit: 1) { results in
+        PhotoPicker.convertToUIImageArray(fromResults: results) { (imagesOrNil, errorOrNil) in
+            if let error = errorOrNil {
+                print(error)
+            }
+            if let images = imagesOrNil {
+                completion(images)
             }
         }
-        .edgesIgnoringSafeArea(.bottom)
+    }
+    .edgesIgnoringSafeArea(.bottom)
+}
+}
+
+class ImageMetadataViewModel: ObservableObject {
+    @Published var imageMetadata: [CFString: Any]? = nil
+    
+    func fetchImageMetadata(from url: URL) {
+        let request = URLRequest(url: url)
+        
+        URLSession.shared.dataTask(with: request) { data, _, error in
+            guard let data = data, error == nil else {
+                print("Failed to fetch image metadata: \(error?.localizedDescription ?? "")")
+                return
+            }
+            
+            if let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
+               let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any] {
+                
+                // Filter the properties to only include the TIFF metadata
+                if let tiffMetadata = properties[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
+                    
+                    // Filter the TIFF metadata to only include the "ImageDescription" key
+                    if let imageDescription = tiffMetadata[kCGImagePropertyTIFFImageDescription] {
+                        
+                        DispatchQueue.main.async {
+                            // Use a CFString key directly in the dictionary
+                            self.imageMetadata = [kCGImagePropertyTIFFImageDescription: imageDescription]
+                            print("Image Metadata - ImageDescription: \(imageDescription)")
+                        }
+                    } else {
+                        print("ImageDescription key not found in TIFF metadata")
+                    }
+                } else {
+                    print("TIFF metadata not found")
+                }
+            } else {
+                print("Failed to fetch image metadata")
+            }
+        }.resume()
     }
 }
 
