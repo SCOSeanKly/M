@@ -573,106 +573,148 @@ struct LargeImageView: View {
             .ignoresSafeArea()
             .customPresentationWithPrimaryBackground(detent: .large, backgroundColorOpacity: 1.0)
             
+            if metadataViewModel.isLoading {
+                HStack {
+                    ProgressView()
+                        .progressViewStyle(CircularProgressViewStyle(tint: .primary))
+                        .scaleEffect(0.6)
+                    
+                    Text(" Checking for AI Prompt")
+                    
+                }
+                .font(.system(size: 12, weight: .regular, design: .rounded))
+                .foregroundColor(.primary)
+                .padding(5)
+                .padding(.horizontal, 5)
+                .background(.ultraThinMaterial.opacity(0.7))
+                .cornerRadius(50)
+                .multilineTextAlignment(.center)
+                .fixedSize(horizontal: false, vertical: true)
+            }
+            
             if let metadata = metadataViewModel.imageMetadata {
-            VStack {
+                VStack {
                     let sortedKeys = metadata.keys.sorted(by: { ($0 as String).compare($1 as String) == .orderedAscending })
                     ForEach(sortedKeys, id: \.self) { key in
                         if let value = metadata[key] {
-                            Text("\(String(describing: value))")
-                                .font(.footnote)
-                                .foregroundColor(.primary)
-                                .padding(5)
-                                .background(.ultraThinMaterial.opacity(0.7))
-                                .cornerRadius(10)
-                                .multilineTextAlignment(.center)
-                                .fixedSize(horizontal: false, vertical: true)
-                                .onTapGesture{
-                                    // COPY TEXT TO CLIPBOARD
-                                    UIPasteboard.general.string = "\(String(describing: value))"
+                            
+                            Button {
+                                UIPasteboard.general.string = "\(String(describing: value))"
+                                
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
                                     alert.present()
                                 }
+                            } label: {
+                                Text("\(String(describing: value))")
+                                    .font(.system(size: 12, weight: .regular, design: .rounded))
+                                    .foregroundColor(.primary)
+                                    .padding(5)
+                                    .background(.ultraThinMaterial.opacity(0.7))
+                                    .cornerRadius(10)
+                                    .multilineTextAlignment(.center)
+                                    .fixedSize(horizontal: false, vertical: true)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 10)
+                                            .stroke(.primary, lineWidth: 0.5)
+                                            .opacity(0.4)
+                                    )
+                            }
+                            .buttonStyle(.plain)
+                          
                         }
                     }
                 }
-            .alert(alertConfig: $alert) {
-                alertPreferences(title: "Copied to Clipboard!",
-                                            imageName: "checkmark.circle")
+                .alert(alertConfig: $alert) {
+                    alertPreferences(title: "Copied to Clipboard!",
+                                     imageName: "checkmark.circle")
+                }
+                .frame(width: frameSize.width)
+                .padding(.bottom, 5)
             }
-            .padding()
-            }
-           
             
             Spacer()
         }
     }
     
-  private  func alertPreferences(title: String, imageName: String) -> some View {
-           Text("\(Image(systemName: imageName)) \(title)")
+    private func alertPreferences(title: String, imageName: String) -> some View {
+        Text("\(Image(systemName: imageName)) \(title)")
             .foregroundStyle(.primary)
-               .padding(15)
-               .background {
-                   RoundedRectangle(cornerRadius: 15)
-                       .fill(Color.primary.colorInvert())
-               }
-               .onAppear(perform: {
-                   DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                       alert.dismiss()
-                   }
-               })
-               .onTapGesture {
-                   alert.dismiss()
-               }
-       }
-    
-  private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
-    PhotoPicker(filter: .images, limit: 1) { results in
-        PhotoPicker.convertToUIImageArray(fromResults: results) { (imagesOrNil, errorOrNil) in
-            if let error = errorOrNil {
-                print(error)
+            .padding(15)
+            .background {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.primary.colorInvert())
             }
-            if let images = imagesOrNil {
-                completion(images)
+            .onAppear(perform: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    alert.dismiss()
+                }
+            })
+            .onTapGesture {
+                alert.dismiss()
+            }
+    }
+    
+    private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
+        PhotoPicker(filter: .images, limit: 1) { results in
+            PhotoPicker.convertToUIImageArray(fromResults: results) { (imagesOrNil, errorOrNil) in
+                if let error = errorOrNil {
+                    print(error)
+                }
+                if let images = imagesOrNil {
+                    completion(images)
+                }
             }
         }
+        .edgesIgnoringSafeArea(.bottom)
     }
-    .edgesIgnoringSafeArea(.bottom)
-}
 }
 
 class ImageMetadataViewModel: ObservableObject {
     @Published var imageMetadata: [CFString: Any]? = nil
+    @Published var isLoading: Bool = false // New loading state
     
     func fetchImageMetadata(from url: URL) {
+        isLoading = true // Set loading state to true before making the request
+        
         let request = URLRequest(url: url)
         
         URLSession.shared.dataTask(with: request) { data, _, error in
             guard let data = data, error == nil else {
                 print("Failed to fetch image metadata: \(error?.localizedDescription ?? "")")
+                DispatchQueue.main.async {
+                    self.isLoading = false // Set loading state to false in case of an error
+                }
                 return
             }
             
             if let imageSource = CGImageSourceCreateWithData(data as CFData, nil),
                let properties = CGImageSourceCopyPropertiesAtIndex(imageSource, 0, nil) as? [CFString: Any] {
                 
-                // Filter the properties to only include the TIFF metadata
                 if let tiffMetadata = properties[kCGImagePropertyTIFFDictionary] as? [CFString: Any] {
-                    
-                    // Filter the TIFF metadata to only include the "ImageDescription" key
                     if let imageDescription = tiffMetadata[kCGImagePropertyTIFFImageDescription] {
                         
                         DispatchQueue.main.async {
-                            // Use a CFString key directly in the dictionary
                             self.imageMetadata = [kCGImagePropertyTIFFImageDescription: imageDescription]
+                            self.isLoading = false // Set loading state to false on successful response
                             print("Image Metadata - ImageDescription: \(imageDescription)")
                         }
                     } else {
                         print("ImageDescription key not found in TIFF metadata")
+                        DispatchQueue.main.async {
+                            self.isLoading = false // Set loading state to false in case of an error
+                        }
                     }
                 } else {
                     print("TIFF metadata not found")
+                    DispatchQueue.main.async {
+                        self.isLoading = false // Set loading state to false in case of an error
+                    }
                 }
             } else {
                 print("Failed to fetch image metadata")
+                DispatchQueue.main.async {
+                    self.isLoading = false // Set loading state to false in case of an error
+                }
             }
         }.resume()
     }

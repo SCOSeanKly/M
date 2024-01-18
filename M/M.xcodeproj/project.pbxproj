@@ -20,6 +20,7 @@
 		3E3DFA3E2B21F70600A4097E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3D2B21F70600A4097E /* DataModel.swift */; };
 		3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3F2B21F73700A4097E /* ImageModel.swift */; };
 		3E3DFA422B21F77A00A4097E /* OffsetReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA412B21F77A00A4097E /* OffsetReader.swift */; };
+		3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 3E40F5B62B583F3700D1B581 /* SwiftUIX */; };
 		3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImageView.swift */; };
 		3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */; };
 		3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD92B0E196B007A1714 /* URLButtonView.swift */; };
@@ -72,7 +73,6 @@
 		3EC0D5B42B18B9B700365B38 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B32B18B9B700365B38 /* DonationView.swift */; };
 		3ED67EC22B1F677D008CFD61 /* StarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* StarView.swift */; };
 		3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */; };
-		3EEF72642B57DCB300077775 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 3EEF72632B57DCB300077775 /* SwiftUIX */; };
 		3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF74DA52B552FE4002E1D8D /* URLPill.swift */; };
 /* End PBXBuildFile section */
 
@@ -152,7 +152,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3EEF72642B57DCB300077775 /* SwiftUIX in Frameworks */,
+				3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */,
 				3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */,
 				3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */,
 			);
@@ -326,7 +326,7 @@
 			packageProductDependencies = (
 				3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */,
 				3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */,
-				3EEF72632B57DCB300077775 /* SwiftUIX */,
+				3E40F5B62B583F3700D1B581 /* SwiftUIX */,
 			);
 			productName = M;
 			productReference = 3E69AF772AF55875007244C1 /* M.app */;
@@ -359,7 +359,7 @@
 			packageReferences = (
 				3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
 				3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
-				3EEF72622B57DCB300077775 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+				3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 			);
 			productRefGroup = 3E69AF782AF55875007244C1 /* Products */;
 			projectDirPath = "";
@@ -580,7 +580,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.0.5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -625,7 +625,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.0.5;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -685,6 +685,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.9;
+			};
+		};
 		3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/danielsaidi/SwiftUIKit.git";
@@ -701,17 +709,14 @@
 				minimumVersion = 2.2.4;
 			};
 		};
-		3EEF72622B57DCB300077775 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.1.9;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		3E40F5B62B583F3700D1B581 /* SwiftUIX */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
+			productName = SwiftUIX;
+		};
 		3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */;
@@ -721,11 +726,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
-		};
-		3EEF72632B57DCB300077775 /* SwiftUIX */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3EEF72622B57DCB300077775 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
-			productName = SwiftUIX;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

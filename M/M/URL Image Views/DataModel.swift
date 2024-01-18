@@ -21,28 +21,28 @@ class DataViewModel: ObservableObject {
     @AppStorage("seenImages") var seenImages: [String] = []
     @Published var newImagesCount: Int = 0
 
-    private let commonBaseUrl = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main"
+    private let commonBaseUrl = "https://raw.githubusercontent.com/SCOSeanKly/"
 
     private let creatorURLs: [String: (subPath: String, jsonFile: String)] = [
         "widgy": (
-            subPath: "/Widgys/",
-            jsonFile: "/JSON/widgyImages.json"
+            subPath: "M_Resources/main/Widgys/",
+            jsonFile: "M_Resources/main/JSON/widgyImages.json"
         ),
         "SeanKly": (
-            subPath: "/Wallpapers/",
-            jsonFile: "/JSON/wallpaperImages.json"
+            subPath: "M_Resources/main/Wallpapers/",
+            jsonFile: "M_Resources/main/JSON/wallpaperImages.json"
         ),
         "ElijahCreative": (
-            subPath: "/elijahCreative_Wallpapers/",
-            jsonFile: "/JSON/elijahCreative.json"
+            subPath: "ElijahCreative_M_Resources/main/Wallpapers/",
+            jsonFile: "ElijahCreative_M_Resources/main/JSON/elijahCreative.json"
         ),
         "timetravelr2025": (
-            subPath: "/timetravelr2025_Wallpapers/",
-            jsonFile: "/JSON/timetravelr2025.json"
+            subPath: "TimeTraveler_M_Resources/main/Wallpapers/",
+            jsonFile: "TimeTraveler_M_Resources/main/JSON/timetravelr2025.json"
         ),
         "patricialeveq": (
-            subPath: "/patricialeveq_Wallpapers/",
-            jsonFile: "/JSON/patricialeveq.json"
+            subPath: "patricialeveq_M_Resources/main/Wallpapers/",
+            jsonFile: "patricialeveq_M_Resources/main/JSON/patricialeveq.json"
         )
     ]
 
