@@ -4,7 +4,7 @@
 //
 //  Created by Sean Kelly on 03/11/2023.
 //
-
+/*
 import SwiftUI
 
 @main
@@ -20,4 +20,5 @@ struct CustomUniversalAlertApp: App {
         }
     }
 }
+ */
 

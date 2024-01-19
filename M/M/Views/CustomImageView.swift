@@ -80,10 +80,6 @@ struct BackgroundView: View {
 //                            .scaleEffect(2.75)
 //                             
 //                    }
-                /*
-                 var wallBrightness: CGFloat
-                 var wallContrast: CGFloat
-                 */
             }
             
             //Blur overlay - disabled until blur value is > 0.01

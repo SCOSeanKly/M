@@ -50,7 +50,7 @@ struct RollingText: View {
                 updateText()
             }
         }
-        .onChange(of: value) { newValue in
+        .onChange(of: value) {
             // MARK: Handling Addition/Removal to Extra Value
             let extra = "\(value)".count - animationRange.count
             if extra > 0{
@@ -58,11 +58,13 @@ struct RollingText: View {
                 for _ in 0..<extra{
                     withAnimation(.easeIn(duration: 0.1)){animationRange.append(0)}
                 }
-            }else{
+            } else{
                 // Removing Extra Range
                 for _ in 0..<(-extra){
-                    withAnimation(.easeIn(duration: 0.1)){animationRange.removeLast()}
+                    _ = withAnimation(.easeIn(duration: 0.1)){ animationRange.removeLast() }
                 }
+                
+                
             }
             
             // MARK: Little Delay for Nice Look

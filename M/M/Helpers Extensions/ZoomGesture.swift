@@ -54,7 +54,7 @@ struct PinchZoomContext<Content: View>: View{
             .scaleEffect(1 + (scale < 0 ? 0 : scale),anchor: .init(x: scalePosition.x, y: scalePosition.y))
         // Making it top when zooming started...
             .zIndex((scale != 0 || offset != .zero) ? 1000 : 0)
-            .onChange(of: scale) { newValue in
+            .onChange(of: scale) {
                 
                 isZooming = (scale != 0)
                 
@@ -65,7 +65,7 @@ struct PinchZoomContext<Content: View>: View{
                     }
                 }
             }
-            .onChange(of: offset) { newValue in
+            .onChange(of: offset) { 
                 isZooming = (offset != .zero)
             }
     }
