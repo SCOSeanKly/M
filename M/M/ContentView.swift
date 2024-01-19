@@ -18,6 +18,7 @@ struct ContentView: View {
     
     @State var buyClicked: Bool = false
     let animationDuration: CGFloat = 0.2
+
     
     var body: some View {
    

@@ -33,6 +33,7 @@ struct LayerObjectAppearance {
     var showPremiumWallpapersOnly: Bool
     var showWidgetsOnly: Bool
     let avatarNames: [String]
+    var showAIPromptText: Bool
 
     enum AppearanceMode {
         case light
@@ -112,6 +113,7 @@ struct LayerObjectAppearance {
         self.showWidgetsOnly = false
         self.showGrid = false
         self.avatarNames = ["SeanKly", "ElijahCreative", "timetravelr2025", "patricialeveq", "widgy"]
+        self.showAIPromptText = true
         
      
         self.backgroundColour = .clear
@@ -183,6 +185,7 @@ struct LayerObjectAppearance {
         showWidgetsOnly: Bool,
         showGrid: Bool,
         avatarNames: [String],
+        showAIPromptText: Bool,
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -261,6 +264,7 @@ struct LayerObjectAppearance {
         self.backgroundColourOrGradient = backgroundColourOrGradient
         self.showGrid = showGrid
         self.avatarNames = avatarNames
+        self.showAIPromptText = showAIPromptText
         
         self.showScreenReflection = showScreenReflection
         self.selectedScreenReflection = selectedScreenReflection

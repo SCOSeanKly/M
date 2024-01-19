@@ -190,7 +190,7 @@ struct SheetContentView: View {
             ScrollView {
                 VStack {
                     
-                    LargeImageView(image: image, viewModelContent: viewModelContent, importedOverlay: $viewModelContent.importedOverlay, showPremiumContent: $showPremiumContent)
+                    LargeImageView(image: image, viewModelContent: viewModelContent, importedOverlay: $viewModelContent.importedOverlay, obj: obj, showPremiumContent: $showPremiumContent)
                     
                     Group {
                         HStack(alignment: .center){
@@ -441,6 +441,7 @@ struct LargeImageView: View {
     @SceneStorage("isZooming") var isZooming: Bool = false
     @StateObject var viewModelContent: ContentViewModel
     @Binding var importedOverlay: UIImage?
+    @StateObject var obj: Object
     
     @Binding var showPremiumContent: Bool
     
@@ -573,63 +574,65 @@ struct LargeImageView: View {
             .ignoresSafeArea()
             .customPresentationWithPrimaryBackground(detent: .large, backgroundColorOpacity: 1.0)
             
-            if metadataViewModel.isLoading {
-                HStack {
-                    ProgressView()
-                        .progressViewStyle(CircularProgressViewStyle(tint: .primary))
-                        .scaleEffect(0.6)
-                    
-                    Text(" Checking for AI Prompt")
-                    
+            if obj.appearance.showAIPromptText {
+                if metadataViewModel.isLoading {
+                    HStack {
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .primary))
+                            .scaleEffect(0.6)
+                        
+                        Text(" Checking for AI Prompt")
+                        
+                    }
+                    .font(.system(size: 12, weight: .regular, design: .rounded))
+                    .foregroundColor(.primary)
+                    .padding(5)
+                    .padding(.horizontal, 5)
+                    .background(.ultraThinMaterial.opacity(0.7))
+                    .cornerRadius(50)
+                    .multilineTextAlignment(.center)
+                    .fixedSize(horizontal: false, vertical: true)
                 }
-                .font(.system(size: 12, weight: .regular, design: .rounded))
-                .foregroundColor(.primary)
-                .padding(5)
-                .padding(.horizontal, 5)
-                .background(.ultraThinMaterial.opacity(0.7))
-                .cornerRadius(50)
-                .multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-            }
-            
-            if let metadata = metadataViewModel.imageMetadata {
-                VStack {
-                    let sortedKeys = metadata.keys.sorted(by: { ($0 as String).compare($1 as String) == .orderedAscending })
-                    ForEach(sortedKeys, id: \.self) { key in
-                        if let value = metadata[key] {
-                            
-                            Button {
-                                UIPasteboard.general.string = "\(String(describing: value))"
+                
+                if let metadata = metadataViewModel.imageMetadata {
+                    VStack {
+                        let sortedKeys = metadata.keys.sorted(by: { ($0 as String).compare($1 as String) == .orderedAscending })
+                        ForEach(sortedKeys, id: \.self) { key in
+                            if let value = metadata[key] {
                                 
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                    alert.present()
+                                Button {
+                                    UIPasteboard.general.string = "\(String(describing: value))"
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                        alert.present()
+                                    }
+                                } label: {
+                                    Text("\(String(describing: value))")
+                                        .font(.system(size: 12, weight: .regular, design: .rounded))
+                                        .foregroundColor(.primary)
+                                        .padding(5)
+                                        .background(.ultraThinMaterial.opacity(0.7))
+                                        .cornerRadius(10)
+                                        .multilineTextAlignment(.center)
+                                        .fixedSize(horizontal: false, vertical: true)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 10)
+                                                .stroke(.primary, lineWidth: 0.5)
+                                                .opacity(0.4)
+                                        )
                                 }
-                            } label: {
-                                Text("\(String(describing: value))")
-                                    .font(.system(size: 12, weight: .regular, design: .rounded))
-                                    .foregroundColor(.primary)
-                                    .padding(5)
-                                    .background(.ultraThinMaterial.opacity(0.7))
-                                    .cornerRadius(10)
-                                    .multilineTextAlignment(.center)
-                                    .fixedSize(horizontal: false, vertical: true)
-                                    .overlay(
-                                        RoundedRectangle(cornerRadius: 10)
-                                            .stroke(.primary, lineWidth: 0.5)
-                                            .opacity(0.4)
-                                    )
+                                .buttonStyle(.plain)
+                                
                             }
-                            .buttonStyle(.plain)
-                          
                         }
                     }
+                    .alert(alertConfig: $alert) {
+                        alertPreferences(title: "Copied to Clipboard!",
+                                         imageName: "checkmark.circle")
+                    }
+                    .frame(width: frameSize.width)
+                    .padding(.bottom, 5)
                 }
-                .alert(alertConfig: $alert) {
-                    alertPreferences(title: "Copied to Clipboard!",
-                                     imageName: "checkmark.circle")
-                }
-                .frame(width: frameSize.width)
-                .padding(.bottom, 5)
             }
             
             Spacer()

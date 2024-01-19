@@ -196,6 +196,33 @@ struct ApplicationSettings: View {
                 //MARK: Select Icon view
                 SelectIconView(obj: obj)
                 
+                VStack {
+                    HStack {
+                        Image(systemName: "doc.plaintext")
+                            .font(.title3)
+                        
+                        Text("Show AI prompt: ")
+                            .font(.system(size: obj.appearance.settingsSliderFontSize))
+                      
+                        Spacer()
+                        
+                        CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showAIPromptText, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                            .offset(x: 15)
+                    }
+                    
+                    HStack {
+                        Text("Shows the AI prompt text when available in the fullscreen wallpaper view")
+                            .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            .foregroundStyle(.gray)
+                            .frame(width: UIScreen.main.bounds.width * 0.8)
+                        
+                        Spacer()
+                        
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.vertical, 2.5)
+                
                 Divider()
                     .padding([.horizontal, .top])
                 
@@ -242,7 +269,7 @@ struct SelectIconView: View {
                 
                 ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(["IconBlueM", "IconBlueM_White", "IconWhiteM", "IconPinkM", "IconMultiM"], id: \.self) { iconName in
+                        ForEach(["IconBlueM", "IconBlueM_White", "IconWhiteM", "IconPinkM", "IconMultiM", "IconAIM"], id: \.self) { iconName in
                             Button {
                                 changeAppIcon(to: iconName)
                                 selectedIcon = iconName
