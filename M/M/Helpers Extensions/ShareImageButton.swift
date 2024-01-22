@@ -8,7 +8,6 @@
 import SwiftUI
 import StoreKit
 
-
 struct ShareImageButton: View {
     @Binding var showSymbolEffect: Bool
     @Binding var importedBackground: UIImage?
@@ -16,6 +15,7 @@ struct ShareImageButton: View {
     @Binding var importedImage2: UIImage?
     @Binding var importedLogo: UIImage?
     var item: Item
+    
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @State private var alertError: AlertConfig = .init()
     @State private var saveImage_showSheet: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
@@ -23,80 +23,74 @@ struct ShareImageButton: View {
     @AppStorage("saveToPhotos") private var saveToPhotos: Bool = true
     @Binding var saveCount: Int
     @AppStorage("requestReview") private var requestReviewCount: Int = 0
+
     @Environment(\.requestReview) var requestReview
     
-    
+
     var body: some View {
-        
+
         Image(systemName: "square.and.arrow.up.circle.fill")
-            .font(.system(size: 35, weight: .medium))
+            .font(.system(size: 30, weight: .medium))
             .symbolEffect(.pulse, value: showSymbolEffect)
             .foregroundColor(.primary)
             .rotationEffect(saveToPhotos ? .degrees(180) : .degrees(0))
             .onTapGesture {
-                
-                /*
-                 UIApplication.shared.inAppNotification(adaptForDynamicIsland: true, timeout: 4, swipeToClose: true) { isDynamicIslandEnabled in
-                     HStack {
-                         Image("Pic")
-                             .resizable()
-                             .aspectRatio(contentMode: .fill)
-                             .frame(width: 40, height: 40)
-                             .clipShape(.circle)
-                         
-                         VStack(alignment: .leading, spacing: 6, content: {
-                             Text("iJustine")
-                                 .font(.caption.bold())
-                                 .foregroundStyle(.white)
-                             
-                             Text("Hello, This is iJustine!")
-                                 .textScale(.secondary)
-                                 .foregroundStyle(.gray)
-                         })
-                         .padding(.top, 20)
-                         
-                         Spacer(minLength: 0)
-                         
-                         Button(action: {}, label: {
-                             Image(systemName: "speaker.slash.fill")
-                                 .font(.title2)
-                         })
-                         .buttonStyle(.bordered)
-                         .buttonBorderShape(.circle)
-                         .tint(.white)
-                     }
-                     .padding(15)
-                     .background {
-                         RoundedRectangle(cornerRadius: 15)
-                             .fill(.black)
-                     }
-                 }
-                 */
-                
                 feedback()
                 showSymbolEffect.toggle()
-                
-                if obj.appearance.showGrid {
-                    obj.appearance.showGrid.toggle()
-                    
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        obj.appearance.showGrid.toggle()
-                    }
-                }
-                
+
                 withAnimation(.bouncy){
                     obj.appearance.showPill = true
                 }
-                
-                let image = createSnapshot()
-                
+
                 if saveToPhotos {
-                    handleSaveToPhotos(image: image)
+
+                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
+                        .ignoresSafeArea(.all)
+                        .snapshot()
+
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
+                        imageSaver.writeToPhotoAlbum(image: image)
+                    }
+
+                    saveCount += 1
+
+                    requestReviewPrompt()
+
                 } else {
-                    handleShare(image: image)
+
+                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
+                        .ignoresSafeArea(.all)
+                        .snapshot()
+
+                    let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+
+                    activityViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
+                        if completed {
+                            // The user successfully shared the image
+                            provideSuccessFeedback()
+                            alert.present()
+                            saveCount += 1
+                        } else if let error = error {
+                            // An error occurred
+                            print("Error sharing image: \(error.localizedDescription)")
+                            provideErrorFeedback()
+                            alertError.present()
+                        } else {
+                            // The user cancelled
+                        }
+                    }
+
+                    if let keyWindowScene = UIApplication.shared.connectedScenes
+                        .compactMap({ $0 as? UIWindowScene })
+                        .first(where: { $0.activationState == .foregroundActive }) {
+                        if let keyWindow = keyWindowScene.windows.first(where: { $0.isKeyWindow }) {
+                            keyWindow.rootViewController?.present(activityViewController, animated: true, completion: nil)
+                        }
+                    }
                 }
             }
-            .onLongPressGesture(minimumDuration: 0.5) {
+            .onLongPressGesture(minimumDuration: 0.5){
                 feedback()
                 saveToPhotos.toggle()
                 saveImage_showSheet.present()
@@ -105,80 +99,54 @@ struct ShareImageButton: View {
                 }
             }
             .padding()
-            .background(Color.white.opacity(0.000001))
             .alert(alertConfig: $saveImage_showSheet) {
-                createAlert(title: saveToPhotos ? "Saving to Photos Album" : "Changed to Share Sheet", imageName: "info.circle")
+                Text(saveToPhotos ? "\(Image(systemName: "info.circle")) Saving to Photos Album" : "\(Image(systemName: "info.circle")) Changed to Share Sheet")
+                    .foregroundStyle(item.alertTextColor)
+                    .padding(15)
+                    .background {
+                        RoundedRectangle(cornerRadius: 15)
+                            .fill(item.color.gradient)
+                    }
+                    .onAppear(perform: {
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                            alert.dismiss()
+                        }
+                    })
+                    .onTapGesture {
+                        alert.dismiss()
+                    }
             }
             .alert(alertConfig: $alert) {
-                createAlert(title: saveToPhotos ? "Saved Successfully!" : "Shared Successfully!", imageName: "checkmark.circle")
+                alertPreferences(title: saveToPhotos ? "Saved Successfully!" : "Shared Successfully!",
+                                            imageName: "checkmark.circle")
             }
             .alert(alertConfig: $alertError) {
-                createAlert(title: saveToPhotos ? "Error Saving!" : "Error Sharing!", imageName: "exclamationmark.triangle")
+                alertPreferences(title: saveToPhotos ? "Error Saving!" : "Error Sharing!",
+                                            imageName: "exclamationmark.triangle")
             }
     }
-    
-    private func createSnapshot() -> UIImage {
-        CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
-            .ignoresSafeArea(.all)
-            .snapshot()
-    }
-    
-    private func handleSaveToPhotos(image: UIImage) {
-        let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
-        imageSaver.writeToPhotoAlbum(image: image)
-        saveCount += 1
-        requestReviewPrompt()
-    }
-    
-    private func handleShare(image: UIImage) {
-        let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        
-        activityViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
-            if completed {
-                provideSuccessFeedback()
-                alert.present()
-                saveCount += 1
-            } else if let error = error {
-                print("Error sharing image: \(error.localizedDescription)")
-                provideErrorFeedback()
-                alertError.present()
-            }
-        }
-        
-        if let keyWindowScene = UIApplication.shared.connectedScenes
-            .compactMap({ $0 as? UIWindowScene })
-            .first(where: { $0.activationState == .foregroundActive }) {
-            if let keyWindow = keyWindowScene.windows.first(where: { $0.isKeyWindow }) {
-                keyWindow.rootViewController?.present(activityViewController, animated: true, completion: nil)
-            }
-        }
-    }
-    
-    private func createAlert(title: String, imageName: String) -> some View {
-        alertPreferences(title: "\(title)")
-    }
-    
-    private func alertPreferences(title: String) -> some View {
-        Text(title)
-            .foregroundStyle(item.alertTextColor)
-            .padding(15)
-            .background {
-                RoundedRectangle(cornerRadius: 15)
-                    .fill(item.color.gradient)
-            }
-            .onAppear(perform: {
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                    alert.dismiss()
-                }
-            })
-            .onTapGesture {
-                alert.dismiss()
-            }
-    }
-    
-    private func requestReviewPrompt() {
+
+    func alertPreferences(title: String, imageName: String) -> some View {
+           Text("\(Image(systemName: imageName)) \(title)")
+               .foregroundStyle(item.alertTextColor)
+               .padding(15)
+               .background {
+                   RoundedRectangle(cornerRadius: 15)
+                       .fill(item.color.gradient)
+               }
+               .onAppear(perform: {
+                   DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                       alert.dismiss()
+                   }
+               })
+               .onTapGesture {
+                   alert.dismiss()
+               }
+       }
+
+    func requestReviewPrompt() {
         requestReviewCount += 1
-        
+
         DispatchQueue.main.asyncAfter(deadline: .now() + 6.0) {
             if self.requestReviewCount == 10 || self.requestReviewCount == 50 || self.requestReviewCount == 100 {
                 self.requestReview()
