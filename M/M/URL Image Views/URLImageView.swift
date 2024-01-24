@@ -95,6 +95,7 @@ struct URLImages: View {
                                             .lineLimit(1)
                                             .multilineTextAlignment(.center)
                                     }
+                                    .sensoryFeedback(.selection, trigger: isTapped)
                                 }
                             }
                             .padding(10)
@@ -444,6 +445,7 @@ struct LargeImageView: View {
     @StateObject var obj: Object
     
     @Binding var showPremiumContent: Bool
+    @State private var isTapped: Bool = false
     
     @StateObject private var metadataViewModel = ImageMetadataViewModel()
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
@@ -626,6 +628,7 @@ struct LargeImageView: View {
                             }
                         }
                     }
+                    .sensoryFeedback(.selection, trigger: isTapped)
                     .alert(alertConfig: $alert) {
                         alertPreferences(title: "Copied to Clipboard!",
                                          imageName: "checkmark.circle")

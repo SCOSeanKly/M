@@ -52,7 +52,6 @@ struct URLPill: View {
                 }
             }
             .padding(8)
-            .padding(.trailing, 4)
             .background(.ultraThinMaterial)
             .clipShape(RoundedRectangle(cornerRadius: 24))
             .pillModifier(obj: obj, normalScale: 1.0)
@@ -98,12 +97,18 @@ private struct URLTextViewTwo: View {
     @StateObject var viewModelData: DataViewModel
     
     var body: some View {
-        HStack {
-            ForEach(obj.appearance.avatarNames, id: \.self) { avatarName in
-                AvatarButton(avatarName: avatarName, viewModelData: viewModelData, obj: obj)
-                    .padding(.horizontal, 5)
+        ScrollView (.horizontal, showsIndicators: false) {
+            HStack {
+                ForEach(obj.appearance.avatarNames, id: \.self) { avatarName in
+                    AvatarButton(avatarName: avatarName, viewModelData: viewModelData, obj: obj)
+                        .padding(.horizontal, 4)
+                }
             }
+          
         }
+        .frame(width: UIScreen.main.bounds.width * 0.52, height: 30, alignment: .center)
+        .cornerRadius(100)
+        
     }
 }
 
@@ -130,7 +135,7 @@ private struct URLTextViewTwoSizer: View {
     var body: some View {
         Group {
             Color.clear
-                .frame(width: 226, height: 30, alignment: .center)
+                .frame(width: UIScreen.main.bounds.width * 0.52, height: 30, alignment: .center)
         }
     }
 }

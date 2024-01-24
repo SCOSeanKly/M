@@ -17,6 +17,8 @@ struct CreatorProfiles: View {
     let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
     let widgyURL = URL(string: "https://www.reddit.com/r/widgy/")!
     let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
+    let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
+    @State private var isTapped: Bool = false
     
     var body: some View {
         ScrollView (.horizontal, showsIndicators: false) {
@@ -30,6 +32,8 @@ struct CreatorProfiles: View {
                             openURL(timetravelr2025URL)
                         case "ElijahCreative":
                             openURL(elijahCreativeURL)
+                        case "RealStellaSky":
+                            openURL(RealStellaSkyURL)
                         case "patricialeveq":
                             openURL(patricialeveqURL)
                         case "widgy":
@@ -37,6 +41,8 @@ struct CreatorProfiles: View {
                         default:
                             break
                         }
+                        isTapped.toggle()
+                        
                     } label: {
                         VStack {
                             Image(avatarName)
@@ -46,14 +52,35 @@ struct CreatorProfiles: View {
                                 .clipShape(Circle())
                                 .padding(.top)
                             
-                            Image(avatarName == "widgy" ? "reddit" : "twitter")
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 20, height: 20)
-                                .clipShape(Circle())
-                                .offset(x: 10.0, y: -20)
+                            if avatarName == "widgy" {
+                                Image("reddit")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 20, height: 20)
+                                    .clipShape(Circle())
+                                    .offset(x: 10.0, y: -20)
+                            } else if avatarName == "RealStellaSky" {
+                                Circle()
+                                    .foregroundStyle(Color.primary.colorInvert())
+                                    .frame(width: 20, height: 20)
+                                    .overlay {
+                                        Image(systemName: "globe.americas.fill")
+                                            .resizable()
+                                            .foregroundStyle(.link)
+                                            .aspectRatio(contentMode: .fill)
+                                            .clipShape(Circle())
+                                    }
+                                    .offset(x: 10.0, y: -20)
+                            } else {
+                                Image("twitter")
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 20, height: 20)
+                                    .clipShape(Circle())
+                                    .offset(x: 10.0, y: -20)
+                            }
                             
-                            Text(avatarName == "widgy" ? "r/\(avatarName)" : "@\(avatarName)")
+                            Text(avatarName)
                                 .font(.system(size: 8, weight: .regular, design: .rounded))
                                 .offset(y: -15)
                         }
@@ -62,8 +89,9 @@ struct CreatorProfiles: View {
                 .frame(width: 78, height: 90)
                 .buttonStyle(.plain)
             }
+            .sensoryFeedback(.selection, trigger: isTapped)
         }
-      
+        
     }
 }
 

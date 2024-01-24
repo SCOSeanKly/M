@@ -112,7 +112,7 @@ struct LayerObjectAppearance {
         self.showPremiumWallpapersOnly = false
         self.showWidgetsOnly = false
         self.showGrid = false
-        self.avatarNames = ["SeanKly", "ElijahCreative", "timetravelr2025", "patricialeveq", "widgy"]
+        self.avatarNames = ["SeanKly", "timetravelr2025", "ElijahCreative", "RealStellaSky", "patricialeveq", "widgy"]
         self.showAIPromptText = true
         
      
