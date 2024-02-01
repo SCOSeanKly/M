@@ -193,6 +193,23 @@ struct SheetContentView: View {
                 
                 // Resume the data task
                 dataTask.resume()
+                
+                URLSession.shared.dataTask(with: modifiedURL) { data, response, error in
+                    if let data = data, let originalUIImage = UIImage(data: data) {
+                        // Save the original image as PNG
+                        if let pngData = originalUIImage.pngData() {
+                            UIImage(data: pngData)?.writeToPhotosAlbum()
+                            provideSuccessFeedback()
+                            saveState = .saved
+                            viewModel.loadImages()
+                            print("Saved to photos")
+                        } else {
+                            saveState = .idle
+                        }
+                    } else {
+                        saveState = .idle
+                    }
+                }.resume()
             }
         }
     }
