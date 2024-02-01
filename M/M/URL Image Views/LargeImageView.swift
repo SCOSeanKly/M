@@ -14,7 +14,7 @@ struct LargeImageView: View {
     @StateObject var viewModelContent: ContentViewModel
     @StateObject var obj: Object
     @StateObject private var metadataViewModel = ImageMetadataViewModel()
-
+    
     @State private var isTapped: Bool = false
     @State private var isTappedAnimation: Bool = false
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
@@ -52,12 +52,10 @@ struct LargeImageView: View {
     
     var body: some View {
         VStack {
-            ZStack {
-                WebImage(url: URL(string: image.image))
-                    .resizable()
-            }
-            .aspectRatio(contentMode: .fill)
-            .ignoresSafeArea()
+            WebImage(url: URL(string: image.image))
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .ignoresSafeArea()
                 .onAppear {
                     // Fetch metadata when the premium content image appears
                     if let fullResURL = fullResImageURL {
@@ -134,7 +132,7 @@ struct LargeImageView: View {
                                 }
                             }
                         }
-                         
+                        
                     }
                     .frame(height: UIScreen.main.bounds.height * 0.6)
                 }

@@ -186,21 +186,26 @@ struct SheetContentView: View {
                     // Update the progress in your UI
                     downloadProgress = progress
                 })
+
                 let delegateQueue = OperationQueue.main
                 let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: delegateQueue)
+
                 let dataTask = session.dataTask(with: modifiedURL)
                 delegate.task = dataTask
-                
+
                 // Resume the data task
                 dataTask.resume()
-                
+
                 URLSession.shared.dataTask(with: modifiedURL) { data, response, error in
                     if let data = data, let originalUIImage = UIImage(data: data) {
                         // Save the original image as PNG
                         if let pngData = originalUIImage.pngData() {
                             UIImage(data: pngData)?.writeToPhotosAlbum()
                             provideSuccessFeedback()
-                            saveState = .saved
+                            // Introduce a delay before transitioning to "saved"
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                saveState = .saved
+                            }
                             viewModel.loadImages()
                             print("Saved to photos")
                         } else {
@@ -226,7 +231,7 @@ struct SheetContentView: View {
 
         func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
             let progress = Double(dataTask.countOfBytesReceived) / Double(dataTask.countOfBytesExpectedToReceive)
-            
+
             DispatchQueue.main.async {
                 self.progressCallback?(progress)
             }
@@ -242,14 +247,16 @@ struct SheetContentView: View {
                     self.saveState.wrappedValue = .idle
                 }
             } else {
-                // Update UI to indicate successful download
-                DispatchQueue.main.async {
+                // Introduce a delay before transitioning to "saved"
+                DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                    // Update UI to indicate successful download
                     print("Download Progress: 1.0 (completed)")
                     self.saveState.wrappedValue = .saved
                 }
             }
         }
     }
+
 }
 
 struct ProgressBar: View {
