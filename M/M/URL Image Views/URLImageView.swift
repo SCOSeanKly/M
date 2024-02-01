@@ -89,27 +89,6 @@ struct URLImages: View {
         }
         .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
-        /*
-         .sheet(item: $selectedImage) { image in
-         ZStack {
-         SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, isZooming: $isZooming, showPremiumContent: $showPremiumContent)
-         .onDisappear{
-         viewModelData.loadImages()
-         }
-         }
-         .onDisappear {
-         selectedImage = nil
-         }
-         .onChange(of: saveState) {
-         if saveState == .saved {
-         DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-         selectedImage = nil
-         saveState = .idle // Reset saveState
-         }
-         }
-         }
-         }
-         */
         .fullScreenCover(item: $selectedImage) { image in
             SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, isZooming: $isZooming, showPremiumContent: $showPremiumContent)
                 .onDisappear {

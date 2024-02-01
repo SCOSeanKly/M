@@ -34,6 +34,10 @@ struct ShareImageButton: View {
             .symbolEffect(.pulse, value: showSymbolEffect)
             .foregroundColor(.primary)
             .rotationEffect(saveToPhotos ? .degrees(180) : .degrees(0))
+            .animation(.linear, value: saveToPhotos)
+            .padding(6)
+            .background(.ultraThinMaterial)
+            .clipShape(Circle())
             .onTapGesture {
                 feedback()
                 showSymbolEffect.toggle()
