@@ -140,6 +140,7 @@ struct ButtonsAndPopoverView: View {
         obj.appearance.screenshotFitFill = false
         obj.appearance.selectedNotch = "None"
         obj.appearance.selectedScreenReflection = "None"
+        obj.appearance.groundReflectionOffset = 0.0
         obj.appearance.showGroundReflection = false
         obj.appearance.scale = 1
         obj.appearance.colorMultiply = .white
@@ -554,6 +555,21 @@ struct MockupSettingsView: View {
                 CustomToggle(showTitleText: true, titleText: "Show Ground Reflection", bindingValue: $obj.appearance.showGroundReflection, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             }
             .padding(.vertical, 5)
+            
+            HStack {
+                Image(systemName: "arrow.up.arrow.down")
+                   
+                Text("Reflection Offset")
+                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                
+                CustomSlider(value: $obj.appearance.groundReflectionOffset, inRange: 0...75, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                }
+                .padding(.trailing, 10)
+                
+                ScalePercentageText(scale: obj.appearance.groundReflectionOffset, maxScale: 75, fontSize: obj.appearance.settingsSliderFontSize)
+                
+            }
+            .padding()
             
             if !obj.appearance.easySettingsMode {
                 

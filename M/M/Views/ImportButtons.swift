@@ -14,79 +14,18 @@ struct importButtons: View {
     @Binding var saveCount: Int
     @StateObject var viewModel:  ContentViewModel
     @State private var isTapped: Bool = false
-    let showWallpaperTip = NewWallpapersSectionTip()
+ 
     
-  
     var body: some View {
         VStack {
-            HStack {
-                HStack {
-                    
-                    Group { //MARK: Show Wallpaper Button
-                        Button {
-                            
-                            isTapped.toggle()
-                            withAnimation(.bouncy) {
-                                obj.appearance.showPill = true
-                            }
-                            obj.appearance.showWallpapersView.toggle()
-                            showWallpaperTip.invalidate(reason: .actionPerformed)
-                            
-                        } label: {
-                            Circle()
-                                .fill(.blue.opacity(0.5))
-                                .frame(width: 30, height: 30)
-                                .overlay {
-                                    Image(systemName: "photo.circle")
-                                        .font(.system(.body, design: .rounded).weight(.medium))
-                                        .foregroundColor(.white)
-                                }
-                                .padding(8)
-                                .background(.ultraThinMaterial)
-                                .clipShape(RoundedRectangle(cornerRadius: 24))
-                        }
-                    }
-                    
-                    Group { //MARK: Show Application Settings
-                        Button {
-                            
-                            isTapped.toggle()
-                            withAnimation(.bouncy) {
-                                obj.appearance.showPill = true
-                            }
-                            obj.appearance.showApplicationSettings.toggle()
-                          
-                        } label: {
-                            Circle()
-                                .fill(.blue.opacity(0.5))
-                                .frame(width: 30, height: 30)
-                                .overlay {
-                                    Image(systemName: "gearshape")
-                                        .font(.system(.body, design: .rounded).weight(.medium))
-                                        .foregroundColor(.white)
-                                }
-                                .padding(8)
-                                .background(.ultraThinMaterial)
-                                .clipShape(RoundedRectangle(cornerRadius: 24))
-                        }
-                    }
-                }
-                .opacity(obj.appearance.showPill ? 1: 0)
-                .offset(x: obj.appearance.showPill ?  0 : -100)
-                .pillModifier(obj: obj, normalScale: 1)
-                
-                Spacer()
-                
-                Pill(
-                    viewModel: viewModel, obj: obj, saveCount: $saveCount
-                )
+            ZStack {
+                WallpaperButtonView(isTapped: $isTapped, obj: obj)
+               
+                Pill(viewModel: viewModel, obj: obj, saveCount: $saveCount, isTapped: $isTapped)
             }
-            .padding()
-            .sensoryFeedback(.selection, trigger: isTapped)
-            
             Spacer()
         }
- 
+        .sensoryFeedback(.selection, trigger: isTapped)
     }
 }
 
@@ -95,60 +34,60 @@ private struct Pill: View {
     @StateObject var viewModel:  ContentViewModel
     @StateObject var obj: Object
     @Binding var saveCount: Int
-    @State private var isTapped: Bool = false
-    @State private var isTappedProminent: Bool = false
+    @Binding var isTapped: Bool
     
     
     var body: some View {
-        ZStack(alignment: .leading) {
-            HStack {
-                Circle()
-                    .fill(.clear)
-                    .frame(width: 30, height: 30)
-                    .overlay {
-                        ZStack {
-                            ViewerCountIcon()
-                                .opacity(obj.appearance.showPill ? 1 : 0)
-                            
-                            ViewerAvatar()
-                                .opacity(obj.appearance.showPill ? 0 : 1)
+        
+        HStack {
+            Spacer()
+            ZStack(alignment: .leading) {
+                HStack {
+                    Circle()
+                        .fill(.clear)
+                        .frame(width: 30, height: 30)
+                        .overlay {
+                            ZStack {
+                                ViewerCountIcon()
+                                    .opacity(obj.appearance.showPill ? 1 : 0)
+                                
+                                ViewerAvatar()
+                                    .opacity(obj.appearance.showPill ? 0 : 1)
+                            }
                         }
-                    }
-                    .overlay(alignment: .leading) {
-                        
-                        ZStack(alignment: .leading) {
-                            TextViewOne(saveCount: $saveCount)
-                                .opacity(obj.appearance.showPill ? 1 : 0)
+                        .overlay(alignment: .leading) {
                             
-                            TextViewTwo(obj: obj, viewModel: viewModel)
-                                .opacity(obj.appearance.showPill ? 0 : 1)
+                            ZStack(alignment: .leading) {
+                                TextViewOne(saveCount: $saveCount)
+                                    .opacity(obj.appearance.showPill ? 1 : 0)
+                                
+                                TextViewTwo(obj: obj, viewModel: viewModel)
+                                    .opacity(obj.appearance.showPill ? 0 : 1)
+                            }
+                            .frame(width: 200, alignment: .leading)
+                            .padding(.leading, 38)
                         }
-                        .frame(width: 200, alignment: .leading)
-                        .padding(.leading, 38)
+                    
+                    if obj.appearance.showPill {
+                        TextViewOneSizer(saveCount: $saveCount)
+                    } else {
+                        TextViewTwoSizer(obj: obj)
                     }
-                
-                
-                if obj.appearance.showPill {
-                    TextViewOneSizer(saveCount: $saveCount)
-                } else {
-                    TextViewTwoSizer(obj: obj)
                 }
-            }
-            .sensoryFeedback(.selection, trigger: isTapped)
-            .sensoryFeedback(.success, trigger: isTappedProminent)
-            .onTapGesture {
-                withAnimation(.bouncy){
-                    isTapped.toggle()
-                    obj.appearance.showPill.toggle()
+                .onTapGesture {
+                    withAnimation(.bouncy){
+                        isTapped.toggle()
+                        obj.appearance.showPill.toggle()
+                    }
                 }
+                .padding(8)
+                .padding(.trailing, 4)
+                .background(.ultraThinMaterial)
+                .clipShape(RoundedRectangle(cornerRadius: 24))
+                .pillModifier(obj: obj, normalScale: 1.0)
             }
-            .padding(8)
-            .padding(.trailing, 4)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-            .pillModifier(obj: obj, normalScale: 1.0)
         }
-      
+        .padding()
     }
 }
 
@@ -156,14 +95,8 @@ private struct TextViewOne: View {
     @Binding var saveCount: Int
     var body: some View {
         
-        
         RollingText(value: $saveCount)
-        /*
-        Text("\(saveCount)")
-            .font(.system(.body, design: .rounded).weight(.medium))
-         */
-        
-        
+ 
     }
 }
 
@@ -183,8 +116,6 @@ private struct TextViewTwo: View {
     @StateObject var obj: Object
     @StateObject var viewModel: ContentViewModel
 
-    
-  
     
     var body: some View {
         Group {
@@ -283,4 +214,77 @@ private struct ViewerAvatar: View {
             }
     }
 }
+
+extension View {
+    func wallpaperButtonModifier(obj: Object, normalScale: CGFloat) -> some View {
+        self
+            .opacity(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings ? 0.3 : 1)
+            .animation(.bouncy, value: obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
+            .disabled(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
+            .opacity(obj.appearance.showPill ? 1: 0)
+            .offset(x: obj.appearance.showPill ?  0 : -100)
+            .padding()
+    }
+}
+
+private struct WallpaperButtonView: View {
+    @Binding var isTapped: Bool
+    @StateObject var obj: Object
+    let showWallpaperTip = NewWallpapersSectionTip()
+    
+    var body: some View {
+        HStack {
+            Group { //MARK: Show Wallpaper Button
+                Button {
+                    isTapped.toggle()
+                    withAnimation(.bouncy) {
+                        obj.appearance.showPill = true
+                    }
+                    obj.appearance.showWallpapersView.toggle()
+                    showWallpaperTip.invalidate(reason: .actionPerformed)
+                    
+                } label: {
+                    Circle()
+                        .fill(.blue.opacity(0.5))
+                        .frame(width: 30, height: 30)
+                        .overlay {
+                            Image(systemName: "photo.circle")
+                                .font(.system(.body, design: .rounded).weight(.medium))
+                                .foregroundColor(.white)
+                        }
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                }
+            }
+            
+            Group { //MARK: Show Application Settings
+                Button {
+                    isTapped.toggle()
+                    withAnimation(.bouncy) {
+                        obj.appearance.showPill = true
+                    }
+                    obj.appearance.showApplicationSettings.toggle()
+                    
+                } label: {
+                    Circle()
+                        .fill(.blue.opacity(0.5))
+                        .frame(width: 30, height: 30)
+                        .overlay {
+                            Image(systemName: "gearshape")
+                                .font(.system(.body, design: .rounded).weight(.medium))
+                                .foregroundColor(.white)
+                        }
+                        .padding(8)
+                        .background(.ultraThinMaterial)
+                        .clipShape(RoundedRectangle(cornerRadius: 24))
+                }
+            }
+            
+            Spacer()
+        }
+        .wallpaperButtonModifier(obj: obj, normalScale: 1)
+    }
+}
+
 

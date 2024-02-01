@@ -15,10 +15,10 @@ struct ContentView: View {
     @StateObject var obj: Object
     @State private var totalNewWallpapersCount = 0
     @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
-    
     @State var buyClicked: Bool = false
     let animationDuration: CGFloat = 0.2
-    
+    @State private var isZooming: Bool = false 
+    @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
 
     
     var body: some View {
@@ -29,7 +29,7 @@ struct ContentView: View {
                     
                     // MARK: Wallpaper View
                     GeometryReader { geometry in
-                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, showPremiumContent: $showPremiumContent)
+                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, showPremiumContent: $showPremiumContent, isZooming: $isZooming)
                             .opacity(geometry.frame(in: .global).midX >= UIScreen.main.bounds.width / 2 ? 1.0 : 0.0)
                             .onAppear {
                                 let _ = IAP.shared
@@ -45,7 +45,7 @@ struct ContentView: View {
                     
                     //MARK: Mockup View
                     GeometryReader { geometry in
-                        MockupView(viewModel: viewModel, obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked)
+                        MockupView(viewModel: viewModel, obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow)
                             .opacity(geometry.frame(in: .global).midX <= UIScreen.main.bounds.width / 2 ? 1.0 : 0.0)
                             .onAppear {
                                 let _ = IAP.shared

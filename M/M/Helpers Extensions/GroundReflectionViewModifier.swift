@@ -9,6 +9,7 @@ import SwiftUI
 
 private struct GroundReflectionViewModifier: ViewModifier {
     let offsetY: CGFloat
+    @StateObject var obj: Object
     func body(content: Content) -> some View {
         content
             .background(
@@ -21,14 +22,13 @@ private struct GroundReflectionViewModifier: ViewModifier {
                     )
                     .scaleEffect(x: 1.0, y: -1.0, anchor: .bottom)
                     .offset(y: offsetY)
+                    .offset(y: obj.appearance.groundReflectionOffset)
             )
     }
 }
 
 extension View {
-    func reflection(offsetY: CGFloat = 1) -> some View {
-        modifier(GroundReflectionViewModifier(offsetY: offsetY))
+    func reflection(offsetY: CGFloat = 1, obj: Object) -> some View {
+        modifier(GroundReflectionViewModifier(offsetY: offsetY, obj: obj))
     }
 }
-
-

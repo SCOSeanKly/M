@@ -18,7 +18,7 @@ struct BlurView: View {
                 .foregroundColor(.clear)
                 .background {
                     TransparentBlurView(removeAllFilters: true)
-                        .blur(radius: 5, opaque: true)
+                        .blur(radius: 15, opaque: true)
                 }
                 .clipShape(Rectangle())
               

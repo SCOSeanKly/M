@@ -70,10 +70,11 @@ struct Item: Identifiable {
 
 /// Custom View
 struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessCollection>: View where Item: MutableCollection, Item.Element: Identifiable {
-    
+    @Binding var showCoverFlow: Bool
     @Binding var data: Item
     @ViewBuilder var content: (Binding<Item.Element>) -> Content
     @ViewBuilder var titleContent: (Binding<Item.Element>) -> TitleContent
+    let itemWidth = UIScreen.main.bounds.width
     
     
     /// View Properties
@@ -82,31 +83,47 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
     var body: some View {
         
         VStack(spacing: 20) {
-            ScrollView(.horizontal) {
-                
-                HStack(spacing: 150) {
-                    ForEach($data) { item in
-                        VStack(spacing: 0) {
-                            titleContent(item)
-                                .frame(maxWidth: .infinity)
-                                .visualEffect { content, geometryProxy in
-                                    content
-                                        .offset(x: scrollOffset(geometryProxy))
-                                }
-                            
-                            content(item)
-                        }
-                        .containerRelativeFrame(.horizontal)
+            
+            //MARK: Coverflow style
+            if showCoverFlow {
+                CoverFlowView(
+                    itemWidth: itemWidth,
+                    enableReflection: false,
+                    spacing: 0,
+                    rotation: 40,
+                    items: $data
+                ) { item in
+                    VStack(spacing: 0) {
+                        titleContent(item)
+                            .frame(maxWidth: .infinity)
+                        
+                        content(item)
                     }
                 }
-                /// Adding Paging
-                .scrollTargetLayout()
+            } else {
+                //MARK: Slide style
+                ScrollView(.horizontal) {
+                    HStack(spacing: 150) {
+                        ForEach($data) { item in
+                            VStack(spacing: 0) {
+                                titleContent(item)
+                                    .frame(maxWidth: .infinity)
+                                    .visualEffect { content, geometryProxy in
+                                        content
+                                            .offset(x: scrollOffset(geometryProxy))
+                                    }
+                                
+                                content(item)
+                            }
+                            .containerRelativeFrame(.horizontal)
+                        }
+                    }
+                    /// Adding Paging
+                    .scrollTargetLayout()
+                }
             }
-            .scrollIndicators(.hidden)
-            .scrollTargetBehavior(.viewAligned)
-            .scrollPosition(id: $activeID)
             
-            
+            //MARK: Scroll position indicators
             PagingControl(numberOfPages: data.count, activePage: activePage) { value in
                 /// Updating to current Page
                 if let index = value as? Item.Index, data.indices.contains(index) {
@@ -119,7 +136,11 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
             }
             .disabled(false)
             .scaleEffect(0.8)
+            .offset(y: showCoverFlow ? -65 : 0)
         }
+        .scrollIndicators(.hidden)
+        .scrollTargetBehavior(.viewAligned)
+        .scrollPosition(id: $activeID)
     }
     
     var activePage: Int {

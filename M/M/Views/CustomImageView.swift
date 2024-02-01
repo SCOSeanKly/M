@@ -172,7 +172,8 @@ struct MockupLayersView: View {
             }
         }   //Ground reflection of mockup layers
         .if(obj.appearance.showGroundReflection) { view in
-            view.reflection(offsetY: item.reflectionOffset)
+            view.reflection(offsetY: item.reflectionOffset, obj: obj)
+              
         }
         .rotationEffect(.degrees(obj.appearance.rotate))
         .scaleEffect(obj.appearance.scale, anchor: .center)
@@ -189,8 +190,8 @@ struct LogoView: View {
             if let importedLogo = importedLogo {
                 Image(uiImage: importedLogo)
                     .resizable()
-                    .frame(width: 100, height: 100)
                     .aspectRatio(contentMode: .fit)
+                    .frame(width: 100, height: 100)
                     .cornerRadius(obj.appearance.logoCornerRadius)
                     .scaleEffect(obj.appearance.logoScale)
                     .rotationEffect(.degrees(obj.appearance.logoRotate))

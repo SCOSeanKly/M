@@ -36,8 +36,8 @@ class ContentViewModel: ObservableObject {
               offX: 0.5,
               offY: 0,
               rotationEffect: 0,
-              width: 173.0 * 2,
-              height: 373.4 * 2,
+              width: 172.4 * 2,
+              height: 373.5 * 2,
               cornerRadius: 40,
               notch: "notch_set1_",
               reflectionOffset: -247,
@@ -977,7 +977,6 @@ class ContentViewModel: ObservableObject {
     @Published var showBgPickerSheet: Bool = false
     @Published var importedLogo: UIImage? = nil
     @Published var showLogoPickerSheet: Bool = false
-    
     @Published var importedOverlay: UIImage? = nil
     @Published var showOverlayPickerSheet: Bool = false
     

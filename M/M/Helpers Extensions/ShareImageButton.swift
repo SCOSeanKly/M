@@ -99,6 +99,7 @@ struct ShareImageButton: View {
                 }
             }
             .padding()
+            .offset(x: 0, y: -20)
             .alert(alertConfig: $saveImage_showSheet) {
                 Text(saveToPhotos ? "\(Image(systemName: "info.circle")) Saving to Photos Album" : "\(Image(systemName: "info.circle")) Changed to Share Sheet")
                     .foregroundStyle(item.alertTextColor)

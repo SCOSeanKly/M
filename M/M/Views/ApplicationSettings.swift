@@ -14,6 +14,7 @@ struct ApplicationSettings: View {
     @State private var toggleStates: [ToggleState] = [.first, .second, .third]
     @Binding var showPremiumContent: Bool
     @Binding var buyClicked: Bool
+    @Binding var showCoverFlow: Bool
     
     var symbolName: String {
         switch obj.appearance.selectedAppearance {
@@ -150,6 +151,35 @@ struct ApplicationSettings: View {
                         
                         HStack {
                             Text("Switch between system, light and dark mode")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                .foregroundStyle(.gray)
+                            
+                            
+                            Spacer()
+                            
+                        }
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 2.5)
+                    
+                    VStack {
+                        HStack {
+                            
+                            Image(systemName: "square.stack.3d.down.right")
+                                .font(.title3)
+                            
+                            Text("Mockup Coverflow View: ")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            
+                            Spacer()
+                            
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $showCoverFlow, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                .offset(x: 15)
+                            
+                        }
+                        
+                        HStack {
+                            Text("Switch between Coverflow and Slide view")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
                                 .foregroundStyle(.gray)
                             

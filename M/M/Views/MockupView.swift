@@ -27,15 +27,19 @@ struct MockupView: View {
     
     @Binding var showPremiumContent: Bool
     @Binding var buyClicked: Bool
+    @ObservedObject var manager = MotionManager()
+    @Binding var isZooming: Bool
+    @Binding var showCoverFlow: Bool
     
     var body: some View {
         ZStack {
           
             // MARK: Wallpaper View
-            CustomPagingSlider(data: $viewModel.items) { $item in
+            CustomPagingSlider(showCoverFlow: $showCoverFlow, data: $viewModel.items) { $item in
                 
                 CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
-                    .customImageViewModifier(obj: obj, viewModel: viewModel)
+                    .customImageViewModifier(obj: obj, viewModel: viewModel, isZooming: $isZooming)
+                  //  .modifier(ParallaxMotionModifier(manager: manager, magnitude: 10))
                 
                 ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
                     .titleViewModifier(obj: obj, normalScale: 1.0)
@@ -46,6 +50,8 @@ struct MockupView: View {
                     
                     Text(item.title)
                         .font(.largeTitle.bold())
+                        .lineLimit(1)
+                        .minimumScaleFactor(0.5)
                     
                     Text(item.subTitle)
                         .foregroundStyle(.gray)
@@ -54,7 +60,7 @@ struct MockupView: View {
                 }
                 .titleViewModifier(obj: obj, normalScale: 0.8)
             }
-            .safeAreaPadding([.horizontal, .top], 35)
+          //  .safeAreaPadding([.horizontal, .top], 35)
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
                 fullScreenImagePickerCover(for: $viewModel.importedImage1) { images in
                     viewModel.importedImage1 = images.first
@@ -79,7 +85,7 @@ struct MockupView: View {
                 SettingsView(viewModel: viewModel, obj: obj)
             })
             .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
-                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked)
+                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow)
             })
             
             //MARK: Pill Buttons for importing images etc
@@ -135,7 +141,7 @@ struct MockupView: View {
 }
 
 extension View {
-    func customImageViewModifier(obj: Object, viewModel: ContentViewModel) -> some View {
+    func customImageViewModifier(obj: Object, viewModel: ContentViewModel, isZooming: Binding<Bool>) -> some View {
         self
             .scaleEffect(0.5)
             .frame(width: obj.appearance.frameWidth * 0.5, height: obj.appearance.frameHeight * 0.5)
@@ -145,7 +151,7 @@ extension View {
                 RoundedRectangle(cornerRadius: 15)
                     .stroke(Color.gray, lineWidth: 0.5)
             }
-            .addPinchZoom()
+            .addPinchZoom(isZooming: isZooming)
             .scaleEffect(obj.appearance.screenWidth, anchor: .center)
             .if(obj.appearance.enableImportTapGestures) { view in
                 view.onTapGesture(count: 2) {
@@ -160,6 +166,7 @@ extension View {
             .padding(-60)
     }
 }
+
 
 extension View {
     func titleViewModifier(obj: Object, normalScale: CGFloat) -> some View {

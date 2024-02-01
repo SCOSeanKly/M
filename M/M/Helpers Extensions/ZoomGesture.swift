@@ -8,10 +8,10 @@
 import SwiftUI
 
 // Add Pinch to Zoom Custom Modifier...
-extension View{
+extension View {
     
-    func addPinchZoom()->some View{
-        return PinchZoomContext {
+    func addPinchZoom(isZooming: Binding<Bool>) -> some View {
+        return PinchZoomContext(isZooming: isZooming) {
             self
         }
     }
@@ -22,18 +22,16 @@ struct PinchZoomContext<Content: View>: View{
     
     var content: Content
     
-    init(@ViewBuilder content: @escaping ()->Content){
+    init(isZooming: Binding<Bool>, @ViewBuilder content: @escaping ()->Content){
         self.content = content()
+        _isZooming = isZooming
     }
-    
+
     // Offset and Scale Data...
     @State var offset: CGPoint = .zero
     @State var scale: CGFloat = 0
-    
     @State var scalePosition: CGPoint = .zero
-    
-    // Were creating a SceneStorage that will give whether the Zooming is happening or not...
-    @SceneStorage("isZooming") var isZooming: Bool = false
+    @Binding var isZooming: Bool
     
     var body: some View{
         

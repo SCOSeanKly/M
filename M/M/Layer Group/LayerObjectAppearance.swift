@@ -34,6 +34,7 @@ struct LayerObjectAppearance {
     var showWidgetsOnly: Bool
     let avatarNames: [String]
     var showAIPromptText: Bool
+    var showCoverFlow: Bool
 
     enum AppearanceMode {
         case light
@@ -72,8 +73,10 @@ struct LayerObjectAppearance {
     var selectedNotch: String
     var notchOptions: [String]
     var showGroundReflection: Bool
+    var groundReflectionOffset: CGFloat
     var reflectionOffset: CGFloat
     var screenshotFitFill: Bool
+    
     
     // Logo Variables
     var showLogo: Bool
@@ -114,6 +117,7 @@ struct LayerObjectAppearance {
         self.showGrid = false
         self.avatarNames = ["SeanKly", "timetravelr2025", "ElijahCreative", "RealStellaSky", "patricialeveq", "widgy"]
         self.showAIPromptText = true
+        self.showCoverFlow = false
         
      
         self.backgroundColour = .clear
@@ -127,6 +131,7 @@ struct LayerObjectAppearance {
         self.backgroundColourOrGradient = false
         
         self.showGroundReflection = false
+        self.groundReflectionOffset = 0.0
         self.showScreenReflection = true
         self.selectedScreenReflection = "None"
         self.screenReflectionOptions = ["None", "1", "2", "3", "4", "5", "6"]
@@ -186,6 +191,7 @@ struct LayerObjectAppearance {
         showGrid: Bool,
         avatarNames: [String],
         showAIPromptText: Bool,
+        showCoverFlow: Bool,
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -217,6 +223,7 @@ struct LayerObjectAppearance {
         selectedNotch: String,
         notchOptions: [String], // Include notch options here
         showGroundReflection: Bool,
+        groundReflectionOffset: CGFloat,
         reflectionOffset: CGFloat,
         screenshotFitFill: Bool,
         landscapeOrientation: Bool,
@@ -265,6 +272,7 @@ struct LayerObjectAppearance {
         self.showGrid = showGrid
         self.avatarNames = avatarNames
         self.showAIPromptText = showAIPromptText
+        self.showCoverFlow = showCoverFlow
         
         self.showScreenReflection = showScreenReflection
         self.selectedScreenReflection = selectedScreenReflection
@@ -284,6 +292,7 @@ struct LayerObjectAppearance {
         self.selectedNotch = selectedNotch
         self.notchOptions = notchOptions
         self.showGroundReflection = showGroundReflection
+        self.groundReflectionOffset = groundReflectionOffset
         self.reflectionOffset = reflectionOffset
         self.screenshotFitFill = screenshotFitFill
         self.showLogo = showLogo
