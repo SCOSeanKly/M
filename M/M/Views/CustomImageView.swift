@@ -74,6 +74,15 @@ struct BackgroundView: View {
                     .saturation(obj.appearance.saturation)
                     .contrast(obj.appearance.wallContrast)
                     .brightness(obj.appearance.wallBrightness)
+                    .overlay{
+                        RoundedRectangle(cornerRadius: 0)
+                            .foregroundColor(.clear)
+                            .background {
+                                TransparentBlurView(removeAllFilters: true)
+                                    .blur(radius: obj.appearance.blur, opaque: true)
+                                    .opacity(obj.appearance.blur > 0.01 ? 1 : 0)
+                            }
+                    }
 //                    .overlay{
 //                        HexagonGrid(rows: 34, columns: 10)
 //                            .offset(x: -17.5, y: 350)
@@ -81,16 +90,7 @@ struct BackgroundView: View {
 //                             
 //                    }
             }
-            
-            //Blur overlay - disabled until blur value is > 0.01
-            RoundedRectangle(cornerRadius: 0)
-                .foregroundColor(.clear)
-                .background {
-                    TransparentBlurView(removeAllFilters: true)
-                        .blur(radius: obj.appearance.blur, opaque: true)
-                }
-                .clipShape(Rectangle())
-                .opacity(obj.appearance.blur > 0.01 ? 1 : 0)
+
         }
     }
 }

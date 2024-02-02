@@ -14,9 +14,10 @@ struct LargeImageView: View {
     @StateObject var viewModelContent: ContentViewModel
     @StateObject var obj: Object
     @StateObject private var metadataViewModel = ImageMetadataViewModel()
-    
+    @Binding var showPremiumContent: Bool
     @State private var isTapped: Bool = false
     @State private var isTappedAnimation: Bool = false
+    @Binding var isZooming: Bool
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @Binding var isNoAIPromptVisible: Bool
     @Binding var isNoAIPromptVisibleAnimation: Bool
@@ -52,90 +53,108 @@ struct LargeImageView: View {
     
     var body: some View {
         VStack {
-            WebImage(url: URL(string: image.image))
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .ignoresSafeArea()
-                .onAppear {
-                    // Fetch metadata when the premium content image appears
-                    if let fullResURL = fullResImageURL {
-                        metadataViewModel.fetchImageMetadata(from: fullResURL)
-                    } else {
-                        print("Metadata not found in fullRes Image")
+            ZStack {
+                if showPremiumContent {
+                    VStack {
+                        ProgressView()
+                            .font(.system(.body, design: .rounded).weight(.medium))
+                            .foregroundColor(.primary)
                     }
+                    WebImage(url: fullResImageURL, options: [.progressiveLoad])
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .addPinchZoom(isZooming: $isZooming)
+                } else {
+                    WebImage(url: URL(string: image.image))
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
                 }
-                .onDisappear {
-                    // Reset metadata when the view disappears to avoid showing old metadata when reappearing
-                    metadataViewModel.imageMetadata = nil
+            }
+            .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            .ignoresSafeArea()
+            .onAppear {
+                // Fetch metadata when the premium content image appears
+                if let fullResURL = fullResImageURL {
+                    metadataViewModel.fetchImageMetadata(from: fullResURL)
+                } else {
+                    print("Metadata not found in fullRes Image")
                 }
-                .fullScreenCover(isPresented: $viewModelContent.showOverlayPickerSheet) {
-                    fullScreenImagePickerCover(for: $viewModelContent.importedOverlay) { images in
-                        viewModelContent.importedOverlay = images.first
-                    }
+            }
+            .onDisappear {
+                // Reset metadata when the view disappears to avoid showing old metadata when reappearing
+                metadataViewModel.imageMetadata = nil
+            }
+            .fullScreenCover(isPresented: $viewModelContent.showOverlayPickerSheet) {
+                fullScreenImagePickerCover(for: $viewModelContent.importedOverlay) { images in
+                    viewModelContent.importedOverlay = images.first
                 }
-                .overlay{
-                    VStack{
-                        
-                        Spacer()
-                        
-                        if obj.appearance.showAIPromptText {
-                            if metadataViewModel.isLoading {
-                                HStack {
-                                    ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .primary))
-                                        .scaleEffect(0.6)
-                                    
-                                    Text(" Checking for AI prompt")
-                                    
-                                }
-                                .modifier(AICustomTextModifier(customPadding: 5, cornerRadius: 50, strokeOpacity: 0.0))
-                                .onDisappear {
-                                    isNoAIPromptVisible = true
-                                }
+            }
+            .overlay{
+                VStack{
+                    
+                    Spacer()
+                    
+                    
+                    if obj.appearance.showAIPromptText {
+                        if metadataViewModel.isLoading {
+                            HStack {
+                                ProgressView()
+                                    .progressViewStyle(CircularProgressViewStyle(tint: .primary))
+                                    .scaleEffect(0.6)
+                                
+                                Text(" Checking for AI prompt")
+                                
                             }
-                            
-                            if let metadata = metadataViewModel.imageMetadata {
-                                VStack {
-                                    let sortedKeys = metadata.keys.sorted(by: { ($0 as String).compare($1 as String) == .orderedAscending })
-                                    ForEach(sortedKeys, id: \.self) { key in
-                                        if let value = metadata[key] {
-                                            
-                                            Button {
-                                                isTappedAnimation.toggle()
-                                                UIPasteboard.general.string = "\(String(describing: value))"
-                                                isTapped.toggle()
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                                                    alert.present()
-                                                }
-                                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                                    isTappedAnimation.toggle()
-                                                }
-                                                
-                                            } label: {
-                                                Text("\(String(describing: value))")
-                                                    .modifier(AICustomTextModifier(customPadding: 5, cornerRadius: 10, strokeOpacity: 0.4))
-                                                    .scaleEffect(isTappedAnimation ? 0.9 : 1, anchor: .center)
-                                                    .animation(.bouncy, value: isTappedAnimation)
-                                            }
-                                            .buttonStyle(.plain)
-                                        }
-                                    }
-                                }
-                                .frame(width: frameSize.width)
-                                .alert(alertConfig: $alert) {
-                                    alertPreferences(title: "Copied to Clipboard!",
-                                                     imageName: "checkmark.circle")
-                                }
-                            } else {
-                                if isNoAIPromptVisible {
-                                    NoAIPromptView(isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation)
-                                }
+                            .modifier(AICustomTextModifier(customPadding: 5, cornerRadius: 50, strokeOpacity: 0.0))
+                            .onDisappear {
+                                isNoAIPromptVisible = true
                             }
                         }
                         
+                        if let metadata = metadataViewModel.imageMetadata {
+                            VStack {
+                                let sortedKeys = metadata.keys.sorted(by: { ($0 as String).compare($1 as String) == .orderedAscending })
+                                ForEach(sortedKeys, id: \.self) { key in
+                                    if let value = metadata[key] {
+                                        
+                                        Button {
+                                            isTappedAnimation.toggle()
+                                            UIPasteboard.general.string = "\(String(describing: value))"
+                                            isTapped.toggle()
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                                                alert.present()
+                                            }
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                                isTappedAnimation.toggle()
+                                            }
+                                            
+                                        } label: {
+                                            Text("\(String(describing: value))")
+                                                .modifier(AICustomTextModifier(customPadding: 5, cornerRadius: 10, strokeOpacity: 0.4))
+                                                .scaleEffect(isTappedAnimation ? 0.9 : 1, anchor: .center)
+                                                .animation(.bouncy, value: isTappedAnimation)
+                                        }
+                                        .buttonStyle(.plain)
+                                    }
+                                }
+                            }
+                            .frame(width: frameSize.width)
+                            .alert(alertConfig: $alert) {
+                                alertPreferences(title: "Copied to Clipboard!",
+                                                 imageName: "checkmark.circle")
+                            }
+                        } else {
+                            if isNoAIPromptVisible {
+                                NoAIPromptView(isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation)
+                            }
+                        }
                     }
-                    .frame(height: UIScreen.main.bounds.height * 0.6)
+                    
                 }
+                .frame(height: UIScreen.main.bounds.height * 0.6)
+                .opacity(isZooming ? 0 : 1)
+                .animation(.smooth, value: isZooming)
+            }
         }
         .sensoryFeedback(.selection, trigger: isTapped)
     }

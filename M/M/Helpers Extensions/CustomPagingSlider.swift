@@ -88,7 +88,6 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
             if showCoverFlow {
                 CoverFlowView(
                     itemWidth: itemWidth,
-                    enableReflection: false,
                     spacing: 0,
                     rotation: 40,
                     items: $data
@@ -158,7 +157,7 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
     }
 }
 
-/// Let's Add Paging Control
+/// Paging Control
 struct PagingControl: UIViewRepresentable {
     var numberOfPages: Int
     var activePage: Int

@@ -128,7 +128,7 @@ struct SheetContentView: View {
     @State private var downloadProgress: Double = 0.0
 
     var body: some View {
-        LargeImageView(image: image, viewModelContent: viewModelContent, obj: obj, isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation)
+        LargeImageView(image: image, viewModelContent: viewModelContent, obj: obj, showPremiumContent: $showPremiumContent, isZooming: $isZooming, isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation)
             .overlay {
                 VStack {
                     Spacer()
@@ -150,11 +150,14 @@ struct SheetContentView: View {
                     .clipShape(RoundedRectangle(cornerRadius: 24))
                     .animation(.bouncy, value: saveState)
                     .sensoryFeedback(.selection, trigger: isTapped)
+                    .opacity(isZooming ? 0 : 1)
+                    .animation(.smooth, value: isZooming)
                     
                   
                 }
                 .frame(height: UIScreen.main.bounds.height * 0.8)
             }
+        
     }
 
     private func saveImage() {
@@ -201,10 +204,13 @@ struct SheetContentView: View {
                         // Save the original image as PNG
                         if let pngData = originalUIImage.pngData() {
                             UIImage(data: pngData)?.writeToPhotosAlbum()
-                            provideSuccessFeedback()
+                        
                             // Introduce a delay before transitioning to "saved"
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 saveState = .saved
+                                if downloadProgress > 0.99 {
+                                    provideSuccessFeedback()
+                                }
                             }
                             viewModel.loadImages()
                             print("Saved to photos")
