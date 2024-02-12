@@ -17,12 +17,12 @@ struct ContentView: View {
     @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
     @State var buyClicked: Bool = false
     let animationDuration: CGFloat = 0.2
-    @State private var isZooming: Bool = false 
+    @State private var isZooming: Bool = false
     @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
-
+    
     
     var body: some View {
-   
+        
         Group {
             ZStack {
                 if obj.appearance.showWallpapersView {
@@ -64,6 +64,6 @@ struct ContentView: View {
             )
             .animation(.linear(duration: animationDuration), value: obj.appearance.showWallpapersView)
         }
-    
+        
     }
 }

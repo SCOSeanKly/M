@@ -18,12 +18,13 @@ struct CreatorProfiles: View {
     let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
     let widgyURL = URL(string: "https://www.reddit.com/r/widgy/")!
     let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
-    let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
+    //   let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
     @State private var isTapped: Bool = false
     
     var body: some View {
         ScrollView (.horizontal, showsIndicators: false) {
             HStack {
+                //MARK: avatarName is found in obj.appearance.avatarNames
                 ForEach(obj.appearance.avatarNames, id: \.self) { avatarName in
                     Button {
                         switch avatarName {
@@ -33,8 +34,8 @@ struct CreatorProfiles: View {
                             openURL(timetravelr2025URL)
                         case "ElijahCreative":
                             openURL(elijahCreativeURL)
-                        case "RealStellaSky":
-                            openURL(RealStellaSkyURL)
+                            //                        case "RealStellaSky":
+                            //                            openURL(RealStellaSkyURL)
                         case "patricialeveq":
                             openURL(patricialeveqURL)
                         case "widgy":
@@ -60,18 +61,18 @@ struct CreatorProfiles: View {
                                     .frame(width: 20, height: 20)
                                     .clipShape(Circle())
                                     .offset(x: 10.0, y: -20)
-                            } else if avatarName == "RealStellaSky" {
-                                Circle()
-                                    .foregroundStyle(Color.primary.colorInvert())
-                                    .frame(width: 20, height: 20)
-                                    .overlay {
-                                        Image(systemName: "globe.americas.fill")
-                                            .resizable()
-                                            .foregroundStyle(.link)
-                                            .aspectRatio(contentMode: .fill)
-                                            .clipShape(Circle())
-                                    }
-                                    .offset(x: 10.0, y: -20)
+                                //                            } else if avatarName == "RealStellaSky" {
+                                //                                Circle()
+                                //                                    .foregroundStyle(Color.primary.colorInvert())
+                                //                                    .frame(width: 20, height: 20)
+                                //                                    .overlay {
+                                //                                        Image(systemName: "globe.americas.fill")
+                                //                                            .resizable()
+                                //                                            .foregroundStyle(.link)
+                                //                                            .aspectRatio(contentMode: .fill)
+                                //                                            .clipShape(Circle())
+                                //                                    }
+                                //                                    .offset(x: 10.0, y: -20)
                             } else {
                                 Image("twitter")
                                     .resizable()

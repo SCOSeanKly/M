@@ -34,7 +34,7 @@ struct Custom_MockupApp: App {
                         }
                     }
                 })
-              
+            
         }
     }
 }

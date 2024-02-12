@@ -28,6 +28,6 @@ struct NoAIPromptView: View {
                 isNoAIPromptVisibleAnimation.toggle()
             }
         }
-        .animation(.easeInOut, value: isNoAIPromptVisible)
+        .animation(.easeInOut, value: isNoAIPromptVisibleAnimation)
     }
 }

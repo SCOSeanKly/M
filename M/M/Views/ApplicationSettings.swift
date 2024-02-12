@@ -79,7 +79,6 @@ struct ApplicationSettings: View {
                 UnlockPremiumView(obj: obj, iapID: IAP.purchaseID_UnlockPremium, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked)
                 
                 DonationView(obj: obj)
-                    .offset(y: -10)
                 
                 Divider()
                     .padding(.horizontal)
@@ -107,13 +106,44 @@ struct ApplicationSettings: View {
                             Text("Toggle on and off to allow single tap to import screenshot, double tap to import a background")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
                                 .foregroundStyle(.gray)
-                                .frame(width: UIScreen.main.bounds.width * 0.8)
+                            
                             
                             Spacer()
                             
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.vertical, 2.5)
+                    
+                    VStack {
+                        HStack {
+                            
+                            Image(systemName: "rectangle.grid.3x2")
+                                .font(.title3)
+                            
+                            Text("3 or 2 Wallpaper Columns: ")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            
+                            + Text ("\(gridStyle)")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
+                            
+                            Spacer()
+                            
+                            
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showTwoWallpapers, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                .offset(x: 15)
+                            
+                        }
+                        
+                        HStack {
+                            Text("Switch between a 3 and 2 column style")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                .foregroundStyle(.gray)
+                            
+                            
+                            Spacer()
+                            
+                        }
+                    }
                     .padding(.vertical, 2.5)
                     
                     VStack {
@@ -159,8 +189,20 @@ struct ApplicationSettings: View {
                             
                         }
                     }
-                    .padding(.horizontal)
                     .padding(.vertical, 2.5)
+                }
+                .padding(.horizontal)
+                
+                
+                //MARK: Select Icon view
+                SelectIconView(obj: obj)
+                
+                Divider()
+                    .padding([.horizontal, .vertical])
+                
+                
+                
+                Group {
                     
                     VStack {
                         HStack {
@@ -168,8 +210,12 @@ struct ApplicationSettings: View {
                             Image(systemName: "square.stack.3d.down.right")
                                 .font(.title3)
                             
-                            Text("Mockup Coverflow View: ")
+                            Text("Mockup Coverflow View:")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            if !showPremiumContent {
+                                Text("(PREMIUM)")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            }
                             
                             Spacer()
                             
@@ -188,52 +234,19 @@ struct ApplicationSettings: View {
                             
                         }
                     }
-                    .padding(.horizontal)
                     .padding(.vertical, 2.5)
-                    
-                    VStack {
-                        HStack {
-                            
-                            Image(systemName: "rectangle.grid.3x2")
-                                .font(.title3)
-                            
-                            Text("3 or 2 Wallpaper Columns: ")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            
-                            + Text ("\(gridStyle)")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
-                            
-                            Spacer()
-                            
-                            
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showTwoWallpapers, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
-                                .offset(x: 15)
-                            
-                        }
-                        
-                        HStack {
-                            Text("Switch between a 3 and 2 column style")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
-                            
-                            
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.horizontal)
-                    .padding(.vertical, 2.5)
-                    
-                    //MARK: Select Icon view
-                    SelectIconView(obj: obj)
                     
                     VStack {
                         HStack {
                             Image(systemName: "doc.plaintext")
                                 .font(.title3)
                             
-                            Text("Show AI prompt: ")
+                            Text("Show AI prompt:")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            if !showPremiumContent {
+                                Text("(PREMIUM)")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            }
                             
                             Spacer()
                             
@@ -245,15 +258,47 @@ struct ApplicationSettings: View {
                             Text("Shows the AI prompt text when available in the fullscreen wallpaper view")
                                 .font(.system(size: obj.appearance.settingsSliderFontSize))
                                 .foregroundStyle(.gray)
-                                .frame(width: UIScreen.main.bounds.width * 0.8)
+                            //  .frame(width: UIScreen.main.bounds.width * 0.8)
                             
                             Spacer()
                             
                         }
                     }
-                    .padding(.horizontal)
+                    .padding(.vertical, 2.5)
+                    
+                    VStack {
+                        HStack {
+                            Image(systemName: "camera.filters")
+                                .font(.title3)
+                            
+                            Text("Load full resolution preview:")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            if !showPremiumContent {
+                                Text("(PREMIUM)")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            }
+                            
+                            Spacer()
+                            
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showFullResPreview, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                .offset(x: 15)
+                        }
+                        
+                        HStack {
+                            Text("Loads the preview wallpaper image in full resolution")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                .foregroundStyle(.gray)
+                            //   .frame(width: UIScreen.main.bounds.width * 0.8)
+                            
+                            Spacer()
+                            
+                        }
+                    }
                     .padding(.vertical, 2.5)
                 }
+                .padding(.horizontal)
+                .disabled(!showPremiumContent)
+                .opacity(showPremiumContent ? 1 : 0.5)
                 
                 Divider()
                     .padding([.horizontal, .top])
@@ -321,7 +366,7 @@ struct SelectIconView: View {
                                         )
                                 }
                                 .frame(width: buttonSize, height: buttonSize)
-                               
+                                
                             }
                         }
                     }
@@ -359,7 +404,7 @@ struct InfoView: View {
                 Text("Contributors")
                     .font(.system(size: obj.appearance.settingsSliderFontSize))
                     .padding(.bottom, 5)
-                  
+                
                 Spacer()
             }
             .padding(.top)
@@ -408,7 +453,7 @@ struct InfoView: View {
                 
                 Spacer()
             }
-          
+            
         }
         .padding(.horizontal)
         .padding(.vertical, 2.5)

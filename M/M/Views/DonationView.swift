@@ -70,6 +70,7 @@ struct DonationView: View {
                     .strokeBorder(.primary,  lineWidth: 1)
                     .padding()
             }
+            .offset(y: -10)
             
         
         .alert(alertConfig: $showDonation) {

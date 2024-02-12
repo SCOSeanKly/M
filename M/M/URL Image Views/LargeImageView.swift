@@ -54,7 +54,7 @@ struct LargeImageView: View {
     var body: some View {
         VStack {
             ZStack {
-                if showPremiumContent {
+                if showPremiumContent && !image.image.contains("w_") && obj.appearance.showFullResPreview {
                     VStack {
                         ProgressView()
                             .font(.system(.body, design: .rounded).weight(.medium))

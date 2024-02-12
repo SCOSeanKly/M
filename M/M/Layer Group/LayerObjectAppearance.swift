@@ -33,9 +33,10 @@ struct LayerObjectAppearance {
     var showPremiumWallpapersOnly: Bool
     var showWidgetsOnly: Bool
     let avatarNames: [String]
-    var showAIPromptText: Bool
-    var showCoverFlow: Bool
-
+    @AppStorage("showAIPromptText") var showAIPromptText: Bool = false
+    @AppStorage("showCoverFlow") var showCoverFlow: Bool = false
+    @AppStorage("showFullResPreview") var showFullResPreview: Bool = false
+    
     enum AppearanceMode {
         case light
         case dark
@@ -115,11 +116,8 @@ struct LayerObjectAppearance {
         self.showPremiumWallpapersOnly = false
         self.showWidgetsOnly = false
         self.showGrid = false
-        self.avatarNames = ["SeanKly", "timetravelr2025", "ElijahCreative", "RealStellaSky", "patricialeveq", "widgy"]
-        self.showAIPromptText = true
-        self.showCoverFlow = false
+        self.avatarNames = ["SeanKly", "timetravelr2025", "ElijahCreative", "patricialeveq", "widgy"]
         
-     
         self.backgroundColour = .clear
         self.backgroundOffsetY = 0
         self.blur = 0
@@ -190,8 +188,9 @@ struct LayerObjectAppearance {
         showWidgetsOnly: Bool,
         showGrid: Bool,
         avatarNames: [String],
-        showAIPromptText: Bool,
-        showCoverFlow: Bool,
+        //        showAIPromptText: Bool,
+        //        showCoverFlow: Bool,
+        //        showFullResPreview: Bool,
         
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
@@ -234,10 +233,10 @@ struct LayerObjectAppearance {
         logoOffsetY: CGFloat,
         logoRotate: CGFloat,
         
-       wallHue: CGFloat,
-       wallSaturation: CGFloat,
-       wallBrightness: CGFloat,
-       wallContrast: CGFloat
+        wallHue: CGFloat,
+        wallSaturation: CGFloat,
+        wallBrightness: CGFloat,
+        wallContrast: CGFloat
     ) {
         self.showSaveAlert = showSaveAlert
         self.showSymbolEffect = showSymbolEffect
@@ -271,8 +270,9 @@ struct LayerObjectAppearance {
         self.backgroundColourOrGradient = backgroundColourOrGradient
         self.showGrid = showGrid
         self.avatarNames = avatarNames
-        self.showAIPromptText = showAIPromptText
-        self.showCoverFlow = showCoverFlow
+        //        self.showAIPromptText = showAIPromptText
+        //        self.showCoverFlow = showCoverFlow
+        //        self.showFullResPreview = showFullResPreview
         
         self.showScreenReflection = showScreenReflection
         self.selectedScreenReflection = selectedScreenReflection
@@ -306,6 +306,6 @@ struct LayerObjectAppearance {
         self.wallSaturation = wallSaturation
         self.wallBrightness = wallBrightness
         self.wallContrast = wallContrast
-       
+        
     }
 }
