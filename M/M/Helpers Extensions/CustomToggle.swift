@@ -11,6 +11,7 @@ struct CustomToggle: View {
     let showTitleText: Bool
     let titleText: String
     let bindingValue: Binding<Bool>
+    let bindingValue2: Binding<Bool>?
     let onSymbol: String
     let offSymbol: String
     let rotate: Bool
@@ -93,6 +94,10 @@ struct CustomToggle: View {
                 }
                 
                 bindingValue.wrappedValue.toggle()
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                    bindingValue2?.wrappedValue.toggle()
+                }
+            
                 
                 if rotate {
                     withAnimation(.easeInOut(duration: 0.2)) {
@@ -111,7 +116,7 @@ struct ToggleView: View {
     
     @State private var toggleTest: Bool = false
     var body: some View {
-        CustomToggle(showTitleText: true, titleText: "Test Toggle View", bindingValue: $toggleTest, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+        CustomToggle(showTitleText: true, titleText: "Test Toggle View", bindingValue: $toggleTest, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             .padding()
     }
 }

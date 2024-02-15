@@ -208,7 +208,7 @@ struct BackgroundSettingsView: View {
                     }
                 
                 
-                CustomToggle(showTitleText: true, titleText: "Show Background", bindingValue: $obj.appearance.showBackground, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemRed))
+                CustomToggle(showTitleText: true, titleText: "Show Background", bindingValue: $obj.appearance.showBackground, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemRed))
             }
             .padding(.bottom, 5)
             
@@ -217,7 +217,7 @@ struct BackgroundSettingsView: View {
                 Image(systemName: "grid")
                 
                 
-                CustomToggle(showTitleText: true, titleText: "Show Alignment Grid", bindingValue: $obj.appearance.showGrid, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                CustomToggle(showTitleText: true, titleText: "Show Alignment Grid", bindingValue: $obj.appearance.showGrid, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             }
             .padding(.vertical, 10)
             .padding(.leading)
@@ -259,7 +259,7 @@ struct BackgroundSettingsView: View {
                                     Text("Background colour can either be a solid colour or a subtle gradient")
                                 }
                             
-                            CustomToggle(showTitleText: true, titleText: "Background Style" + "\(obj.appearance.backgroundColourOrGradient ? " :SOLID" : " :GRADIENT")", bindingValue: $obj.appearance.backgroundColourOrGradient, onSymbol: "circle.righthalf.filled.inverse", offSymbol: "circle.lefthalf.striped.horizontal", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                            CustomToggle(showTitleText: true, titleText: "Background Style" + "\(obj.appearance.backgroundColourOrGradient ? " :SOLID" : " :GRADIENT")", bindingValue: $obj.appearance.backgroundColourOrGradient, bindingValue2: nil, onSymbol: "circle.righthalf.filled.inverse", offSymbol: "circle.lefthalf.striped.horizontal", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                         }
                         .padding(.vertical, 10)
                         .padding(.leading)
@@ -473,7 +473,7 @@ struct MockupSettingsView: View {
                             Text("Adjusts aspect ratio content mode to fit or fill the frame")
                         }
                     
-                    CustomToggle(showTitleText: true, titleText: "Aspect Ratio - Fit or Fill", bindingValue: $obj.appearance.screenshotFitFill, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                    CustomToggle(showTitleText: true, titleText: "Aspect Ratio - Fit or Fill", bindingValue: $obj.appearance.screenshotFitFill, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                 }
                 .padding(.bottom, 10)
                 
@@ -552,7 +552,7 @@ struct MockupSettingsView: View {
                         Text("Toggle a ground reflection on and off. Note: Not for all mockups")
                     }
                 
-                CustomToggle(showTitleText: true, titleText: "Show Ground Reflection", bindingValue: $obj.appearance.showGroundReflection, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                CustomToggle(showTitleText: true, titleText: "Show Ground Reflection", bindingValue: $obj.appearance.showGroundReflection, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             }
             .padding(.vertical, 5)
             
@@ -683,7 +683,7 @@ struct MockupSettingsView: View {
                             Text("Toggle on and off the shadow effect")
                         }
                     
-                    CustomToggle(showTitleText: true, titleText: "Show Shadow", bindingValue: $obj.appearance.showShadow, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                    CustomToggle(showTitleText: true, titleText: "Show Shadow", bindingValue: $obj.appearance.showShadow, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                 }
                 .padding(.vertical, 10)
                 
@@ -853,7 +853,7 @@ struct LogoSettingsView: View {
                     }
                 
                 
-                CustomToggle(showTitleText: true, titleText: "Show Logo", bindingValue: $obj.appearance.showLogo, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemRed))
+                CustomToggle(showTitleText: true, titleText: "Show Logo", bindingValue: $obj.appearance.showLogo, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemRed))
             }
             .padding(.bottom, 10)
             

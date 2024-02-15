@@ -70,7 +70,6 @@
 		3E72A08C2B17A01B00797359 /* MockupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72A08B2B17A01B00797359 /* MockupView.swift */; };
 		3E7EC1F42B18CF05006CA403 /* IAP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7EC1F32B18CF05006CA403 /* IAP.swift */; };
 		3E81CA4B2B271AE400D01A39 /* Shine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E81CA4A2B271AE400D01A39 /* Shine.swift */; };
-		3E8B333D2B46AA07007536DB /* RegularPolygon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8B333C2B46AA07007536DB /* RegularPolygon.swift */; };
 		3E8B33422B4707D5007536DB /* CrownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8B33412B4707D5007536DB /* CrownView.swift */; };
 		3E91943E2B567FA400B4EB2D /* CreatorProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E91943D2B567FA400B4EB2D /* CreatorProfiles.swift */; };
 		3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */; };
@@ -83,6 +82,11 @@
 		3EC0D5B42B18B9B700365B38 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B32B18B9B700365B38 /* DonationView.swift */; };
 		3ED67EC22B1F677D008CFD61 /* CrownOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* CrownOverlayView.swift */; };
 		3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */; };
+		3EEE00422B7E1602005CB2CD /* PhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00412B7E1602005CB2CD /* PhotosPicker.swift */; };
+		3EEE00462B7E1933005CB2CD /* Fluid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00452B7E1933005CB2CD /* Fluid.swift */; };
+		3EEE00482B7E19CC005CB2CD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00472B7E19CC005CB2CD /* GradientView.swift */; };
+		3EEE004A2B7E19D4005CB2CD /* GradientExportNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00492B7E19D4005CB2CD /* GradientExportNotification.swift */; };
+		3EF4A60B2B7A48D10025D0F6 /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */; };
 		3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF74DA52B552FE4002E1D8D /* URLPill.swift */; };
 /* End PBXBuildFile section */
 
@@ -151,7 +155,6 @@
 		3E72A08B2B17A01B00797359 /* MockupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupView.swift; sourceTree = "<group>"; };
 		3E7EC1F32B18CF05006CA403 /* IAP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAP.swift; sourceTree = "<group>"; };
 		3E81CA4A2B271AE400D01A39 /* Shine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shine.swift; sourceTree = "<group>"; };
-		3E8B333C2B46AA07007536DB /* RegularPolygon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularPolygon.swift; sourceTree = "<group>"; };
 		3E8B33412B4707D5007536DB /* CrownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownView.swift; sourceTree = "<group>"; };
 		3E8ED9522AFB92A0004F87EF /* SwiftUI-Shimmer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "SwiftUI-Shimmer"; path = "../../../../../Library/Developer/Xcode/DerivedData/screenshotSL-hlbihqdhqjcigifxwrohccejlkan/SourcePackages/checkouts/SwiftUI-Shimmer"; sourceTree = "<group>"; };
 		3E8ED9532AFB92AC004F87EF /* SwiftUI-Shimmer */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "SwiftUI-Shimmer"; path = "../../../../../Library/Developer/Xcode/DerivedData/screenshotSL-hlbihqdhqjcigifxwrohccejlkan/SourcePackages/checkouts/SwiftUI-Shimmer"; sourceTree = "<group>"; };
@@ -164,6 +167,11 @@
 		3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettings.swift; sourceTree = "<group>"; };
 		3EC0D5B32B18B9B700365B38 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		3ED67EC12B1F677D008CFD61 /* CrownOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownOverlayView.swift; sourceTree = "<group>"; };
+		3EEE00412B7E1602005CB2CD /* PhotosPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosPicker.swift; sourceTree = "<group>"; };
+		3EEE00452B7E1933005CB2CD /* Fluid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fluid.swift; sourceTree = "<group>"; };
+		3EEE00472B7E19CC005CB2CD /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		3EEE00492B7E19D4005CB2CD /* GradientExportNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientExportNotification.swift; sourceTree = "<group>"; };
+		3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		3EF74DA52B552FE4002E1D8D /* URLPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLPill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -219,8 +227,7 @@
 		3E69AF6E2AF55875007244C1 = {
 			isa = PBXGroup;
 			children = (
-				3E8B333C2B46AA07007536DB /* RegularPolygon.swift */,
-				3EA47FD72B3F324B00405093 /* BlurView.swift */,
+				3EEE00402B7E1592005CB2CD /* ShowGradient */,
 				3E69AF792AF55875007244C1 /* M */,
 				3E69AF782AF55875007244C1 /* Products */,
 			);
@@ -245,7 +252,6 @@
 				3E69AF9A2AF55945007244C1 /* Views */,
 				3E69AF8F2AF558B5007244C1 /* Layer Group */,
 				3E69AF892AF55884007244C1 /* Launch Screen.storyboard */,
-				3E69AF8A2AF55884007244C1 /* Shaders.metal */,
 				3E69AF7A2AF55875007244C1 /* MApp.swift */,
 				3E69AF7C2AF55875007244C1 /* ContentView.swift */,
 				3E69AF7E2AF55876007244C1 /* Assets.xcassets */,
@@ -279,6 +285,8 @@
 		3E69AF9A2AF55945007244C1 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				3EA47FD72B3F324B00405093 /* BlurView.swift */,
+				3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */,
 				3E2D61612B1B213100C83E14 /* New.swift */,
 				3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */,
 				3E69AF9B2AF5594E007244C1 /* ShowCreative.swift */,
@@ -335,6 +343,18 @@
 				3E69AFCC2AF55BD1007244C1 /* View+Modifiers.swift */,
 			);
 			path = PopOver;
+			sourceTree = "<group>";
+		};
+		3EEE00402B7E1592005CB2CD /* ShowGradient */ = {
+			isa = PBXGroup;
+			children = (
+				3EEE00492B7E19D4005CB2CD /* GradientExportNotification.swift */,
+				3EEE00472B7E19CC005CB2CD /* GradientView.swift */,
+				3EEE00412B7E1602005CB2CD /* PhotosPicker.swift */,
+				3EEE00452B7E1933005CB2CD /* Fluid.swift */,
+				3E69AF8A2AF55884007244C1 /* Shaders.metal */,
+			);
+			path = ShowGradient;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -424,6 +444,7 @@
 				3E69AFC12AF55B08007244C1 /* CustomPresentation.swift in Sources */,
 				3E67B32C2B6AB10F003C6C73 /* AICustomTextModifier.swift in Sources */,
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
+				3EEE00462B7E1933005CB2CD /* Fluid.swift in Sources */,
 				3EA47FD82B3F324B00405093 /* BlurView.swift in Sources */,
 				3E81CA4B2B271AE400D01A39 /* Shine.swift in Sources */,
 				3E67B3222B6AA7FF003C6C73 /* ImageMetadataViewModel.swift in Sources */,
@@ -440,6 +461,7 @@
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
 				3E69AFC72AF55B93007244C1 /* AlwaysPopoverModifier.swift in Sources */,
+				3EF4A60B2B7A48D10025D0F6 /* OnBoarding.swift in Sources */,
 				3EB858BD2B4FEA24001C8A68 /* RollingText.swift in Sources */,
 				3E69AF8C2AF55884007244C1 /* Shaders.metal in Sources */,
 				3E67B3122B695F84003C6C73 /* CoverFlowView.swift in Sources */,
@@ -457,10 +479,10 @@
 				3EAFEB3E2B23644900D57F5C /* Heart.swift in Sources */,
 				3E69AFC92AF55BA7007244C1 /* ContentViewController.swift in Sources */,
 				3E69AFA02AF55998007244C1 /* SettingsView.swift in Sources */,
+				3EEE00422B7E1602005CB2CD /* PhotosPicker.swift in Sources */,
 				3E69AFAB2AF55A30007244C1 /* TransparentBlurView.swift in Sources */,
 				3E23E90E2B0F997700DE4460 /* ZoomGesture.swift in Sources */,
 				3E69AFAF2AF55A5A007244C1 /* IfExtension.swift in Sources */,
-				3E8B333D2B46AA07007536DB /* RegularPolygon.swift in Sources */,
 				3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */,
 				3E67B31E2B6AA508003C6C73 /* SheetContentView.swift in Sources */,
 				3EB9F1B92B6C0B5600DDC58A /* PersistentOverlays.swift in Sources */,
@@ -468,9 +490,11 @@
 				3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */,
 				3E69AFBB2AF55AC7007244C1 /* PhotoPicker.swift in Sources */,
 				3E69AFCD2AF55BD1007244C1 /* View+Modifiers.swift in Sources */,
+				3EEE00482B7E19CC005CB2CD /* GradientView.swift in Sources */,
 				3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */,
 				3E69AFB52AF55A93007244C1 /* UniversalAlert.swift in Sources */,
 				3E67B32A2B6AB0F3003C6C73 /* WallpaperImageView.swift in Sources */,
+				3EEE004A2B7E19D4005CB2CD /* GradientExportNotification.swift in Sources */,
 				3E72A08C2B17A01B00797359 /* MockupView.swift in Sources */,
 				3E3D5C342B5AD0D9003B98C2 /* InAppNotificationExtension.swift in Sources */,
 				3E7EC1F42B18CF05006CA403 /* IAP.swift in Sources */,
@@ -620,7 +644,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -643,7 +667,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.11;
+				MARKETING_VERSION = 2.0.13;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -665,7 +689,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.3;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -688,7 +712,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.11;
+				MARKETING_VERSION = 2.0.13;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

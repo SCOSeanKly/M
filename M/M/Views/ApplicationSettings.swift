@@ -15,6 +15,7 @@ struct ApplicationSettings: View {
     @Binding var showPremiumContent: Bool
     @Binding var buyClicked: Bool
     @Binding var showCoverFlow: Bool
+    @Binding var showOnboarding: Bool
     
     var symbolName: String {
         switch obj.appearance.selectedAppearance {
@@ -86,7 +87,45 @@ struct ApplicationSettings: View {
                 
                 //MARK: Application settings
                 Group {
+                    
                     VStack {
+                        HStack {
+                            Image(systemName: "questionmark.circle")
+                                .font(.title3)
+                            
+                            Text("Restart OnBoarding Help: ")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                            
+                            Spacer()
+                            
+                            AnimatedButton(action: {
+                                
+                                obj.appearance.showApplicationSettings.toggle()
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                    showOnboarding.toggle()
+                                }
+                                
+                                
+                            }, sfSymbolName: "book.and.wrench", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "", overlaySymbolColor: .primary)
+                            .padding(5)
+                            .background(.ultraThinMaterial)
+                            .clipShape(Circle())
+                        }
+                        
+                        HStack {
+                            Text("Shows the onboarding help screens")
+                                .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                .foregroundStyle(.gray)
+                            
+                            Spacer()
+                            
+                        }
+                    }
+                    .padding(.vertical, 2.5)
+                    
+                    
+                    VStack {
+                        
                         HStack {
                             Image(systemName: "hand.tap")
                                 .font(.title3)
@@ -98,7 +137,7 @@ struct ApplicationSettings: View {
                             
                             Spacer()
                             
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.enableImportTapGestures, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.enableImportTapGestures, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
                                 .offset(x: 15)
                         }
                         
@@ -129,7 +168,7 @@ struct ApplicationSettings: View {
                             Spacer()
                             
                             
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showTwoWallpapers, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showTwoWallpapers, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
                                 .offset(x: 15)
                             
                         }
@@ -219,7 +258,7 @@ struct ApplicationSettings: View {
                             
                             Spacer()
                             
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $showCoverFlow, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $showCoverFlow, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
                                 .offset(x: 15)
                             
                         }
@@ -250,7 +289,7 @@ struct ApplicationSettings: View {
                             
                             Spacer()
                             
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showAIPromptText, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showAIPromptText, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
                                 .offset(x: 15)
                         }
                         
@@ -280,7 +319,7 @@ struct ApplicationSettings: View {
                             
                             Spacer()
                             
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showFullResPreview, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showFullResPreview, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
                                 .offset(x: 15)
                         }
                         

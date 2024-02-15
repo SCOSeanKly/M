@@ -19,6 +19,8 @@ struct ContentView: View {
     let animationDuration: CGFloat = 0.2
     @State private var isZooming: Bool = false
     @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
+    @AppStorage("showOnboarding") private var showOnboarding: Bool = true
+    @State private var isShowingGradientView: Bool = false
     
     
     var body: some View {
@@ -29,7 +31,7 @@ struct ContentView: View {
                     
                     // MARK: Wallpaper View
                     GeometryReader { geometry in
-                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, showPremiumContent: $showPremiumContent, isZooming: $isZooming)
+                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming)
                             .opacity(geometry.frame(in: .global).midX >= UIScreen.main.bounds.width / 2 ? 1.0 : 0.0)
                             .onAppear {
                                 let _ = IAP.shared
@@ -45,7 +47,7 @@ struct ContentView: View {
                     
                     //MARK: Mockup View
                     GeometryReader { geometry in
-                        MockupView(viewModel: viewModel, obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow)
+                        MockupView(viewModel: viewModel, obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding)
                             .opacity(geometry.frame(in: .global).midX <= UIScreen.main.bounds.width / 2 ? 1.0 : 0.0)
                             .onAppear {
                                 let _ = IAP.shared
@@ -64,6 +66,8 @@ struct ContentView: View {
             )
             .animation(.linear(duration: animationDuration), value: obj.appearance.showWallpapersView)
         }
-        
-    }
+        .fullScreenCover(isPresented: $showOnboarding) {
+         OnBoarding(showOnboarding: $showOnboarding)
+            }
+        }
 }

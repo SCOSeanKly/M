@@ -458,7 +458,7 @@ class ContentViewModel: ObservableObject {
               anchor2: .leading,
               scale: 1,
               offX: 16.2,
-              offY: -17.08 * 2,
+              offY: -17.08,
               rotationEffect: 0.22,
               width: 217.7,
               height: 645.9,

@@ -30,6 +30,7 @@ struct MockupView: View {
     @ObservedObject var manager = MotionManager()
     @Binding var isZooming: Bool
     @Binding var showCoverFlow: Bool
+    @Binding var showOnboarding: Bool
     
     var body: some View {
         ZStack {
@@ -85,7 +86,7 @@ struct MockupView: View {
                 SettingsView(viewModel: viewModel, obj: obj)
             })
             .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
-                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow)
+                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding)
             })
             
             //MARK: Pill Buttons for importing images etc

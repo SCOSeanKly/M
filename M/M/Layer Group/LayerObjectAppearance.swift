@@ -43,6 +43,8 @@ struct LayerObjectAppearance {
         case system
     }
     
+    var showGradientCreatorView: Bool
+    
     // Background Variables
     var backgroundOffsetY: CGFloat
     var backgroundColour: Color
@@ -117,6 +119,7 @@ struct LayerObjectAppearance {
         self.showWidgetsOnly = false
         self.showGrid = false
         self.avatarNames = ["SeanKly", "timetravelr2025", "ElijahCreative", "patricialeveq", "widgy"]
+        self.showGradientCreatorView = false
         
         self.backgroundColour = .clear
         self.backgroundOffsetY = 0
@@ -191,7 +194,7 @@ struct LayerObjectAppearance {
         //        showAIPromptText: Bool,
         //        showCoverFlow: Bool,
         //        showFullResPreview: Bool,
-        
+        showGradientCreatorView: Bool,
         backgroundOffsetY: CGFloat,
         backgroundColour: Color,
         pixellate: CGFloat,
@@ -273,6 +276,7 @@ struct LayerObjectAppearance {
         //        self.showAIPromptText = showAIPromptText
         //        self.showCoverFlow = showCoverFlow
         //        self.showFullResPreview = showFullResPreview
+        self.showGradientCreatorView = showGradientCreatorView
         
         self.showScreenReflection = showScreenReflection
         self.selectedScreenReflection = selectedScreenReflection

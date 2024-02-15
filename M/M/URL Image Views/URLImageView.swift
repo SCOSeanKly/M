@@ -16,6 +16,7 @@ struct URLImages: View {
     @State private var isSheetPresented = false
     @State private var saveState: SaveState = .idle
     @StateObject var obj: Object
+    @Binding var isShowingGradientView: Bool
     
     enum SaveState {
         case idle
@@ -42,7 +43,7 @@ struct URLImages: View {
         ZStack {
             VStack {
                 
-                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent)
+                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView)
                 
                 if !viewModelData.images.isEmpty {
                     ScrollViewReader(content: { proxy in
