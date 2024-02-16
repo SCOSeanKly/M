@@ -88,6 +88,8 @@ struct ApplicationSettings: View {
                 //MARK: Application settings
                 Group {
                     
+                    //MARK: Onboarding diabled for now
+                    /*
                     VStack {
                         HStack {
                             Image(systemName: "questionmark.circle")
@@ -104,8 +106,7 @@ struct ApplicationSettings: View {
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                                     showOnboarding.toggle()
                                 }
-                                
-                                
+            
                             }, sfSymbolName: "book.and.wrench", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "", overlaySymbolColor: .primary)
                             .padding(5)
                             .background(.ultraThinMaterial)
@@ -122,6 +123,7 @@ struct ApplicationSettings: View {
                         }
                     }
                     .padding(.vertical, 2.5)
+                     */
                     
                     
                     VStack {
@@ -385,7 +387,7 @@ struct SelectIconView: View {
                 
                 ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(["IconBlueM", "IconBlueM_White", "IconWhiteM", "IconPinkM", "IconMultiM", "IconAIM"], id: \.self) { iconName in
+                        ForEach(["IconBlueM", "IconBlueM_White", "IconWhiteM", "IconPinkM", "IconMultiM", "IconAIM", "IconCamera"], id: \.self) { iconName in
                             Button {
                                 changeAppIcon(to: iconName)
                                 selectedIcon = iconName

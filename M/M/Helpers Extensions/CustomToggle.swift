@@ -112,14 +112,14 @@ struct CustomToggle: View {
     }
 }
 
-struct ToggleView: View {
-    
-    @State private var toggleTest: Bool = false
-    var body: some View {
-        CustomToggle(showTitleText: true, titleText: "Test Toggle View", bindingValue: $toggleTest, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
-            .padding()
-    }
-}
+//struct ToggleView: View {
+//    
+//    @State private var toggleTest: Bool = false
+//    var body: some View {
+//        CustomToggle(showTitleText: true, titleText: "Test Toggle View", bindingValue: $toggleTest, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+//            .padding()
+//    }
+//}
  
 
 struct CustomSquareToggle: View {

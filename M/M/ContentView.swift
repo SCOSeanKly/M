@@ -66,8 +66,10 @@ struct ContentView: View {
             )
             .animation(.linear(duration: animationDuration), value: obj.appearance.showWallpapersView)
         }
+        /*
         .fullScreenCover(isPresented: $showOnboarding) {
          OnBoarding(showOnboarding: $showOnboarding)
             }
+         */
         }
 }

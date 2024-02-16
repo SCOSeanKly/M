@@ -68,6 +68,9 @@
 		3E69AFCB2AF55BBD007244C1 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFCA2AF55BBD007244C1 /* UIView+Extension.swift */; };
 		3E69AFCD2AF55BD1007244C1 /* View+Modifiers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFCC2AF55BD1007244C1 /* View+Modifiers.swift */; };
 		3E72A08C2B17A01B00797359 /* MockupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E72A08B2B17A01B00797359 /* MockupView.swift */; };
+		3E7808732B7FA978000A9F84 /* GradientBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7808722B7FA978000A9F84 /* GradientBackground.swift */; };
+		3E7808752B7FA99A000A9F84 /* SliderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7808742B7FA99A000A9F84 /* SliderView.swift */; };
+		3E7808772B7FA9AE000A9F84 /* PopOverGradientWallView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7808762B7FA9AE000A9F84 /* PopOverGradientWallView.swift */; };
 		3E7EC1F42B18CF05006CA403 /* IAP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E7EC1F32B18CF05006CA403 /* IAP.swift */; };
 		3E81CA4B2B271AE400D01A39 /* Shine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E81CA4A2B271AE400D01A39 /* Shine.swift */; };
 		3E8B33422B4707D5007536DB /* CrownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8B33412B4707D5007536DB /* CrownView.swift */; };
@@ -85,7 +88,6 @@
 		3EEE00422B7E1602005CB2CD /* PhotosPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00412B7E1602005CB2CD /* PhotosPicker.swift */; };
 		3EEE00462B7E1933005CB2CD /* Fluid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00452B7E1933005CB2CD /* Fluid.swift */; };
 		3EEE00482B7E19CC005CB2CD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00472B7E19CC005CB2CD /* GradientView.swift */; };
-		3EEE004A2B7E19D4005CB2CD /* GradientExportNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00492B7E19D4005CB2CD /* GradientExportNotification.swift */; };
 		3EF4A60B2B7A48D10025D0F6 /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */; };
 		3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF74DA52B552FE4002E1D8D /* URLPill.swift */; };
 /* End PBXBuildFile section */
@@ -153,6 +155,9 @@
 		3E69AFCA2AF55BBD007244C1 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		3E69AFCC2AF55BD1007244C1 /* View+Modifiers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Modifiers.swift"; sourceTree = "<group>"; };
 		3E72A08B2B17A01B00797359 /* MockupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockupView.swift; sourceTree = "<group>"; };
+		3E7808722B7FA978000A9F84 /* GradientBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientBackground.swift; sourceTree = "<group>"; };
+		3E7808742B7FA99A000A9F84 /* SliderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderView.swift; sourceTree = "<group>"; };
+		3E7808762B7FA9AE000A9F84 /* PopOverGradientWallView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopOverGradientWallView.swift; sourceTree = "<group>"; };
 		3E7EC1F32B18CF05006CA403 /* IAP.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = IAP.swift; sourceTree = "<group>"; };
 		3E81CA4A2B271AE400D01A39 /* Shine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shine.swift; sourceTree = "<group>"; };
 		3E8B33412B4707D5007536DB /* CrownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownView.swift; sourceTree = "<group>"; };
@@ -170,7 +175,6 @@
 		3EEE00412B7E1602005CB2CD /* PhotosPicker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PhotosPicker.swift; sourceTree = "<group>"; };
 		3EEE00452B7E1933005CB2CD /* Fluid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fluid.swift; sourceTree = "<group>"; };
 		3EEE00472B7E19CC005CB2CD /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		3EEE00492B7E19D4005CB2CD /* GradientExportNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientExportNotification.swift; sourceTree = "<group>"; };
 		3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		3EF74DA52B552FE4002E1D8D /* URLPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLPill.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -348,11 +352,13 @@
 		3EEE00402B7E1592005CB2CD /* ShowGradient */ = {
 			isa = PBXGroup;
 			children = (
-				3EEE00492B7E19D4005CB2CD /* GradientExportNotification.swift */,
 				3EEE00472B7E19CC005CB2CD /* GradientView.swift */,
 				3EEE00412B7E1602005CB2CD /* PhotosPicker.swift */,
 				3EEE00452B7E1933005CB2CD /* Fluid.swift */,
 				3E69AF8A2AF55884007244C1 /* Shaders.metal */,
+				3E7808722B7FA978000A9F84 /* GradientBackground.swift */,
+				3E7808742B7FA99A000A9F84 /* SliderView.swift */,
+				3E7808762B7FA9AE000A9F84 /* PopOverGradientWallView.swift */,
 			);
 			path = ShowGradient;
 			sourceTree = "<group>";
@@ -455,8 +461,10 @@
 				3E67B3242B6AA82A003C6C73 /* UIImage.swift in Sources */,
 				3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */,
 				3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */,
+				3E7808732B7FA978000A9F84 /* GradientBackground.swift in Sources */,
 				3ED67EC22B1F677D008CFD61 /* CrownOverlayView.swift in Sources */,
 				3EB858BF2B51A49F001C8A68 /* GridOverlay.swift in Sources */,
+				3E7808772B7FA9AE000A9F84 /* PopOverGradientWallView.swift in Sources */,
 				3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */,
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
@@ -474,6 +482,7 @@
 				3E69AFB12AF55A67007244C1 /* ZoomModifier.swift in Sources */,
 				3E67B3282B6AACB2003C6C73 /* customFrameBasedOnCondition.swift in Sources */,
 				3E69AFB32AF55A7B007244C1 /* CustomUniversalAlertApp.swift in Sources */,
+				3E7808752B7FA99A000A9F84 /* SliderView.swift in Sources */,
 				3E69AF7D2AF55875007244C1 /* ContentView.swift in Sources */,
 				3E69AF9E2AF55963007244C1 /* AnimatedButton.swift in Sources */,
 				3EAFEB3E2B23644900D57F5C /* Heart.swift in Sources */,
@@ -494,7 +503,6 @@
 				3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */,
 				3E69AFB52AF55A93007244C1 /* UniversalAlert.swift in Sources */,
 				3E67B32A2B6AB0F3003C6C73 /* WallpaperImageView.swift in Sources */,
-				3EEE004A2B7E19D4005CB2CD /* GradientExportNotification.swift in Sources */,
 				3E72A08C2B17A01B00797359 /* MockupView.swift in Sources */,
 				3E3D5C342B5AD0D9003B98C2 /* InAppNotificationExtension.swift in Sources */,
 				3E7EC1F42B18CF05006CA403 /* IAP.swift in Sources */,
@@ -638,13 +646,13 @@
 		3E69AF872AF55876007244C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM IconCamera";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.0.4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -683,13 +691,13 @@
 		3E69AF882AF55876007244C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM IconCamera";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.3;
+				CURRENT_PROJECT_VERSION = 0.0.4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
