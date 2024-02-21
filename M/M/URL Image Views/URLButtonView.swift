@@ -24,9 +24,10 @@ struct ButtonView: View {
     let showCreativeURL = URL(string: "https://twitter.com/SeanKly")!
     let timetravelr2025URL = URL(string: "https://twitter.com/timetravelr2025")!
     let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
-    //   let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
-    let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
+    let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
+    //let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
     let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .red]
+    @State private var buttonScale: Bool = false
     
     var body: some View {
         
@@ -84,29 +85,19 @@ struct ButtonView: View {
                         
                         //MARK: Open graidient wall view
                         Group {
-                            Button {
-                                isTapped.toggle()
-                                isShowingGradientView.toggle()
-                            } label: {
-                                HStack{
-                                    
-                                    Circle()
-                                        .fill(
-                                            AngularGradient(gradient: Gradient(colors: colors), center: .center)
-                                        )
-                                        .frame(width: 30, height: 30)
-                                        .overlay {
-                                            Image(systemName: "paintbrush")
-                                                .font(.system(.body, design: .rounded).weight(.medium))
-                                                .foregroundColor(.white)
-                                        }
+                            if viewModelData.images.count != 0 {
+                                UltraThinButton(action: {
+                                    isTapped.toggle()
+                                    isShowingGradientView.toggle()
+                                }, systemName: "paintbrush", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                                .opacity(obj.appearance.showPill ? 1: 0)
+                                .offset(x: obj.appearance.showPill ?  0 : -100)
+                                .scaleEffect(buttonScale ? 1 : 0)
+                                .animation(.linear(duration: 0.5), value: buttonScale)
+                                .onAppear{
+                                    buttonScale.toggle()
                                 }
-                                .padding(8)
-                                .background(.ultraThinMaterial)
-                                .clipShape(RoundedRectangle(cornerRadius: 24))
                             }
-                            .opacity(obj.appearance.showPill ? 1: 0)
-                            .offset(x: obj.appearance.showPill ?  0 : -100)
                         }
                         
                         Spacer()
@@ -166,12 +157,12 @@ struct ButtonView: View {
                                     openURL(showCreativeURL)
                                 case "timetravelr2025":
                                     openURL(timetravelr2025URL)
-                                case "RealStellaSky":
-                                    openURL(RealStellaSkyURL)
+                                    //case "RealStellaSky":
+                                    //openURL(RealStellaSkyURL)
                                 case "ElijahCreative":
                                     openURL(elijahCreativeURL)
-                                    //                             case "patricialeveq":
-                                    //                                 openURL(patricialeveqURL)
+                                case "patricialeveq":
+                                    openURL(patricialeveqURL)
                                 default:
                                     break
                                 }
@@ -191,4 +182,35 @@ struct ButtonView: View {
         
     }
 }
+
+struct UltraThinButton: View {
+    
+    var action: () -> Void
+    let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .red]
+    let systemName: String
+    let gradientFill: Bool
+    let fillColor: Color
+    let showUltraThinMaterial: Bool
+    
+    var body: some View {
+        Button {
+            action()
+        } label: {
+            Circle()
+                .fill(
+                    AngularGradient(gradient: Gradient(colors: gradientFill ? colors : [fillColor]), center: .center)
+                )
+                .frame(width: 30, height: 30)
+                .overlay {
+                    Image(systemName: systemName)
+                        .font(.system(.body, design: .rounded).weight(.medium))
+                        .foregroundColor(.white)
+                }
+                .padding(8)
+                .background(.ultraThinMaterial.opacity(showUltraThinMaterial ? 1 : 0))
+                .clipShape(Circle())
+        }
+    }
+}
+
 

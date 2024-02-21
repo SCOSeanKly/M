@@ -40,15 +40,12 @@ struct MockupView: View {
                 
                 CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
                     .customImageViewModifier(obj: obj, viewModel: viewModel, isZooming: $isZooming)
-                  //  .modifier(ParallaxMotionModifier(manager: manager, magnitude: 10))
-                
+                 
                 ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
                     .titleViewModifier(obj: obj, normalScale: 1.0)
-                
+                 
             } titleContent: { $item in
-                
                 VStack(spacing: 5) {
-                    
                     Text(item.title)
                         .font(.largeTitle.bold())
                         .lineLimit(1)
@@ -61,7 +58,6 @@ struct MockupView: View {
                 }
                 .titleViewModifier(obj: obj, normalScale: 0.8)
             }
-          //  .safeAreaPadding([.horizontal, .top], 35)
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
                 fullScreenImagePickerCover(for: $viewModel.importedImage1) { images in
                     viewModel.importedImage1 = images.first
@@ -88,10 +84,8 @@ struct MockupView: View {
             .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
                 ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding)
             })
-            
             //MARK: Pill Buttons for importing images etc
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
-            
         }
         .onAppear {
             let _ = IAP.shared
@@ -99,24 +93,10 @@ struct MockupView: View {
         //MARK: Add system to mode toggle
         .preferredColorScheme(colorScheme)
         .onTapGesture {
-            withAnimation(.bouncy){
                 if !obj.appearance.showPill {
                     obj.appearance.showPill = true
                 }
-            }
         }
-        .gesture( // MARK: Drag up gesture to show settings sheet
-            DragGesture(minimumDistance: 30, coordinateSpace: .global)
-                .onEnded { value in
-                    if value.translation.height < 0 {
-                        obj.appearance.showSettingsSheet.toggle()
-                        withAnimation(.bouncy){
-                            if !obj.appearance.showPill {
-                                obj.appearance.showPill = true
-                            }
-                        }
-                    }
-                })
         // MARK: Show Tips
         .task {
             //   try? Tips.resetDatastore() //MARK:  Disable this once tested - shows tips all the time
@@ -165,6 +145,16 @@ extension View {
             .offset(y: obj.appearance.showSettingsSheet ? -110 : 0)
             .animation(.bouncy, value: obj.appearance.showSettingsSheet)
             .padding(-60)
+            .gesture( // MARK: Drag up gesture to show settings sheet
+                DragGesture(minimumDistance: 30, coordinateSpace: .global)
+                    .onEnded { value in
+                        if value.translation.height < 0 {
+                            obj.appearance.showSettingsSheet.toggle()
+                                if !obj.appearance.showPill {
+                                    obj.appearance.showPill = true
+                                }
+                        }
+                    })
     }
 }
 

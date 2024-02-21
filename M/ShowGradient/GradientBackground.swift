@@ -87,7 +87,6 @@ struct GradientBackground: View {
         .saturation(gradientSaturation)
         .contrast(gradientContrast)
         .brightness(gradientBrightness)
-        .scaleEffect(gradientScale)
         .rotationEffect(gradientRotation)
         .offset(x: gradientOffsetX, y: gradientOffsetY)
         .clipShape(Rectangle())
@@ -98,6 +97,7 @@ struct GradientBackground: View {
             ),
             maxSampleOffset: .zero
         )
+        .scaleEffect(gradientScale)
         .onAppear {
             animationDuration = 1.0
             updateGradientProperties()

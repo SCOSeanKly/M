@@ -352,9 +352,9 @@ struct ApplicationSettings: View {
         .onAppear {
             let _ = IAP.shared
         }
+        .preferredColorScheme(colorScheme)
         .sensoryFeedback(.selection, trigger: isTapped)
         .customPresentationWithBlur(detent: .large, blurRadius: 0, backgroundColorOpacity: 1.0)
-        .preferredColorScheme(colorScheme)
         .ignoresSafeArea()
     }
 }

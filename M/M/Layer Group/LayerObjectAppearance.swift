@@ -141,12 +141,12 @@ struct LayerObjectAppearance {
         self.offsetX = 0
         self.offsetY = 0
         self.rotate = 0
-        self.shadowRadius = 5
+        self.shadowRadius = 0
         self.shadowOffsetX = 0
         self.shadowOffsetY = 0
         self.showShadow = false
         self.shadowColor = .black
-        self.shadowOpacity = 0.2
+        self.shadowOpacity = 0
         self.scale = 1
         self.selectedNotch = "None"
         self.notchOptions = ["None", "1", "2", "3"]

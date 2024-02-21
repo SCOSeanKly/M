@@ -16,8 +16,8 @@ struct GradientView: View {
     let screenHeight = UIScreen.main.bounds.height
     let sliderHeight: CGFloat = 10
     let bottomPadding: CGFloat = 8
-    let horizontalPadding: CGFloat = 10
-    let scaleEffect: CGFloat = 0.8
+    let horizontalPadding: CGFloat = 8
+    let scaleEffect: CGFloat = 1
     let startDate: Date = .init()
     
     @State private var showBgPickerSheet = false
@@ -53,6 +53,7 @@ struct GradientView: View {
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @State private var showPopoverGradientWall: Bool = false
     @State private var isTapped: Bool = false
+    let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .red]
     
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
@@ -156,6 +157,11 @@ struct GradientView: View {
                     VStack {
                         HStack {
                             
+                            UltraThinButton(action: {
+                                isTapped.toggle()
+                                isShowingGradientView.toggle()
+                            }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true)
+                    
                             Spacer()
                             
                             Picker("Gradient Style", selection: $gradientStyle) {
@@ -197,19 +203,9 @@ struct GradientView: View {
                             
                             Spacer()
                             
-                            Button{
+                            UltraThinButton(action: {
                                 showBgPickerSheet.toggle()
-                            } label: {
-                                Circle()
-                                    .fill(.blue.opacity(0.5))
-                                    .frame(width: 30, height: 30)
-                                    .overlay {
-                                        Image(systemName: "photo.circle.fill")
-                                            .font(.system(.body, design: .rounded).weight(.medium))
-                                            .foregroundColor(.white)
-                                    }
-                            }
-                            .shadow(radius: 3)
+                            }, systemName: "photo.circle", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
                             .padding(.trailing)
                             .padding(.top, 10)
                         }
@@ -218,30 +214,33 @@ struct GradientView: View {
                             
                             Spacer()
                             
-                            Button{
+                            UltraThinButton(action: {
                                 showImageOverlayPickerSheet.toggle()
-                            } label: {
-                                Circle()
-                                    .fill(.blue.opacity(0.5))
-                                    .frame(width: 30, height: 30)
-                                    .overlay {
-                                        Image(systemName: "photo.circle")
-                                            .font(.system(.body, design: .rounded).weight(.medium))
-                                            .foregroundColor(.white)
-                                    }
-                            }
-                            .shadow(radius: 3)
+                            }, systemName: "photo.circle.fill", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
                             .padding(.trailing)
                             .padding(.top, 10)
                         }
                         
                         Spacer()
+                        
+                        HStack {
+                            
+                            UltraThinButton(action: {
+                                generateGradient()
+                            }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                            .padding(.bottom)
+                         
+                            .padding(.bottom)
+                            
+                            Spacer()
+                        }
                     }
                     .padding(.top, 50)
                     .padding(.horizontal)
                     .font(.footnote)
                     .tint(.white)
                 }
+                 
             }
         }
         .ignoresSafeArea()
@@ -249,13 +248,6 @@ struct GradientView: View {
             //MARK: These are the buttons and control sliders
             
             if !isSavingImage {
-                
-                VStack {
-                    
-                    Spacer()
-                    
-                    VStack {
-                        
                         //MARK: Title
                         HStack {
                             Text("Adjustment Settings")
@@ -301,12 +293,8 @@ struct GradientView: View {
                         .padding(.horizontal, 4)
                         .padding(.top)
                         
-                        
-                        
                         ScrollView {
                             
-                            VStack {
-                                
                                 //MARK: Horizontal and Vertical Position Sliders
                                 HStack{
                                     
@@ -324,6 +312,7 @@ struct GradientView: View {
                                         .frame(width: sliderScale.width * 0.28)
                                         
                                     }
+                                 
                                     
                                     Spacer()
                                     
@@ -346,26 +335,26 @@ struct GradientView: View {
                                     .padding(.leading, 8)
                                     .offset(y: 12)
                                 }
-                                .frame(width: sliderScale.width)
-                                .scaleEffect(scaleEffect)
+                                .padding(.horizontal)
                                 .padding(.vertical)
+                             
                                 
                                 //MARK: Hue Slider
-                                SliderView(systemName: "camera.filters", blurSystemName: false, value: $gradientHue, inValue: -180, outValue: 180, resetValue: 0)
+                                SliderView(systemName: "camera.filters", sliderTitle: "", blurSystemName: false, value: $gradientHue, inValue: -180, outValue: 180, resetValue: 0)
                                 
                                 //MARK: Sat Slider
-                                SliderView(systemName: "drop.halffull", blurSystemName: false, value: $gradientSaturation, inValue: 0, outValue: 2, resetValue: 1)
+                                SliderView(systemName: "drop.halffull", sliderTitle: "", blurSystemName: false, value: $gradientSaturation, inValue: 0, outValue: 2, resetValue: 1)
                                 
                                 //MARK: Contrast Slider
-                                SliderView(systemName: "circle.lefthalf.striped.horizontal", blurSystemName: false, value: $gradientContrast, inValue: 0.1, outValue: 3, resetValue: 1)
+                                SliderView(systemName: "circle.lefthalf.striped.horizontal", sliderTitle: "", blurSystemName: false, value: $gradientContrast, inValue: 0.1, outValue: 3, resetValue: 1)
                                 //MARK: Brightneass Slider
-                                SliderView(systemName: "sun.max", blurSystemName: false, value: $gradientBrightness, inValue: -1, outValue: 1, resetValue: 1)
+                                SliderView(systemName: "sun.max", sliderTitle: "", blurSystemName: false, value: $gradientBrightness, inValue: -1, outValue: 1, resetValue: 1)
                                 
                                 //MARK: Blur Slider
-                                SliderView(systemName: "scribble.variable", blurSystemName: true, value: $gradientBlur, inValue: 0, outValue: 40, resetValue: 0)
+                                SliderView(systemName: "scribble.variable", sliderTitle: "", blurSystemName: true, value: $gradientBlur, inValue: 0, outValue: 100, resetValue: 0)
                                 
                                 //MARK: Scale Slider
-                                SliderView(systemName: "arrow.up.left.and.arrow.down.right", blurSystemName: false, value: $gradientScale, inValue: 0, outValue: 3.5, resetValue: 1)
+                                SliderView(systemName: "arrow.up.left.and.arrow.down.right", sliderTitle: "", blurSystemName: false, value: $gradientScale, inValue: 0, outValue: 3.5, resetValue: 1)
                                 
                                 
                                 //MARK: Rotation Slider
@@ -386,22 +375,18 @@ struct GradientView: View {
                                     }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
                                     .padding(.leading, 8)
                                 }
-                                .frame(width: sliderScale.width)
-                                .scaleEffect(scaleEffect)
-                                .padding(.bottom, 8)
+                                .padding(.horizontal)
+                                .padding(.vertical, 8)
                                 
                                 
                                 //MARK: Chequered Slider
-                                SliderView(systemName: "rectangle.checkered", blurSystemName: false, value: $pixellate, inValue: 1, outValue: 75, resetValue: 1)
+                                SliderView(systemName: "rectangle.checkered", sliderTitle: "", blurSystemName: false, value: $pixellate, inValue: 1, outValue: 75, resetValue: 1)
                                 
                                 //MARK: Wave effect Slider
                                 HStack {
                                     Image(systemName: "water.waves")
                                         .font(.title2)
                                         .padding(.trailing)
-                                    
-                                    //                                        CustomSlider(value: $speed, inRange: 0...1, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                    //                                        }
                                     
                                     CustomSlider(value: $amplitude, inRange: 0...100, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
                                     }
@@ -416,15 +401,12 @@ struct GradientView: View {
                                     }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
                                     .padding(.leading, 8)
                                 }
-                                .frame(width: sliderScale.width)
-                                .scaleEffect(scaleEffect)
-                                .padding(.top, 1)
+                                .padding(.horizontal)
+                                .padding(.vertical, 8)
                                 
                                 //MARK: Add Half Blur Toggle
                                 CustomToggle(showTitleText: true, titleText: "Show Half Blur", bindingValue: $showHalfBlur, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
-                                    .frame(width: sliderScale.width * 0.875)
-                                    .padding(.bottom)
-                                    .padding(.top, 8)
+                                    .padding(.vertical, 8)
                                 
                                 //MARK: Color Picker
                                 HStack {
@@ -438,11 +420,9 @@ struct GradientView: View {
                                                 .padding(.horizontal, horizontalPadding)
                                         }
                                     }
-                                    
-                                    Circle()
-                                        .foregroundColor(.white)
-                                        .frame(width: 10)
-                                        .padding(.leading, 10)
+
+                                    Divider()
+                                        .padding(.leading, 8)
                                     
                                     ColorPicker("", selection: $bgColor,supportsOpacity: false)
                                         .frame(width: 10)
@@ -453,8 +433,7 @@ struct GradientView: View {
                                 //MARK: Re-Order Gradient Button
                                 HStack {
                                     
-                                    Button(action: {
-                                        
+                                    UltraThinButton(action: {
                                         showGradientControl = false
                                         
                                         generateGradient()
@@ -464,36 +443,20 @@ struct GradientView: View {
                                             showGradientControl = true
                                             
                                         }
-                                        
-                                        
-                                        
-                                    }) {
-                                        Text("ReOrder Gradient")
-                                            .font(.footnote)
-                                            .padding()
-                                            .foregroundColor(.white)
-                                            .padding(.vertical, -5)
-                                            .background(Color.black.opacity(0.3))
-                                            .clipShape(RoundedRectangle(cornerRadius: 10))
-                                            .shadow(color: Color.black.opacity(0.4), radius: 2, x: 0, y: 0)
-                                    }
-                                    
+                                    }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                             
                                     Picker("Color Count", selection: $selectedColorCount) {
                                         ForEach(1...6, id: \.self) { count in
                                             Text("\(count)").tag(count)
                                         }
                                     }
-                                    .tint(.white)
+                                    .tint(.primary)
                                 }
-                                .background(Color.black.opacity(0.3))
-                                .clipShape(RoundedRectangle(cornerRadius: 10))
+                                .background(.ultraThinMaterial)
+                                .clipShape(RoundedRectangle(cornerRadius: 100))
                                 .padding()
-                            }
-                            
                         }
-                    }
                     .padding(.bottom)
-                }
                 .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
             }
         }

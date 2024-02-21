@@ -92,7 +92,7 @@ class ContentViewModel: ObservableObject {
               width: 310,
               height: 812,
               cornerRadius: 43,
-              notch: "",
+              notch: "None",
               reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
@@ -145,7 +145,7 @@ class ContentViewModel: ObservableObject {
               width: 311.8,
               height: 812,
               cornerRadius: 43,
-              notch: "",
+              notch: "None",
               reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
@@ -540,6 +540,59 @@ class ContentViewModel: ObservableObject {
               height_b: 373,
               cornerRadius_b: 40),
         
+        //MARK: Mockup 10 - iPX
+        .init(imageName: "iPX_Hand",
+              screenReflectionName: "iP15PM_Front_screen",
+              shadowName: "",
+              color: .mint,
+              alertTextColor: .white,
+              title: "X Hand View",
+              subTitle: "Holding the iPhone X",
+              
+              // MARK: 1st mockup image
+              degrees: 0,
+              degrees2: 0,
+              x: 0,
+              y: 0,
+              z: 0,
+              anchor: .bottomLeading,
+              perspective: 1.2,
+              perspective2: 0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1,
+              offX: 0.5,
+              offY: 0,
+              rotationEffect: 0,
+              width: 346,
+              height: 746.8,
+              cornerRadius: 40,
+              notch: "notch_set1_",
+              reflectionOffset: 10000,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
+        
         //MARK: Mockup 11 - Dual iPX
         .init(imageName: "iPX_Front_Dual",
               screenReflectionName: "Dual_iP15PM_Front_screen",
@@ -593,14 +646,14 @@ class ContentViewModel: ObservableObject {
               height_b: 373,
               cornerRadius_b: 40),
         
-        //MARK: Mockup 12 - iP15PM Dark Concept
-        .init(imageName: "iP15PM_DarkDesign_Front",
+        //MARK: Mockup 12 - iPhone 15 Pro Max over AirPods Max Concept
+        .init(imageName: "iP15PM_AirPodsProMax",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
               color: .black,
               alertTextColor: .white,
-              title: "Dark Concept",
-              subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max in a dark concept",
+              title: "Max Concept",
+              subTitle: "iPhone 15 Pro Max over AirPods Max Concept",
               
               // MARK: 1st mockup image
               degrees: 0,
@@ -623,7 +676,7 @@ class ContentViewModel: ObservableObject {
               height: 746.8,
               cornerRadius: 40,
               notch: "notch_set1_",
-              reflectionOffset: -247,
+              reflectionOffset: 10000,
               
               // MARK: 2nd mockup image
               degrees_b: 0,
@@ -752,12 +805,65 @@ class ContentViewModel: ObservableObject {
               height_b: 373,
               cornerRadius_b: 40),
         
-        //MARK: Mockup 15 - iP15PM Cutout Concept
-        .init(imageName: "iP15PM_CutoutDesign_Front",
+        //MARK: Mockup 12 - iP15PM Dark Concept
+        .init(imageName: "iP15PM_DarkDesign_Front",
               screenReflectionName: "iP15PM_Front_screen",
               shadowName: "",
               color: .black,
               alertTextColor: .white,
+              title: "Dark Concept",
+              subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max in a dark concept",
+              
+              // MARK: 1st mockup image
+              degrees: 0,
+              degrees2: 0,
+              x: 0,
+              y: 0,
+              z: 0,
+              anchor: .bottomLeading,
+              perspective: 1.2,
+              perspective2: 0,
+              x2: 0,
+              y2: 0,
+              z2: 0,
+              anchor2: .bottomLeading,
+              scale: 1,
+              offX: 0.5,
+              offY: 0,
+              rotationEffect: 0,
+              width: 346,
+              height: 746.8,
+              cornerRadius: 40,
+              notch: "notch_set1_",
+              reflectionOffset: -247,
+              
+              // MARK: 2nd mockup image
+              degrees_b: 0,
+              degrees2_b: 0,
+              x_b: 0,
+              y_b: 0,
+              z_b: 0,
+              anchor_b: .bottomLeading,
+              perspective_b: 1,
+              perspective2_b: 0,
+              x2_b: 0,
+              y2_b: 0,
+              z2_b: 0,
+              offX_b: 10000,
+              offY_b: 0,
+              anchor2_b: .bottomLeading,
+              scale_b: 1,
+              rotationEffect_b: 0,
+              width_b: 173,
+              height_b: 373,
+              cornerRadius_b: 40),
+        
+        //MARK: Mockup 15 - iP15PM Cutout Concept
+        .init(imageName: "iP15PM_CutoutDesign_Front",
+              screenReflectionName: "iP15PM_Front_screen",
+              shadowName: "",
+              color: .cyan,
+              alertTextColor: .black,
               title: "Cutout Concept",
               subTitle: "Forward-facing upright perspective of the iPhone 15 Pro Max with a cutout concept",
               
@@ -834,7 +940,7 @@ class ContentViewModel: ObservableObject {
               width: 349,
               height: 430.2,
               cornerRadius: 80,
-              notch: "",
+              notch: "None",
               reflectionOffset: 10000,
               
               // MARK: 2nd mockup image

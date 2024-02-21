@@ -235,7 +235,8 @@ private struct WallpaperButtonView: View {
     var body: some View {
         HStack {
             Group { //MARK: Show Wallpaper Button
-                Button {
+                
+                UltraThinButton(action: {
                     isTapped.toggle()
                     withAnimation(.bouncy) {
                         obj.appearance.showPill = true
@@ -243,42 +244,19 @@ private struct WallpaperButtonView: View {
                     obj.appearance.showWallpapersView.toggle()
                     showWallpaperTip.invalidate(reason: .actionPerformed)
                     
-                } label: {
-                    Circle()
-                        .fill(.blue.opacity(0.5))
-                        .frame(width: 30, height: 30)
-                        .overlay {
-                            Image(systemName: "photo.circle")
-                                .font(.system(.body, design: .rounded).weight(.medium))
-                                .foregroundColor(.white)
-                        }
-                        .padding(8)
-                        .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                }
+                }, systemName: "photo.circle", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
             }
             
             Group { //MARK: Show Application Settings
-                Button {
+                
+                UltraThinButton(action: {
                     isTapped.toggle()
                     withAnimation(.bouncy) {
                         obj.appearance.showPill = true
                     }
                     obj.appearance.showApplicationSettings.toggle()
                     
-                } label: {
-                    Circle()
-                        .fill(.blue.opacity(0.5))
-                        .frame(width: 30, height: 30)
-                        .overlay {
-                            Image(systemName: "gearshape")
-                                .font(.system(.body, design: .rounded).weight(.medium))
-                                .foregroundColor(.white)
-                        }
-                        .padding(8)
-                        .background(.ultraThinMaterial)
-                        .clipShape(RoundedRectangle(cornerRadius: 24))
-                }
+                }, systemName: "gearshape", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
             }
             
             Spacer()
