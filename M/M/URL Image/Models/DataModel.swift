@@ -40,10 +40,6 @@ class DataViewModel: ObservableObject {
             subPath: "TimeTraveler_M_Resources/main/Wallpapers/",
             jsonFile: "TimeTraveler_M_Resources/main/JSON/timetravelr2025.json"
         ),
-        //        "RealStellaSky": (
-        //            subPath: "RealStellaSky_M_Resources/main/Wallpapers/",
-        //            jsonFile: "RealStellaSky_M_Resources/main/JSON/RealStellaSky.json"
-        //        ),
         "patricialeveq": (
             subPath: "patricialeveq_M_Resources/main/Wallpapers/",
             jsonFile: "patricialeveq_M_Resources/main/JSON/patricialeveq.json"

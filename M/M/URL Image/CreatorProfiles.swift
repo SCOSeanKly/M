@@ -61,18 +61,6 @@ struct CreatorProfiles: View {
                                     .frame(width: 20, height: 20)
                                     .clipShape(Circle())
                                     .offset(x: 10.0, y: -20)
-                                //                            } else if avatarName == "RealStellaSky" {
-                                //                                Circle()
-                                //                                    .foregroundStyle(Color.primary.colorInvert())
-                                //                                    .frame(width: 20, height: 20)
-                                //                                    .overlay {
-                                //                                        Image(systemName: "globe.americas.fill")
-                                //                                            .resizable()
-                                //                                            .foregroundStyle(.link)
-                                //                                            .aspectRatio(contentMode: .fill)
-                                //                                            .clipShape(Circle())
-                                //                                    }
-                                //                                    .offset(x: 10.0, y: -20)
                             } else {
                                 Image("twitter")
                                     .resizable()

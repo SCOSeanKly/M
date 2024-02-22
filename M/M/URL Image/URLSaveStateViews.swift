@@ -72,7 +72,6 @@ struct SaveStateSaved: View {
     }
 }
 
-
 struct LoadingImagesView: View {
     var body: some View {
         VStack {

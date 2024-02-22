@@ -58,4 +58,4 @@ struct AlwaysPopoverModifier<PopoverContent>: ViewModifier where PopoverContent:
         func updateUIView(_ uiView: Self.UIViewType, context: Self.Context) { }
     }
 }
-
+ 

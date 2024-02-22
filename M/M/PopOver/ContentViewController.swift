@@ -29,8 +29,9 @@ class ContentViewController<V>: UIHostingController<V>, UIPopoverPresentationCon
     func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
         return .none
     }
-
+    
     func presentationControllerDidDismiss(_ presentationController: UIPresentationController) {
         self.isPresented.wrappedValue = false
     }
 }
+

@@ -9,8 +9,8 @@ import SwiftUI
 
 struct GradientBackground: View {
     let gradientColors: [Color]
-    @Binding var refreshButtonTapped: Bool
     let gradientStyle: GradientView.GradientStyle
+    let startDate: Date = .init()
     
     @State private var animationDuration: Double = 0.5
     @State private var center: UnitPoint = .zero
@@ -20,20 +20,17 @@ struct GradientBackground: View {
     @State private var endAngle: Angle = .zero
     @State private var startPoint: UnitPoint = .topLeading
     @State private var endPoint: UnitPoint = .bottomTrailing
+    
+    @Binding var refreshButtonTapped: Bool
     @Binding var gradientScale: CGFloat
     @Binding var gradientRotation: Angle
     @Binding var gradientBlur: CGFloat
     @Binding var gradientOffsetX: CGFloat
     @Binding var gradientOffsetY: CGFloat
     @Binding var importedBackground: UIImage?
-    
     @Binding var pixellate: CGFloat
-    @Binding var speed: CGFloat
     @Binding var amplitude: CGFloat
     @Binding var frequency: CGFloat
-    
-    let startDate: Date = .init()
-    
     @Binding var gradientHue: CGFloat
     @Binding var gradientSaturation: CGFloat
     @Binding var gradientBrightness: CGFloat
@@ -72,7 +69,7 @@ struct GradientBackground: View {
                         function: .init(library: .default, name: "wave"),
                         arguments: [
                             .float(0),
-                            .float(speed),
+                            .float(0),
                             .float(frequency),
                             .float(amplitude)
                         ]
