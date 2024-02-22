@@ -89,7 +89,7 @@ struct ButtonView: View {
                                 UltraThinButton(action: {
                                     isTapped.toggle()
                                     isShowingGradientView.toggle()
-                                }, systemName: "paintbrush", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                                }, systemName: "paintbrush", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
                                 .opacity(obj.appearance.showPill ? 1: 0)
                                 .offset(x: obj.appearance.showPill ?  0 : -100)
                                 .scaleEffect(buttonScale ? 1 : 0)
@@ -191,6 +191,7 @@ struct UltraThinButton: View {
     let gradientFill: Bool
     let fillColor: Color
     let showUltraThinMaterial: Bool
+    let useSystemImage: Bool
     
     var body: some View {
         Button {
@@ -202,9 +203,17 @@ struct UltraThinButton: View {
                 )
                 .frame(width: 30, height: 30)
                 .overlay {
-                    Image(systemName: systemName)
-                        .font(.system(.body, design: .rounded).weight(.medium))
-                        .foregroundColor(.white)
+                    if useSystemImage {
+                        Image(systemName: systemName)
+                            .font(.system(.body, design: .rounded).weight(.medium))
+                            .foregroundColor(.white)
+                    } else {
+                        Image(systemName)
+                            .resizable()
+                            .frame(width: 24, height: 24)
+                            .offset(x: 2.4, y: 2.4)
+                            .foregroundColor(.white)
+                    }
                 }
                 .padding(8)
                 .background(.ultraThinMaterial.opacity(showUltraThinMaterial ? 1 : 0))

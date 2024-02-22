@@ -244,7 +244,7 @@ private struct WallpaperButtonView: View {
                     obj.appearance.showWallpapersView.toggle()
                     showWallpaperTip.invalidate(reason: .actionPerformed)
                     
-                }, systemName: "photo.circle", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                }, systemName: "photo.circle", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
             }
             
             Group { //MARK: Show Application Settings
@@ -256,7 +256,7 @@ private struct WallpaperButtonView: View {
                     }
                     obj.appearance.showApplicationSettings.toggle()
                     
-                }, systemName: "gearshape", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                }, systemName: "gearshape", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
             }
             
             Spacer()

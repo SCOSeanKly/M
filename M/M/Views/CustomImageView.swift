@@ -21,8 +21,16 @@ struct CustomImageView: View {
         
         ZStack {
             BackgroundView(obj: obj, importedBackground: $importedBackground, item: item)
-            
+              
             MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item)
+                .background{
+                    Color.black
+                        .mask{
+                            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item)
+                        }
+                        .shadow(color: obj.appearance.shadowColor.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
+                    
+                }
             
             LogoView(obj: obj, importedLogo: $importedLogo)
         }
@@ -103,49 +111,46 @@ struct MockupLayersView: View {
     
     var body: some View {
         ZStack {
-            // MARK: Mockup Screenshot 1
+            // MARK: Mockup Screenshot 1 & 2
             ZStack {
-                // MARK: Black screen placeholder when no screenshot image 1 is imported
-                RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(.black)
-                    .clipShape(Rectangle())
-                   
-                
-                // MARK: Screenshot Image 1
-                if let importedImage1 = importedImage1 {
-                    Image(uiImage: importedImage1)
-                        .resizable()
-                        .if(obj.appearance.screenshotFitFill) { view in
-                            view.aspectRatio(contentMode: .fill)
-                        }
-                }
-            }
-            .applyImageTransformsMockupImage1(item)
-            .frame(width: item.width, height: item.height)
-           
-            
-            
-            // MARK: Mockup Screenshot 2
-            ZStack {
-                // MARK: Black screen placeholder when no screenshot image 2 is imported
-                RoundedRectangle(cornerRadius: 0)
-                    .foregroundColor(.black)
-                    .clipShape(Rectangle())
-                    .if(obj.appearance.showShadow) { view in
-                        view.shadow(color: obj.appearance.shadowColor.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
+                ZStack {
+                    // MARK: Black screen placeholder when no screenshot image 1 is imported
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(.black)
+                        .clipShape(Rectangle())
+                    
+                    // MARK: Screenshot Image 1
+                    if let importedImage1 = importedImage1 {
+                        Image(uiImage: importedImage1)
+                            .resizable()
+                            .if(obj.appearance.screenshotFitFill) { view in
+                                view.aspectRatio(contentMode: .fill)
+                            }
+                          
                     }
-                
-                // MARK: Screenshot Image 2
-                if let importedImage2 = importedImage2 {
-                    Image(uiImage: importedImage2)
-                        .resizable()
-                        .if(obj.appearance.screenshotFitFill) { view in
-                            view.aspectRatio(contentMode: .fill)
-                        }
                 }
+                .applyImageTransformsMockupImage1(item)
+                .frame(width: item.width, height: item.height)
+                
+                // MARK: Mockup Screenshot 2
+                ZStack {
+                    // MARK: Black screen placeholder when no screenshot image 2 is imported
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(.black)
+                        .clipShape(Rectangle())
+                    
+                    // MARK: Screenshot Image 2
+                    if let importedImage2 = importedImage2 {
+                        Image(uiImage: importedImage2)
+                            .resizable()
+                            .if(obj.appearance.screenshotFitFill) { view in
+                                view.aspectRatio(contentMode: .fill)
+                            }
+                    }
+                }
+                .applyImageTransformsMockupImage2(item)
+                .frame(width: item.width, height: item.height)
             }
-            .frame(width: item.width, height: item.height)
-            .applyImageTransformsMockupImage2(item)
             
             // MARK: Mockup, Notch & Reflection image from Assets
             ZStack {
@@ -154,7 +159,6 @@ struct MockupLayersView: View {
                     .resizable()
                     .aspectRatio(contentMode: .fill)
                     .colorMultiply(obj.appearance.colorMultiply)
-                
                 
                 // MARK: Notch image from assets
                 Image(item.notch + obj.appearance.selectedNotch)
@@ -183,7 +187,6 @@ struct MockupLayersView: View {
             view.reflection(offsetY: item.reflectionOffset, obj: obj)
         }
         .rotationEffect(.degrees(obj.appearance.rotate))
-        .shadow(color: obj.appearance.shadowColor.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
         .scaleEffect(obj.appearance.scale, anchor: .center)
         .offset(x: obj.appearance.offsetX, y: obj.appearance.offsetY)
     }

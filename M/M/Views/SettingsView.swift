@@ -158,7 +158,7 @@ struct BackgroundSettingsView: View {
     @State private var showPopover_offset: Bool = false
     
     var body: some View {
-        Group {
+        VStack {
             
             HStack (spacing: -5) {
                 
@@ -231,12 +231,12 @@ struct BackgroundSettingsView: View {
                     
                     
                     HStack (spacing: -5) {
-                        Image(systemName: "circle.lefthalf.striped.horizontal")
+                        Image(systemName: "circle.bottomrighthalf.checkered")
                             .popOverInfo(isPresented: $showPopover_BackgroundColourOrGradient) {
                                 Text("Background colour can either be a solid colour or a subtle gradient")
                             }
                         
-                        CustomToggle(showTitleText: true, titleText: "Background Style" + "\(obj.appearance.backgroundColourOrGradient ? " :SOLID" : " :GRADIENT")", bindingValue: $obj.appearance.backgroundColourOrGradient, bindingValue2: nil, onSymbol: "circle.righthalf.filled.inverse", offSymbol: "circle.lefthalf.striped.horizontal", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                        CustomToggle(showTitleText: true, titleText: "Background Style" + "\(obj.appearance.backgroundColourOrGradient ? " :SOLID" : " :GRADIENT")", bindingValue: $obj.appearance.backgroundColourOrGradient, bindingValue2: nil, onSymbol: "circle.fill", offSymbol: "circle.bottomrighthalf.checkered", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                     }
                     .padding(.vertical, 10)
                     .padding(.leading)
@@ -259,7 +259,7 @@ struct BackgroundSettingsView: View {
                             SliderView(systemName: "circle.lefthalf.striped.horizontal", sliderTitle: "Contrast", blurSystemName: false, value: $obj.appearance.wallContrast, inValue: 0, outValue: 2, resetValue: 1)
                             
                             //Brightness
-                            SliderView(systemName: "sun.max", sliderTitle: "Brightness", blurSystemName: false, value: $obj.appearance.wallBrightness, inValue: -1, outValue: 1, resetValue: 1)
+                            SliderView(systemName: "sun.max", sliderTitle: "Brightness", blurSystemName: false, value: $obj.appearance.wallBrightness, inValue: -1, outValue: 1, resetValue: 0)
                         }
                     }
                     .disabled(!obj.appearance.showBackground)
@@ -275,7 +275,7 @@ struct BackgroundSettingsView: View {
                 SliderView(systemName: "arrow.left.and.right.square", sliderTitle: "Frame Width", blurSystemName: false, value: $obj.appearance.frameWidth, inValue: 300, outValue: 1020, resetValue: 1020)
                 
                 // Frame Height Size
-                SliderView(systemName: "arrow.up.and.down.square", sliderTitle: "Frame Height", blurSystemName: false, value: $obj.appearance.frameWidth, inValue: 800, outValue: 1020, resetValue: 1020)
+                SliderView(systemName: "arrow.up.and.down.square", sliderTitle: "Frame Height", blurSystemName: false, value: $obj.appearance.frameHeight, inValue: 800, outValue: 1020, resetValue: 1020)
                 
             }
             
@@ -321,7 +321,8 @@ struct MockupSettingsView: View {
     @State private var showPopover_ShadowColor: Bool = false
     
     var body: some View {
-        Group {
+      VStack {
+          
             HStack (spacing: -5) {
                 
                 Text("Mockup Settings")
@@ -403,7 +404,7 @@ struct MockupSettingsView: View {
             }
             
             // Reflection Opacity
-            SliderView(systemName: "circle.bottomrighthalf.checkered", sliderTitle: "Reflection Opacity", blurSystemName: false, value: $obj.appearance.screenReflectionOpacity, inValue: 0.1, outValue: 1, resetValue: 1)
+            SliderView(systemName: "circle.dotted.and.circle", sliderTitle: "Reflection Opacity", blurSystemName: false, value: $obj.appearance.screenReflectionOpacity, inValue: 0.1, outValue: 1, resetValue: 1)
             
             // Ground Refletion Toggle
             HStack (spacing: -5) {
@@ -483,17 +484,17 @@ struct MockupSettingsView: View {
                 .padding(.horizontal)
                 .padding(.vertical, 10)
                 
-                // Shadow Radius
-                SliderView(systemName: "rectangle.expand.vertical", sliderTitle: "Shadow Blur", blurSystemName: false, value: $obj.appearance.shadowRadius, inValue: 0, outValue: 100, resetValue: 0)
-                
                 // Shadow Opacity
-                SliderView(systemName: "circle.bottomrighthalf.checkered", sliderTitle: "Shadow Opacity", blurSystemName: false, value: $obj.appearance.shadowOpacity, inValue: 0, outValue: 1, resetValue: 0.0)
+                SliderView(systemName: "circle.dotted.and.circle", sliderTitle: "Shadow Opacity", blurSystemName: false, value: $obj.appearance.shadowOpacity, inValue: 0, outValue: 1, resetValue: 0.0)
+                
+                // Shadow Radius
+                SliderView(systemName: "scribble.variable", sliderTitle: "Shadow Blur", blurSystemName: true, value: $obj.appearance.shadowRadius, inValue: 0, outValue: 100, resetValue: 0)
                 
                 // Shadow Offsey X
                 SliderView(systemName: "arrow.left.arrow.right", sliderTitle: "Shadow Offset", blurSystemName: false, value: $obj.appearance.shadowOffsetX, inValue: -300, outValue: 300, resetValue: 0)
                 
                 // Shadow Offsey Y
-                SliderView(systemName: "arrow.left.arrow.right", sliderTitle: "Shadow Offset", blurSystemName: false, value: $obj.appearance.shadowOffsetY, inValue: -300, outValue: 300, resetValue: 0)
+                SliderView(systemName: "arrow.up.arrow.down", sliderTitle: "Shadow Offset", blurSystemName: false, value: $obj.appearance.shadowOffsetY, inValue: -300, outValue: 300, resetValue: 0)
                 
             }
         }
@@ -537,7 +538,7 @@ struct LogoSettingsView: View {
     
     
     var body: some View {
-        Group {
+        VStack {
             HStack (spacing: -5) {
                 
                 Text("Logo Settings")

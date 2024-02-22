@@ -55,6 +55,10 @@ struct GradientView: View {
     @State private var isTapped: Bool = false
     let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .red]
     
+    @State private var gradientOffsetSliderMoved = false // Track whether the slider has been moved
+    @State private var rotationSliderMoved = false // Track whether the slider has been moved
+    @State private var waveSliderMoved = false // Track whether the slider has been moved
+    
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
         var id: String { self.rawValue }
@@ -67,91 +71,87 @@ struct GradientView: View {
     }
     
     var body: some View {
+        
+        //MARK: Image layers
         ZStack {
-            //MARK: Image layers
-            Group {
-                ZStack {
-                    Group {
-                        Rectangle()
-                            .foregroundColor(bgColor)
-                        
-                        //MARK: This is the view I want to export as an image
-                        GradientBackground(gradientColors: selectedColors(), refreshButtonTapped: $refreshButtonTapped, gradientStyle: gradientStyle, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, speed: $speed, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast)
-                        
-                        if blendMode != .normal {
-                            GradientBackground(gradientColors: selectedColors(), refreshButtonTapped: $refreshButtonTapped, gradientStyle: gradientStyle, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, speed: $speed, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast)
-                                .blendMode(blendMode)
-                        }
+            Rectangle()
+                .foregroundColor(bgColor)
+            
+            //MARK: This is the view I want to export as an image
+            GradientBackground(gradientColors: selectedColors(), refreshButtonTapped: $refreshButtonTapped, gradientStyle: gradientStyle, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, speed: $speed, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast)
+              
+            
+            if blendMode != .normal {
+                GradientBackground(gradientColors: selectedColors(), refreshButtonTapped: $refreshButtonTapped, gradientStyle: gradientStyle, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, speed: $speed, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast)
+                    .blendMode(blendMode)
+            }
+            
+            if gradientBlur > 0.001 {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .background {
+                        TransparentBlurView(removeAllFilters: true)
+                            .blur(radius: gradientBlur, opaque: true)
+                            .frame(width: screenWidth, height: screenHeight)
                     }
-                    
-                    if gradientBlur > 0.001 {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .background {
-                                TransparentBlurView(removeAllFilters: true)
-                                    .blur(radius: gradientBlur, opaque: true)
-                                    .frame(width: screenWidth, height: screenHeight)
-                            }
+            }
+            
+            if let imageOverlay = importedImageOverlay {
+                Image(uiImage: imageOverlay)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: UIScreen.main.bounds.width)
+                    .shadow(radius: 5, x: 3)
+            }
+            
+            if showHalfBlur {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .background {
+                        TransparentBlurView(removeAllFilters: true)
+                            .blur(radius: 25, opaque: true)
+                            .frame(width: screenWidth, height: screenHeight)
                     }
-                    
-                    if let imageOverlay = importedImageOverlay {
-                        Image(uiImage: imageOverlay)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .frame(width: UIScreen.main.bounds.width)
-                            .shadow(radius: 5, x: 3)
-                    }
-                    
-                    if showHalfBlur {
-                        Rectangle()
-                            .foregroundColor(.clear)
-                            .background {
-                                TransparentBlurView(removeAllFilters: true)
-                                    .blur(radius: 25, opaque: true)
-                                    .frame(width: screenWidth, height: screenHeight)
-                            }
-                            .shadow(radius: 10)
-                            .offset(x: -UIScreen.main.bounds.width * 0.5)
-                    }
+                    .shadow(radius: 10)
+                    .offset(x: -UIScreen.main.bounds.width * 0.5)
+            }
+        }
+        .gesture(DragGesture(minimumDistance: 30, coordinateSpace: .global)
+            .onEnded { value in
+                if value.translation.height > 0 {
+                    isShowingGradientView = false
                 }
-                .gesture(DragGesture(minimumDistance: 30, coordinateSpace: .global)
-                    .onEnded { value in
-                        if value.translation.height > 0 {
-                            isShowingGradientView = false
-                        }
-                    })
-                .onTapGesture (count: 2) {
-                    feedback()
-                    isSavingImage = true
+            })
+        .onTapGesture (count: 2) {
+            feedback()
+            isSavingImage = true
+            
+            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                saveImageToPhotoLibrary()
+                
+                DispatchQueue.main.async {
+                    alert.present()
                     
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                        saveImageToPhotoLibrary()
+                    performDelayedAction(after: 2.0) {
+                        alert.dismiss()
                         
-                        DispatchQueue.main.async {
-                            alert.present()
-                            
-                            performDelayedAction(after: 2.0) {
-                                alert.dismiss()
-                                
-                                performDelayedAction(after: 0.3) {
-                                    isSavingImage = false
-                                }
-                            }
+                        performDelayedAction(after: 0.3) {
+                            isSavingImage = false
                         }
-                    }
-                }
-                .alert(alertConfig: $alert) {
-                    alertPreferences(title: "Saved Successfully!", imageName: "checkmark.circle")
-                }
-                .onTapGesture {
-                    withAnimation(.bouncy) {
-                        showGradientControl.toggle()
                     }
                 }
             }
         }
+        .alert(alertConfig: $alert) {
+            alertPreferences(title: "Saved Successfully!", imageName: "checkmark.circle")
+        }
+        .onTapGesture {
+            withAnimation(.bouncy) {
+                showGradientControl.toggle()
+            }
+        }
         .overlay{
-            //MARK: Top Buttons
+            //MARK: Screen Buttons
             Group {
                 if !isSavingImage && !showGradientControl{
                     VStack {
@@ -160,8 +160,8 @@ struct GradientView: View {
                             UltraThinButton(action: {
                                 isTapped.toggle()
                                 isShowingGradientView.toggle()
-                            }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true)
-                    
+                            }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true)
+                            
                             Spacer()
                             
                             Picker("Gradient Style", selection: $gradientStyle) {
@@ -205,7 +205,18 @@ struct GradientView: View {
                             
                             UltraThinButton(action: {
                                 showBgPickerSheet.toggle()
-                            }, systemName: "photo.circle", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                            }, systemName: "custom.photo.circle.fill.badge.plus", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false)
+                            .padding(.trailing)
+                            .padding(.top, 10)
+                        }
+                        
+                        HStack {
+                            
+                            Spacer()
+                       
+                            UltraThinButton(action: {
+                                showImageOverlayPickerSheet.toggle()
+                            }, systemName: "custom.photo.circle.badge.plus", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false)
                             .padding(.trailing)
                             .padding(.top, 10)
                         }
@@ -215,24 +226,56 @@ struct GradientView: View {
                             Spacer()
                             
                             UltraThinButton(action: {
-                                showImageOverlayPickerSheet.toggle()
-                            }, systemName: "photo.circle.fill", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
+                                withAnimation(.bouncy) {
+                                    showGradientControl.toggle()
+                                }
+                            }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
                             .padding(.trailing)
                             .padding(.top, 10)
                         }
                         
                         Spacer()
                         
-                        HStack {
+                        VStack {
                             
-                            UltraThinButton(action: {
-                                generateGradient()
-                            }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
-                            .padding(.bottom)
-                         
-                            .padding(.bottom)
+                            HStack {
+                                
+                                UltraThinButton(action: {
+                                    feedback()
+                                    isSavingImage = true
+                                    
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                                        saveImageToPhotoLibrary()
+                                        
+                                        DispatchQueue.main.async {
+                                            alert.present()
+                                            
+                                            performDelayedAction(after: 2.0) {
+                                                alert.dismiss()
+                                                
+                                                performDelayedAction(after: 0.3) {
+                                                    isSavingImage = false
+                                                }
+                                            }
+                                        }
+                                    }
+                                }, systemName: "square.and.arrow.up.circle.fill", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
+                                .padding(.bottom, 10)
+                                
+                                Spacer()
+                            }
                             
-                            Spacer()
+                            HStack {
+                                
+                                UltraThinButton(action: {
+                                    generateGradient()
+                                }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
+                                .padding(.bottom)
+                                .padding(.bottom)
+                                
+                                Spacer()
+                            }
+                            
                         }
                     }
                     .padding(.top, 50)
@@ -240,7 +283,7 @@ struct GradientView: View {
                     .font(.footnote)
                     .tint(.white)
                 }
-                 
+                
             }
         }
         .ignoresSafeArea()
@@ -248,215 +291,234 @@ struct GradientView: View {
             //MARK: These are the buttons and control sliders
             
             if !isSavingImage {
-                        //MARK: Title
-                        HStack {
-                            Text("Adjustment Settings")
-                                .font(.headline)
-                            
-                            Spacer()
-                            
-                            AnimatedButton(action: {
-                                gradientBlur = 0
-                                gradientScale = 1
-                                gradientRotation = .zero
-                                gradientOffsetX = 0
-                                gradientOffsetY = 0
-                                importedBackground = nil
-                                importedImageOverlay = nil
-                                pixellate = 1
-                                speed = 0
-                                amplitude = 5
-                                frequency = 200
-                                showHalfBlur = false
-                                gradientHue = 0
-                                gradientSaturation = 1
-                                gradientBrightness = 0
-                                gradientContrast = 1
-                            }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                            
-                            Button {
-                                isTapped.toggle()
-                                showPopoverGradientWall.toggle()
-                            } label: {
-                                Label("",systemImage: showPopoverGradientWall ? "xmark.circle": "info.circle")
-                                    .font(.title2)
-                                    .popover(isPresented: $showPopoverGradientWall) {
-                                        PopOverGradientWallView()
-                                    }
+                //MARK: Title
+                HStack {
+                    Text("Adjustment Settings")
+                        .font(.headline)
+                    
+                    Spacer()
+                    
+                    AnimatedButton(action: {
+                        gradientBlur = 0
+                        gradientScale = 1
+                        gradientRotation = .zero
+                        gradientOffsetX = 0
+                        gradientOffsetY = 0
+                        importedBackground = nil
+                        importedImageOverlay = nil
+                        pixellate = 1
+                        speed = 0
+                        amplitude = 5
+                        frequency = 200
+                        showHalfBlur = false
+                        gradientHue = 0
+                        gradientSaturation = 1
+                        gradientBrightness = 0
+                        gradientContrast = 1
+                    }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                    
+                    Button {
+                        isTapped.toggle()
+                        showPopoverGradientWall.toggle()
+                    } label: {
+                        Label("",systemImage: showPopoverGradientWall ? "xmark.circle": "info.circle")
+                            .font(.title2)
+                            .popover(isPresented: $showPopoverGradientWall) {
+                                PopOverGradientWallView()
                             }
-                            .buttonStyle(.plain)
-                            .contentTransition(.symbolEffect(.replace))
-                            .sensoryFeedback(.selection, trigger: isTapped)
-                            
-                        }
-                        .padding(.horizontal)
-                        .padding(.horizontal, 4)
-                        .padding(.top)
+                    }
+                    .buttonStyle(.plain)
+                    .contentTransition(.symbolEffect(.replace))
+                    .sensoryFeedback(.selection, trigger: isTapped)
+                    
+                }
+                .padding(.horizontal)
+                .padding(.horizontal, 4)
+                .padding(.top)
+                
+                ScrollView {
+                    
+                    //MARK: Horizontal and Vertical Position Sliders
+                    HStack{
                         
-                        ScrollView {
+                        Image(systemName: "arrow.left.arrow.right")
+                            .padding(.trailing)
+                            .offset(y: 12)
+                        VStack {
                             
-                                //MARK: Horizontal and Vertical Position Sliders
-                                HStack{
-                                    
-                                    Image(systemName: "arrow.left.arrow.right")
-                                        .font(.title2)
-                                        .padding(.trailing)
-                                        .offset(y: 12)
-                                    VStack {
-                                        
-                                        Text("\(Int((gradientOffsetX / 1000) * 100))%")
-                                            .font(.footnote)
-                                        
-                                        CustomSlider(value: $gradientOffsetX, inRange: -1000...1000, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                        }
-                                        .frame(width: sliderScale.width * 0.28)
-                                        
-                                    }
-                                 
-                                    
-                                    Spacer()
-                                    
-                                    Image(systemName: "arrow.up.arrow.down")
-                                        .font(.title2)
-                                        .padding(.trailing)
-                                        .offset(x: 15, y: 12)
-                                    VStack {  Text("\(Int((gradientOffsetY / 1000) * 100))%")
-                                            .font(.footnote)
-                                        
-                                        CustomSlider(value: $gradientOffsetY, inRange: -1000...1000, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                        }
-                                        .frame(width: sliderScale.width * 0.28)
-                                    }
-                                    
-                                    AnimatedButton(action: {
-                                        gradientOffsetX = 0
-                                        gradientOffsetY = 0
-                                    }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                                    .padding(.leading, 8)
-                                    .offset(y: 12)
-                                }
-                                .padding(.horizontal)
-                                .padding(.vertical)
-                             
-                                
-                                //MARK: Hue Slider
-                                SliderView(systemName: "camera.filters", sliderTitle: "", blurSystemName: false, value: $gradientHue, inValue: -180, outValue: 180, resetValue: 0)
-                                
-                                //MARK: Sat Slider
-                                SliderView(systemName: "drop.halffull", sliderTitle: "", blurSystemName: false, value: $gradientSaturation, inValue: 0, outValue: 2, resetValue: 1)
-                                
-                                //MARK: Contrast Slider
-                                SliderView(systemName: "circle.lefthalf.striped.horizontal", sliderTitle: "", blurSystemName: false, value: $gradientContrast, inValue: 0.1, outValue: 3, resetValue: 1)
-                                //MARK: Brightneass Slider
-                                SliderView(systemName: "sun.max", sliderTitle: "", blurSystemName: false, value: $gradientBrightness, inValue: -1, outValue: 1, resetValue: 1)
-                                
-                                //MARK: Blur Slider
-                                SliderView(systemName: "scribble.variable", sliderTitle: "", blurSystemName: true, value: $gradientBlur, inValue: 0, outValue: 100, resetValue: 0)
-                                
-                                //MARK: Scale Slider
-                                SliderView(systemName: "arrow.up.left.and.arrow.down.right", sliderTitle: "", blurSystemName: false, value: $gradientScale, inValue: 0, outValue: 3.5, resetValue: 1)
-                                
-                                
-                                //MARK: Rotation Slider
-                                HStack {
-                                    Image(systemName: "arrow.triangle.2.circlepath")
-                                        .font(.title2)
-                                        .padding(.trailing)
-                                    
-                                    CustomSlider(value: $gradientRotation.degrees, inRange: 0...360, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                    }
-                                    
-                                    Text("\(Int(gradientRotation.degrees))°")
-                                        .font(.footnote)
-                                        .padding(.leading)
-                                    
-                                    AnimatedButton(action: {
-                                        gradientRotation.degrees = 0
-                                    }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                                    .padding(.leading, 8)
-                                }
-                                .padding(.horizontal)
-                                .padding(.vertical, 8)
-                                
-                                
-                                //MARK: Chequered Slider
-                                SliderView(systemName: "rectangle.checkered", sliderTitle: "", blurSystemName: false, value: $pixellate, inValue: 1, outValue: 75, resetValue: 1)
-                                
-                                //MARK: Wave effect Slider
-                                HStack {
-                                    Image(systemName: "water.waves")
-                                        .font(.title2)
-                                        .padding(.trailing)
-                                    
-                                    CustomSlider(value: $amplitude, inRange: 0...100, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                    }
-                                    
-                                    CustomSlider(value: $frequency, inRange: 0.001...200, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
-                                    }
-                                    
-                                    AnimatedButton(action: {
-                                        speed = 0
-                                        amplitude = 5
-                                        frequency = 200
-                                    }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                                    .padding(.leading, 8)
-                                }
-                                .padding(.horizontal)
-                                .padding(.vertical, 8)
-                                
-                                //MARK: Add Half Blur Toggle
-                                CustomToggle(showTitleText: true, titleText: "Show Half Blur", bindingValue: $showHalfBlur, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
-                                    .padding(.vertical, 8)
-                                
-                                //MARK: Color Picker
-                                HStack {
-                                    ForEach(0..<gradientColors.count, id: \.self) { index in
-                                        if index < selectedColorCount {
-                                            ColorPicker("", selection: $gradientColors[index])
-                                                .onChange(of: gradientColors[index]) { color in
-                                                    gradientColors[index] = color
-                                                }
-                                                .frame(width: 10)
-                                                .padding(.horizontal, horizontalPadding)
-                                        }
-                                    }
-
-                                    Divider()
-                                        .padding(.leading, 8)
-                                    
-                                    ColorPicker("", selection: $bgColor,supportsOpacity: false)
-                                        .frame(width: 10)
-                                        .padding(.horizontal, horizontalPadding)
-                                    
-                                }
-                                
-                                //MARK: Re-Order Gradient Button
-                                HStack {
-                                    
-                                    UltraThinButton(action: {
-                                        showGradientControl = false
-                                        
-                                        generateGradient()
-                                        
-                                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                                            
-                                            showGradientControl = true
-                                            
-                                        }
-                                    }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true)
-                             
-                                    Picker("Color Count", selection: $selectedColorCount) {
-                                        ForEach(1...6, id: \.self) { count in
-                                            Text("\(count)").tag(count)
-                                        }
-                                    }
-                                    .tint(.primary)
-                                }
-                                .background(.ultraThinMaterial)
-                                .clipShape(RoundedRectangle(cornerRadius: 100))
-                                .padding()
+                            Text("\(Int((gradientOffsetX / 1000) * 100))%")
+                                .font(.system(size: 10))
+                                .padding(.horizontal, 8)
+                                .lineLimit(1) // Ensure text doesn't exceed one line
+                                .minimumScaleFactor(0.5) // Allow text to scale down to 50% of its original size if needed
+                                .frame(width: 50)
+                            
+                            CustomSlider(value: $gradientOffsetX, inRange: -1000...1000, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                                  self.gradientOffsetSliderMoved = started // Update the state when the slider is moved
+                            }
+                            .frame(width: sliderScale.width * 0.28)
+                            
                         }
-                    .padding(.bottom)
+                        
+                        Spacer()
+                        
+                        Image(systemName: "arrow.up.arrow.down")
+                            .padding(.trailing)
+                            .offset(x: 15, y: 12)
+                        VStack {  Text("\(Int((gradientOffsetY / 1000) * 100))%")
+                                .font(.system(size: 10))
+                                .padding(.horizontal, 8)
+                                .lineLimit(1) // Ensure text doesn't exceed one line
+                                .minimumScaleFactor(0.5) // Allow text to scale down to 50% of its original size if needed
+                                .frame(width: 50)
+                            
+                            CustomSlider(value: $gradientOffsetY, inRange: -1000...1000, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                                self.gradientOffsetSliderMoved = started // Update the state when the slider is moved
+                            }
+                            .frame(width: sliderScale.width * 0.28)
+                        }
+                        
+                        AnimatedButton(action: {
+                            gradientOffsetX = 0
+                            gradientOffsetY = 0
+                        }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                        .padding(.leading, 8)
+                        .offset(y: 12)
+                        .scaleEffect(0.8)
+                        .disabled(!gradientOffsetSliderMoved)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical)
+                    
+                    //MARK: Hue Slider
+                    SliderView(systemName: "camera.filters", sliderTitle: "Hue", blurSystemName: false, value: $gradientHue, inValue: -180, outValue: 180, resetValue: 0)
+                    
+                    //MARK: Sat Slider
+                    SliderView(systemName: "drop.halffull", sliderTitle: "Saturation", blurSystemName: false, value: $gradientSaturation, inValue: 0, outValue: 2, resetValue: 1)
+                    
+                    //MARK: Contrast Slider
+                    SliderView(systemName: "circle.lefthalf.striped.horizontal", sliderTitle: "Contrast", blurSystemName: false, value: $gradientContrast, inValue: 0.1, outValue: 3, resetValue: 1)
+                    //MARK: Brightneass Slider
+                    SliderView(systemName: "sun.max", sliderTitle: "Brightness", blurSystemName: false, value: $gradientBrightness, inValue: -1, outValue: 1, resetValue: 0)
+                    
+                    //MARK: Blur Slider
+                    SliderView(systemName: "scribble.variable", sliderTitle: "Blur", blurSystemName: true, value: $gradientBlur, inValue: 0, outValue: 100, resetValue: 0)
+                    
+                    //MARK: Scale Slider
+                    SliderView(systemName: "arrow.up.left.and.arrow.down.right", sliderTitle: "Scale", blurSystemName: false, value: $gradientScale, inValue: 0, outValue: 3.5, resetValue: 1)
+                    
+                    //MARK: Rotation Slider
+                    HStack {
+                        Image(systemName: "arrow.triangle.2.circlepath")
+                          
+                        Text("Rotation")
+                            .font(.system(size: 12.5))
+                        
+                        CustomSlider(value: $gradientRotation.degrees, inRange: 0...360, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                            self.rotationSliderMoved = started
+                        }
+                        
+                        Text("\(Int(gradientRotation.degrees))°")
+                            .font(.system(size: 10))
+                            .padding(.horizontal, 8)
+                            .lineLimit(1) // Ensure text doesn't exceed one line
+                            .minimumScaleFactor(0.5) // Allow text to scale down to 50% of its original size if needed
+                            .frame(width: 50)
+                        
+                        AnimatedButton(action: {
+                            gradientRotation.degrees = 0
+                        }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                        .scaleEffect(0.8)
+                        .disabled(!rotationSliderMoved || gradientRotation.degrees == 0)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                  
+                    
+                    //MARK: Chequered Slider
+                    SliderView(systemName: "rectangle.checkered", sliderTitle: "Pixellate", blurSystemName: false, value: $pixellate, inValue: 1, outValue: 75, resetValue: 1)
+                    
+                    //MARK: Wave effect Slider
+                    HStack {
+                        Image(systemName: "water.waves")
+                          
+                        Text("Wave")
+                            .font(.system(size: 12.5))
+                        
+                        CustomSlider(value: $amplitude, inRange: 0...100, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                            self.waveSliderMoved = started
+                        }
+                        
+                        CustomSlider(value: $frequency, inRange: 0.001...200, activeFillColor: .green, fillColor: .blue.opacity(0.5), emptyColor: .gray.opacity(0.2), height: 10) { started in
+                            self.waveSliderMoved = started
+                        }
+                        
+                        AnimatedButton(action: {
+                          //  speed = 0
+                            amplitude = 0
+                            frequency = 200
+                        }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                        .padding(.leading, 8)
+                        .scaleEffect(0.8)
+                        .disabled(!waveSliderMoved)
+                        .disabled(amplitude == 0 && frequency == 200)
+                    }
+                    .padding(.horizontal)
+                    .padding(.vertical, 8)
+                    
+                    //MARK: Add Half Blur Toggle
+                    CustomToggle(showTitleText: true, titleText: "Show Half Blur", bindingValue: $showHalfBlur, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                        .padding(.vertical, 8)
+                    
+                    //MARK: Color Picker
+                    HStack {
+                        ForEach(0..<gradientColors.count, id: \.self) { index in
+                            if index < selectedColorCount {
+                                ColorPicker("", selection: $gradientColors[index])
+                                    .onChange(of: gradientColors[index]) { color in
+                                        gradientColors[index] = color
+                                    }
+                                    .frame(width: 10)
+                                    .padding(.horizontal, horizontalPadding)
+                            }
+                        }
+                        
+                        Divider()
+                            .padding(.leading, 8)
+                        
+                        ColorPicker("", selection: $bgColor,supportsOpacity: false)
+                            .frame(width: 10)
+                            .padding(.horizontal, horizontalPadding)
+                        
+                    }
+                    
+                    //MARK: Re-Order Gradient Button
+                    HStack {
+                        
+                        UltraThinButton(action: {
+                            showGradientControl = false
+                            
+                            generateGradient()
+                            
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                                
+                                showGradientControl = true
+                                
+                            }
+                        }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
+                        
+                        Picker("Color Count", selection: $selectedColorCount) {
+                            ForEach(1...6, id: \.self) { count in
+                                Text("\(count)").tag(count)
+                            }
+                        }
+                        .tint(.primary)
+                    }
+                    .background(.ultraThinMaterial)
+                    .clipShape(RoundedRectangle(cornerRadius: 100))
+                    .padding()
+                }
+                .padding(.bottom)
                 .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
             }
         }
