@@ -54,5 +54,6 @@ struct PopOverGradientWallView: View {
         }
         //  .frame(height: UIScreen.main.bounds.height * 0.5)
         .padding()
+        .foregroundStyle(Color.primary)
     }
 }

@@ -84,17 +84,15 @@ struct BackgroundView: View {
                         .saturation(obj.appearance.saturation)
                         .contrast(obj.appearance.wallContrast)
                         .brightness(obj.appearance.wallBrightness)
-                        .overlay{
-                            // MARK: Add a blur overlay view when the blur value is increased above 0.0
-                            if obj.appearance.blur > 0.0 {
-                                RoundedRectangle(cornerRadius: 0)
-                                    .foregroundColor(.clear)
-                                    .background {
-                                        TransparentBlurView(removeAllFilters: true)
-                                            .blur(radius: obj.appearance.blur, opaque: true)
-                                    }
-                            }
+                       
+                    
+                    RoundedRectangle(cornerRadius: 0)
+                        .foregroundColor(.clear)
+                        .background {
+                            TransparentBlurView(removeAllFilters: true)
+                                .blur(radius: obj.appearance.blur, opaque: true)
                         }
+                        .opacity(obj.appearance.blur > 0 ? 1 : 0)
                 }
                 
             }
@@ -129,8 +127,9 @@ struct MockupLayersView: View {
                           
                     }
                 }
-                .applyImageTransformsMockupImage1(item)
                 .frame(width: item.width, height: item.height)
+                .applyImageTransformsMockupImage1(item)
+              
                 
                 // MARK: Mockup Screenshot 2
                 ZStack {
@@ -148,8 +147,9 @@ struct MockupLayersView: View {
                             }
                     }
                 }
-                .applyImageTransformsMockupImage2(item)
                 .frame(width: item.width, height: item.height)
+                .applyImageTransformsMockupImage2(item)
+               
             }
             
             // MARK: Mockup, Notch & Reflection image from Assets
