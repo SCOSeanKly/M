@@ -15,7 +15,7 @@ struct OverlayButtonsView: View {
     @Binding var isShowingGradientView: Bool
     @Binding var gradientStyle: GradientView.GradientStyle
     @Binding var blendMode: BlendMode
-    @Binding var showBgPickerSheet: Bool
+    @Binding var showGradientBgPickerSheet: Bool
     @Binding var showImageOverlayPickerSheet: Bool
     @State private var gradientColors = [Color]()
     @AppStorage("SelectedColorCount") private var selectedColorCount = 4
@@ -76,7 +76,7 @@ struct OverlayButtonsView: View {
                         Spacer()
                         
                         UltraThinButton(action: {
-                            showBgPickerSheet.toggle()
+                            showGradientBgPickerSheet.toggle()
                         }, systemName: "custom.photo.circle.fill.badge.plus", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false)
                         .padding(.trailing)
                         .padding(.top, 10)

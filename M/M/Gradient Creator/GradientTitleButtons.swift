@@ -69,29 +69,8 @@ struct GradientTitleButtons: View {
             
             AnimatedButton(action: {
                 showSheetBackground.toggle()
-            }, sfSymbolName: "circle.dotted.and.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-            .foregroundColor(.white)
-            .blendMode(.difference)
-            .overlay{
-                AnimatedButton(action: {
-                    showSheetBackground.toggle()
-                }, sfSymbolName: "circle.dotted.and.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .blendMode(.hue)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    showSheetBackground.toggle()
-                }, sfSymbolName: "circle.dotted.and.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .foregroundColor(.white)
-                    .blendMode(.overlay)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    showSheetBackground.toggle()
-                }, sfSymbolName: "circle.dotted.and.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .foregroundColor(.black)
-                    .blendMode(.overlay)
-            }
+            }, sfSymbolName: "circle.dotted.and.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+           
             
             // Reset button
             AnimatedButton(action: {
@@ -111,74 +90,8 @@ struct GradientTitleButtons: View {
                 gradientSaturation = 1
                 gradientBrightness = 0
                 gradientContrast = 1
-            }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-            .foregroundColor(.white)
-            .blendMode(.difference)
-            .overlay{
-                AnimatedButton(action: {
-                    // Reset all values
-                    gradientBlur = 0
-                    gradientScale = 1
-                    gradientRotation = .zero
-                    gradientOffsetX = 0
-                    gradientOffsetY = 0
-                    importedBackground = nil
-                    importedImageOverlay = nil
-                    pixellate = 1
-                    amplitude = 5
-                    frequency = 200
-                    showHalfBlur = false
-                    gradientHue = 0
-                    gradientSaturation = 1
-                    gradientBrightness = 0
-                    gradientContrast = 1
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .blendMode(.hue)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    // Reset all values
-                    gradientBlur = 0
-                    gradientScale = 1
-                    gradientRotation = .zero
-                    gradientOffsetX = 0
-                    gradientOffsetY = 0
-                    importedBackground = nil
-                    importedImageOverlay = nil
-                    pixellate = 1
-                    amplitude = 5
-                    frequency = 200
-                    showHalfBlur = false
-                    gradientHue = 0
-                    gradientSaturation = 1
-                    gradientBrightness = 0
-                    gradientContrast = 1
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .foregroundColor(.white)
-                    .blendMode(.overlay)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    // Reset all values
-                    gradientBlur = 0
-                    gradientScale = 1
-                    gradientRotation = .zero
-                    gradientOffsetX = 0
-                    gradientOffsetY = 0
-                    importedBackground = nil
-                    importedImageOverlay = nil
-                    pixellate = 1
-                    amplitude = 5
-                    frequency = 200
-                    showHalfBlur = false
-                    gradientHue = 0
-                    gradientSaturation = 1
-                    gradientBrightness = 0
-                    gradientContrast = 1
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .foregroundColor(.black)
-                    .blendMode(.overlay)
-            }
+            }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+          
             
             // Info button
             Button {

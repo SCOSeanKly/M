@@ -49,7 +49,7 @@ struct LargeImageView: View {
         
         return nil
     }
-    
+
     
     var body: some View {
         VStack {
@@ -118,6 +118,10 @@ struct LargeImageView: View {
                                     if let value = metadata[key] {
                                         
                                         Button {
+                                            
+                                            // ADD BUTTON TO OPEN GRADIENT VIEW
+                                            // @Binding var importedBackground: UIImage?
+                                            
                                             isTappedAnimation.toggle()
                                             UIPasteboard.general.string = "\(String(describing: value))"
                                             isTapped.toggle()

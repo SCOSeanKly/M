@@ -39,6 +39,7 @@ struct GradientSlidersButtons: View {
     @Binding var gradientOffsetSliderMoved: Bool
     @Binding var rotationSliderMoved: Bool
     @Binding var waveSliderMoved: Bool
+    @Binding var invertGradient: Bool
     
     
     var body: some View {
@@ -50,10 +51,11 @@ struct GradientSlidersButtons: View {
         SliderView(systemName: "camera.filters", sliderTitle: "Hue", blurSystemName: false, value: $gradientHue, inValue: -180, outValue: 180, resetValue: 0)
         
         //MARK: Sat Slider
-        SliderView(systemName: "drop.halffull", sliderTitle: "Saturation", blurSystemName: false, value: $gradientSaturation, inValue: 0, outValue: 2, resetValue: 1)
+        SliderView(systemName: "drop.halffull", sliderTitle: "Saturation", blurSystemName: false, value: $gradientSaturation, inValue: 0, outValue: 5, resetValue: 1)
         
         //MARK: Contrast Slider
         SliderView(systemName: "circle.lefthalf.striped.horizontal", sliderTitle: "Contrast", blurSystemName: false, value: $gradientContrast, inValue: 0.1, outValue: 3, resetValue: 1)
+        
         //MARK: Brightneass Slider
         SliderView(systemName: "sun.max", sliderTitle: "Brightness", blurSystemName: false, value: $gradientBrightness, inValue: -1, outValue: 1, resetValue: 0)
         
@@ -72,10 +74,58 @@ struct GradientSlidersButtons: View {
         //MARK: Wave effect Slider
         WaveEffectSlider(amplitude: $amplitude, frequency: $frequency, waveSliderMoved: $waveSliderMoved)
         
+        //MARK: Add Half Invert Toggle
+        HStack (spacing: -5) {
+            let imageName: String = "moonphase.first.quarter.inverse"
+            Image(systemName: imageName)
+                .foregroundColor(.white)
+                .blendMode(.difference)
+                .overlay{
+                    Image(systemName: imageName)
+                        .blendMode(.hue)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.white)
+                        .blendMode(.overlay)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.black)
+                        .blendMode(.overlay)
+                }
+                .padding(.leading)
+            
+            CustomToggleBlend(showTitleText: true, titleText: "Invert", bindingValue: $invertGradient, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                .padding(.vertical, 6)
+        }
+      
         //MARK: Add Half Blur Toggle
-        CustomToggleBlend(showTitleText: true, titleText: "Show Half Blur", bindingValue: $showHalfBlur, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
-            .padding(.vertical, 8)
-        
+        HStack (spacing: -5) {
+            let imageName: String = "square.lefthalf.filled"
+            Image(systemName: imageName)
+                .foregroundColor(.white)
+                .blendMode(.difference)
+                .overlay{
+                    Image(systemName: imageName)
+                        .blendMode(.hue)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.white)
+                        .blendMode(.overlay)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.black)
+                        .blendMode(.overlay)
+                }
+                .padding(.leading)
+            
+            CustomToggleBlend(showTitleText: true, titleText: "Show Half Blur", bindingValue: $showHalfBlur, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                .padding(.vertical, 6)
+        }
+     
         //MARK: Color Picker
         ColorPickerView(gradientColors: $gradientColors, selectedColorCount: $selectedColorCount, bgColor: $bgColor)
         

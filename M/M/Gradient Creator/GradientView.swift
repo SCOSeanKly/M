@@ -10,8 +10,8 @@ import Photos
 
 struct GradientView: View {
 
-    @State private var showBgPickerSheet = false
-    @State private var importedBackground: UIImage? = nil
+    @State private var showGradientBgPickerSheet = false
+    @Binding var importedBackground: UIImage?
     @State private var showImageOverlayPickerSheet = false
     @State private var importedImageOverlay: UIImage? = nil
     @State private var gradientColors = [Color]()
@@ -30,7 +30,7 @@ struct GradientView: View {
     @State private var showGradientControl: Bool = false
     @State private var blendMode: BlendMode = .normal
     @State private var pixellate: CGFloat = 1
-    @State private var amplitude: CGFloat = 5
+    @State private var amplitude: CGFloat = 0
     @State private var frequency: CGFloat = 200
     @State private var showHalfBlur: Bool = false
     @State private var gradientHue: CGFloat = 0
@@ -40,13 +40,15 @@ struct GradientView: View {
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @State private var showPopoverGradientWall: Bool = false
     @State private var isTapped: Bool = false
+    @State private var invertGradient: Bool = false
     
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
         var id: String { self.rawValue }
     }
     
-    init(isShowingGradientView: Binding<Bool>) {
+    init(isShowingGradientView: Binding<Bool>, importedBackground: Binding<UIImage?>) {
+        _importedBackground = importedBackground
         _isShowingGradientView = isShowingGradientView
         _gradientColors = State(initialValue: generateRandomColors(count: 6))
         isShowingGradientSavedNotification = false
@@ -60,11 +62,11 @@ struct GradientView: View {
                 .foregroundColor(bgColor)
             
             //MARK: This is the view I want to export as an image
-            GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast)
+            GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient)
             
             
             if blendMode != .normal {
-                GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast)
+                GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient)
                     .blendMode(blendMode)
             }
             
@@ -111,14 +113,14 @@ struct GradientView: View {
         }
         .overlay{
             //MARK: Screen Buttons
-            OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendMode: $blendMode, showBgPickerSheet: $showBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert)
+            OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendMode: $blendMode, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert)
         }
         .ignoresSafeArea()
         .sheet(isPresented: $showGradientControl){
             //MARK: These are the buttons and control sliders
-            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall)
+            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient)
         }
-        .fullScreenCover(isPresented: $showBgPickerSheet) {
+        .fullScreenCover(isPresented: $showGradientBgPickerSheet) {
             createFullScreenCover(for: $importedBackground) { BgImage in
                 importedBackground = BgImage.first
             }
@@ -222,8 +224,6 @@ struct GradientView: View {
     // Get the selected colors for the gradient
     func selectedColors() -> [Color] {
         Array(gradientColors.prefix(selectedColorCount))
-        
-        
     }
     
     func feedback() {

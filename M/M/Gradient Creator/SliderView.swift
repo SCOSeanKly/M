@@ -113,37 +113,9 @@ struct SliderView: View {
 
             AnimatedButton(action: {
                 value = resetValue
-            }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+            }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
             .scaleEffect(0.8)
-            .disabled(!sliderMoved || value == resetValue) // Disable the button if the slider hasn't been moved or if the value equals the reset value
-            .foregroundColor(.white)
-            .blendMode(.difference)
-            .overlay{
-                AnimatedButton(action: {
-                    value = resetValue
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .scaleEffect(0.8)
-                .disabled(!sliderMoved || value == resetValue) // Disable the button if the slider hasn't been moved or if the value equals the reset value
-                    .blendMode(.hue)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    value = resetValue
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .scaleEffect(0.8)
-                .disabled(!sliderMoved || value == resetValue) // Disable the button if the slider hasn't been moved or if the value equals the reset value
-                    .foregroundColor(.white)
-                    .blendMode(.overlay)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    value = resetValue
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .scaleEffect(0.8)
-                .disabled(!sliderMoved || value == resetValue) // Disable the button if the slider hasn't been moved or if the value equals the reset value
-                    .foregroundColor(.black)
-                    .blendMode(.overlay)
-            }
+          //  .disabled(!sliderMoved || value == resetValue) // Disable the button if the slider hasn't been moved or if the value equals the reset value
             
         }
         .padding(.vertical, bottomPadding)

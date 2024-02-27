@@ -168,36 +168,9 @@ struct HorizontalVerticalSliders: View {
                 gradientOffsetX = 0
                 gradientOffsetY = 0
             }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-            .foregroundColor(.white)
-            .blendMode(.difference)
-            .overlay{
-                AnimatedButton(action: {
-                    gradientOffsetX = 0
-                    gradientOffsetY = 0
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .blendMode(.hue)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    gradientOffsetX = 0
-                    gradientOffsetY = 0
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .foregroundColor(.white)
-                    .blendMode(.overlay)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    gradientOffsetX = 0
-                    gradientOffsetY = 0
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .foregroundColor(.black)
-                    .blendMode(.overlay)
-            }
             .padding(.leading, 8)
             .offset(y: 12)
             .scaleEffect(0.8)
-            .disabled(!gradientOffsetSliderMoved)
-            
         }
         .padding(.horizontal)
         .padding(.vertical)

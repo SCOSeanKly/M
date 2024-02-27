@@ -35,6 +35,7 @@ struct GradientBackground: View {
     @Binding var gradientSaturation: CGFloat
     @Binding var gradientBrightness: CGFloat
     @Binding var gradientContrast: CGFloat
+    @Binding var invertGradient: Bool
     
     var body: some View {
         let gradient: AnyView
@@ -95,6 +96,9 @@ struct GradientBackground: View {
             maxSampleOffset: .zero
         )
         .scaleEffect(gradientScale)
+        .if(invertGradient) { view in
+            view.colorInvert()
+        }
         .onAppear {
             animationDuration = 1.0
             updateGradientProperties()

@@ -101,35 +101,6 @@ struct RotationSlider: View {
                 gradientRotation.degrees = 0
             }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
             .scaleEffect(0.8)
-            .disabled(!rotationSliderMoved || gradientRotation.degrees == 0)
-            .foregroundColor(.white)
-            .blendMode(.difference)
-            .overlay{
-                AnimatedButton(action: {
-                    gradientRotation.degrees = 0
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .scaleEffect(0.8)
-                .disabled(!rotationSliderMoved || gradientRotation.degrees == 0)
-                    .blendMode(.hue)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    gradientRotation.degrees = 0
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .scaleEffect(0.8)
-                .disabled(!rotationSliderMoved || gradientRotation.degrees == 0)
-                    .foregroundColor(.white)
-                    .blendMode(.overlay)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    gradientRotation.degrees = 0
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .scaleEffect(0.8)
-                .disabled(!rotationSliderMoved || gradientRotation.degrees == 0)
-                    .foregroundColor(.black)
-                    .blendMode(.overlay)
-            }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)

@@ -28,6 +28,7 @@ struct ButtonView: View {
     //let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
     let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .red]
     @State private var buttonScale: Bool = false
+    @Binding var importedBackground: UIImage?
     
     var body: some View {
         
@@ -177,7 +178,7 @@ struct ButtonView: View {
             }
         }
         .fullScreenCover(isPresented: $isShowingGradientView) {
-            GradientView(isShowingGradientView: $isShowingGradientView)
+            GradientView(isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground)
         }
         
     }

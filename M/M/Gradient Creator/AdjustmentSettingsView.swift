@@ -40,6 +40,7 @@ struct AdjustmentSettingsView: View {
     @State private var isTapped: Bool = false
     @Binding var showPopoverGradientWall: Bool
     @State private var showSheetBackground: Bool = false
+    @Binding var invertGradient: Bool
     
     var body: some View {
         if !isSavingImage {
@@ -47,7 +48,7 @@ struct AdjustmentSettingsView: View {
             GradientTitleButtons(showSheetBackground: $showSheetBackground, isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, isTapped: $isTapped, showPopoverGradientWall: $showPopoverGradientWall)
             
             ScrollView {
-                GradientSlidersButtons(showSheetBackground: $showSheetBackground, isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, isTapped: $isTapped, showPopoverGradientWall: $showPopoverGradientWall, gradientOffsetSliderMoved: $gradientOffsetSliderMoved, rotationSliderMoved: $rotationSliderMoved, waveSliderMoved: $waveSliderMoved)
+                GradientSlidersButtons(showSheetBackground: $showSheetBackground, isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, isTapped: $isTapped, showPopoverGradientWall: $showPopoverGradientWall, gradientOffsetSliderMoved: $gradientOffsetSliderMoved, rotationSliderMoved: $rotationSliderMoved, waveSliderMoved: $waveSliderMoved, invertGradient: $invertGradient)
             }
             .modifier(PresentationModifiers(showSheetBackground: $showSheetBackground))
         }

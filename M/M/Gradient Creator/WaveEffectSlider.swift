@@ -74,48 +74,6 @@ struct WaveEffectSlider: View {
             }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
             .padding(.leading, 8)
             .scaleEffect(0.8)
-            .disabled(!waveSliderMoved)
-            .disabled(amplitude == 0 && frequency == 200)
-            .foregroundColor(.white)
-            .blendMode(.difference)
-            .overlay{
-                AnimatedButton(action: {
-                    //  speed = 0
-                    amplitude = 0
-                    frequency = 200
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .padding(.leading, 8)
-                .scaleEffect(0.8)
-                .disabled(!waveSliderMoved)
-                .disabled(amplitude == 0 && frequency == 200)
-                    .blendMode(.hue)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    //  speed = 0
-                    amplitude = 0
-                    frequency = 200
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .padding(.leading, 8)
-                .scaleEffect(0.8)
-                .disabled(!waveSliderMoved)
-                .disabled(amplitude == 0 && frequency == 200)
-                    .foregroundColor(.white)
-                    .blendMode(.overlay)
-            }
-            .overlay{
-                AnimatedButton(action: {
-                    //  speed = 0
-                    amplitude = 0
-                    frequency = 200
-                }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                .padding(.leading, 8)
-                .scaleEffect(0.8)
-                .disabled(!waveSliderMoved)
-                .disabled(amplitude == 0 && frequency == 200)
-                    .foregroundColor(.black)
-                    .blendMode(.overlay)
-            }
         }
         .padding(.horizontal)
         .padding(.vertical, 8)

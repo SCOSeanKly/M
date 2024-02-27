@@ -21,6 +21,7 @@ struct ContentView: View {
     @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
     @AppStorage("showOnboarding") private var showOnboarding: Bool = true
     @State private var isShowingGradientView: Bool = false
+    @State private var importedBackground: UIImage? = nil
     
     
     var body: some View {
@@ -31,7 +32,7 @@ struct ContentView: View {
                     
                     // MARK: Wallpaper View
                     GeometryReader { geometry in
-                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming)
+                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground)
                             .opacity(geometry.frame(in: .global).midX >= UIScreen.main.bounds.width / 2 ? 1.0 : 0.0)
                             .onAppear {
                                 let _ = IAP.shared

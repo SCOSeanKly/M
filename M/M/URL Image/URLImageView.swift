@@ -38,12 +38,13 @@ struct URLImages: View {
     @Binding var showPremiumContent: Bool
     @State private var premiumRequiredAlert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @Binding var isZooming: Bool
+    @Binding var importedBackground: UIImage?
     
     var body: some View {
         ZStack {
             VStack {
                 
-                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView)
+                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground)
                 
                 if !viewModelData.images.isEmpty {
                     ScrollViewReader(content: { proxy in
@@ -82,7 +83,7 @@ struct URLImages: View {
                     
                 } else {
                     // Show loading images view when no images have been loaded yet
-                    LoadingImagesView()
+                    LoadingImagesView(obj: obj)
                 }
                 
                 Spacer()
