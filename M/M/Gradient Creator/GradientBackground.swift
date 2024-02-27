@@ -36,6 +36,7 @@ struct GradientBackground: View {
     @Binding var gradientBrightness: CGFloat
     @Binding var gradientContrast: CGFloat
     @Binding var invertGradient: Bool
+    @Binding var blendModeImportedBackground: BlendMode
     
     var body: some View {
         let gradient: AnyView
@@ -63,6 +64,7 @@ struct GradientBackground: View {
                     if let background = importedBackground {
                         Image(uiImage: background)
                             .resizable()
+                            .blendMode(blendModeImportedBackground)
                     }
                 }
                 .distortionEffect(

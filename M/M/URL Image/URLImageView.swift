@@ -92,7 +92,7 @@ struct URLImages: View {
         .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
         .fullScreenCover(item: $selectedImage) { image in
-            SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, isZooming: $isZooming, showPremiumContent: $showPremiumContent)
+            SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, isZooming: $isZooming, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, selectedImage: $selectedImage)
                 .onDisappear {
                     viewModelData.loadImages()
                 }

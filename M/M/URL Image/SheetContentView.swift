@@ -25,9 +25,12 @@ struct SheetContentView: View {
     
     // Progress bar related state
     @State private var downloadProgress: Double = 0.0
+    @Binding var isShowingGradientView: Bool
+    @Binding var importedBackground: UIImage?
+    @Binding var selectedImage: ImageModel?
 
     var body: some View {
-        LargeImageView(image: image, viewModelContent: viewModelContent, obj: obj, showPremiumContent: $showPremiumContent, isZooming: $isZooming, isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation)
+        LargeImageView(image: image, viewModelContent: viewModelContent, obj: obj, showPremiumContent: $showPremiumContent, isZooming: $isZooming, isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, selectedImage: $selectedImage)
             .overlay {
                 VStack {
                     Spacer()

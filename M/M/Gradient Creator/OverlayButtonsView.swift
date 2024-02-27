@@ -14,13 +14,14 @@ struct OverlayButtonsView: View {
     @Binding var isTapped: Bool
     @Binding var isShowingGradientView: Bool
     @Binding var gradientStyle: GradientView.GradientStyle
-    @Binding var blendMode: BlendMode
+    @Binding var blendModeGradient: BlendMode
     @Binding var showGradientBgPickerSheet: Bool
     @Binding var showImageOverlayPickerSheet: Bool
     @State private var gradientColors = [Color]()
     @AppStorage("SelectedColorCount") private var selectedColorCount = 4
     @Binding var refreshButtonTapped: Bool
     @Binding var alert: AlertConfig
+    @Binding var importedBackground: UIImage?
     
     
     var body: some View {
@@ -36,39 +37,43 @@ struct OverlayButtonsView: View {
                         
                         Spacer()
                         
-                        Picker("Gradient Style", selection: $gradientStyle) {
-                            ForEach(GradientView.GradientStyle.allCases) { style in
-                                Text(style.rawValue.capitalized)
-                                    .tag(style)
+                        if importedBackground == nil {
+                            Picker("Gradient Style", selection: $gradientStyle) {
+                                ForEach(GradientView.GradientStyle.allCases) { style in
+                                    Text(style.rawValue.capitalized)
+                                        .tag(style)
+                                }
                             }
+                            .shadow(radius: 3)
                         }
-                        .shadow(radius: 3)
                     }
                     
-                    HStack {
-                        Spacer()
-                        
-                        Picker("Blend Mode", selection: $blendMode) {
-                            Group {
-                                Text("None").tag(BlendMode.normal)
-                                Text("Difference").tag(BlendMode.difference)
-                                Text("Exclusion").tag(BlendMode.exclusion)
-                                Text("Hard Light").tag(BlendMode.hardLight)
-                                Text("Soft Light").tag(BlendMode.softLight)
-                                Text("Color Burn").tag(BlendMode.colorBurn)
+                    if importedBackground == nil {
+                        HStack {
+                            Spacer()
+                            
+                            Picker("Blend Mode", selection: $blendModeGradient) {
+                                Group {
+                                    Text("None").tag(BlendMode.normal)
+                                    Text("Difference").tag(BlendMode.difference)
+                                    Text("Exclusion").tag(BlendMode.exclusion)
+                                    Text("Hard Light").tag(BlendMode.hardLight)
+                                    Text("Soft Light").tag(BlendMode.softLight)
+                                    Text("Color Burn").tag(BlendMode.colorBurn)
+                                }
+                                Group {
+                                    Text("Color Dodge").tag(BlendMode.colorDodge)
+                                    Text("Darken").tag(BlendMode.darken)
+                                    Text("Lighten").tag(BlendMode.lighten)
+                                    Text("Multiply").tag(BlendMode.multiply)
+                                    Text("Overlay").tag(BlendMode.overlay)
+                                    Text("Screen").tag(BlendMode.screen)
+                                    Text("Plus Lighter").tag(BlendMode.plusLighter)
+                                    
+                                }
                             }
-                            Group {
-                                Text("Color Dodge").tag(BlendMode.colorDodge)
-                                Text("Darken").tag(BlendMode.darken)
-                                Text("Lighten").tag(BlendMode.lighten)
-                                Text("Multiply").tag(BlendMode.multiply)
-                                Text("Overlay").tag(BlendMode.overlay)
-                                Text("Screen").tag(BlendMode.screen)
-                                Text("Plus Lighter").tag(BlendMode.plusLighter)
-                                
-                            }
+                            .shadow(radius: 3)
                         }
-                        .shadow(radius: 3)
                     }
                     
                     HStack {

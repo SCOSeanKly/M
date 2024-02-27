@@ -40,6 +40,8 @@ struct GradientSlidersButtons: View {
     @Binding var rotationSliderMoved: Bool
     @Binding var waveSliderMoved: Bool
     @Binding var invertGradient: Bool
+    @Binding var blendModeImportedBackground: BlendMode
+    
     
     
     var body: some View {
@@ -125,6 +127,80 @@ struct GradientSlidersButtons: View {
             CustomToggleBlend(showTitleText: true, titleText: "Show Half Blur", bindingValue: $showHalfBlur, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                 .padding(.vertical, 6)
         }
+        
+        //MARK: Imported background lend mode - Not Used
+        /*
+        HStack (spacing: -5) {
+            let imageName: String = "moonphase.first.quarter.inverse"
+            Image(systemName: imageName)
+                .foregroundColor(.white)
+                .blendMode(.difference)
+                .overlay{
+                    Image(systemName: imageName)
+                        .blendMode(.hue)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.white)
+                        .blendMode(.overlay)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.black)
+                        .blendMode(.overlay)
+                }
+                .padding(.horizontal)
+            
+            
+            let sliderTitle = "Background Blend Mode"
+            Text(sliderTitle)
+                .font(.system(size: 12.5))
+                .foregroundColor(.white)
+                .blendMode(.difference)
+                .overlay{
+                    Text(sliderTitle)
+                        .font(.system(size: 12.5))
+                        .blendMode(.hue)
+                }
+                .overlay{
+                    Text(sliderTitle)
+                        .font(.system(size: 12.5))
+                        .foregroundColor(.white)
+                        .blendMode(.overlay)
+                }
+                .overlay{
+                    Text(sliderTitle)
+                        .font(.system(size: 12.5))
+                        .foregroundColor(.black)
+                        .blendMode(.overlay)
+                }
+            
+            Spacer()
+            
+            Picker("Blend Mode", selection: $blendModeImportedBackground) {
+                Group {
+                    Text("None").tag(BlendMode.normal)
+                    Text("Difference").tag(BlendMode.difference)
+                    Text("Exclusion").tag(BlendMode.exclusion)
+                    Text("Hard Light").tag(BlendMode.hardLight)
+                    Text("Soft Light").tag(BlendMode.softLight)
+                    Text("Color Burn").tag(BlendMode.colorBurn)
+                }
+                Group {
+                    Text("Color Dodge").tag(BlendMode.colorDodge)
+                    Text("Darken").tag(BlendMode.darken)
+                    Text("Lighten").tag(BlendMode.lighten)
+                    Text("Multiply").tag(BlendMode.multiply)
+                    Text("Overlay").tag(BlendMode.overlay)
+                    Text("Screen").tag(BlendMode.screen)
+                    Text("Plus Lighter").tag(BlendMode.plusLighter)
+                    
+                }
+            }
+            .tint(.white)
+        }
+         */
+
      
         //MARK: Color Picker
         ColorPickerView(gradientColors: $gradientColors, selectedColorCount: $selectedColorCount, bgColor: $bgColor)

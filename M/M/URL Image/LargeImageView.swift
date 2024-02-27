@@ -49,6 +49,10 @@ struct LargeImageView: View {
         
         return nil
     }
+    @Binding var isShowingGradientView: Bool
+    @Binding var importedBackground: UIImage?
+    @Binding var selectedImage: ImageModel?
+    
 
     
     var body: some View {
@@ -91,7 +95,7 @@ struct LargeImageView: View {
             }
             .overlay{
                 VStack{
-                    
+                  
                     Spacer()
                     
                     
@@ -118,9 +122,6 @@ struct LargeImageView: View {
                                     if let value = metadata[key] {
                                         
                                         Button {
-                                            
-                                            // ADD BUTTON TO OPEN GRADIENT VIEW
-                                            // @Binding var importedBackground: UIImage?
                                             
                                             isTappedAnimation.toggle()
                                             UIPasteboard.general.string = "\(String(describing: value))"
@@ -158,6 +159,39 @@ struct LargeImageView: View {
                 .frame(height: UIScreen.main.bounds.height * 0.6)
                 .opacity(isZooming ? 0 : 1)
                 .animation(.smooth, value: isZooming)
+            }
+            .overlay{
+                VStack {
+                  
+                    HStack{
+                        
+                        Spacer()
+                        
+                        UltraThinButton(action: {
+                            isTapped.toggle()
+                            if let fullResURL = fullResImageURL {
+                                // Load the image asynchronously
+                                SDWebImageDownloader.shared.downloadImage(with: fullResURL) { image, _, _, _ in
+                                    // Once the image is loaded, update importedBackground
+                                    if let loadedImage = image {
+                                        DispatchQueue.main.async {
+                                            importedBackground = loadedImage
+                                            // After updating importedBackground, toggle isShowingGradientView
+                                            isShowingGradientView.toggle()
+                                            selectedImage = nil
+                                        }
+                                    }
+                                }
+                            }
+                        }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
+                    }
+                    
+                    Spacer()
+                  
+                }
+                .padding()
+                .padding(.trailing)
+                .padding(.top, 40)
             }
         }
         .sensoryFeedback(.selection, trigger: isTapped)
