@@ -37,6 +37,10 @@ struct GradientBackground: View {
     @Binding var gradientContrast: CGFloat
     @Binding var invertGradient: Bool
     @Binding var blendModeImportedBackground: BlendMode
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+    
+    
     
     var body: some View {
         let gradient: AnyView
@@ -64,7 +68,8 @@ struct GradientBackground: View {
                     if let background = importedBackground {
                         Image(uiImage: background)
                             .resizable()
-                            .blendMode(blendModeImportedBackground)
+                            .aspectRatio(contentMode: .fill)
+                            .blendMode(blendModeImportedBackground)  
                     }
                 }
                 .distortionEffect(
@@ -82,7 +87,7 @@ struct GradientBackground: View {
             }
         }
         .id(refreshButtonTapped)
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
+     //   .frame(maxWidth: .infinity, maxHeight: .infinity)
         .hueRotation(Angle(degrees: gradientHue))
         .saturation(gradientSaturation)
         .contrast(gradientContrast)

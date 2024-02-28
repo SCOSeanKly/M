@@ -22,22 +22,31 @@ struct OverlayButtonsView: View {
     @Binding var refreshButtonTapped: Bool
     @Binding var alert: AlertConfig
     @Binding var importedBackground: UIImage?
+    @Binding var showOverlaysURLView: Bool
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+    @Binding var selectedURLOverlayImage: ImageModelOverlayImage?
+    @Binding var importedImageOverlay: UIImage?
+    let offsetValue: CGFloat = UIScreen.main.bounds.width * 0.5
     
     
     var body: some View {
-        Group {
-            if !isSavingImage && !showGradientControl{
+        ZStack {
+            if !isSavingImage {
                 VStack {
+                    
+                    //MARK: Xmark
                     HStack {
                         
                         UltraThinButton(action: {
                             isTapped.toggle()
                             isShowingGradientView.toggle()
                         }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true)
+                        .offset(x: showGradientControl ? -offsetValue : 0)
+                        .animation(.bouncy, value: showGradientControl)
                         
                         Spacer()
                         
-                        if importedBackground == nil {
                             Picker("Gradient Style", selection: $gradientStyle) {
                                 ForEach(GradientView.GradientStyle.allCases) { style in
                                     Text(style.rawValue.capitalized)
@@ -45,76 +54,115 @@ struct OverlayButtonsView: View {
                                 }
                             }
                             .shadow(radius: 3)
-                        }
+                            .offset(x: showGradientControl ? offsetValue : 0)
+                            .animation(.bouncy, value: showGradientControl)
+                            .disabled(importedBackground != nil)
+                            .opacity(importedBackground != nil ? 0.5 : 1)
+                        
                     }
-                    
-                    if importedBackground == nil {
+                  
+                    Group {
+                      
+                            //MARK: Blend Modes
+                            HStack {
+                                Spacer()
+                                
+                                Picker("Blend Mode", selection: $blendModeGradient) {
+                                    Group {
+                                        Text("None").tag(BlendMode.normal)
+                                        Text("Difference").tag(BlendMode.difference)
+                                        Text("Exclusion").tag(BlendMode.exclusion)
+                                        Text("Hard Light").tag(BlendMode.hardLight)
+                                        Text("Soft Light").tag(BlendMode.softLight)
+                                        Text("Color Burn").tag(BlendMode.colorBurn)
+                                    }
+                                    Group {
+                                        Text("Color Dodge").tag(BlendMode.colorDodge)
+                                        Text("Darken").tag(BlendMode.darken)
+                                        Text("Lighten").tag(BlendMode.lighten)
+                                        Text("Multiply").tag(BlendMode.multiply)
+                                        Text("Overlay").tag(BlendMode.overlay)
+                                        Text("Screen").tag(BlendMode.screen)
+                                        Text("Plus Lighter").tag(BlendMode.plusLighter)
+                                        
+                                    }
+                                }
+                                .shadow(radius: 3)
+                            }
+                            .disabled(importedBackground != nil)
+                            .opacity(importedBackground != nil ? 0.5 : 1)
+                        
+                        
+                        //MARK: BG Image
                         HStack {
+                            
                             Spacer()
                             
-                            Picker("Blend Mode", selection: $blendModeGradient) {
-                                Group {
-                                    Text("None").tag(BlendMode.normal)
-                                    Text("Difference").tag(BlendMode.difference)
-                                    Text("Exclusion").tag(BlendMode.exclusion)
-                                    Text("Hard Light").tag(BlendMode.hardLight)
-                                    Text("Soft Light").tag(BlendMode.softLight)
-                                    Text("Color Burn").tag(BlendMode.colorBurn)
-                                }
-                                Group {
-                                    Text("Color Dodge").tag(BlendMode.colorDodge)
-                                    Text("Darken").tag(BlendMode.darken)
-                                    Text("Lighten").tag(BlendMode.lighten)
-                                    Text("Multiply").tag(BlendMode.multiply)
-                                    Text("Overlay").tag(BlendMode.overlay)
-                                    Text("Screen").tag(BlendMode.screen)
-                                    Text("Plus Lighter").tag(BlendMode.plusLighter)
-                                    
-                                }
-                            }
-                            .shadow(radius: 3)
+                            UltraThinButton(action: {
+                                showGradientBgPickerSheet.toggle()
+                            }, systemName: importedBackground == nil ? "custom.photo.circle.fill.badge.plus" : "custom.photo.circle.badge.plus.badge.xmark", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false)
+                            .padding(.trailing)
+                            .padding(.top, 10)
                         }
+                        
+                        //MARK: Overlay Image = URL
+                        HStack {
+                            
+                            Spacer()
+                            
+                            UltraThinButton(action: {
+                                withAnimation(.bouncy) {
+                                    if selectedURLOverlayImage == nil {
+                                        showOverlaysURLView.toggle()
+                                    } else {
+                                        selectedURLOverlayImage = nil
+                                    }
+                                }
+                            }, systemName: selectedURLOverlayImage == nil ? "circle.grid.2x2" : "trash.circle", gradientFill: false, fillColor: selectedURLOverlayImage == nil ? Color.blue.opacity(0.5) : Color.red, showUltraThinMaterial: true, useSystemImage: true)
+                            .padding(.trailing)
+                            .padding(.top, 10)
+                        }
+                      
+                        
+                        //MARK: Overlay Image = Photos Album
+                        HStack {
+                            
+                            Spacer()
+                            
+                            UltraThinButton(action: {
+                                showImageOverlayPickerSheet.toggle()
+                            }, systemName: importedImageOverlay == nil ? "custom.photo.circle.badge.plus" : "custom.photo.circle.badge.plus.badge.xmark", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false)
+                            .padding(.trailing)
+                            .padding(.top, 10)
+                        }
+                      
+                        
+                      
+                       
+                        
+                        //MARK: Open Settings
+                        HStack {
+                            
+                            Spacer()
+                            
+                            UltraThinButton(action: {
+                                withAnimation(.bouncy) {
+                                    showGradientControl.toggle()
+                                }
+                            }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
+                            .padding(.trailing)
+                            .padding(.top, 10)
+                        }
+                       
                     }
-                    
-                    HStack {
-                        
-                        Spacer()
-                        
-                        UltraThinButton(action: {
-                            showGradientBgPickerSheet.toggle()
-                        }, systemName: "custom.photo.circle.fill.badge.plus", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false)
-                        .padding(.trailing)
-                        .padding(.top, 10)
-                    }
-                    
-                    HStack {
-                        
-                        Spacer()
-                        
-                        UltraThinButton(action: {
-                            showImageOverlayPickerSheet.toggle()
-                        }, systemName: "custom.photo.circle.badge.plus", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false)
-                        .padding(.trailing)
-                        .padding(.top, 10)
-                    }
-                    
-                    HStack {
-                        
-                        Spacer()
-                        
-                        UltraThinButton(action: {
-                            withAnimation(.bouncy) {
-                                showGradientControl.toggle()
-                            }
-                        }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
-                        .padding(.trailing)
-                        .padding(.top, 10)
-                    }
-                    
+                    .offset(x: showGradientControl ? offsetValue : 0)
+                    .animation(.bouncy, value: showGradientControl)
+                   
                     Spacer()
                     
+                    // MARK: Save Image & Re-Order Gradient
                     VStack {
-                        
+                        //MARK: Save Image - Snapshot
                         HStack {
                             
                             UltraThinButton(action: {
@@ -142,18 +190,21 @@ struct OverlayButtonsView: View {
                             Spacer()
                         }
                         
+                        //MARK: Re-Order Gradient
                         HStack {
-                            
                             UltraThinButton(action: {
                                 generateGradient()
                             }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
-                            .padding(.bottom)
-                            .padding(.bottom)
-                            
+                           
                             Spacer()
                         }
-                        
+                        .disabled(importedBackground != nil)
+                        .opacity(importedBackground != nil ? 0.5 : 1)
                     }
+                    .padding(.bottom, 50)
+                    .padding(.leading)
+                    .offset(x: showGradientControl ? -offsetValue : 0)
+                    .animation(.bouncy, value: showGradientControl)
                 }
                 .padding(.top, 50)
                 .padding(.horizontal)
@@ -162,6 +213,7 @@ struct OverlayButtonsView: View {
             }
             
         }
+        .frame(width: screenWidth, height: screenHeight)
     }
     
     func saveImageToPhotoLibrary() {

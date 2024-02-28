@@ -10,14 +10,16 @@ import SwiftUI
 struct GradientOverlayImageView: View {
     
     @Binding var importedImageOverlay: UIImage?
-    
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+  
     var body: some View {
         if let imageOverlay = importedImageOverlay {
             Image(uiImage: imageOverlay)
                 .resizable()
                 .aspectRatio(contentMode: .fill)
-                .frame(width: UIScreen.main.bounds.width)
-                .shadow(radius: 5, x: 3)
+                .frame(width: screenWidth, height: screenHeight)
+                .clipShape(Rectangle())
         }
     }
 }

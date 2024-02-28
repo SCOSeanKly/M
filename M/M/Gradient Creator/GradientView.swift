@@ -42,6 +42,13 @@ struct GradientView: View {
     @State private var isTapped: Bool = false
     @State private var invertGradient: Bool = false
     @State private var blendModeImportedBackground: BlendMode = .normal
+    @State private var showOverlaysURLView: Bool = false
+    @StateObject var viewModelHeader = DataViewModelHeader()
+    @State private var selectedURLOverlayImage: ImageModelOverlayImage?
+    let screenWidth = UIScreen.main.bounds.width
+    let screenHeight = UIScreen.main.bounds.height
+   
+   
     
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
@@ -59,10 +66,10 @@ struct GradientView: View {
         
         //MARK: Image layers
         ZStack {
+            
             Rectangle()
                 .foregroundColor(bgColor)
             
-            //MARK: This is the view I want to export as an image
             GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground)
             
             
@@ -72,12 +79,19 @@ struct GradientView: View {
             }
             
             GradientBlurView(gradientBlur: $gradientBlur)
-            
+             
+            if let image = selectedURLOverlayImage {
+                FullSizeImageView(image: image)
+            }
+  
             GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
             
             HalfBlurView(showHalfBlur: $showHalfBlur)
-            
+         
         }
+        .frame(width: screenWidth, height: screenHeight)
+        .clipShape(Rectangle())
+        .ignoresSafeArea()
         .gesture(DragGesture(minimumDistance: 30, coordinateSpace: .global)
             .onEnded { value in
                 if value.translation.height > 0 {
@@ -114,9 +128,8 @@ struct GradientView: View {
         }
         .overlay{
             //MARK: Screen Buttons
-            OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground)
+            OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImage: $selectedURLOverlayImage, importedImageOverlay: $importedImageOverlay)
         }
-        .ignoresSafeArea()
         .sheet(isPresented: $showGradientControl){
             //MARK: These are the buttons and control sliders
             AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground)
@@ -130,6 +143,9 @@ struct GradientView: View {
             createFullScreenCover(for: $importedImageOverlay) { overlayImage in
                 importedImageOverlay = overlayImage.first
             }
+        }
+        .sheet(isPresented: $showOverlaysURLView){
+            LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImage: $selectedURLOverlayImage, showOverlaysURLView: $showOverlaysURLView)
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {

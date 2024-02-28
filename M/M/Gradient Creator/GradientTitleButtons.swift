@@ -38,9 +38,6 @@ struct GradientTitleButtons: View {
     @Binding var showPopoverGradientWall: Bool
 
 
-  
-    
-    
     var body: some View {
         HStack {
             Text("Adjustment Settings")

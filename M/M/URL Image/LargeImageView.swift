@@ -98,7 +98,6 @@ struct LargeImageView: View {
                   
                     Spacer()
                     
-                    
                     if obj.appearance.showAIPromptText {
                         if metadataViewModel.isLoading {
                             HStack {

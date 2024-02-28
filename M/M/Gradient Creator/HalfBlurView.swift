@@ -9,8 +9,6 @@ import SwiftUI
 
 struct HalfBlurView: View {
     
-    let screenWidth = UIScreen.main.bounds.width
-    let screenHeight = UIScreen.main.bounds.height
     @Binding var showHalfBlur: Bool
     
     var body: some View {
@@ -20,7 +18,6 @@ struct HalfBlurView: View {
                 .background {
                     TransparentBlurView(removeAllFilters: true)
                         .blur(radius: 25, opaque: true)
-                        .frame(width: screenWidth, height: screenHeight)
                 }
                 .shadow(radius: 10)
                 .offset(x: -UIScreen.main.bounds.width * 0.5)

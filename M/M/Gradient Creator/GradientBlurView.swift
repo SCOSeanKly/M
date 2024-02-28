@@ -10,9 +10,7 @@ import SwiftUI
 struct GradientBlurView: View {
     
     @Binding var gradientBlur: CGFloat
-    let screenWidth = UIScreen.main.bounds.width
-    let screenHeight = UIScreen.main.bounds.height
-    
+
     var body: some View {
         if gradientBlur > 0.001 {
             Rectangle()
@@ -20,7 +18,6 @@ struct GradientBlurView: View {
                 .background {
                     TransparentBlurView(removeAllFilters: true)
                         .blur(radius: gradientBlur, opaque: true)
-                        .frame(width: screenWidth, height: screenHeight)
                 }
         }
     }
