@@ -34,8 +34,9 @@ struct UltraThinButton: View {
                     } else {
                         Image(systemName)
                             .resizable()
-                            .frame(width: 24, height: 24)
-                            .offset(x: 2.4, y: 2.4)
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 26, height: 26)
+                            .offset(x: 3.0, y: 2.2)
                             .foregroundColor(.white)
                     }
                 }
