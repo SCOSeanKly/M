@@ -47,6 +47,7 @@ struct GradientView: View {
     @State private var selectedURLOverlayImage: ImageModelOverlayImage?
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
+    @State private var isZooming: Bool = false
    
    
     
@@ -93,9 +94,11 @@ struct GradientView: View {
             HalfBlurView(showHalfBlur: $showHalfBlur)
          
         }
+       
         .frame(width: screenWidth, height: screenHeight)
         .clipShape(Rectangle())
         .ignoresSafeArea()
+        .addPinchZoom(isZooming: $isZooming)
         .gesture(DragGesture(minimumDistance: 30, coordinateSpace: .global)
             .onEnded { value in
                 if value.translation.height > 0 {
@@ -131,8 +134,10 @@ struct GradientView: View {
             }
         }
         .overlay{
-            //MARK: Screen Buttons
-            OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImage: $selectedURLOverlayImage, importedImageOverlay: $importedImageOverlay)
+            if !isZooming {
+                //MARK: Screen Buttons
+                OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImage: $selectedURLOverlayImage, importedImageOverlay: $importedImageOverlay)
+            }
         }
         .sheet(isPresented: $showGradientControl){
             //MARK: These are the buttons and control sliders
