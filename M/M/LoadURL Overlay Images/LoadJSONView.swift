@@ -10,22 +10,43 @@ import SwiftUI
 import SDWebImageSwiftUI
 
 struct LoadJSONView: View {
-    @ObservedObject var viewModelHeader: DataViewModelHeader
+    @ObservedObject var viewModelHeader: DataViewModelOverlays
     @Binding var selectedURLOverlayImage: ImageModelOverlayImage?
     @Binding var showOverlaysURLView: Bool
+    @AppStorage("selectedOverlayType") private var selectedOverlayType: String = "Complete"
     
+    // Define overlayURLs within LoadJSONView
+    private let overlayURLs: [String: String] = [
+        "Overlay": "mOverlayImages.json",
+        "Dock": "mDockImages.json",
+        "Notch": "mNotchImages.json",
+        "Complete": "mCompleteImages.json",
+    ]
     
     var body: some View {
         NavigationView {
             VStack {
+                Picker("Select Overlay Type", selection: $selectedOverlayType) {
+                    ForEach(overlayURLs.keys.sorted(), id: \.self) { key in
+                        Text(key).tag(key)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding()
+                .onChange(of: selectedOverlayType) {
+                    // When selectedOverlayType changes, load images for the new overlay type
+                    viewModelHeader.overlayType = selectedOverlayType
+                    viewModelHeader.loadImages()
+                }
+                
+                
                 if !viewModelHeader.images.isEmpty {
                     ScrollView {
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 2), spacing: 30) {
                             ForEach(viewModelHeader.images) { image in
                                 Button {
-                                    selectedURLOverlayImage = image // Select the current image
+                                    selectedURLOverlayImage = image
                                     showOverlaysURLView.toggle()
-                                    
                                 } label: {
                                     URLOverlayImageView(image: image)
                                         .cornerRadius(5)
@@ -39,12 +60,14 @@ struct LoadJSONView: View {
                 }
             }
             .onAppear {
+                viewModelHeader.overlayType = selectedOverlayType
                 viewModelHeader.loadImages()
             }
-            .navigationTitle("Overlays")
+            .navigationTitle(selectedOverlayType)
         }
     }
 }
+
 
 struct URLOverlayImageView: View {
     let image: ImageModelOverlayImage
@@ -53,40 +76,84 @@ struct URLOverlayImageView: View {
     var body: some View {
         ZStack {
             
+            Image("p_SKE2060")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+                .frame(width: UIScreen.main.bounds.width / 2.5, height: UIScreen.main.bounds.height / 2.5,  alignment: .center)
+               
             WebImage(url: URL(string: image.image))
-                .resizable() // Make sure to call resizable() directly on WebImage
+                .resizable()
+            
                 .placeholder {
                     ProgressView()
                 }
-                .cornerRadius(10)
-                .aspectRatio(contentMode: .fit)
-                .frame(width: UIScreen.main.bounds.width * 0.4, alignment: .center)
-                .cornerRadius(imageCornerRadius)
+                .aspectRatio(contentMode: .fill)
+                .frame(width: UIScreen.main.bounds.width / 2.5, height: UIScreen.main.bounds.height / 2.5,  alignment: .center)
+               
         }
+      
+     
+        .clipShape(RoundedRectangle(cornerRadius: imageCornerRadius))
         .overlay {
             VStack {
                 Spacer()
                 VStack{
                     HStack {
                         Text(image.title)
-                            .font(.subheadline)
-                            .fontWeight(.semibold)
-                        
+                            .font(.system(size: 10, weight: .semibold, design: .rounded))
+                            .foregroundColor(.white)
+                            .blendMode(.difference)
+                            .overlay{
+                                Text(image.title)
+                                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                                    .blendMode(.hue)
+                            }
+                            .overlay{
+                                Text(image.title)
+                                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                                    .foregroundColor(.white)
+                                    .blendMode(.overlay)
+                            }
+                            .overlay{
+                                Text(image.title)
+                                    .font(.system(size: 10, weight: .semibold, design: .rounded))
+                                    .foregroundColor(.black)
+                                    .blendMode(.overlay)
+                            }
+                           
                         Spacer()
                     }
                     HStack {
                         Text(image.subtitle)
-                            .font(.footnote)
+                            .font(.system(size: 8, weight: .regular, design: .rounded))
                             .lineLimit(1)
+                            .foregroundColor(.white)
+                            .blendMode(.difference)
+                            .overlay{
+                                Text(image.subtitle)
+                                    .font(.system(size: 8, weight: .regular, design: .rounded))
+                                    .lineLimit(1)
+                                    .blendMode(.hue)
+                            }
+                            .overlay{
+                                Text(image.subtitle)
+                                    .font(.system(size: 8, weight: .regular, design: .rounded))
+                                    .lineLimit(1)
+                                    .foregroundColor(.white)
+                                    .blendMode(.overlay)
+                            }
+                            .overlay{
+                                Text(image.subtitle)
+                                    .font(.system(size: 8, weight: .regular, design: .rounded))
+                                    .lineLimit(1)
+                                    .foregroundColor(.black)
+                                    .blendMode(.overlay)
+                            }
                         
                         Spacer()
                     }
                 }
-                .foregroundStyle(Color.primary)
-                .colorInvert()
                 .padding()
-                .background(.ultraThinMaterial)
-                .clipShape(UnevenRoundedRectangle(topLeadingRadius: 0, bottomLeadingRadius: imageCornerRadius, bottomTrailingRadius: imageCornerRadius, topTrailingRadius: 0))
             }
         }
     }
@@ -100,16 +167,34 @@ struct ImageModelOverlayImage: Identifiable {
     let subtitle: String
 }
 
-class DataViewModelHeader: ObservableObject {
+
+class DataViewModelOverlays: ObservableObject {
     @Published var images: [ImageModelOverlayImage] = []
+    @Published var overlayType: String = "Complete"
+    private let commonBaseUrl = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/Overlays/"
+    
+    @Published var forceRefreshOverlays: Bool = false {
+        didSet {
+            if forceRefreshOverlays {
+                loadImages()
+            }
+        }
+    }
+    
+    private let overlayURLs: [String: String] = [
+        "Overlay": "mOverlayImages.json",
+        "Dock": "mDockImages.json",
+        "Notch": "mNotchImages.json",
+        "Complete": "mCompleteImages.json",
+        
+    ]
     
     func loadImages() {
-        let urlString = "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/mOverlayImages.json"
-        
-        guard let url = URL(string: urlString) else {
+        guard let jsonFileName = overlayURLs[overlayType],
+              let url = URL(string: commonBaseUrl + jsonFileName) else {
             return
         }
-        
+   
         let config = URLSessionConfiguration.default
         config.timeoutIntervalForRequest = 10
         config.timeoutIntervalForResource = 10
@@ -138,6 +223,7 @@ class DataViewModelHeader: ObservableObject {
         }.resume()
     }
 }
+
 
 
 struct ImageData: Decodable {
@@ -173,11 +259,3 @@ struct FullSizeImageView: View {
         
     }
 }
-
-
-
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LoadJSONView()
-//    }
-//}

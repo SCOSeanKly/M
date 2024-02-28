@@ -43,7 +43,7 @@ struct GradientView: View {
     @State private var invertGradient: Bool = false
     @State private var blendModeImportedBackground: BlendMode = .normal
     @State private var showOverlaysURLView: Bool = false
-    @StateObject var viewModelHeader = DataViewModelHeader()
+    @StateObject var viewModelHeader = DataViewModelOverlays()
     @State private var selectedURLOverlayImage: ImageModelOverlayImage?
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
@@ -67,25 +67,29 @@ struct GradientView: View {
         //MARK: Image layers
         ZStack {
             
+            //MARK: Rearmost background colour
             Rectangle()
                 .foregroundColor(bgColor)
             
+            //MARK: Gradient Background - 1
             GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground)
             
-            
+            //MARK: Gradient Background - 2
             if blendModeGradient != .normal {
                 GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground)
                     .blendMode(blendModeGradient)
             }
-            
+            //MARK: Adds a blurred overlay to gradient views
             GradientBlurView(gradientBlur: $gradientBlur)
-             
+            
+            //MARK: URL Overlay effects
             if let image = selectedURLOverlayImage {
                 FullSizeImageView(image: image)
             }
-  
+            //MARK: Overlay image from photos
             GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
             
+            //MARK: Adds a half blur on the left side
             HalfBlurView(showHalfBlur: $showHalfBlur)
          
         }
