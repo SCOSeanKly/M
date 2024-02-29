@@ -90,7 +90,7 @@ struct ButtonView: View {
                                 UltraThinButton(action: {
                                     isTapped.toggle()
                                     isShowingGradientView.toggle()
-                                }, systemName: "paintbrush", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
+                                }, systemName: "paintbrush", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1)
                                 .opacity(obj.appearance.showPill ? 1: 0)
                                 .offset(x: obj.appearance.showPill ?  0 : -100)
                                 .scaleEffect(buttonScale ? 1 : 0)

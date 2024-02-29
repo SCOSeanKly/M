@@ -16,6 +16,7 @@ struct UltraThinButton: View {
     let fillColor: Color
     let showUltraThinMaterial: Bool
     let useSystemImage: Bool
+    let scaleEffect: CGFloat
     
     var body: some View {
         Button {
@@ -43,6 +44,7 @@ struct UltraThinButton: View {
                 .padding(8)
                 .background(.ultraThinMaterial.opacity(showUltraThinMaterial ? 1 : 0))
                 .clipShape(Circle())
+                .scaleEffect(scaleEffect)
         }
     }
 }

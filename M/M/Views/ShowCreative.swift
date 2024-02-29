@@ -25,11 +25,14 @@ struct ShowCreative: View {
                 Link("© ShowCreative \(currentYear)", destination: showCreativeURL)
                 
                 HStack {
-                    Text("Ver. \(Bundle.main.appVersion!)")
-                    Text("Build. \(Bundle.main.buildNumber!)")
+                    Text("Ver: \(Bundle.main.appVersion!)")
+                    Text("Build: \(Bundle.main.buildNumber!)")
                 }
                 .foregroundColor(.gray)
                 
+                    Text("UIDevice: \(UIDevice.current.modelName)")
+                        .foregroundColor(.gray)
+                        .font(.system(size: 10)) 
             }
             .font(.footnote)
             .frame(height: 50)

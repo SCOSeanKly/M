@@ -182,7 +182,7 @@ struct LargeImageView: View {
                                     }
                                 }
                             }
-                        }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true)
+                        }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1)
                     }
                     
                     Spacer()

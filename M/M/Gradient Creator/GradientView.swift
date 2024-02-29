@@ -44,10 +44,12 @@ struct GradientView: View {
     @State private var blendModeImportedBackground: BlendMode = .normal
     @State private var showOverlaysURLView: Bool = false
     @StateObject var viewModelHeader = DataViewModelOverlays()
-    @State private var selectedURLOverlayImage: ImageModelOverlayImage?
+   // @State private var selectedURLOverlayImage: ImageModelOverlayImage?
+    @State private var selectedURLOverlayImages: [ImageModelOverlayImage]
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     @State private var isZooming: Bool = false
+    @StateObject var obj = Object()
    
    
     
@@ -59,9 +61,11 @@ struct GradientView: View {
     init(isShowingGradientView: Binding<Bool>, importedBackground: Binding<UIImage?>) {
         _importedBackground = importedBackground
         _isShowingGradientView = isShowingGradientView
+        _selectedURLOverlayImages = State(initialValue: [])
         _gradientColors = State(initialValue: generateRandomColors(count: 6))
         isShowingGradientSavedNotification = false
     }
+
     
     var body: some View {
         
@@ -84,9 +88,15 @@ struct GradientView: View {
             GradientBlurView(gradientBlur: $gradientBlur)
             
             //MARK: URL Overlay effects
+            /*
             if let image = selectedURLOverlayImage {
-                FullSizeImageView(image: image)
+                OverlaysImageView(image: image)
             }
+             */
+            ForEach(selectedURLOverlayImages) { image in
+                          OverlaysImageView(image: image)
+                      }
+            
             //MARK: Overlay image from photos
             GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
             
@@ -136,7 +146,7 @@ struct GradientView: View {
         .overlay{
             if !isZooming {
                 //MARK: Screen Buttons
-                OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImage: $selectedURLOverlayImage, importedImageOverlay: $importedImageOverlay)
+                OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImages: $selectedURLOverlayImages, importedImageOverlay: $importedImageOverlay)
             }
         }
         .sheet(isPresented: $showGradientControl){
@@ -153,9 +163,14 @@ struct GradientView: View {
                 importedImageOverlay = overlayImage.first
             }
         }
+        /*
         .sheet(isPresented: $showOverlaysURLView){
             LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImage: $selectedURLOverlayImage, showOverlaysURLView: $showOverlaysURLView)
         }
+         */
+        .sheet(isPresented: $showOverlaysURLView) {
+              LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImages: $selectedURLOverlayImages, showOverlaysURLView: $showOverlaysURLView, obj: obj)
+          }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 showGradientControl = true

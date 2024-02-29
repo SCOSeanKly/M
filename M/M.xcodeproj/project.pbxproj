@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */; };
 		3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */; };
+		3E09B5F52B90A57A0010A47F /* UIDeviceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */; };
+		3E09B5F72B90A8660010A47F /* ImageTitleSubTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */; };
 		3E1927502B1DF1DC0029B011 /* UnlockPremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */; };
 		3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E9092B0F5D1800DE4460 /* Tip Views.swift */; };
 		3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */; };
@@ -109,6 +111,8 @@
 /* Begin PBXFileReference section */
 		3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageButton.swift; sourceTree = "<group>"; };
 		3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportButtons.swift; sourceTree = "<group>"; };
+		3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceIdentifier.swift; sourceTree = "<group>"; };
+		3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleSubTitleView.swift; sourceTree = "<group>"; };
 		3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPremiumView.swift; sourceTree = "<group>"; };
 		3E23E9092B0F5D1800DE4460 /* Tip Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tip Views.swift"; sourceTree = "<group>"; };
 		3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatWalpaperCount.swift; sourceTree = "<group>"; };
@@ -359,6 +363,7 @@
 				3E69AFC02AF55B08007244C1 /* CustomPresentation.swift */,
 				3E81CA4A2B271AE400D01A39 /* Shine.swift */,
 				3E67B30F2B6952FC003C6C73 /* ParallaxMotionModifier.swift */,
+				3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */,
 			);
 			path = "Helpers Extensions";
 			sourceTree = "<group>";
@@ -378,6 +383,7 @@
 			isa = PBXGroup;
 			children = (
 				3E84DFC72B8E2C48000D139D /* LoadJSONView.swift */,
+				3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */,
 			);
 			path = "LoadURL Overlay Images";
 			sourceTree = "<group>";
@@ -527,6 +533,7 @@
 				3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */,
 				3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */,
 				3E7808732B7FA978000A9F84 /* GradientBackground.swift in Sources */,
+				3E09B5F72B90A8660010A47F /* ImageTitleSubTitleView.swift in Sources */,
 				3ED67EC22B1F677D008CFD61 /* CrownOverlayView.swift in Sources */,
 				3EB858BF2B51A49F001C8A68 /* GridOverlay.swift in Sources */,
 				3E7808772B7FA9AE000A9F84 /* PopOverGradientWallView.swift in Sources */,
@@ -546,6 +553,7 @@
 				3E69AFBD2AF55ADD007244C1 /* CustomPagingSlider.swift in Sources */,
 				3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */,
 				3E69AFB12AF55A67007244C1 /* ZoomModifier.swift in Sources */,
+				3E09B5F52B90A57A0010A47F /* UIDeviceIdentifier.swift in Sources */,
 				3E67B3282B6AACB2003C6C73 /* customFrameBasedOnCondition.swift in Sources */,
 				3E7373C12B8CBE7E00F0C963 /* ColorPickerView.swift in Sources */,
 				3E69AFB32AF55A7B007244C1 /* CustomUniversalAlertApp.swift in Sources */,
