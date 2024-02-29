@@ -20,7 +20,7 @@ struct ReOrderGradientButton: View {
                 
                 generateGradient()
 
-            }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1)
+            }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
             
             Picker("Color Count", selection: $selectedColorCount) {
                 ForEach(1...6, id: \.self) { count in

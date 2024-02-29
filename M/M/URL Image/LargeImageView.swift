@@ -19,6 +19,7 @@ struct LargeImageView: View {
     @State private var isTappedAnimation: Bool = false
     @Binding var isZooming: Bool
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
+    @State private var premiumRequiredAlert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @Binding var isNoAIPromptVisible: Bool
     @Binding var isNoAIPromptVisibleAnimation: Bool
     let frameSize: CGSize = CGSize(width: UIScreen.main.bounds.width * 0.7, height: UIScreen.main.bounds.height * 0.7)
@@ -160,40 +161,71 @@ struct LargeImageView: View {
                 .animation(.smooth, value: isZooming)
             }
             .overlay{
-                VStack {
-                  
-                    HStack{
+              
+                    VStack {
+                        
+                        HStack{
+                            
+                            Spacer()
+                            
+                            UltraThinButton(action: {
+                                
+                                isTapped.toggle()
+                                
+                                
+                                if showPremiumContent {
+                                    if let fullResURL = fullResImageURL {
+                                        // Load the image asynchronously
+                                        SDWebImageDownloader.shared.downloadImage(with: fullResURL) { image, _, _, _ in
+                                            // Once the image is loaded, update importedBackground
+                                            if let loadedImage = image {
+                                                DispatchQueue.main.async {
+                                                    importedBackground = loadedImage
+                                                    // After updating importedBackground, toggle isShowingGradientView
+                                                    isShowingGradientView.toggle()
+                                                    selectedImage = nil
+                                                }
+                                            }
+                                        }
+                                    }
+                                } else {
+                                    premiumRequiredAlert.present()
+                                }
+                                 
+                            }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: showPremiumContent ? false : true, overlaySymbol: "crown.fill", overlaySymbolColor: .yellow)
+                        }
                         
                         Spacer()
                         
-                        UltraThinButton(action: {
-                            isTapped.toggle()
-                            if let fullResURL = fullResImageURL {
-                                // Load the image asynchronously
-                                SDWebImageDownloader.shared.downloadImage(with: fullResURL) { image, _, _, _ in
-                                    // Once the image is loaded, update importedBackground
-                                    if let loadedImage = image {
-                                        DispatchQueue.main.async {
-                                            importedBackground = loadedImage
-                                            // After updating importedBackground, toggle isShowingGradientView
-                                            isShowingGradientView.toggle()
-                                            selectedImage = nil
-                                        }
-                                    }
-                                }
-                            }
-                        }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1)
                     }
-                    
-                    Spacer()
-                  
-                }
-                .padding()
-                .padding(.trailing)
-                .padding(.top, 40)
+                    .alert(alertConfig: $premiumRequiredAlert) {
+                        alertPreferencesPremiumrequired(title: "Premium Required!", imageName: "crown.fill")
+                    }
+                    .padding()
+                    .padding(.trailing)
+                    .padding(.top, 40)
+                
             }
         }
         .sensoryFeedback(.selection, trigger: isTapped)
+    }
+    
+    private func alertPreferencesPremiumrequired(title: String, imageName: String) -> some View {
+        VStack {
+            
+            Text("\(Image(systemName: imageName)) \(title)")
+            
+            Text("Open settings to unlock premium")
+                .font(.system(size: 12, design: .rounded))
+                .padding(.top, 5)
+            
+        }
+        .foregroundStyle(.black)
+        .padding(15)
+        .background {
+            RoundedRectangle(cornerRadius: 15)
+                .fill(Color.yellow)
+        }
     }
     
     private func alertPreferences(title: String, imageName: String) -> some View {

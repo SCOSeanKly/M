@@ -9,7 +9,7 @@ import SwiftUI
 import Photos
 
 struct GradientView: View {
-
+    
     @State private var showGradientBgPickerSheet = false
     @Binding var importedBackground: UIImage?
     @State private var showImageOverlayPickerSheet = false
@@ -44,14 +44,13 @@ struct GradientView: View {
     @State private var blendModeImportedBackground: BlendMode = .normal
     @State private var showOverlaysURLView: Bool = false
     @StateObject var viewModelHeader = DataViewModelOverlays()
-   // @State private var selectedURLOverlayImage: ImageModelOverlayImage?
     @State private var selectedURLOverlayImages: [ImageModelOverlayImage]
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
     @State private var isZooming: Bool = false
     @StateObject var obj = Object()
-   
-   
+    
+    
     
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
@@ -65,7 +64,7 @@ struct GradientView: View {
         _gradientColors = State(initialValue: generateRandomColors(count: 6))
         isShowingGradientSavedNotification = false
     }
-
+    
     
     var body: some View {
         
@@ -88,23 +87,18 @@ struct GradientView: View {
             GradientBlurView(gradientBlur: $gradientBlur)
             
             //MARK: URL Overlay effects
-            /*
-            if let image = selectedURLOverlayImage {
+            ForEach(selectedURLOverlayImages) { image in
                 OverlaysImageView(image: image)
             }
-             */
-            ForEach(selectedURLOverlayImages) { image in
-                          OverlaysImageView(image: image)
-                      }
             
             //MARK: Overlay image from photos
             GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
             
             //MARK: Adds a half blur on the left side
             HalfBlurView(showHalfBlur: $showHalfBlur)
-         
+            
         }
-       
+        
         .frame(width: screenWidth, height: screenHeight)
         .clipShape(Rectangle())
         .ignoresSafeArea()
@@ -163,14 +157,9 @@ struct GradientView: View {
                 importedImageOverlay = overlayImage.first
             }
         }
-        /*
-        .sheet(isPresented: $showOverlaysURLView){
-            LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImage: $selectedURLOverlayImage, showOverlaysURLView: $showOverlaysURLView)
-        }
-         */
         .sheet(isPresented: $showOverlaysURLView) {
-              LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImages: $selectedURLOverlayImages, showOverlaysURLView: $showOverlaysURLView, obj: obj)
-          }
+            LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImages: $selectedURLOverlayImages, showOverlaysURLView: $showOverlaysURLView, obj: obj)
+        }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
                 showGradientControl = true

@@ -43,7 +43,7 @@ struct OverlayButtonsView: View {
                         UltraThinButton(action: {
                             isTapped.toggle()
                             isShowingGradientView.toggle()
-                        }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1)
+                        }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                         .offset(x: showGradientControl ? -offsetValue : 0)
                         .animation(.bouncy, value: showGradientControl)
                         
@@ -102,7 +102,7 @@ struct OverlayButtonsView: View {
                             
                             UltraThinButton(action: {
                                 showGradientBgPickerSheet.toggle()
-                            }, systemName: importedBackground == nil ? "custom.photo.circle.fill.badge.plus" : "custom.photo.circle.badge.plus.badge.xmark", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false, scaleEffect: buttonScaleEffect)
+                            }, systemName: importedBackground == nil ? "custom.photo.circle.fill.badge.plus" : "custom.photo.circle.badge.plus.badge.xmark", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false, scaleEffect: buttonScaleEffect, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                             .padding(.trailing)
                             .padding(.top, 10)
                         }
@@ -117,7 +117,7 @@ struct OverlayButtonsView: View {
                                 UltraThinButton(action: {
                                     selectedURLOverlayImages.removeLast() // Remove the last added image
                                     
-                                }, systemName: "arrow.uturn.backward.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: buttonScaleEffect)
+                                }, systemName: "arrow.uturn.backward.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: buttonScaleEffect, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                                 .offset(x: !selectedURLOverlayImages.isEmpty ? -50 : 0)
                                 .animation(.linear(duration: 0.2), value: !selectedURLOverlayImages.isEmpty)
                                 .opacity(!selectedURLOverlayImages.isEmpty ? 1 : 0)
@@ -125,7 +125,7 @@ struct OverlayButtonsView: View {
                                 UltraThinButton(action: {
                                     showOverlaysURLView.toggle()
                                     
-                                }, systemName: "apps.iphone.badge.plus", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: buttonScaleEffect)
+                                }, systemName: "apps.iphone.badge.plus", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: buttonScaleEffect, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                                 
                             }
                             .padding(.trailing)
@@ -141,7 +141,7 @@ struct OverlayButtonsView: View {
                             
                             UltraThinButton(action: {
                                 showImageOverlayPickerSheet.toggle()
-                            }, systemName: importedImageOverlay == nil ? "custom.photo.circle.badge.plus" : "custom.photo.circle.badge.plus.badge.xmark", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false, scaleEffect: buttonScaleEffect)
+                            }, systemName: importedImageOverlay == nil ? "custom.photo.circle.badge.plus" : "custom.photo.circle.badge.plus.badge.xmark", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: false, scaleEffect: buttonScaleEffect, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                             .padding(.trailing)
                             .padding(.top, 10)
                         }
@@ -156,7 +156,7 @@ struct OverlayButtonsView: View {
                                 withAnimation(.bouncy) {
                                     showGradientControl.toggle()
                                 }
-                            }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: buttonScaleEffect)
+                            }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: buttonScaleEffect, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                             .padding(.trailing)
                             .padding(.top, 10)
                         }
@@ -191,7 +191,7 @@ struct OverlayButtonsView: View {
                                         }
                                     }
                                 }
-                            }, systemName: "square.and.arrow.up.circle.fill", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1)
+                            }, systemName: "square.and.arrow.up.circle.fill", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                             .padding(.bottom, 10)
                             
                             Spacer()
@@ -201,7 +201,7 @@ struct OverlayButtonsView: View {
                         HStack {
                             UltraThinButton(action: {
                                 generateGradient()
-                            }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1)
+                            }, systemName: "arrow.clockwise.circle", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                             
                             Spacer()
                         }

@@ -17,6 +17,10 @@ struct UltraThinButton: View {
     let showUltraThinMaterial: Bool
     let useSystemImage: Bool
     let scaleEffect: CGFloat
+    let showOverlaySymbol: Bool
+    let overlaySymbol: String
+    let overlaySymbolColor: Color
+    
     
     var body: some View {
         Button {
@@ -32,6 +36,7 @@ struct UltraThinButton: View {
                         Image(systemName: systemName)
                             .font(.system(.body, design: .rounded).weight(.medium))
                             .foregroundColor(.white)
+                          
                     } else {
                         Image(systemName)
                             .resizable()
@@ -44,6 +49,15 @@ struct UltraThinButton: View {
                 .padding(8)
                 .background(.ultraThinMaterial.opacity(showUltraThinMaterial ? 1 : 0))
                 .clipShape(Circle())
+                .overlay{
+                    Image(systemName: overlaySymbol)
+                        .font(.system(size: 10, weight: .bold))
+                        .foregroundColor(overlaySymbolColor.opacity(showOverlaySymbol ? 1 : 0))
+                        .padding(5)
+                        .background(.black.opacity(showOverlaySymbol ? 1 : 0))
+                        .clipShape(Circle())
+                        .offset(x: -14.0, y: 14.0)
+                }
                 .scaleEffect(scaleEffect)
         }
     }

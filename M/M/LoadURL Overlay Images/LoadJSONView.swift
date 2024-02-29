@@ -16,6 +16,7 @@ struct LoadJSONView: View {
     @Binding var showOverlaysURLView: Bool
     @AppStorage("selectedOverlayType") private var selectedOverlayType: String = "Complete"
     @StateObject var obj: Object
+    @State private var showSheetBackground: Bool = true
     
     // Define overlayURLs within LoadJSONView
     private let overlayURLs: [String] = [
@@ -23,7 +24,7 @@ struct LoadJSONView: View {
         "Dock",
         "Notch",
         "Complete",
-        "Effects"
+        "Effect"
     ]
     
     var body: some View {
@@ -40,12 +41,17 @@ struct LoadJSONView: View {
                     // When selectedOverlayType changes, load images for the new overlay type
                     viewModelHeader.overlayType = selectedOverlayType
                     viewModelHeader.loadImages()
+                    viewModelHeader.images = [] //MARK: Clears array
                 }
                 
-                if !viewModelHeader.images.isEmpty {
+                if viewModelHeader.images.isEmpty {
+                  
+                     //MARK: ADD ERROR?
+                         
+                } else {
                     ScrollView {
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 2), spacing: 30) {
-                            ForEach(viewModelHeader.images) { image in
+                            ForEach(viewModelHeader.images.sorted(by: { $0.subtitle < $1.subtitle })) { image in
                                 Button {
                                     selectedURLOverlayImages.append(image) // Append image instead of assigning
                                     showOverlaysURLView.toggle()
@@ -57,15 +63,15 @@ struct LoadJSONView: View {
                             }
                         }
                     }
-                } else {
-                    LoadingImagesView(obj: obj)
                 }
+                
+                Spacer()
             }
+            .modifier(PresentationModifiers(showSheetBackground: $showSheetBackground))
             .onAppear {
                 viewModelHeader.overlayType = selectedOverlayType
                 viewModelHeader.loadImages()
             }
-            .navigationTitle(selectedOverlayType)
         }
     }
 }
