@@ -18,7 +18,7 @@ struct CreatorProfiles: View {
     let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
     let widgyURL = URL(string: "https://www.reddit.com/r/widgy/")!
     let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
-    //   let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
+    let SmartWallpaperArtURL = URL(string: "https://twitter.com/TeboulDavid1")!
     @State private var isTapped: Bool = false
     
     var body: some View {
@@ -34,8 +34,8 @@ struct CreatorProfiles: View {
                             openURL(timetravelr2025URL)
                         case "ElijahCreative":
                             openURL(elijahCreativeURL)
-                            //                        case "RealStellaSky":
-                            //                            openURL(RealStellaSkyURL)
+                        case "SmartWallpaperArt":
+                            openURL(SmartWallpaperArtURL)
                         case "patricialeveq":
                             openURL(patricialeveqURL)
                         case "widgy":

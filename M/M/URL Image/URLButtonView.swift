@@ -25,7 +25,7 @@ struct ButtonView: View {
     let timetravelr2025URL = URL(string: "https://twitter.com/timetravelr2025")!
     let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
     let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
-    //let RealStellaSkyURL = URL(string: "https://realstellasky.com/resources")!
+    let SmartWallpaperArtURL = URL(string: "https://twitter.com/TeboulDavid1")!
     let colors: [Color] = [.red, .yellow, .green, .blue, .purple, .red]
     @State private var buttonScale: Bool = false
     @Binding var importedBackground: UIImage?
@@ -156,10 +156,10 @@ struct ButtonView: View {
                                 switch viewModelData.creatorName {
                                 case "SeanKly":
                                     openURL(showCreativeURL)
+                                case "SmartWallpaperArt":
+                                    openURL(SmartWallpaperArtURL)
                                 case "timetravelr2025":
                                     openURL(timetravelr2025URL)
-                                    //case "RealStellaSky":
-                                    //openURL(RealStellaSkyURL)
                                 case "ElijahCreative":
                                     openURL(elijahCreativeURL)
                                 case "patricialeveq":

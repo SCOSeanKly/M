@@ -36,6 +36,10 @@ class DataViewModel: ObservableObject {
             subPath: "ElijahCreative_M_Resources/main/Wallpapers/",
             jsonFile: "ElijahCreative_M_Resources/main/JSON/elijahCreative.json"
         ),
+        "SmartWallpaperArt": (
+            subPath: "SmartWallpaperArt_M_Resources/main/Wallpapers/",
+            jsonFile: "SmartWallpaperArt_M_Resources/main/JSON/SmartWallpaperArt.json"
+        ),
         "timetravelr2025": (
             subPath: "TimeTraveler_M_Resources/main/Wallpapers/",
             jsonFile: "TimeTraveler_M_Resources/main/JSON/timetravelr2025.json"

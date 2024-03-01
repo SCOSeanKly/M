@@ -118,7 +118,7 @@ struct LayerObjectAppearance {
         self.showPremiumWallpapersOnly = false
         self.showWidgetsOnly = false
         self.showGrid = false
-        self.avatarNames = ["SeanKly", "timetravelr2025", "ElijahCreative", "patricialeveq", "widgy"]
+        self.avatarNames = ["SeanKly", "SmartWallpaperArt", "timetravelr2025", "ElijahCreative", "patricialeveq", "widgy"]
         self.showGradientCreatorView = false
         
         self.backgroundColour = .clear
