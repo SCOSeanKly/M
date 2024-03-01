@@ -495,16 +495,18 @@ struct InfoView: View {
                 Spacer()
             }
             
+            //MARK: Show Creative View
+            ShowCreative()
+                .padding(.bottom, 50)
+                .padding(.top, 5)
+            
         }
         .padding(.horizontal)
         .padding(.vertical, 2.5)
         
         Spacer()
         
-        //MARK: Show Creative View
-        ShowCreative()
-            .padding(.bottom, 50)
-            .padding(.top, 5)
+    
     }
 }
 

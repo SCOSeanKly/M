@@ -17,9 +17,10 @@ struct ShowCreative: View {
         let year = calendar.component(.year, from: Date())
         return "\(year)"
     }
+    
 
     var body: some View {
-        ZStack {
+      
             VStack {
                 
                 Link("© ShowCreative \(currentYear)", destination: showCreativeURL)
@@ -33,10 +34,18 @@ struct ShowCreative: View {
                     Text("UIDevice: \(UIDevice.current.modelName)")
                         .foregroundColor(.gray)
                         .font(.system(size: 10)) 
+                
             }
             .font(.footnote)
-            .frame(height: 50)
-        }
+            .padding(.vertical)
+         
+        
     }
+    
+    let dateFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd MMM yy" // Set custom date format
+        return formatter
+    }()
 }
 
