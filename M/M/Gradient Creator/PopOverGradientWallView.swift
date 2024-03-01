@@ -24,6 +24,7 @@ struct PopOverGradientWallView: View {
                     Text("\(Image(systemName: "chevron.up.chevron.down")) Use the first picker to select a gradient style. Linear, Radial or Angular")
                     Text("\(Image(systemName: "chevron.up.chevron.down")) Use the second picker to select a blend style")
                     Text("\(Image(systemName: "photo.circle.fill")) Tap this button to import an image from photos. Example import a wallpaper so you can add effects as described below")
+                    Text("\(Image(systemName: "apps.iphone.badge.plus")) Tap this button to overlay effects such as icon shadows, dock effects and more. Please note that not all devices will be compatible and some effects may not fit correctly")
                     Text("\(Image(systemName: "photo.circle")) Tap this button to import an overlay image from photos. Note that this image isnt affected by any effects")
                 }
                 Section(header: Text("Adjustment Sliders/Button")) {

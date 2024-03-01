@@ -113,7 +113,7 @@ struct ButtonView: View {
                     
                 }
                 .sensoryFeedback(.selection, trigger: isTapped)
-                .padding()
+                .padding(.horizontal)
                 .onAppear{
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                         withAnimation(.bouncy) {

@@ -31,6 +31,8 @@ struct MockupView: View {
     @Binding var isZooming: Bool
     @Binding var showCoverFlow: Bool
     @Binding var showOnboarding: Bool
+    @Binding var isShowingGradientView: Bool
+    @StateObject var viewModelData: DataViewModel
     
     var body: some View {
         ZStack {
@@ -85,7 +87,7 @@ struct MockupView: View {
                 ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding)
             })
             //MARK: Pill Buttons for importing images etc
-            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel)
+            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
         }
         .onAppear {
             let _ = IAP.shared

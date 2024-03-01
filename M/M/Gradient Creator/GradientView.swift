@@ -160,11 +160,11 @@ struct GradientView: View {
         .sheet(isPresented: $showOverlaysURLView) {
             LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImages: $selectedURLOverlayImages, showOverlaysURLView: $showOverlaysURLView, obj: obj)
         }
-        .onAppear {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
-                showGradientControl = true
-            }
-        }
+//        .onAppear {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+//                showGradientControl = true
+//            }
+//        }
     }
     
     func alertPreferences(title: String, imageName: String) -> some View {

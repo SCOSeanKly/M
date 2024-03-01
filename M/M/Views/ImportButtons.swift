@@ -14,18 +14,22 @@ struct importButtons: View {
     @Binding var saveCount: Int
     @StateObject var viewModel:  ContentViewModel
     @State private var isTapped: Bool = false
+    @Binding var isShowingGradientView: Bool
+    @StateObject var viewModelData: DataViewModel
  
     
     var body: some View {
         VStack {
             ZStack {
-                WallpaperButtonView(isTapped: $isTapped, obj: obj)
+                WallpaperButtonView(isTapped: $isTapped, obj: obj, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
                
                 Pill(viewModel: viewModel, obj: obj, saveCount: $saveCount, isTapped: $isTapped)
             }
             Spacer()
         }
         .sensoryFeedback(.selection, trigger: isTapped)
+        .padding(.top, 45)
+        .ignoresSafeArea()
     }
 }
 
@@ -231,6 +235,8 @@ private struct WallpaperButtonView: View {
     @Binding var isTapped: Bool
     @StateObject var obj: Object
     let showWallpaperTip = NewWallpapersSectionTip()
+    @Binding var isShowingGradientView: Bool
+    @StateObject var viewModelData: DataViewModel
     
     var body: some View {
         HStack {

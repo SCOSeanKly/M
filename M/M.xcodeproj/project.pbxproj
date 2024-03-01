@@ -21,6 +21,7 @@
 		3E3D5C342B5AD0D9003B98C2 /* InAppNotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D5C332B5AD0D9003B98C2 /* InAppNotificationExtension.swift */; };
 		3E3DFA3E2B21F70600A4097E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3D2B21F70600A4097E /* DataModel.swift */; };
 		3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3F2B21F73700A4097E /* ImageModel.swift */; };
+		3E3F03CA2B91D5B400F15E6F /* TabBarView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F03C92B91D5B400F15E6F /* TabBarView1.swift */; };
 		3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 3E40F5B62B583F3700D1B581 /* SwiftUIX */; };
 		3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImageView.swift */; };
 		3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */; };
@@ -123,6 +124,7 @@
 		3E3D5C332B5AD0D9003B98C2 /* InAppNotificationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppNotificationExtension.swift; sourceTree = "<group>"; };
 		3E3DFA3D2B21F70600A4097E /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		3E3DFA3F2B21F73700A4097E /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
+		3E3F03C92B91D5B400F15E6F /* TabBarView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView1.swift; sourceTree = "<group>"; };
 		3E5FF5922B078C0D0007AF8D /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSaveStateViews.swift; sourceTree = "<group>"; };
 		3E611AD92B0E196B007A1714 /* URLButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLButtonView.swift; sourceTree = "<group>"; };
@@ -307,6 +309,7 @@
 		3E69AF8F2AF558B5007244C1 /* Layer Group */ = {
 			isa = PBXGroup;
 			children = (
+				3E3F03C92B91D5B400F15E6F /* TabBarView1.swift */,
 				3E69AF902AF558C6007244C1 /* ContentViewModel.swift */,
 				3E69AF922AF558DC007244C1 /* ImageObject.swift */,
 				3E69AF942AF558F4007244C1 /* LayerObject.swift */,
@@ -560,6 +563,7 @@
 				3E7808752B7FA99A000A9F84 /* SliderView.swift in Sources */,
 				3EAB31092B87964800B0D756 /* HalfBlurView.swift in Sources */,
 				3E69AF7D2AF55875007244C1 /* ContentView.swift in Sources */,
+				3E3F03CA2B91D5B400F15E6F /* TabBarView1.swift in Sources */,
 				3E69AF9E2AF55963007244C1 /* AnimatedButton.swift in Sources */,
 				3EAFEB3E2B23644900D57F5C /* Heart.swift in Sources */,
 				3E69AFC92AF55BA7007244C1 /* ContentViewController.swift in Sources */,

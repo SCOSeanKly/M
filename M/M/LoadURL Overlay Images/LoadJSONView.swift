@@ -20,7 +20,7 @@ struct LoadJSONView: View {
     
     // Define overlayURLs within LoadJSONView
     private let overlayURLs: [String] = [
-        "Overlay",
+        "Pattern",
         "Dock",
         "Notch",
         "Complete",
@@ -51,7 +51,7 @@ struct LoadJSONView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 2), spacing: 30) {
-                            ForEach(viewModelHeader.images.sorted(by: { $0.subtitle < $1.subtitle })) { image in
+                            ForEach(viewModelHeader.images.sorted(by: { $0.title < $1.title })) { image in
                                 Button {
                                     selectedURLOverlayImages.append(image) // Append image instead of assigning
                                     showOverlaysURLView.toggle()
@@ -95,7 +95,7 @@ struct URLOverlayImageView: View {
                 WebImage(url: URL(string: image.image))
                     .resizable()
                     .placeholder {
-                        ProgressView()
+                       ProgressViewBlend()
                     }
                     .aspectRatio(contentMode: .fill)
                     .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
@@ -136,7 +136,7 @@ class DataViewModelOverlays: ObservableObject {
         let effectURL = "mEffect_\(deviceIdentifier.replacingOccurrences(of: "iPhone", with: "").replacingOccurrences(of: ",", with: "")).json"
         
         return [
-            "Overlay": "mOverlayImages.json",
+            "Pattern": "mOverlayImages.json",
             "Dock": "mDockImages.json",
             "Notch": "mNotchImages.json",
             "Complete": "mCompleteImages.json",
@@ -211,4 +211,26 @@ struct OverlaysImageView: View {
 }
 
 
+
+struct ProgressViewBlend: View {
+    var body: some View {
+        ProgressView()
+            .foregroundColor(.white)
+            .blendMode(.difference)
+            .overlay{
+                ProgressView()
+                    .blendMode(.hue)
+            }
+            .overlay{
+                ProgressView()
+                    .foregroundColor(.white)
+                    .blendMode(.overlay)
+            }
+            .overlay{
+                ProgressView()
+                    .foregroundColor(.black)
+                    .blendMode(.overlay)
+            }
+    }
+}
 

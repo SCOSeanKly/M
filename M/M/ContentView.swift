@@ -48,7 +48,7 @@ struct ContentView: View {
                     
                     //MARK: Mockup View
                     GeometryReader { geometry in
-                        MockupView(viewModel: viewModel, obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding)
+                        MockupView(viewModel: viewModel, obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
                             .opacity(geometry.frame(in: .global).midX <= UIScreen.main.bounds.width / 2 ? 1.0 : 0.0)
                             .onAppear {
                                 let _ = IAP.shared
