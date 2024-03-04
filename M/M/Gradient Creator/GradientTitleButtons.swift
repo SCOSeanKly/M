@@ -36,6 +36,7 @@ struct GradientTitleButtons: View {
     @Binding var refreshButtonTapped: Bool
     @Binding var isTapped: Bool
     @Binding var showPopoverGradientWall: Bool
+    @Binding var allowPixellateEffect: Bool
 
 
     var body: some View {
@@ -87,6 +88,7 @@ struct GradientTitleButtons: View {
                 gradientSaturation = 1
                 gradientBrightness = 0
                 gradientContrast = 1
+                allowPixellateEffect = false
             }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
           
             

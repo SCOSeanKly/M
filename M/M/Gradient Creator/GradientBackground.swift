@@ -39,6 +39,7 @@ struct GradientBackground: View {
     @Binding var blendModeImportedBackground: BlendMode
     let screenWidth = UIScreen.main.bounds.width
     let screenHeight = UIScreen.main.bounds.height
+    @Binding var allowPixellateEffect: Bool
     
     
     
@@ -95,13 +96,17 @@ struct GradientBackground: View {
         .rotationEffect(gradientRotation)
         .offset(x: gradientOffsetX, y: gradientOffsetY)
         .clipShape(Rectangle())
-        .distortionEffect(
-            .init(
-                function: .init(library: .default, name: "pixellate"),
-                arguments: [.float(pixellate)]
-            ),
-            maxSampleOffset: .zero
-        )
+        .if(allowPixellateEffect) { view in
+            view
+                .distortionEffect(
+                .init(
+                    function: .init(library: .default, name: "pixellate"),
+                    arguments: [.float(pixellate)]
+                ),
+                maxSampleOffset: .zero
+            )
+        }
+      
         .scaleEffect(gradientScale)
         .if(invertGradient) { view in
             view.colorInvert()

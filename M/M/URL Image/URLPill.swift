@@ -51,9 +51,6 @@ struct URLPill: View {
                     obj.appearance.showPill.toggle()
                 }
             }
-            .padding(8)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
             .pillModifier(obj: obj, normalScale: 1.0)
         }
     }
@@ -75,7 +72,7 @@ private struct URLTextViewOne: View {
             }
     }
 }
-
+ 
 private struct URLTextViewOneSizer: View {
     
     var body: some View {
@@ -106,7 +103,7 @@ private struct URLTextViewTwo: View {
             }
           
         }
-        .frame(width: UIScreen.main.bounds.width * 0.52, height: 30, alignment: .center)
+        .frame(width: UIScreen.main.bounds.width * 0.685, height: 30, alignment: .center)
         .cornerRadius(100)
         
     }
@@ -135,7 +132,66 @@ private struct URLTextViewTwoSizer: View {
     var body: some View {
         Group {
             Color.clear
-                .frame(width: UIScreen.main.bounds.width * 0.52, height: 30, alignment: .center)
+                .frame(width: UIScreen.main.bounds.width * 0.68, height: 30, alignment: .center)
         }
     }
 }
+
+
+struct AvatarAnimatedButton: View {
+    
+    @State private var rotationAngle: Angle = .degrees(0)
+    @State private var isAnimating: Bool = false
+    @State private var isTapped: Bool = false
+    
+    var action: () -> Void
+    var avatarName: String
+    var rotationAntiClockwise: Bool
+    var rotationDegrees: Double
+    var color: Color
+    var allowRotation: Bool
+    
+    
+    
+    var body: some View {
+        
+        Button {
+            isTapped.toggle()
+            isAnimating.toggle()
+            action()
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                isAnimating.toggle()
+            }
+            
+        } label: {
+            if isAnimating {
+                Image(avatarName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(Circle())
+                    .rotationEffect(rotationAngle)
+                    .animation(.easeInOut(duration: 1.5), value: rotationAngle)
+                    .onAppear {
+                        if allowRotation {
+                            rotationAngle = .degrees(rotationAntiClockwise ? -rotationDegrees : rotationDegrees)
+                        }
+                    }
+                    .onDisappear {
+                        rotationAngle = .degrees(0)
+                    }
+            } else {
+                Image(avatarName)
+                    .resizable()
+                    .frame(width: 30, height: 30)
+                    .aspectRatio(contentMode: .fill)
+                    .clipShape(Circle())
+            }
+        }
+        .tint(color)
+        .sensoryFeedback(.selection, trigger: isTapped)
+        
+    }
+}
+
+

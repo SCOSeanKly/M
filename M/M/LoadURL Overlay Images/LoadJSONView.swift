@@ -30,13 +30,23 @@ struct LoadJSONView: View {
     var body: some View {
         NavigationView {
             VStack {
+                
+                HStack {
+                    Text("Effects")
+                        .font(.largeTitle.bold())
+                        .padding([.top, .horizontal])
+                      
+                    
+                    Spacer()
+                }
+                
                 Picker("Select Overlay Type", selection: $selectedOverlayType) {
                     ForEach(overlayURLs.sorted(), id: \.self) { key in
                         Text(key).tag(key)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
-                .padding()
+                .padding([.bottom, .horizontal])
                 .onChange(of: selectedOverlayType) {
                     // When selectedOverlayType changes, load images for the new overlay type
                     viewModelHeader.overlayType = selectedOverlayType
@@ -131,6 +141,8 @@ class DataViewModelOverlays: ObservableObject {
         }
     }
     
+    @AppStorage("seenOverlayImages") var seenOverlayImages: [String] = []
+    
     private lazy var overlayURLs: [String: String] = {
         let deviceIdentifier = UIDevice.current.modelName
         let effectURL = "mEffect_\(deviceIdentifier.replacingOccurrences(of: "iPhone", with: "").replacingOccurrences(of: ",", with: "")).json"
@@ -209,8 +221,6 @@ struct OverlaysImageView: View {
         }
     }
 }
-
-
 
 struct ProgressViewBlend: View {
     var body: some View {

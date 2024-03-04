@@ -119,58 +119,43 @@ struct AnimatedButton: View {
     }
 }
 
-struct AvatarAnimatedButton: View {
+
+
+struct MockupButton: View {
     
-    @State private var rotationAngle: Angle = .degrees(0)
-    @State private var isAnimating: Bool = false
     @State private var isTapped: Bool = false
     
     var action: () -> Void
-    var avatarName: String
-    var rotationAntiClockwise: Bool
-    var rotationDegrees: Double
-    var color: Color
-    var allowRotation: Bool
-    
+    var sfSymbolName: String
+    var showOverlaySymbol: Bool
+    var overlaySymbolName: String
+    var overlaySymbolColor: Color
     
     
     var body: some View {
         
         Button {
             isTapped.toggle()
-            isAnimating.toggle()
             action()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                isAnimating.toggle()
-            }
-            
         } label: {
-            if isAnimating {
-                Image(avatarName)
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(Circle())
-                    .rotationEffect(rotationAngle)
-                    .animation(.easeInOut(duration: 1.5), value: rotationAngle)
-                    .onAppear {
-                        if allowRotation {
-                            rotationAngle = .degrees(rotationAntiClockwise ? -rotationDegrees : rotationDegrees)
-                        }
+            Image(systemName: sfSymbolName)
+                .font(.title2)
+                .foregroundColor(.primary)
+                .overlay{
+                    if showOverlaySymbol {
+                        Image(systemName: overlaySymbolName)
+                            .foregroundColor(overlaySymbolColor)
+                            .font(.system(size: 10))
+                            .padding(2)
+                            .background(Color.primary.colorInvert())
+                            .clipShape(Circle())
+                            .offset(x: -10, y: 10)
                     }
-                    .onDisappear {
-                        rotationAngle = .degrees(0)
-                    }
-            } else {
-                Image(avatarName)
-                    .resizable()
-                    .frame(width: 30, height: 30)
-                    .aspectRatio(contentMode: .fill)
-                    .clipShape(Circle())
-            }
+                }
         }
-        .tint(color)
         .sensoryFeedback(.selection, trigger: isTapped)
-        
+        .padding(.horizontal, 5)
     }
+    
 }
+

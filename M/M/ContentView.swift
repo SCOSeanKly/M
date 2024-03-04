@@ -72,33 +72,7 @@ struct ContentView: View {
             fetchData()
         }
         .sheet(isPresented: $showNewDataAlert) {
-            ZStack {
-                VStack {
-                    HStack {
-                        UltraThinButton(action: {
-                            showNewDataAlert.toggle()
-                            feedback()
-                        }, systemName: "xmark", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
-                       
-                        
-                        Text("News")
-                            .font(.title)
-                        
-                        Spacer()
-                    }
-                    .padding()
-                    
-                    
-                    List(updates) { update in
-                        VStack(alignment: .leading) {
-                            Text(update.title)
-                                .font(.headline)
-                            Text(update.content)
-                                .font(.body)
-                        }
-                    }
-                }
-            }
+          NewsView(showNewDataAlert: $showNewDataAlert, updates: $updates)
         }
         .rotation3DEffect(
             Angle(degrees: obj.appearance.showWallpapersView ? 180 : 0),
@@ -147,9 +121,6 @@ struct ContentView: View {
 }
 
 
-struct Update: Codable, Identifiable {
-    let id = UUID()
-    let date: Date
-    let title: String
-    let content: String
-}
+
+
+

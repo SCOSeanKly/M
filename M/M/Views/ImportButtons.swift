@@ -84,10 +84,6 @@ private struct Pill: View {
                         obj.appearance.showPill.toggle()
                     }
                 }
-                .padding(8)
-                .padding(.trailing, 4)
-                .background(.ultraThinMaterial)
-                .clipShape(RoundedRectangle(cornerRadius: 24))
                 .pillModifier(obj: obj, normalScale: 1.0)
             }
         }
@@ -125,59 +121,47 @@ private struct TextViewTwo: View {
         Group {
             
             HStack {
-                    AnimatedButton(action: {
-                        
-                        viewModel.showImagePickerSheet1 = true
-                        withAnimation(.bouncy){
-                            obj.appearance.showPill.toggle()
-                        }
-                        
-                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage1 == nil ? "1.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
-                    .padding(.horizontal, 5)
-                    .padding(.leading, 5)
-                    
-                    AnimatedButton(action: {
-                        
-                        viewModel.showImagePickerSheet2 = true
-                        withAnimation(.bouncy){
-                            obj.appearance.showPill.toggle()
-                        }
-                        
-                    }, sfSymbolName: "iphone.gen2.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage2 == nil ? "2.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage2 == nil ? .primary : .red)
-                    
-                    AnimatedButton(action: {
-                        
-                        viewModel.showBgPickerSheet = true
-                        withAnimation(.bouncy){
-                            obj.appearance.showPill.toggle()
-                        }
-                        
-                    }, sfSymbolName: "photo.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedBackground == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedBackground == nil ? .primary : .red)
-                    .padding(.horizontal, 5)
-                    
-                    AnimatedButton(action: {
-                        
-                        viewModel.showLogoPickerSheet = true
-                        withAnimation(.bouncy){
-                            obj.appearance.showPill.toggle()
-                        }
-                        
-                    }, sfSymbolName: "person.circle", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: true, overlaySymbolName: viewModel.importedLogo == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedLogo == nil ? .primary : .red)
-                    .padding(.horizontal, 5)
-                    
+                
+                MockupButton(action: {
+                    viewModel.showImagePickerSheet1 = true
+                    withAnimation(.bouncy){
+                        obj.appearance.showPill.toggle()
+                    }
+                }, sfSymbolName: "iphone.gen2.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage1 == nil ? "1.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
+                .padding(.leading, 5)
+                
+                MockupButton(action: {
+                    viewModel.showImagePickerSheet2 = true
+                    withAnimation(.bouncy){
+                        obj.appearance.showPill.toggle()
+                    }
+                }, sfSymbolName: "iphone.gen2.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage2 == nil ? "2.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage2 == nil ? .primary : .red)
+              
+                MockupButton(action: {
+                    viewModel.showBgPickerSheet = true
+                    withAnimation(.bouncy){
+                        obj.appearance.showPill.toggle()
+                    }
+                }, sfSymbolName: "photo.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedBackground == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedBackground == nil ? .primary : .red)
+             
+                MockupButton(action: {
+                    viewModel.showLogoPickerSheet = true
+                    withAnimation(.bouncy){
+                        obj.appearance.showPill.toggle()
+                    }
+                }, sfSymbolName: "person.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedLogo == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedLogo == nil ? .primary : .red)
+           
                     Divider()
                     
-                    AnimatedButton(action: {
-                        obj.appearance.showSettingsSheet.toggle()
-                        
-                        
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                            withAnimation(.bouncy){
-                                obj.appearance.showPill.toggle()
-                            }
+                MockupButton(action: {
+                    obj.appearance.showSettingsSheet.toggle()
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+                        withAnimation(.bouncy){
+                            obj.appearance.showPill.toggle()
                         }
-                    }, sfSymbolName: "slider.horizontal.3", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                    .padding(.horizontal, 5)
+                    }
+                }, sfSymbolName: "slider.horizontal.3", showOverlaySymbol: false, overlaySymbolName: "", overlaySymbolColor: .clear)
+              
             }
         }
     }
@@ -188,7 +172,7 @@ private struct TextViewTwoSizer: View {
     var body: some View {
         Group {
             Color.clear
-                .frame(width: obj.appearance.showAppSettings ? 80 : 215, height: 30, alignment: .center)
+                .frame(width: obj.appearance.showAppSettings ? 80 : 225, height: 30, alignment: .center)
         }
     }
 }

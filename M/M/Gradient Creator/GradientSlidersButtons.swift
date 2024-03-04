@@ -41,6 +41,7 @@ struct GradientSlidersButtons: View {
     @Binding var waveSliderMoved: Bool
     @Binding var invertGradient: Bool
     @Binding var blendModeImportedBackground: BlendMode
+    @Binding var allowPixellateEffect: Bool
     
     
     
@@ -70,9 +71,38 @@ struct GradientSlidersButtons: View {
         //MARK: Rotation Slider
         RotationSlider(gradientRotation: $gradientRotation, rotationSliderMoved: $rotationSliderMoved)
         
+        //MARK: Chequered Enable Toggle
+        HStack (spacing: -5) {
+            let imageName: String = "rectangle.checkered"
+            Image(systemName: imageName)
+                .foregroundColor(.white)
+                .blendMode(.difference)
+                .overlay{
+                    Image(systemName: imageName)
+                        .blendMode(.hue)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.white)
+                        .blendMode(.overlay)
+                }
+                .overlay{
+                    Image(systemName: imageName)
+                        .foregroundColor(.black)
+                        .blendMode(.overlay)
+                }
+                .padding(.leading)
+            
+            CustomToggleBlend(showTitleText: true, titleText: "Enable Pixellate", bindingValue: $allowPixellateEffect, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
+                .padding(.vertical, 6)
+        }
+        
         //MARK: Chequered Slider
         SliderView(systemName: "rectangle.checkered", sliderTitle: "Pixellate", blurSystemName: false, value: $pixellate, inValue: 1, outValue: 75, resetValue: 1)
+            .disabled(!allowPixellateEffect)
+            .opacity(allowPixellateEffect ? 1 : 0.5)
         
+     
         //MARK: Wave effect Slider
         WaveEffectSlider(amplitude: $amplitude, frequency: $frequency, waveSliderMoved: $waveSliderMoved)
         
@@ -128,7 +158,7 @@ struct GradientSlidersButtons: View {
                 .padding(.vertical, 6)
         }
         
-        //MARK: Imported background lend mode - Not Used
+        //MARK: Imported background blend mode - Not Used
         /*
         HStack (spacing: -5) {
             let imageName: String = "moonphase.first.quarter.inverse"

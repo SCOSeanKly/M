@@ -173,6 +173,10 @@ extension View {
 extension View {
     func pillModifier(obj: Object, normalScale: CGFloat) -> some View {
         self
+            .padding(8)
+            .padding(.trailing, 4)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
             .opacity(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings ? 0.3 : 1)
             .animation(.bouncy, value: obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
             .disabled(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)

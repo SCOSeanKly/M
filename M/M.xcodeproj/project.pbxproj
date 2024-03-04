@@ -22,7 +22,6 @@
 		3E3DFA3E2B21F70600A4097E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3D2B21F70600A4097E /* DataModel.swift */; };
 		3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3F2B21F73700A4097E /* ImageModel.swift */; };
 		3E3F03CA2B91D5B400F15E6F /* TabBarView1.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F03C92B91D5B400F15E6F /* TabBarView1.swift */; };
-		3E3F03D02B92050100F15E6F /* UpdateNewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3F03CF2B92050100F15E6F /* UpdateNewsView.swift */; };
 		3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 3E40F5B62B583F3700D1B581 /* SwiftUIX */; };
 		3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E5FF5922B078C0D0007AF8D /* URLImageView.swift */; };
 		3E611AD82B0E1942007A1714 /* URLSaveStateViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */; };
@@ -100,6 +99,7 @@
 		3EB858BD2B4FEA24001C8A68 /* RollingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB858BC2B4FEA24001C8A68 /* RollingText.swift */; };
 		3EB858BF2B51A49F001C8A68 /* GridOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */; };
 		3EB9F1B92B6C0B5600DDC58A /* PersistentOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9F1B82B6C0B5600DDC58A /* PersistentOverlays.swift */; };
+		3EBB36032B960EB500734B21 /* NewsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EBB36022B960EB500734B21 /* NewsView.swift */; };
 		3EC0D5B22B18992000365B38 /* ApplicationSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */; };
 		3EC0D5B42B18B9B700365B38 /* DonationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EC0D5B32B18B9B700365B38 /* DonationView.swift */; };
 		3ED67EC22B1F677D008CFD61 /* CrownOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* CrownOverlayView.swift */; };
@@ -126,7 +126,6 @@
 		3E3DFA3D2B21F70600A4097E /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		3E3DFA3F2B21F73700A4097E /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		3E3F03C92B91D5B400F15E6F /* TabBarView1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarView1.swift; sourceTree = "<group>"; };
-		3E3F03CF2B92050100F15E6F /* UpdateNewsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UpdateNewsView.swift; path = "../../../../Developer/XCode Projects/LoadUrlData/LoadUrlData/UpdateNewsView.swift"; sourceTree = "<group>"; };
 		3E5FF5922B078C0D0007AF8D /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
 		3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSaveStateViews.swift; sourceTree = "<group>"; };
 		3E611AD92B0E196B007A1714 /* URLButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLButtonView.swift; sourceTree = "<group>"; };
@@ -204,6 +203,7 @@
 		3EB858BC2B4FEA24001C8A68 /* RollingText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollingText.swift; sourceTree = "<group>"; };
 		3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridOverlay.swift; sourceTree = "<group>"; };
 		3EB9F1B82B6C0B5600DDC58A /* PersistentOverlays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentOverlays.swift; sourceTree = "<group>"; };
+		3EBB36022B960EB500734B21 /* NewsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewsView.swift; sourceTree = "<group>"; };
 		3EC0D5B12B18992000365B38 /* ApplicationSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ApplicationSettings.swift; sourceTree = "<group>"; };
 		3EC0D5B32B18B9B700365B38 /* DonationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonationView.swift; sourceTree = "<group>"; };
 		3ED67EC12B1F677D008CFD61 /* CrownOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownOverlayView.swift; sourceTree = "<group>"; };
@@ -282,7 +282,6 @@
 		3E69AF792AF55875007244C1 /* M */ = {
 			isa = PBXGroup;
 			children = (
-				3E3F03CF2B92050100F15E6F /* UpdateNewsView.swift */,
 				3E84DFC62B8E2C33000D139D /* LoadURL Overlay Images */,
 				3EEE00402B7E1592005CB2CD /* Gradient Creator */,
 				3E23E9082B0F5D0600DE4460 /* Tips Messages */,
@@ -337,6 +336,7 @@
 				3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */,
 				3E8B33412B4707D5007536DB /* CrownView.swift */,
 				3EAFEB3D2B23644900D57F5C /* Heart.swift */,
+				3EBB36022B960EB500734B21 /* NewsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -551,6 +551,7 @@
 				3EF4A60B2B7A48D10025D0F6 /* OnBoarding.swift in Sources */,
 				3EB858BD2B4FEA24001C8A68 /* RollingText.swift in Sources */,
 				3E69AF8C2AF55884007244C1 /* Shaders.metal in Sources */,
+				3EBB36032B960EB500734B21 /* NewsView.swift in Sources */,
 				3E67B3122B695F84003C6C73 /* CoverFlowView.swift in Sources */,
 				3E67B3202B6AA525003C6C73 /* LargeImageView.swift in Sources */,
 				3E69AFAD2AF55A40007244C1 /* GroundReflectionViewModifier.swift in Sources */,
@@ -559,7 +560,6 @@
 				3E69AFBD2AF55ADD007244C1 /* CustomPagingSlider.swift in Sources */,
 				3E5FF5932B078C0D0007AF8D /* URLImageView.swift in Sources */,
 				3E69AFB12AF55A67007244C1 /* ZoomModifier.swift in Sources */,
-				3E3F03D02B92050100F15E6F /* UpdateNewsView.swift in Sources */,
 				3E09B5F52B90A57A0010A47F /* UIDeviceIdentifier.swift in Sources */,
 				3E67B3282B6AACB2003C6C73 /* customFrameBasedOnCondition.swift in Sources */,
 				3E7373C12B8CBE7E00F0C963 /* ColorPickerView.swift in Sources */,
