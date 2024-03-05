@@ -13,80 +13,55 @@ struct CreatorProfiles: View {
     @StateObject var obj: Object
     @Environment(\.openURL) var openURL
     
-    let showCreativeURL = URL(string: "https://twitter.com/SeanKly")!
-    let timetravelr2025URL = URL(string: "https://twitter.com/timetravelr2025")!
-    let elijahCreativeURL = URL(string: "https://twitter.com/ElijahCreative")!
-    let widgyURL = URL(string: "https://www.reddit.com/r/widgy/")!
-    let patricialeveqURL = URL(string: "https://twitter.com/patricialeveq")!
-    let SmartWallpaperArtURL = URL(string: "https://twitter.com/TeboulDavid1")!
-    @State private var isTapped: Bool = false
+    // Dictionary to map avatar names to their corresponding URLs
+    let avatarURLs: [String: URL] = [
+        "SeanKly": URL(string: "https://twitter.com/SeanKly")!,
+        "timetravelr2025": URL(string: "https://twitter.com/timetravelr2025")!,
+        "ElijahCreative": URL(string: "https://twitter.com/ElijahCreative")!,
+        "widgy": URL(string: "https://www.reddit.com/r/widgy/")!,
+        "patricialeveq": URL(string: "https://twitter.com/patricialeveq")!,
+        "SmartWallpaperArt": URL(string: "https://twitter.com/TeboulDavid1")!
+    ]
+    
+    @State private var isButtonTapped: Bool = false
     
     var body: some View {
         ScrollView (.horizontal, showsIndicators: false) {
             HStack {
-                //MARK: avatarName is found in obj.appearance.avatarNames
                 ForEach(obj.appearance.avatarNames, id: \.self) { avatarName in
-                    Button {
-                        switch avatarName {
-                        case "SeanKly":
-                            openURL(showCreativeURL)
-                        case "timetravelr2025":
-                            openURL(timetravelr2025URL)
-                        case "ElijahCreative":
-                            openURL(elijahCreativeURL)
-                        case "SmartWallpaperArt":
-                            openURL(SmartWallpaperArtURL)
-                        case "patricialeveq":
-                            openURL(patricialeveqURL)
-                        case "widgy":
-                            openURL(widgyURL)
-                        default:
-                            break
-                        }
-                        isTapped.toggle()
-                        
-                    } label: {
-                        VStack {
-                            Image(avatarName)
-                                .resizable()
-                                .aspectRatio(contentMode: .fill)
-                                .frame(width: 40, height: 40)
-                                .clipShape(Circle())
-                                .padding(.top)
-                            
-                            if avatarName == "widgy" {
-                                Image("reddit")
+                    if let url = avatarURLs[avatarName] {
+                        Button {
+                            openURL(url)
+                            isButtonTapped.toggle()
+                        } label: {
+                            VStack {
+                                Image(avatarName)
+                                    .resizable()
+                                    .aspectRatio(contentMode: .fill)
+                                    .frame(width: 40, height: 40)
+                                    .clipShape(Circle())
+                                    .padding(.top)
+                                
+                                Image(avatarName == "widgy" ? "reddit" : "twitter")
                                     .resizable()
                                     .aspectRatio(contentMode: .fill)
                                     .frame(width: 20, height: 20)
                                     .clipShape(Circle())
                                     .offset(x: 10.0, y: -20)
-                            } else {
-                                Image("twitter")
-                                    .resizable()
-                                    .aspectRatio(contentMode: .fill)
-                                    .frame(width: 20, height: 20)
-                                    .clipShape(Circle())
-                                    .offset(x: 10.0, y: -20)
+                                
+                                Text(avatarName)
+                                    .font(.system(size: 8, weight: .regular, design: .rounded))
+                                    .offset(y: -15)
                             }
-                            
-                            Text(avatarName)
-                                .font(.system(size: 8, weight: .regular, design: .rounded))
-                                .offset(y: -15)
                         }
+                        .frame(width: 78, height: 90)
+                        .buttonStyle(.plain)
                     }
                 }
-                .frame(width: 78, height: 90)
-                .buttonStyle(.plain)
             }
-            .sensoryFeedback(.selection, trigger: isTapped)
+            .sensoryFeedback(.selection, trigger: isButtonTapped)
         }
-        
     }
 }
 
-struct CreatorProfiles_Previews: PreviewProvider {
-    static var previews: some View {
-        CreatorProfiles(obj: Object())
-    }
-}
+

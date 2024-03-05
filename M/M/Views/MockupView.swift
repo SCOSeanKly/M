@@ -99,13 +99,6 @@ struct MockupView: View {
                     obj.appearance.showPill = true
                 }
         }
-        // MARK: Show Tips
-        .task {
-            //   try? Tips.resetDatastore() //MARK:  Disable this once tested - shows tips all the time
-            try? Tips.configure([
-                .displayFrequency(.immediate),
-                .datastoreLocation(.applicationDefault)])
-        }
     }
     
     private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {

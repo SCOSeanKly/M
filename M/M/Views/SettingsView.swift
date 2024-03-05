@@ -624,6 +624,7 @@ struct ScalePercentageText: View {
     }
 }
 
+
 extension View {
     func popOverInfo<Content: View>(isPresented: Binding<Bool>, onTapAction: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content) -> some View {
         self
