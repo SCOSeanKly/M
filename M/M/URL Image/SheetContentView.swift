@@ -108,7 +108,7 @@ struct SheetContentView: View {
                             // Introduce a delay before transitioning to "saved"
                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
                                 saveState = .saved
-                                if downloadProgress > 0.99 {
+                                if downloadProgress > 0.999 {
                                     provideSuccessFeedback()
                                 }
                             }

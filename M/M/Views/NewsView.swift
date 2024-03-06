@@ -18,7 +18,6 @@ struct NewsView: View {
                 HStack {
                     UltraThinButton(action: {
                         showNewDataAlert.toggle()
-                        feedback()
                     }, systemName: "xmark", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                    
                     

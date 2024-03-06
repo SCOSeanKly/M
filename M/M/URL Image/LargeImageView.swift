@@ -99,7 +99,7 @@ struct LargeImageView: View {
                   
                     Spacer()
                     
-                    if obj.appearance.showAIPromptText {
+                    if obj.appearance.showAIPromptText && !image.image.contains("w_"){
                         if metadataViewModel.isLoading {
                             HStack {
                                 ProgressView()
@@ -168,10 +168,8 @@ struct LargeImageView: View {
                             
                             Spacer()
                             
+                            //MARK: Open gradient editor
                             UltraThinButton(action: {
-                                
-                                isTapped.toggle()
-                                
                                 
                                 if showPremiumContent {
                                     if let fullResURL = fullResImageURL {

@@ -12,6 +12,7 @@ struct MockupView: View {
     
     @StateObject var viewModel: ContentViewModel
     @StateObject var obj: Object
+    @StateObject var viewModelData: DataViewModel
     @AppStorage("saveCount") private var saveCount: Int = 0
     
     var colorScheme: ColorScheme? {
@@ -32,7 +33,7 @@ struct MockupView: View {
     @Binding var showCoverFlow: Bool
     @Binding var showOnboarding: Bool
     @Binding var isShowingGradientView: Bool
-    @StateObject var viewModelData: DataViewModel
+   
     
     var body: some View {
         ZStack {
@@ -47,17 +48,9 @@ struct MockupView: View {
                     .titleViewModifier(obj: obj, normalScale: 1.0)
                  
             } titleContent: { $item in
-                VStack(spacing: 5) {
-                    Text(item.title)
-                        .font(.largeTitle.bold())
-                        .lineLimit(1)
-                        .minimumScaleFactor(0.5)
-                    
-                    Text(item.subTitle)
-                        .foregroundStyle(.gray)
-                        .multilineTextAlignment(.center)
-                        .frame(height: 45)
-                }
+                
+                //MARK: ADD TIOTLE CONTENT HERE
+                TitleContent(itemTitle: item.title, itemSubTitle: item.subTitle)
                 .titleViewModifier(obj: obj, normalScale: 0.8)
             }
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
@@ -88,9 +81,6 @@ struct MockupView: View {
             })
             //MARK: Pill Buttons for importing images etc
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
-        }
-        .onAppear {
-            let _ = IAP.shared
         }
         //MARK: Add system to mode toggle
         .preferredColorScheme(colorScheme)
@@ -153,7 +143,6 @@ extension View {
     }
 }
 
-
 extension View {
     func titleViewModifier(obj: Object, normalScale: CGFloat) -> some View {
         self
@@ -175,3 +164,24 @@ extension View {
             .disabled(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
     }
 }
+
+struct TitleContent: View {
+    
+    let itemTitle: String
+    let itemSubTitle: String
+    
+    var body: some View {
+        VStack(spacing: 5) {
+            Text(itemTitle)
+                .font(.largeTitle.bold())
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
+            
+            Text(itemSubTitle)
+                .foregroundStyle(.gray)
+                .multilineTextAlignment(.center)
+                .frame(height: 45)
+        }
+    }
+}
+

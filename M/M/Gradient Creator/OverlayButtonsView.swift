@@ -41,7 +41,6 @@ struct OverlayButtonsView: View {
                     HStack {
                         
                         UltraThinButton(action: {
-                            isTapped.toggle()
                             isShowingGradientView.toggle()
                         }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                         .offset(x: showGradientControl ? -offsetValue : 0)
@@ -173,7 +172,6 @@ struct OverlayButtonsView: View {
                         HStack {
                             
                             UltraThinButton(action: {
-                                feedback()
                                 isSavingImage = true
                                 
                                 DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
@@ -221,6 +219,7 @@ struct OverlayButtonsView: View {
             
         }
         .frame(width: screenWidth, height: screenHeight)
+        .sensoryFeedback(.selection, trigger: isTapped)
     }
     
     func saveImageToPhotoLibrary() {

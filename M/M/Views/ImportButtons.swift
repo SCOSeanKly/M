@@ -227,7 +227,6 @@ private struct WallpaperButtonView: View {
             Group { //MARK: Show Wallpaper Button
                 
                 UltraThinButton(action: {
-                    isTapped.toggle()
                     withAnimation(.bouncy) {
                         obj.appearance.showPill = true
                     }
@@ -240,7 +239,6 @@ private struct WallpaperButtonView: View {
             Group { //MARK: Show Application Settings
                 
                 UltraThinButton(action: {
-                    isTapped.toggle()
                     withAnimation(.bouncy) {
                         obj.appearance.showPill = true
                     }

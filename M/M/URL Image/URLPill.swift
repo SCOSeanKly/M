@@ -103,7 +103,7 @@ private struct URLTextViewTwo: View {
             }
           
         }
-        .frame(width: UIScreen.main.bounds.width * 0.685, height: 30, alignment: .center)
+        .frame(width: UIScreen.main.bounds.width * 0.65, height: 30, alignment: .center)
         .cornerRadius(100)
         
     }
@@ -132,7 +132,7 @@ private struct URLTextViewTwoSizer: View {
     var body: some View {
         Group {
             Color.clear
-                .frame(width: UIScreen.main.bounds.width * 0.68, height: 30, alignment: .center)
+                .frame(width: UIScreen.main.bounds.width * 0.6, height: 30, alignment: .center)
         }
     }
 }

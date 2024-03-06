@@ -231,7 +231,6 @@ struct GradientSlidersButtons: View {
         }
          */
 
-     
         //MARK: Color Picker
         ColorPickerView(gradientColors: $gradientColors, selectedColorCount: $selectedColorCount, bgColor: $bgColor)
         

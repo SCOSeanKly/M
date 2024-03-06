@@ -88,7 +88,6 @@ struct ButtonView: View {
                         Group {
                             if viewModelData.images.count != 0 {
                                 UltraThinButton(action: {
-                                    isTapped.toggle()
                                     isShowingGradientView.toggle()
                                 }, systemName: "paintbrush", gradientFill: true, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                                 .opacity(obj.appearance.showPill ? 1: 0)

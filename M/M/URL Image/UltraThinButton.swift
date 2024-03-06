@@ -20,10 +20,12 @@ struct UltraThinButton: View {
     let showOverlaySymbol: Bool
     let overlaySymbol: String
     let overlaySymbolColor: Color
+    @State private var isTapped: Bool = false
     
     
     var body: some View {
         Button {
+            isTapped.toggle()
             action()
         } label: {
             Circle()
@@ -60,5 +62,6 @@ struct UltraThinButton: View {
                 }
                 .scaleEffect(scaleEffect)
         }
+        .sensoryFeedback(.selection, trigger: isTapped)
     }
 }

@@ -32,13 +32,19 @@ struct LoadJSONView: View {
             VStack {
                 
                 HStack {
-                    Text("Effects")
+                    Text(selectedOverlayType)
                         .font(.largeTitle.bold())
-                        .padding([.top, .horizontal])
                       
+                    if selectedOverlayType == "Effect" {
                     
+                    Text(UIDevice.current.modelName)
+                        .font(.footnote)
+                        .foregroundStyle(.gray)
+                }
+                      
                     Spacer()
                 }
+                .padding([.top, .horizontal])
                 
                 Picker("Select Overlay Type", selection: $selectedOverlayType) {
                     ForEach(overlayURLs.sorted(), id: \.self) { key in
@@ -61,7 +67,8 @@ struct LoadJSONView: View {
                 } else {
                     ScrollView {
                         LazyVGrid(columns: Array(repeating: GridItem(), count: 2), spacing: 30) {
-                            ForEach(viewModelHeader.images.sorted(by: { $0.title < $1.title })) { image in
+                           // ForEach(viewModelHeader.images.sorted(by: { $0.title < $1.title })) { image in
+                            ForEach(viewModelHeader.images.reversed()) { image in
                                 Button {
                                     selectedURLOverlayImages.append(image) // Append image instead of assigning
                                     showOverlaysURLView.toggle()
@@ -76,6 +83,7 @@ struct LoadJSONView: View {
                 }
                 
                 Spacer()
+                 
             }
             .modifier(PresentationModifiers(showSheetBackground: $showSheetBackground))
             .onAppear {
@@ -145,6 +153,8 @@ class DataViewModelOverlays: ObservableObject {
     
     private lazy var overlayURLs: [String: String] = {
         let deviceIdentifier = UIDevice.current.modelName
+      //  let deviceIdentifier = "iPhone15,3"
+        
         let effectURL = "mEffect_\(deviceIdentifier.replacingOccurrences(of: "iPhone", with: "").replacingOccurrences(of: ",", with: "")).json"
         
         return [

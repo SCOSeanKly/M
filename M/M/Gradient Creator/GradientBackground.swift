@@ -88,7 +88,6 @@ struct GradientBackground: View {
             }
         }
         .id(refreshButtonTapped)
-     //   .frame(maxWidth: .infinity, maxHeight: .infinity)
         .hueRotation(Angle(degrees: gradientHue))
         .saturation(gradientSaturation)
         .contrast(gradientContrast)

@@ -115,7 +115,6 @@ struct SliderView: View {
                 value = resetValue
             }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
             .scaleEffect(0.8)
-          //  .disabled(!sliderMoved || value == resetValue) // Disable the button if the slider hasn't been moved or if the value equals the reset value
             
         }
         .padding(.vertical, bottomPadding)

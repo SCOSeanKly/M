@@ -13,19 +13,20 @@ struct ContentView: View {
     @StateObject var viewModel = ContentViewModel()
     @StateObject var viewModelData = DataViewModel()
     @StateObject var obj: Object
+    
     @State private var totalNewWallpapersCount = 0
-    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
     @State var buyClicked: Bool = false
-    let animationDuration: CGFloat = 0.2
     @State private var isZooming: Bool = false
-    @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
-    @AppStorage("showOnboarding") private var showOnboarding: Bool = true
     @State private var isShowingGradientView: Bool = false
     @State private var importedBackground: UIImage? = nil
-    
     @State private var updates: [Update] = []
-    @AppStorage("previousData") var previousData: Data?
     @State private var showNewDataAlert = false
+    let animationDuration: CGFloat = 0.2
+    
+    @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
+    @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
+    @AppStorage("showOnboarding") private var showOnboarding: Bool = true
+    @AppStorage("previousData") var previousData: Data?
     
     
     var body: some View {
@@ -51,7 +52,7 @@ struct ContentView: View {
                 
                 //MARK: Mockup View
                 GeometryReader { geometry in
-                    MockupView(viewModel: viewModel, obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
+                    MockupView(viewModel: viewModel, obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView)
                         .opacity(geometry.frame(in: .global).midX <= UIScreen.main.bounds.width / 2 ? 1.0 : 0.0)
                         .onAppear {
                             let _ = IAP.shared

@@ -10,9 +10,6 @@ import SwiftUI
 struct GradientTitleButtons: View {
     
     @Binding var showSheetBackground: Bool
-    
-//    let sliderScale = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width * 0.15)
-//    let horizontalPadding: CGFloat = 8
     @Binding var isSavingImage: Bool
     @Binding var gradientBlur: CGFloat
     @Binding var gradientScale: CGFloat
