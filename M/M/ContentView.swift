@@ -153,6 +153,9 @@ struct MockupMView: View {
     @AppStorage("previousData") var previousData: Data?
     @State var isScrolling = false
     @State var isScrollingSettings = false
+    @State private var isTapped: Bool = false
+    
+    @State private var lastCheckedTime: Date?
     
     
     var body: some View {
@@ -184,11 +187,8 @@ struct MockupMView: View {
                 }
             }
             
-          
                 CustomTabBar()
-                   
-          
-               
+                 
         }
         .sheet(isPresented: $showNewDataAlert) {
             NewsView(showNewDataAlert: $showNewDataAlert, updates: $updates)
@@ -226,6 +226,7 @@ struct MockupMView: View {
                     .contentShape(.rect)
                     /// You Can Also Use Button, If you Choose to
                     .onTapGesture {
+                        isTapped.toggle()
                         withAnimation(.bouncy, completionCriteria: .logicallyComplete, {
                             activeTab = tab
                             animatedTab.isAnimating = true
@@ -244,12 +245,23 @@ struct MockupMView: View {
             .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
             .animation(.bouncy, value: isShowingGradientView || isScrolling || isScrollingSettings)
         }
+        .sensoryFeedback(.selection, trigger: isTapped)
         
     }
     
     func fetchData() {
         guard let url = URL(string: "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/Update/update.json") else {
             print("Invalid URL")
+            return
+        }
+        
+        let currentTime = Date()
+        
+        // Check if last checked time is greater than 4 hours from the current time
+        if let lastCheckedTime = self.lastCheckedTime,
+           let timeInterval = Calendar.current.dateComponents([.hour], from: lastCheckedTime, to: currentTime).hour,
+           timeInterval < 1 {
+            print("Last checked less than 1 hour ago, skipping data fetch.")
             return
         }
         
@@ -276,11 +288,15 @@ struct MockupMView: View {
                         // Print the fetched JSON data
                         print(updates)
                     }
+                    
+                    // Update the last checked time
+                    self.lastCheckedTime = currentTime
                 } catch {
                     print(error)
                 }
             }
         }.resume()
     }
+
 }
 

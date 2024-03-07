@@ -34,19 +34,24 @@ struct MockupView: View {
     @Binding var showOnboarding: Bool
     @Binding var isShowingGradientView: Bool
     @Binding var isScrollingSettings: Bool
+    
+    var screenOffset: Bool {
+           return UIScreen.main.bounds.height > 852
+       }
    
     
     var body: some View {
         ZStack {
           
             // MARK: Wallpaper View
-            CustomPagingSlider(showCoverFlow: $showCoverFlow, data: $viewModel.items) { $item in
+            CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
                 CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
                     .customImageViewModifier(obj: obj, viewModel: viewModel, isZooming: $isZooming)
                  
                 ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
                     .titleViewModifier(obj: obj, normalScale: 1.0)
+                  
                  
             } titleContent: { $item in
                 
@@ -54,6 +59,7 @@ struct MockupView: View {
                 TitleContent(itemTitle: item.title, itemSubTitle: item.subTitle)
                 .titleViewModifier(obj: obj, normalScale: 0.8)
             }
+            .offset(y: screenOffset ? -30 : 0)
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
                 fullScreenImagePickerCover(for: $viewModel.importedImage1) { images in
                     viewModel.importedImage1 = images.first
@@ -83,6 +89,9 @@ struct MockupView: View {
             //MARK: Pill Buttons for importing images etc
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
         }
+        
+        
+     
         //MARK: Add system to mode toggle
         .preferredColorScheme(colorScheme)
         .onTapGesture {
@@ -110,8 +119,8 @@ struct MockupView: View {
 extension View {
     func customImageViewModifier(obj: Object, viewModel: ContentViewModel, isZooming: Binding<Bool>) -> some View {
         self
-            .scaleEffect(0.5)
-            .frame(width: obj.appearance.frameWidth * 0.5, height: obj.appearance.frameHeight * 0.5)
+            .scaleEffect(0.6)
+            .frame(width: obj.appearance.frameWidth * 0.6, height: obj.appearance.frameHeight * 0.6)
             .clipped()
             .cornerRadius(15)
             .overlay {
@@ -183,6 +192,8 @@ struct TitleContent: View {
                 .multilineTextAlignment(.center)
                 .frame(height: 45)
         }
+        .offset(y: 25)
+        .scaleEffect(0.9)
     }
 }
 

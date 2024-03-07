@@ -71,6 +71,7 @@ struct Item: Identifiable {
 /// Custom View
 struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessCollection>: View where Item: MutableCollection, Item.Element: Identifiable {
     @Binding var showCoverFlow: Bool
+    @Binding var isZooming: Bool
     @Binding var data: Item
     @ViewBuilder var content: (Binding<Item.Element>) -> Content
     @ViewBuilder var titleContent: (Binding<Item.Element>) -> TitleContent
@@ -122,20 +123,25 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
                 }
             }
             
-            //MARK: Scroll position indicators
-            PagingControl(numberOfPages: data.count, activePage: activePage) { value in
-                /// Updating to current Page
-                if let index = value as? Item.Index, data.indices.contains(index) {
-                    if let id = data[index].id as? UUID {
-                        withAnimation(.snappy(duration: 0.35, extraBounce: 0)) {
-                            activeID = id
+            if UIScreen.main.bounds.height > 852{
+                //MARK: Scroll position indicators
+                PagingControl(numberOfPages: data.count, activePage: activePage) { value in
+                    /// Updating to current Page
+                    if let index = value as? Item.Index, data.indices.contains(index) {
+                        if let id = data[index].id as? UUID {
+                            withAnimation(.snappy(duration: 0.35, extraBounce: 0)) {
+                                activeID = id
+                            }
                         }
                     }
                 }
+                .disabled(false)
+                .scaleEffect(0.6)
+                .offset(y: showCoverFlow ? -65 : -20)
+                .opacity(isZooming ? 0 : 1)
+                .animation(.bouncy, value: isZooming)
+              
             }
-            .disabled(false)
-            .scaleEffect(0.6)
-            .offset(y: showCoverFlow ? -65 : -20)
         }
         .scrollIndicators(.hidden)
         .scrollTargetBehavior(.viewAligned)
