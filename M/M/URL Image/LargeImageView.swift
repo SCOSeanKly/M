@@ -53,6 +53,7 @@ struct LargeImageView: View {
     @Binding var isShowingGradientView: Bool
     @Binding var importedBackground: UIImage?
     @Binding var selectedImage: ImageModel?
+    @Binding var activeTab: Tab
     
 
     
@@ -180,7 +181,7 @@ struct LargeImageView: View {
                                                 DispatchQueue.main.async {
                                                     importedBackground = loadedImage
                                                     // After updating importedBackground, toggle isShowingGradientView
-                                                    isShowingGradientView.toggle()
+                                                    activeTab = .creator
                                                     selectedImage = nil
                                                 }
                                             }

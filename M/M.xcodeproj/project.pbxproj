@@ -108,7 +108,26 @@
 		3EEE00482B7E19CC005CB2CD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00472B7E19CC005CB2CD /* GradientView.swift */; };
 		3EF4A60B2B7A48D10025D0F6 /* OnBoarding.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */; };
 		3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF74DA52B552FE4002E1D8D /* URLPill.swift */; };
+		3EFE43F32B98CFA700646319 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE43F22B98CFA700646319 /* Tab.swift */; };
+		3EFE43F52B98CFB500646319 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE43F42B98CFB500646319 /* Home.swift */; };
+		3EFE43F72B99C78400646319 /* WallpaperTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE43F62B99C78400646319 /* WallpaperTitleView.swift */; };
+		3EFE44082B9A06FD00646319 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 3EFE44072B9A06FD00646319 /* SwiftUIIntrospect */; };
+		3EFE440C2B9A06FD00646319 /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 3EFE440B2B9A06FD00646319 /* SwiftUIIntrospect-Static */; };
+		3EFE440F2B9A072200646319 /* IsScrolling in Frameworks */ = {isa = PBXBuildFile; productRef = 3EFE440E2B9A072200646319 /* IsScrolling */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3EFE44112B9A09A300646319 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageButton.swift; sourceTree = "<group>"; };
@@ -211,6 +230,9 @@
 		3EEE00472B7E19CC005CB2CD /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
 		3EF74DA52B552FE4002E1D8D /* URLPill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLPill.swift; sourceTree = "<group>"; };
+		3EFE43F22B98CFA700646319 /* Tab.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Tab.swift; sourceTree = "<group>"; };
+		3EFE43F42B98CFB500646319 /* Home.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Home.swift; sourceTree = "<group>"; };
+		3EFE43F62B99C78400646319 /* WallpaperTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperTitleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -220,7 +242,10 @@
 			files = (
 				3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */,
 				3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */,
+				3EFE440F2B9A072200646319 /* IsScrolling in Frameworks */,
 				3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */,
+				3EFE44082B9A06FD00646319 /* SwiftUIIntrospect in Frameworks */,
+				3EFE440C2B9A06FD00646319 /* SwiftUIIntrospect-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,6 +266,7 @@
 				3EAB31012B878ADD00B0D756 /* Models */,
 				3E5FF5922B078C0D0007AF8D /* URLImageView.swift */,
 				3E611AD92B0E196B007A1714 /* URLButtonView.swift */,
+				3EFE43F62B99C78400646319 /* WallpaperTitleView.swift */,
 				3E611AD72B0E1942007A1714 /* URLSaveStateViews.swift */,
 				3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */,
 				3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */,
@@ -282,6 +308,7 @@
 		3E69AF792AF55875007244C1 /* M */ = {
 			isa = PBXGroup;
 			children = (
+				3EFE43F12B98CF8A00646319 /* Tab */,
 				3E84DFC62B8E2C33000D139D /* LoadURL Overlay Images */,
 				3EEE00402B7E1592005CB2CD /* Gradient Creator */,
 				3E23E9082B0F5D0600DE4460 /* Tips Messages */,
@@ -437,6 +464,15 @@
 			path = "Gradient Creator";
 			sourceTree = "<group>";
 		};
+		3EFE43F12B98CF8A00646319 /* Tab */ = {
+			isa = PBXGroup;
+			children = (
+				3EFE43F42B98CFB500646319 /* Home.swift */,
+				3EFE43F22B98CFA700646319 /* Tab.swift */,
+			);
+			path = Tab;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -447,6 +483,7 @@
 				3E69AF732AF55875007244C1 /* Sources */,
 				3E69AF742AF55875007244C1 /* Frameworks */,
 				3E69AF752AF55875007244C1 /* Resources */,
+				3EFE44112B9A09A300646319 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -457,6 +494,9 @@
 				3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */,
 				3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */,
 				3E40F5B62B583F3700D1B581 /* SwiftUIX */,
+				3EFE44072B9A06FD00646319 /* SwiftUIIntrospect */,
+				3EFE440B2B9A06FD00646319 /* SwiftUIIntrospect-Static */,
+				3EFE440E2B9A072200646319 /* IsScrolling */,
 			);
 			productName = M;
 			productReference = 3E69AF772AF55875007244C1 /* M.app */;
@@ -490,6 +530,8 @@
 				3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
 				3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
+				3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
+				3EFE440D2B9A072200646319 /* XCRemoteSwiftPackageReference "IsScrolling" */,
 			);
 			productRefGroup = 3E69AF782AF55875007244C1 /* Products */;
 			projectDirPath = "";
@@ -522,6 +564,7 @@
 				3E69AF912AF558C6007244C1 /* ContentViewModel.swift in Sources */,
 				3E8B33422B4707D5007536DB /* CrownView.swift in Sources */,
 				3E69AFC12AF55B08007244C1 /* CustomPresentation.swift in Sources */,
+				3EFE43F52B98CFB500646319 /* Home.swift in Sources */,
 				3E7373C52B8CC04500F0C963 /* CustomToggleBlend.swift in Sources */,
 				3E67B32C2B6AB10F003C6C73 /* AICustomTextModifier.swift in Sources */,
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
@@ -545,6 +588,7 @@
 				3E7808772B7FA9AE000A9F84 /* PopOverGradientWallView.swift in Sources */,
 				3EAB310D2B87970600B0D756 /* AdjustmentSettingsView.swift in Sources */,
 				3EF74DA62B552FE4002E1D8D /* URLPill.swift in Sources */,
+				3EFE43F32B98CFA700646319 /* Tab.swift in Sources */,
 				3E69AF9C2AF5594E007244C1 /* ShowCreative.swift in Sources */,
 				3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */,
 				3E69AFC72AF55B93007244C1 /* AlwaysPopoverModifier.swift in Sources */,
@@ -574,6 +618,7 @@
 				3EAB31072B87963D00B0D756 /* GradientBlurView.swift in Sources */,
 				3E69AFA02AF55998007244C1 /* SettingsView.swift in Sources */,
 				3E69AFAB2AF55A30007244C1 /* TransparentBlurView.swift in Sources */,
+				3EFE43F72B99C78400646319 /* WallpaperTitleView.swift in Sources */,
 				3E23E90E2B0F997700DE4460 /* ZoomGesture.swift in Sources */,
 				3E69AFAF2AF55A5A007244C1 /* IfExtension.swift in Sources */,
 				3E7373C32B8CBE8300F0C963 /* ReOrderGradientButton.swift in Sources */,
@@ -744,7 +789,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.5;
+				CURRENT_PROJECT_VERSION = 0.0.6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -789,7 +834,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.5;
+				CURRENT_PROJECT_VERSION = 0.0.6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -873,6 +918,22 @@
 				minimumVersion = 2.2.4;
 			};
 		};
+		3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.3;
+			};
+		};
+		3EFE440D2B9A072200646319 /* XCRemoteSwiftPackageReference "IsScrolling" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/fatbobman/IsScrolling.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.2;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -890,6 +951,21 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
+		};
+		3EFE44072B9A06FD00646319 /* SwiftUIIntrospect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = SwiftUIIntrospect;
+		};
+		3EFE440B2B9A06FD00646319 /* SwiftUIIntrospect-Static */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = "SwiftUIIntrospect-Static";
+		};
+		3EFE440E2B9A072200646319 /* IsScrolling */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EFE440D2B9A072200646319 /* XCRemoteSwiftPackageReference "IsScrolling" */;
+			productName = IsScrolling;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

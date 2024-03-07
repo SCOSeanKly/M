@@ -15,43 +15,64 @@ struct URLPill: View {
     @StateObject var viewModelData: DataViewModel
     
     var body: some View {
-        ZStack(alignment: .leading) {
+        
+        ZStack {
+            
             HStack {
-                Circle()
-                    .fill(.blue.opacity(0.5))
-                    .frame(width: 30, height: 30)
-                    .overlay {
-                        Image(systemName: "line.3.horizontal.decrease.circle")
-                            .font(.system(.body, design: .rounded).weight(.medium))
-                            .foregroundColor(.white)
+                Text(viewModelData.creatorName == "widgy" ? "Widgets" : "Wallpapers")
+                    .font(.largeTitle.bold())
+                    .onChange(of: viewModelData.creatorName) {
+                        viewModelData.forceRefresh.toggle()
                     }
-                    .overlay(alignment: .leading) {
-                        ZStack(alignment: .leading) {
-                            URLTextViewOne(viewModelData: viewModelData)
-                                .opacity(obj.appearance.showPill ? 1 : 0)
-                            
-                            URLTextViewTwo(obj: obj, viewModelData: viewModelData)
-                                .opacity(obj.appearance.showPill ? 0 : 1)
-                        }
-                        .frame(width: 200, alignment: .leading)
-                        .padding(.leading, 38)
-                    }
+                    .opacity(obj.appearance.showPill ? 1: 0)
+                    .offset(x: obj.appearance.showPill ?  0 : -100)
                 
-                if obj.appearance.showPill {
-                    URLTextViewOneSizer()
-                } else {
-                    URLTextViewTwoSizer(obj: obj)
+                Spacer()
+            }
+            
+            HStack {
+                
+                Spacer()
+                
+                ZStack(alignment: .leading) {
+                    HStack {
+                        Circle()
+                            .fill(.blue.opacity(0.5))
+                            .frame(width: 30, height: 30)
+                            .overlay {
+                                Image(systemName: "line.3.horizontal.decrease.circle")
+                                    .font(.system(.body, design: .rounded).weight(.medium))
+                                    .foregroundColor(.white)
+                            }
+                            .overlay(alignment: .leading) {
+                                ZStack(alignment: .leading) {
+                                    URLTextViewOne(viewModelData: viewModelData)
+                                        .opacity(obj.appearance.showPill ? 1 : 0)
+                                    
+                                    URLTextViewTwo(obj: obj, viewModelData: viewModelData)
+                                        .opacity(obj.appearance.showPill ? 0 : 1)
+                                }
+                                .frame(width: 200, alignment: .leading)
+                                .padding(.leading, 38)
+                            }
+                        
+                        if obj.appearance.showPill {
+                            URLTextViewOneSizer()
+                        } else {
+                            URLTextViewTwoSizer(obj: obj)
+                        }
+                    }
+                    .sensoryFeedback(.selection, trigger: isTapped)
+                    .sensoryFeedback(.success, trigger: isTappedProminent)
+                    .onTapGesture {
+                        withAnimation(.bouncy){
+                            isTapped.toggle()
+                            obj.appearance.showPill.toggle()
+                        }
+                    }
+                    .pillModifier(obj: obj, normalScale: 1.0)
                 }
             }
-            .sensoryFeedback(.selection, trigger: isTapped)
-            .sensoryFeedback(.success, trigger: isTappedProminent)
-            .onTapGesture {
-                withAnimation(.bouncy){
-                    isTapped.toggle()
-                    obj.appearance.showPill.toggle()
-                }
-            }
-            .pillModifier(obj: obj, normalScale: 1.0)
         }
     }
 }

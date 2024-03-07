@@ -4,7 +4,7 @@
 //
 //  Created by Pratik on 14/10/22.
 //
-
+/*
 import SwiftUI
 
 
@@ -133,4 +133,5 @@ struct TabBarView1_Previews: PreviewProvider {
         TabBarView()
     }
 }
+*/
 */

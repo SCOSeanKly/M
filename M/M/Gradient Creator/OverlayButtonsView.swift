@@ -30,6 +30,7 @@ struct OverlayButtonsView: View {
     @Binding var importedImageOverlay: UIImage?
     let offsetValue: CGFloat = UIScreen.main.bounds.width * 0.5
     let buttonScaleEffect: CGFloat = 0.8
+    @Binding var activeTab: Tab
     
     
     var body: some View {
@@ -42,6 +43,8 @@ struct OverlayButtonsView: View {
                         
                         UltraThinButton(action: {
                             isShowingGradientView.toggle()
+                            activeTab = .mockup
+                            
                         }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
                         .offset(x: showGradientControl ? -offsetValue : 0)
                         .animation(.bouncy, value: showGradientControl)

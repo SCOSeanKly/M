@@ -82,7 +82,7 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
     
     var body: some View {
         
-        VStack(spacing: 20) {
+        VStack(spacing: 0) {
             
             //MARK: Coverflow style
             if showCoverFlow {
@@ -134,8 +134,8 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
                 }
             }
             .disabled(false)
-            .scaleEffect(0.8)
-            .offset(y: showCoverFlow ? -65 : 0)
+            .scaleEffect(0.6)
+            .offset(y: showCoverFlow ? -65 : -20)
         }
         .scrollIndicators(.hidden)
         .scrollTargetBehavior(.viewAligned)

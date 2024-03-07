@@ -6,6 +6,8 @@
 //
 
 import SwiftUI
+import SwiftUIIntrospect
+import IsScrolling
 
 struct ApplicationSettings: View {
     
@@ -16,7 +18,6 @@ struct ApplicationSettings: View {
     @Binding var buyClicked: Bool
     @Binding var showCoverFlow: Bool
     @Binding var showOnboarding: Bool
-    
     var symbolName: String {
         switch obj.appearance.selectedAppearance {
         case .light:
@@ -27,7 +28,6 @@ struct ApplicationSettings: View {
             return "rays"
         }
     }
-    
     var appearanceName: String {
         switch obj.appearance.selectedAppearance {
         case .light:
@@ -38,7 +38,6 @@ struct ApplicationSettings: View {
             return " System"
         }
     }
-    
     var colorScheme: ColorScheme? {
         switch obj.appearance.selectedAppearance {
         case .light:
@@ -49,7 +48,6 @@ struct ApplicationSettings: View {
             return nil
         }
     }
-    
     var gridStyle: String {
         switch obj.appearance.showTwoWallpapers {
         case true:
@@ -59,6 +57,8 @@ struct ApplicationSettings: View {
         }
     }
     
+    @Binding var isScrollingSettings: Bool
+    
     
     var body: some View {
         
@@ -66,296 +66,301 @@ struct ApplicationSettings: View {
             
             //MARK: Title
             HStack {
-                Text("Application Settings")
-                    .font(.headline)
+                Text("Settings")
+                    .font(.largeTitle.bold())
                 
                 Spacer()
             }
-            .padding([.horizontal, .top])
-            .padding(.top)
+         //   .padding([.leading, .top])
+            .padding(.leading)
+
             
             //MARK: Donation View
             ScrollView(.vertical, showsIndicators: false) {
-                
-                UnlockPremiumView(obj: obj, iapID: IAP.purchaseID_UnlockPremium, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked)
-                
-                DonationView(obj: obj)
-                
-                Divider()
+                Group {
+                    UnlockPremiumView(obj: obj, iapID: IAP.purchaseID_UnlockPremium, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked)
+                    
+                    DonationView(obj: obj)
+                    
+                    Divider()
+                        .padding(.horizontal)
+                        .padding(.vertical, 5)
+                    
+                    //MARK: Application settings
+                    Group {
+                        
+                        //MARK: Onboarding diabled for now
+                        /*
+                         VStack {
+                         HStack {
+                         Image(systemName: "questionmark.circle")
+                         .font(.title3)
+                         
+                         Text("Restart OnBoarding Help: ")
+                         .font(.system(size: obj.appearance.settingsSliderFontSize))
+                         
+                         Spacer()
+                         
+                         AnimatedButton(action: {
+                         
+                         obj.appearance.showApplicationSettings.toggle()
+                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+                         showOnboarding.toggle()
+                         }
+                         
+                         }, sfSymbolName: "book.and.wrench", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "", overlaySymbolColor: .primary)
+                         .padding(5)
+                         .background(.ultraThinMaterial)
+                         .clipShape(Circle())
+                         }
+                         
+                         HStack {
+                         Text("Shows the onboarding help screens")
+                         .font(.system(size: obj.appearance.settingsSliderFontSize))
+                         .foregroundStyle(.gray)
+                         
+                         Spacer()
+                         
+                         }
+                         }
+                         .padding(.vertical, 2.5)
+                         */
+                        
+                        
+                        VStack {
+                            
+                            HStack {
+                                Image(systemName: "hand.tap")
+                                    .font(.title3)
+                                
+                                Text("Enable Import Tap Gestures: ")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                + Text("\(obj.appearance.enableImportTapGestures ? " Enabled" : " Disabled")")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
+                                
+                                Spacer()
+                                
+                                CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.enableImportTapGestures, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                    .offset(x: 15)
+                            }
+                            
+                            HStack {
+                                Text("Toggle on and off to allow single tap to import screenshot, double tap to import a background")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    .foregroundStyle(.gray)
+                                
+                                
+                                Spacer()
+                                
+                            }
+                        }
+                        .padding(.vertical, 2.5)
+                        
+                        VStack {
+                            HStack {
+                                
+                                Image(systemName: "rectangle.grid.3x2")
+                                    .font(.title3)
+                                
+                                Text("3 or 2 Wallpaper Columns: ")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                
+                                + Text ("\(gridStyle)")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
+                                
+                                Spacer()
+                                
+                                
+                                CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showTwoWallpapers, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                    .offset(x: 15)
+                                
+                            }
+                            
+                            HStack {
+                                Text("Switch between a 3 and 2 column style")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    .foregroundStyle(.gray)
+                                
+                                
+                                Spacer()
+                                
+                            }
+                        }
+                        .padding(.vertical, 2.5)
+                        
+                        VStack {
+                            HStack {
+                                
+                                Image(systemName: "lightbulb.min")
+                                    .font(.title3)
+                                
+                                Text("Appearance Mode: ")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                
+                                + Text ("\(appearanceName)")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
+                                
+                                Spacer()
+                                
+                                AnimatedButton(action: {
+                                    
+                                    isTapped.toggle()
+                                    
+                                    switch obj.appearance.selectedAppearance {
+                                    case .system:
+                                        obj.appearance.selectedAppearance = .light
+                                    case .light:
+                                        obj.appearance.selectedAppearance = .dark
+                                    case .dark:
+                                        obj.appearance.selectedAppearance = .system
+                                    }
+                                    
+                                }, sfSymbolName: symbolName, rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
+                                .padding(5)
+                                .background(.ultraThinMaterial)
+                                .clipShape(Circle())
+                            }
+                            
+                            HStack {
+                                Text("Switch between system, light and dark mode")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    .foregroundStyle(.gray)
+                                
+                                
+                                Spacer()
+                                
+                            }
+                        }
+                        .padding(.vertical, 2.5)
+                    }
                     .padding(.horizontal)
-                    .padding(.vertical, 5)
-                
-                //MARK: Application settings
-                Group {
                     
-                    //MARK: Onboarding diabled for now
-                    /*
-                    VStack {
-                        HStack {
-                            Image(systemName: "questionmark.circle")
-                                .font(.title3)
-                            
-                            Text("Restart OnBoarding Help: ")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            
-                            Spacer()
-                            
-                            AnimatedButton(action: {
+                    
+                    //MARK: Select Icon view
+                    SelectIconView(obj: obj)
+                    
+                    Divider()
+                        .padding([.horizontal, .vertical])
+                    
+                    
+                    
+                    Group {
+                        
+                        VStack {
+                            HStack {
                                 
-                                obj.appearance.showApplicationSettings.toggle()
-                                DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                                    showOnboarding.toggle()
-                                }
-            
-                            }, sfSymbolName: "book.and.wrench", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "", overlaySymbolColor: .primary)
-                            .padding(5)
-                            .background(.ultraThinMaterial)
-                            .clipShape(Circle())
-                        }
-                        
-                        HStack {
-                            Text("Shows the onboarding help screens")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
-                            
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.vertical, 2.5)
-                     */
-                    
-                    
-                    VStack {
-                        
-                        HStack {
-                            Image(systemName: "hand.tap")
-                                .font(.title3)
-                            
-                            Text("Enable Import Tap Gestures: ")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            + Text("\(obj.appearance.enableImportTapGestures ? " Enabled" : " Disabled")")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
-                            
-                            Spacer()
-                            
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.enableImportTapGestures, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
-                                .offset(x: 15)
-                        }
-                        
-                        HStack {
-                            Text("Toggle on and off to allow single tap to import screenshot, double tap to import a background")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
-                            
-                            
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.vertical, 2.5)
-                    
-                    VStack {
-                        HStack {
-                            
-                            Image(systemName: "rectangle.grid.3x2")
-                                .font(.title3)
-                            
-                            Text("3 or 2 Wallpaper Columns: ")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            
-                            + Text ("\(gridStyle)")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
-                            
-                            Spacer()
-                            
-                            
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showTwoWallpapers, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
-                                .offset(x: 15)
-                            
-                        }
-                        
-                        HStack {
-                            Text("Switch between a 3 and 2 column style")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
-                            
-                            
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.vertical, 2.5)
-                    
-                    VStack {
-                        HStack {
-                            
-                            Image(systemName: "lightbulb.min")
-                                .font(.title3)
-                            
-                            Text("Appearance Mode: ")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            
-                            + Text ("\(appearanceName)")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize).smallCaps())
-                            
-                            Spacer()
-                            
-                            AnimatedButton(action: {
+                                Image(systemName: "square.stack.3d.down.right")
+                                    .font(.title3)
                                 
-                                isTapped.toggle()
-                                
-                                switch obj.appearance.selectedAppearance {
-                                case .system:
-                                    obj.appearance.selectedAppearance = .light
-                                case .light:
-                                    obj.appearance.selectedAppearance = .dark
-                                case .dark:
-                                    obj.appearance.selectedAppearance = .system
+                                Text("Mockup Coverflow View:")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                if !showPremiumContent {
+                                    Text("(PREMIUM)")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
                                 }
                                 
-                            }, sfSymbolName: symbolName, rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
-                            .padding(5)
-                            .background(.ultraThinMaterial)
-                            .clipShape(Circle())
+                                Spacer()
+                                
+                                CustomToggle(showTitleText: false, titleText: "", bindingValue: $showCoverFlow, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                    .offset(x: 15)
+                                
+                            }
+                            
+                            HStack {
+                                Text("Switch between Coverflow and Slide view")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    .foregroundStyle(.gray)
+                                
+                                
+                                Spacer()
+                                
+                            }
                         }
+                        .padding(.vertical, 2.5)
                         
-                        HStack {
-                            Text("Switch between system, light and dark mode")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
+                        VStack {
+                            HStack {
+                                Image(systemName: "doc.plaintext")
+                                    .font(.title3)
+                                
+                                Text("Show AI prompt:")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                if !showPremiumContent {
+                                    Text("(PREMIUM)")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                }
+                                
+                                Spacer()
+                                
+                                CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showAIPromptText, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                    .offset(x: 15)
+                            }
                             
-                            
-                            Spacer()
-                            
+                            HStack {
+                                Text("Shows the AI prompt text when available in the fullscreen wallpaper view")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    .foregroundStyle(.gray)
+                                //  .frame(width: UIScreen.main.bounds.width * 0.8)
+                                
+                                Spacer()
+                                
+                            }
                         }
+                        .padding(.vertical, 2.5)
+                        
+                        VStack {
+                            HStack {
+                                Image(systemName: "camera.filters")
+                                    .font(.title3)
+                                
+                                Text("Load full resolution preview:")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                if !showPremiumContent {
+                                    Text("(PREMIUM)")
+                                        .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                }
+                                
+                                Spacer()
+                                
+                                CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showFullResPreview, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
+                                    .offset(x: 15)
+                            }
+                            
+                            HStack {
+                                Text("Loads the preview wallpaper image in full resolution")
+                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
+                                    .foregroundStyle(.gray)
+                                //   .frame(width: UIScreen.main.bounds.width * 0.8)
+                                
+                                Spacer()
+                                
+                            }
+                        }
+                        .padding(.vertical, 2.5)
                     }
-                    .padding(.vertical, 2.5)
+                    .padding(.horizontal)
+                    .disabled(!showPremiumContent)
+                    .opacity(showPremiumContent ? 1 : 0.5)
+                    
+                    Divider()
+                        .padding([.horizontal, .top])
+                    
+                    //MARK: Info view
+                    InfoView(obj: obj)
                 }
-                .padding(.horizontal)
-                
-                
-                //MARK: Select Icon view
-                SelectIconView(obj: obj)
-                
-                Divider()
-                    .padding([.horizontal, .vertical])
-                
-                
-                
-                Group {
-                    
-                    VStack {
-                        HStack {
-                            
-                            Image(systemName: "square.stack.3d.down.right")
-                                .font(.title3)
-                            
-                            Text("Mockup Coverflow View:")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            if !showPremiumContent {
-                                Text("(PREMIUM)")
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            }
-                            
-                            Spacer()
-                            
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $showCoverFlow, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
-                                .offset(x: 15)
-                            
-                        }
-                        
-                        HStack {
-                            Text("Switch between Coverflow and Slide view")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
-                            
-                            
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.vertical, 2.5)
-                    
-                    VStack {
-                        HStack {
-                            Image(systemName: "doc.plaintext")
-                                .font(.title3)
-                            
-                            Text("Show AI prompt:")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            if !showPremiumContent {
-                                Text("(PREMIUM)")
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            }
-                            
-                            Spacer()
-                            
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showAIPromptText, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
-                                .offset(x: 15)
-                        }
-                        
-                        HStack {
-                            Text("Shows the AI prompt text when available in the fullscreen wallpaper view")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
-                            //  .frame(width: UIScreen.main.bounds.width * 0.8)
-                            
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.vertical, 2.5)
-                    
-                    VStack {
-                        HStack {
-                            Image(systemName: "camera.filters")
-                                .font(.title3)
-                            
-                            Text("Load full resolution preview:")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            if !showPremiumContent {
-                                Text("(PREMIUM)")
-                                    .font(.system(size: obj.appearance.settingsSliderFontSize))
-                            }
-                            
-                            Spacer()
-                            
-                            CustomToggle(showTitleText: false, titleText: "", bindingValue: $obj.appearance.showFullResPreview, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: false, onColor: .green, offColor: .gray, obj: obj)
-                                .offset(x: 15)
-                        }
-                        
-                        HStack {
-                            Text("Loads the preview wallpaper image in full resolution")
-                                .font(.system(size: obj.appearance.settingsSliderFontSize))
-                                .foregroundStyle(.gray)
-                            //   .frame(width: UIScreen.main.bounds.width * 0.8)
-                            
-                            Spacer()
-                            
-                        }
-                    }
-                    .padding(.vertical, 2.5)
-                }
-                .padding(.horizontal)
-                .disabled(!showPremiumContent)
-                .opacity(showPremiumContent ? 1 : 0.5)
-                
-                Divider()
-                    .padding([.horizontal, .top])
-                
-                //MARK: Info view
-                InfoView(obj: obj)
+                .scrollSensor()
                 
             }
+            
         }
+        .scrollStatusMonitor($isScrollingSettings, monitorMode: .common)
         .onAppear {
             let _ = IAP.shared
         }
         .preferredColorScheme(colorScheme)
         .sensoryFeedback(.selection, trigger: isTapped)
-        .customPresentationWithBlur(detent: .large, blurRadius: 0, backgroundColorOpacity: 1.0)
-        .ignoresSafeArea()
+     //   .customPresentationWithBlur(detent: .large, blurRadius: 0, backgroundColorOpacity: 1.0)
+       // .ignoresSafeArea()
     }
 }
 

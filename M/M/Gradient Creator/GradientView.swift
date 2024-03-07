@@ -50,6 +50,7 @@ struct GradientView: View {
     @State private var isZooming: Bool = false
     @StateObject var obj = Object()
     @State private var allowPixellateEffect: Bool = false
+    @Binding var activeTab: Tab
     
     
     
@@ -58,7 +59,8 @@ struct GradientView: View {
         var id: String { self.rawValue }
     }
     
-    init(isShowingGradientView: Binding<Bool>, importedBackground: Binding<UIImage?>) {
+    init(isShowingGradientView: Binding<Bool>, importedBackground: Binding<UIImage?>, activeTab: Binding<Tab>) {
+        _activeTab = activeTab
         _importedBackground = importedBackground
         _isShowingGradientView = isShowingGradientView
         _selectedURLOverlayImages = State(initialValue: [])
@@ -99,17 +101,16 @@ struct GradientView: View {
             HalfBlurView(showHalfBlur: $showHalfBlur)
             
         }
-        
         .frame(width: screenWidth, height: screenHeight)
         .clipShape(Rectangle())
-        .ignoresSafeArea()
+        .ignoresSafeArea(.all)
         .addPinchZoom(isZooming: $isZooming)
-        .gesture(DragGesture(minimumDistance: 30, coordinateSpace: .global)
-            .onEnded { value in
-                if value.translation.height > 0 {
-                    isShowingGradientView = false
-                }
-            })
+//        .gesture(DragGesture(minimumDistance: 30, coordinateSpace: .global)
+//            .onEnded { value in
+//                if value.translation.height > 0 {
+//                    isShowingGradientView = false
+//                }
+//            })
         .onTapGesture (count: 2) {
             feedback()
             isSavingImage = true
@@ -141,7 +142,7 @@ struct GradientView: View {
         .overlay{
             if !isZooming {
                 //MARK: Screen Buttons
-                OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImages: $selectedURLOverlayImages, importedImageOverlay: $importedImageOverlay)
+                OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImages: $selectedURLOverlayImages, importedImageOverlay: $importedImageOverlay, activeTab: $activeTab)
             }
         }
         .sheet(isPresented: $showGradientControl){

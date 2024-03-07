@@ -7,6 +7,8 @@
 
 import SwiftUI
 import SwiftUIX
+import SwiftUIIntrospect
+import IsScrolling
 
 
 struct URLImages: View {
@@ -39,15 +41,17 @@ struct URLImages: View {
     @State private var premiumRequiredAlert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @Binding var isZooming: Bool
     @Binding var importedBackground: UIImage?
+    @Binding var activeTab: Tab
+    @Binding var isScrolling: Bool
+    
     
     var body: some View {
-        ZStack {
             VStack {
                 
-                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground)
+                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, activeTab: $activeTab)
                 
                 if !viewModelData.images.isEmpty {
-                    ScrollViewReader(content: { proxy in
+                 
                         ScrollView(.vertical, showsIndicators: true) {
                             LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
                                 ForEach(viewModelData.images.indices.reversed(), id: \.self) { index in
@@ -67,10 +71,11 @@ struct URLImages: View {
                                         obj: obj,
                                         premiumRequiredAlert: $premiumRequiredAlert
                                     )
+                                    .scrollSensor()
                                 }
                             }
+                            .scrollStatusMonitor($isScrolling, monitorMode: .common)
                             .padding(10)
-                            .scrollTargetLayout()
                             
                             Spacer()
                                 .frame(height: 100)
@@ -79,8 +84,6 @@ struct URLImages: View {
                             // Handle pull-to-refresh here
                             viewModelData.forceRefresh.toggle()
                         }
-                    })
-                    
                 } else {
                     // Show loading images view when no images have been loaded yet
                     LoadingImagesView(obj: obj)
@@ -88,11 +91,11 @@ struct URLImages: View {
                 
                 Spacer()
             }
-        }
+        
         .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
         .fullScreenCover(item: $selectedImage) { image in
-            SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, isZooming: $isZooming, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, selectedImage: $selectedImage)
+            SheetContentView(viewModel: viewModelData, image: image, viewModelContent: viewModelContent, saveState: $saveState, obj: obj, isZooming: $isZooming, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, selectedImage: $selectedImage, activeTab: $activeTab)
                 .onDisappear {
                     viewModelData.loadImages()
                 }
@@ -158,3 +161,4 @@ struct URLImages: View {
     }
     
 }
+

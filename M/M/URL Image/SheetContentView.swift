@@ -28,9 +28,10 @@ struct SheetContentView: View {
     @Binding var isShowingGradientView: Bool
     @Binding var importedBackground: UIImage?
     @Binding var selectedImage: ImageModel?
+    @Binding var activeTab: Tab
 
     var body: some View {
-        LargeImageView(image: image, viewModelContent: viewModelContent, obj: obj, showPremiumContent: $showPremiumContent, isZooming: $isZooming, isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, selectedImage: $selectedImage)
+        LargeImageView(image: image, viewModelContent: viewModelContent, obj: obj, showPremiumContent: $showPremiumContent, isZooming: $isZooming, isNoAIPromptVisible: $isNoAIPromptVisible, isNoAIPromptVisibleAnimation: $isNoAIPromptVisibleAnimation, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, selectedImage: $selectedImage, activeTab: $activeTab)
             .overlay {
                 VStack {
                     Spacer()

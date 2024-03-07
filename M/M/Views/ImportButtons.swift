@@ -23,8 +23,10 @@ struct importButtons: View {
             ZStack {
                 WallpaperButtonView(isTapped: $isTapped, obj: obj, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
                
+
                 Pill(viewModel: viewModel, obj: obj, saveCount: $saveCount, isTapped: $isTapped)
             }
+            
             Spacer()
         }
         .sensoryFeedback(.selection, trigger: isTapped)
@@ -223,6 +225,7 @@ private struct WallpaperButtonView: View {
     @StateObject var viewModelData: DataViewModel
     
     var body: some View {
+        /*
         HStack {
             Group { //MARK: Show Wallpaper Button
                 
@@ -250,6 +253,18 @@ private struct WallpaperButtonView: View {
             Spacer()
         }
         .wallpaperButtonModifier(obj: obj, normalScale: 1)
+         */
+        
+        
+      
+            HStack {
+                Text("Mockup")
+                    .font(.largeTitle.bold())
+                Spacer()
+            }
+            .wallpaperButtonModifier(obj: obj, normalScale: 1)
+     
+        
     }
 }
 

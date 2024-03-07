@@ -33,6 +33,7 @@ struct MockupView: View {
     @Binding var showCoverFlow: Bool
     @Binding var showOnboarding: Bool
     @Binding var isShowingGradientView: Bool
+    @Binding var isScrollingSettings: Bool
    
     
     var body: some View {
@@ -77,7 +78,7 @@ struct MockupView: View {
                 SettingsView(viewModel: viewModel, obj: obj)
             })
             .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
-                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding)
+                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isScrollingSettings: $isScrollingSettings)
             })
             //MARK: Pill Buttons for importing images etc
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
