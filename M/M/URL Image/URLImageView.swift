@@ -43,12 +43,13 @@ struct URLImages: View {
     @Binding var importedBackground: UIImage?
     @Binding var activeTab: Tab
     @Binding var isScrolling: Bool
+    @StateObject var newCreatorsViewModel: NewImagesViewModel
     
     
     var body: some View {
             VStack {
                 
-                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, activeTab: $activeTab)
+                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, activeTab: $activeTab, newCreatorsViewModel: newCreatorsViewModel)
                 
                 if !viewModelData.images.isEmpty {
                  
@@ -79,6 +80,11 @@ struct URLImages: View {
                             
                             Spacer()
                                 .frame(height: 100)
+                        }
+                        .onAppear {
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                                newCreatorsViewModel.reloadData()
+                            }
                         }
                         .refreshable {
                             // Handle pull-to-refresh here

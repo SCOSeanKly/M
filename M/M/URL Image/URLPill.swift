@@ -13,6 +13,7 @@ struct URLPill: View {
     @State private var isTapped: Bool = false
     @State private var isTappedProminent: Bool = false
     @StateObject var viewModelData: DataViewModel
+    @StateObject var newCreatorsViewModel: NewImagesViewModel
     
     var body: some View {
         
@@ -23,6 +24,8 @@ struct URLPill: View {
                     .font(.largeTitle.bold())
                     .onChange(of: viewModelData.creatorName) {
                         viewModelData.forceRefresh.toggle()
+                     
+
                     }
                     .opacity(obj.appearance.showPill ? 1: 0)
                     .offset(x: obj.appearance.showPill ?  0 : -100)
@@ -74,6 +77,11 @@ struct URLPill: View {
                 }
             }
         }
+//        .onAppear{
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+//                newCreatorsViewModel.reloadData()
+//            }
+//        }
     }
 }
 

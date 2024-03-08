@@ -23,6 +23,7 @@ struct ButtonView: View {
     @State private var buttonScale: Bool = false
     @Binding var importedBackground: UIImage?
     @Binding var activeTab: Tab
+    @StateObject var newCreatorsViewModel: NewImagesViewModel
     
     var body: some View {
         VStack {
@@ -81,7 +82,7 @@ struct ButtonView: View {
                  */
                                 
                 //MARK: URL Pill view showing wallpapewr creators
-                URLPill(obj: obj, viewModelData: viewModelData)
+                URLPill(obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
             }
             .sensoryFeedback(.selection, trigger: isTapped)
             .padding(.horizontal)
