@@ -29,6 +29,7 @@ struct GradientView: View {
     @State private var bgColor = (Color.black)
     @State private var showGradientControl: Bool = false
     @State private var blendModeGradient: BlendMode = .normal
+    @State private var blendModeEffects: BlendMode = .normal
     @State private var pixellate: CGFloat = 1
     @State private var amplitude: CGFloat = 0
     @State private var frequency: CGFloat = 200
@@ -38,6 +39,7 @@ struct GradientView: View {
     @State private var gradientBrightness: CGFloat = 0
     @State private var gradientContrast: CGFloat = 1
     @State private var alert: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
+    @State private var alertError: AlertConfig = .init(disableOutsideTap: false, slideEdge: .top)
     @State private var showPopoverGradientWall: Bool = false
     @State private var isTapped: Bool = false
     @State private var invertGradient: Bool = false
@@ -51,8 +53,9 @@ struct GradientView: View {
     @StateObject var obj = Object()
     @State private var allowPixellateEffect: Bool = false
     @Binding var activeTab: Tab
-    
-    
+    @State private var importedBackgroundOpacity: CGFloat = 1
+    @State private var effectsOpacity: CGFloat = 1
+    @State private var hideGradient: Bool = false
     
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
@@ -68,71 +71,59 @@ struct GradientView: View {
         isShowingGradientSavedNotification = false
     }
     
+    @State private var showOverlaysView: Bool = false
     
     var body: some View {
         
         //MARK: Image layers
         ZStack {
-            
             //MARK: Rearmost background colour
             Rectangle()
-                .foregroundColor(bgColor)
+                .foregroundColor(hideGradient ? .clear : bgColor)
             
-            //MARK: Gradient Background - 1
-            GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, allowPixellateEffect: $allowPixellateEffect)
-            
-            //MARK: Gradient Background - 2
-            if blendModeGradient != .normal {
-                GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, allowPixellateEffect: $allowPixellateEffect)
-                    .blendMode(blendModeGradient)
+            if !isSavingImage {
+                Checkerboard(rows: 58.5, columns: 27)
+                    .fill(.gray.opacity(0.2))
+                    .frame(width: screenWidth, height: screenHeight)
+                    .ignoresSafeArea()
             }
-            //MARK: Adds a blurred overlay to gradient views
-            GradientBlurView(gradientBlur: $gradientBlur)
+            
+            if !hideGradient {
+                //MARK: Gradient Background - 1
+                GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, allowPixellateEffect: $allowPixellateEffect)
+                
+                //MARK: Gradient Background - 2
+                if blendModeGradient != .normal {
+                    GradientBackground(gradientColors: selectedColors(), gradientStyle: gradientStyle, refreshButtonTapped: $refreshButtonTapped, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientBlur: $gradientBlur, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, allowPixellateEffect: $allowPixellateEffect)
+                        .blendMode(blendModeGradient)
+                }
+                
+                //MARK: Adds a blurred overlay to gradient views
+                GradientBlurView(gradientBlur: $gradientBlur)
+            }
             
             //MARK: URL Overlay effects
-            ForEach(selectedURLOverlayImages) { image in
-                OverlaysImageView(image: image)
-            }
+            OverlaysView(selectedURLOverlayImages: $selectedURLOverlayImages, importedImageOverlay: $importedImageOverlay, blendModeEffects: $blendModeEffects, effectsOpacity: $effectsOpacity)
             
             //MARK: Overlay image from photos
-            GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
+          //  GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
             
             //MARK: Adds a half blur on the left side
-            HalfBlurView(showHalfBlur: $showHalfBlur)
+          //  HalfBlurView(showHalfBlur: $showHalfBlur)
             
         }
+        .background(.clear)
         .frame(width: screenWidth, height: screenHeight)
         .clipShape(Rectangle())
         .ignoresSafeArea(.all)
         .addPinchZoom(isZooming: $isZooming)
-//        .gesture(DragGesture(minimumDistance: 30, coordinateSpace: .global)
-//            .onEnded { value in
-//                if value.translation.height > 0 {
-//                    isShowingGradientView = false
-//                }
-//            })
-        .onTapGesture (count: 2) {
-            feedback()
-            isSavingImage = true
-            
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                saveImageToPhotoLibrary()
-                
-                DispatchQueue.main.async {
-                    alert.present()
-                    
-                    performDelayedAction(after: 2.0) {
-                        alert.dismiss()
-                        
-                        performDelayedAction(after: 0.3) {
-                            isSavingImage = false
-                        }
-                    }
-                }
-            }
-        }
         .alert(alertConfig: $alert) {
-            alertPreferences(title: "Saved Successfully!", imageName: "checkmark.circle")
+            alertPreferences(title: !hideGradient ? "Saved Successfully!" : "Exported Successfully!",
+                                        imageName: "checkmark.circle")
+        }
+        .alert(alertConfig: $alertError) {
+            alertPreferences(title: "Error Saving!",
+                                        imageName: "exclamationmark.triangle")
         }
         .onTapGesture {
             withAnimation(.bouncy) {
@@ -142,12 +133,12 @@ struct GradientView: View {
         .overlay{
             if !isZooming {
                 //MARK: Screen Buttons
-                OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImages: $selectedURLOverlayImages, importedImageOverlay: $importedImageOverlay, activeTab: $activeTab)
+                OverlayButtonsView(isSavingImage: $isSavingImage, showGradientControl: $showGradientControl, isTapped: $isTapped, isShowingGradientView: $isShowingGradientView, gradientStyle: $gradientStyle, blendModeGradient: $blendModeGradient, showGradientBgPickerSheet: $showGradientBgPickerSheet, showImageOverlayPickerSheet: $showImageOverlayPickerSheet, refreshButtonTapped: $refreshButtonTapped, alert: $alert, alertError: $alertError, importedBackground: $importedBackground, showOverlaysURLView: $showOverlaysURLView, selectedURLOverlayImages: $selectedURLOverlayImages, importedImageOverlay: $importedImageOverlay, activeTab: $activeTab, hideGradient: $hideGradient)
             }
         }
         .sheet(isPresented: $showGradientControl){
             //MARK: These are the buttons and control sliders
-            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, allowPixellateEffect: $allowPixellateEffect)
+            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, blendModeEffects: $blendModeEffects, allowPixellateEffect: $allowPixellateEffect, importedBackgroundOpacity: $importedBackgroundOpacity, effectsOpacity: $effectsOpacity, hideGradient: $hideGradient)
         }
         .fullScreenCover(isPresented: $showGradientBgPickerSheet) {
             createFullScreenCover(for: $importedBackground) { BgImage in
@@ -163,6 +154,11 @@ struct GradientView: View {
             LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImages: $selectedURLOverlayImages, showOverlaysURLView: $showOverlaysURLView, obj: obj)
         }
     }
+    
+  
+  
+
+       
     
     func alertPreferences(title: String, imageName: String) -> some View {
         Text("\(Image(systemName: imageName)) \(title)")
@@ -196,37 +192,6 @@ struct GradientView: View {
         .edgesIgnoringSafeArea(.bottom)
     }
     
-    //MARK: Save image function PNG
-    func saveImageToPhotoLibrary() {
-        guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-              let window = windowScene.windows.first else {
-            return
-        }
-        
-        let format = UIGraphicsImageRendererFormat()
-        format.scale = UIScreen.main.scale // Use the screen scale for full resolution
-        
-        let renderer = UIGraphicsImageRenderer(bounds: window.bounds, format: format)
-        let image = renderer.image { context in
-            // Add .withRenderingMode(.alwaysOriginal) to capture the original image
-            window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
-        }.withRenderingMode(.alwaysOriginal) // Apply .withRenderingMode(.alwaysOriginal) to the captured image
-        
-        PHPhotoLibrary.shared().performChanges({
-            let pngData = image.pngData() // Convert the image to PNG data
-            if let pngData = pngData {
-                let creationRequest = PHAssetCreationRequest.forAsset()
-                creationRequest.addResource(with: .photo, data: pngData, options: nil)
-            }
-        }) { _, error in
-            if let error = error {
-                print("Failed to save image to photo library:", error)
-            } else {
-                print("Image saved to photo library successfully.")
-            }
-        }
-    }
-    
     // Timer used to close the exported image notification
     func performDelayedAction(after interval: TimeInterval, action: @escaping () -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + interval, execute: action)
@@ -257,6 +222,8 @@ struct GradientView: View {
         let generator = UIImpactFeedbackGenerator(style: .light)
         generator.impactOccurred()
     }
+    
+    
 }
 
 

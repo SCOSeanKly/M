@@ -1,87 +1,11 @@
 //
-//  NewCreators.swift
+//  NewImagesModel.swift
 //  M
 //
 //  Created by Sean Kelly on 08/03/2024.
 //
 
 import SwiftUI
-
-struct NewCreators: View {
-    @ObservedObject var newCreatorsViewModel = NewImagesViewModel()
-    @State private var isRefreshing = false
-    
-    var sortedCreators: [CreatorModel] {
-        newCreatorsViewModel.creators.sorted { $0.name < $1.name }
-    }
-    
-    var totalNewImagesCount: Int {
-        newCreatorsViewModel.creators.reduce(0) { $0 + $1.newImagesCount }
-    }
-    
-    var body: some View {
-        NavigationView {
-            
-            List(sortedCreators, id: \.name) { creator in
-                CreatorRow(creator: creator)
-            }
-            .navigationTitle("New \(totalNewImagesCount)")
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        refreshData()
-                    }) {
-                       Text("Refresh")
-                    }
-                    .disabled(isRefreshing)
-                }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        resetSeenImages()
-                    }) {
-                       Text("Reset")
-                    }
-                    .disabled(isRefreshing)
-                }
-               
-            }
-            .onAppear {
-                newCreatorsViewModel.reloadData() // Reload data when the view appears
-            }
-            
-          
-        }
-    }
-    
-    private func refreshData() {
-        isRefreshing = true
-        DispatchQueue.main.async {
-            newCreatorsViewModel.reloadData() // Reload data when refresh button is tapped
-            isRefreshing = false
-        }
-    }
-    
-    private func resetSeenImages() {
-        for index in newCreatorsViewModel.creators.indices {
-            newCreatorsViewModel.creators[index].resetSeenImages()
-        }
-    }
-}
-
-
-struct CreatorRow: View {
-    let creator: CreatorModel
-    
-    var body: some View {
-        VStack(alignment: .leading) {
-            Text("Creator: \(creator.name)")
-            Text("Total Images: \(creator.totalImagesCount)")
-            Text("New Images: \(creator.newImagesCount)")
-        }
-    }
-}
-
-
 
 class NewImagesViewModel: ObservableObject {
     @Published var creators: [CreatorModel] = []
@@ -180,13 +104,4 @@ struct CreatorModel {
     func resetSeenImages() {
         UserDefaults.standard.removeObject(forKey: "\(name)_seenImages")
     }
-}
-
-
-
-
-
-
-#Preview {
-    NewCreators()
 }

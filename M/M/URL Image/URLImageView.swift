@@ -82,7 +82,8 @@ struct URLImages: View {
                                 .frame(height: 100)
                         }
                         .onAppear {
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 10) {
+                            //MARK: Dismisses new wallpapers added notification
+                            DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
                                 newCreatorsViewModel.reloadData()
                             }
                         }

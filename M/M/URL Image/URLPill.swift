@@ -52,7 +52,7 @@ struct URLPill: View {
                                     URLTextViewOne(viewModelData: viewModelData)
                                         .opacity(obj.appearance.showPill ? 1 : 0)
                                     
-                                    URLTextViewTwo(obj: obj, viewModelData: viewModelData)
+                                    URLTextViewTwo(obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
                                         .opacity(obj.appearance.showPill ? 0 : 1)
                                 }
                                 .frame(width: 200, alignment: .leading)
@@ -77,11 +77,6 @@ struct URLPill: View {
                 }
             }
         }
-//        .onAppear{
-//            DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
-//                newCreatorsViewModel.reloadData()
-//            }
-//        }
     }
 }
 
@@ -121,22 +116,37 @@ private struct URLTextViewOneSizer: View {
 private struct URLTextViewTwo: View {
     @StateObject var obj: Object
     @StateObject var viewModelData: DataViewModel
+    @ObservedObject var newCreatorsViewModel: NewImagesViewModel
     
     var body: some View {
-        ScrollView (.horizontal, showsIndicators: false) {
+        ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 ForEach(obj.appearance.avatarNames, id: \.self) { avatarName in
                     AvatarButton(avatarName: avatarName, viewModelData: viewModelData, obj: obj)
+                        .overlay {
+                            if let creatorName = newCreatorsViewModel.creators.first(where: { $0.name == avatarName }),
+                               creatorName.newImagesCount > 0 {
+                                Text("\(creatorName.newImagesCount)")
+                                    .foregroundStyle(.white)
+                                    .font(.system(size: 6).weight(.bold))
+                                    .padding(.horizontal, 3)
+                                    .padding(.vertical, 1.5)
+                                    .background {
+                                        Color.red
+                                            .clipShape(RoundedRectangle(cornerRadius: 50))
+                                    }
+                                    .offset(x: 8, y: 10)
+                            }
+                        }
                         .padding(.horizontal, 4)
                 }
             }
-          
         }
         .frame(width: UIScreen.main.bounds.width * 0.65, height: 30, alignment: .center)
         .cornerRadius(100)
-        
     }
 }
+
 
 private struct AvatarButton: View {
     let avatarName: String

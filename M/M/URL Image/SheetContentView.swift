@@ -60,7 +60,7 @@ struct SheetContentView: View {
             }
         
     }
-
+/*
     private func saveImage() {
         saveState = .saving
         
@@ -125,6 +125,69 @@ struct SheetContentView: View {
             }
         }
     }
+ */
+    private func saveImage() {
+        saveState = .saving
+        
+        guard var urlComponents = URLComponents(string: image.image) else {
+            saveState = .idle
+            return
+        }
+        
+        if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
+            if let imageName = pathComponents.last {
+                let modifiedImageName: String
+                if imageName.lowercased().hasSuffix(".jpg") {
+                    modifiedImageName = imageName.replacingOccurrences(of: ".jpg", with: "_fullRes.PNG", options: .caseInsensitive)
+                } else {
+                    modifiedImageName = imageName
+                }
+                
+                pathComponents[pathComponents.count - 1] = modifiedImageName
+                urlComponents.path = pathComponents.joined(separator: "/")
+                
+                guard let modifiedURL = urlComponents.url else {
+                    saveState = .idle
+                    return
+                }
+                
+                let delegate = ImageDownloadDelegate(saveState: $saveState, progressCallback: { progress in
+                    // Update the progress in your UI
+                    downloadProgress = progress
+                })
+
+                let delegateQueue = OperationQueue.main
+                let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: delegateQueue)
+
+                let dataTask = session.dataTask(with: modifiedURL)
+                delegate.task = dataTask
+
+                // Resume the data task
+                dataTask.resume()
+
+                URLSession.shared.dataTask(with: modifiedURL) { data, response, error in
+                    if let data = data, let originalUIImage = UIImage(data: data) {
+                        // Save the original image as PNG using ImageSaver
+                        let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
+                        imageSaver.writeToPhotoAlbum(image: originalUIImage)
+                    
+                        // Introduce a delay before transitioning to "saved"
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                            saveState = .saved
+                            if downloadProgress > 0.999 {
+                                provideSuccessFeedback()
+                            }
+                        }
+                        viewModel.loadImages()
+                        print("Saved to photos")
+                    } else {
+                        saveState = .idle
+                    }
+                }.resume()
+            }
+        }
+    }
+
 
     class ImageDownloadDelegate: NSObject, URLSessionDataDelegate {
         var task: URLSessionDataTask?

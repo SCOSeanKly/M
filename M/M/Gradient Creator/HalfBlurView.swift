@@ -13,14 +13,17 @@ struct HalfBlurView: View {
     
     var body: some View {
         if showHalfBlur {
-            Rectangle()
-                .foregroundColor(.clear)
-                .background {
-                    TransparentBlurView(removeAllFilters: true)
-                        .blur(radius: 25, opaque: true)
-                }
-                .shadow(radius: 10)
-                .offset(x: -UIScreen.main.bounds.width * 0.5)
+            ZStack {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .background {
+                        TransparentBlurView(removeAllFilters: true)
+                            .blur(radius: 25, opaque: true)
+                    }
+                    .shadow(radius: 10)
+                    .offset(x: -UIScreen.main.bounds.width * 0.5)
+            }
+            .background(Color.clear)
         }
     }
 }

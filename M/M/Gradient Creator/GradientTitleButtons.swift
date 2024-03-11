@@ -34,6 +34,8 @@ struct GradientTitleButtons: View {
     @Binding var isTapped: Bool
     @Binding var showPopoverGradientWall: Bool
     @Binding var allowPixellateEffect: Bool
+    @Binding var blendModeEffects: BlendMode
+    @Binding var effectsOpacity: CGFloat
 
 
     var body: some View {
@@ -86,6 +88,8 @@ struct GradientTitleButtons: View {
                 gradientBrightness = 0
                 gradientContrast = 1
                 allowPixellateEffect = false
+                blendModeEffects = .normal
+                effectsOpacity = 1
             }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
           
             

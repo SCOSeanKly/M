@@ -25,8 +25,7 @@ enum Tab: String, CaseIterable {
             return "Creator"
         case .settings:
             return "Settings"
-//        case .news:
-//            return "News"
+
         }
     }
 }

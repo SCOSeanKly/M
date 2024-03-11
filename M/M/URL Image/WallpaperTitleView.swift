@@ -28,6 +28,7 @@ struct WallpaperCountView: View {
                             .padding(.horizontal, 8)
                             .background(.ultraThinMaterial)
                             .clipShape(RoundedRectangle(cornerRadius: 50))
+                           
                     } else {
                         ProgressView()
                             .scaleEffect(0.5)

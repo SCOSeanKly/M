@@ -73,6 +73,7 @@ struct GradientBackground: View {
                             .blendMode(blendModeImportedBackground)  
                     }
                 }
+                .background(Color.clear)
                 .distortionEffect(
                     .init(
                         function: .init(library: .default, name: "wave"),

@@ -54,7 +54,7 @@ struct MockupMView: View {
                     }
                     
                     if activeTab == .mockup {
-                        MockupView(viewModel: viewModel, obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, isScrollingSettings: $isScrollingSettings)
+                        MockupView(viewModel: viewModel, obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, isScrollingSettings: $isScrollingSettings)
                             .setUpTab(.mockup)
                     }
                     

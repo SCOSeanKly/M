@@ -94,8 +94,6 @@ struct LoadJSONView: View {
     }
 }
 
-
-
 struct URLOverlayImageView: View {
     let images: [ImageModelOverlayImage]
     let imageCornerRadius: CGFloat = 20
@@ -126,15 +124,12 @@ struct URLOverlayImageView: View {
     }
 }
 
-
-
 struct ImageModelOverlayImage: Identifiable {
     let id = UUID()
     let image: String
     let title: String
     let subtitle: String
 }
-
 
 class DataViewModelOverlays: ObservableObject {
     @Published var images: [ImageModelOverlayImage] = []
@@ -211,24 +206,31 @@ struct ImageData: Decodable {
 struct OverlaysImageView: View {
     let image: ImageModelOverlayImage
     let frameSize = CGSize(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+    @Binding var effectsOpacity: CGFloat
+    @Binding var blendModeEffects: BlendMode
     
     var body: some View {
-        
-        AsyncImage(url: URL(string: image.image)) { phase in
-            switch phase {
-            case .empty:
-                ProgressView()
-            case .success(let loadedImage):
-                loadedImage
-                    .resizable()
-                    .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
-                    .clipShape(Rectangle())
-            case .failure:
-                Image(systemName: "xmark.circle")
-            @unknown default:
-                EmptyView()
+        ZStack {
+            AsyncImage(url: URL(string: image.image)) { phase in
+                switch phase {
+                case .empty:
+                    ProgressView()
+                case .success(let loadedImage):
+                    loadedImage
+                        .resizable()
+                        .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
+                        .clipShape(Rectangle())
+                        .blendMode(blendModeEffects)
+                        .opacity(effectsOpacity)
+                        .background(Color.clear)
+                case .failure:
+                    Image(systemName: "xmark.circle")
+                @unknown default:
+                    EmptyView()
+                }
             }
         }
+        .background(Color.clear)
     }
 }
 

@@ -12,13 +12,16 @@ struct GradientBlurView: View {
     @Binding var gradientBlur: CGFloat
 
     var body: some View {
-        if gradientBlur > 0.001 {
-            Rectangle()
-                .foregroundColor(.clear)
-                .background {
-                    TransparentBlurView(removeAllFilters: true)
-                        .blur(radius: gradientBlur, opaque: true)
-                }
+        ZStack {
+            if gradientBlur > 0.001 {
+                Rectangle()
+                    .foregroundColor(.clear)
+                    .background {
+                        TransparentBlurView(removeAllFilters: true)
+                            .blur(radius: gradientBlur, opaque: true)
+                    }
+            }
         }
+        .background(Color.clear)
     }
 }

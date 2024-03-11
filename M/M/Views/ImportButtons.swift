@@ -16,12 +16,13 @@ struct importButtons: View {
     @State private var isTapped: Bool = false
     @Binding var isShowingGradientView: Bool
     @StateObject var viewModelData: DataViewModel
+    @ObservedObject var newCreatorsViewModel: NewImagesViewModel
  
     
     var body: some View {
         VStack {
             ZStack {
-                WallpaperButtonView(isTapped: $isTapped, obj: obj, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
+                WallpaperButtonView(isTapped: $isTapped, obj: obj, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
                
 
                 Pill(viewModel: viewModel, obj: obj, saveCount: $saveCount, isTapped: $isTapped)
@@ -223,6 +224,7 @@ private struct WallpaperButtonView: View {
     let showWallpaperTip = NewWallpapersSectionTip()
     @Binding var isShowingGradientView: Bool
     @StateObject var viewModelData: DataViewModel
+    @ObservedObject var newCreatorsViewModel: NewImagesViewModel
     
     var body: some View {
         /*
@@ -260,12 +262,31 @@ private struct WallpaperButtonView: View {
             HStack {
                 Text("Mockup")
                     .font(.largeTitle.bold())
+                    .onTapGesture(count: 10) {
+                        
+                        viewModelData.resetSeenImages()
+                        resetSeenImages()
+                        refreshData()
+                        
+                        feedback()
+                    }
                 Spacer()
             }
             .wallpaperButtonModifier(obj: obj, normalScale: 1)
      
-        
     }
+    private func refreshData() {
+            DispatchQueue.main.async {
+                newCreatorsViewModel.reloadData() // Reload data when refresh button is tapped
+            }
+        }
+    
+    private func resetSeenImages() {
+           for index in newCreatorsViewModel.creators.indices {
+               newCreatorsViewModel.creators[index].resetSeenImages()
+           }
+       }
+    
 }
 
 

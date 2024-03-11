@@ -14,6 +14,7 @@ struct MockupView: View {
     @StateObject var obj: Object
     @StateObject var viewModelData: DataViewModel
     @AppStorage("saveCount") private var saveCount: Int = 0
+    @ObservedObject var newCreatorsViewModel: NewImagesViewModel
     
     var colorScheme: ColorScheme? {
         switch obj.appearance.selectedAppearance {
@@ -87,7 +88,7 @@ struct MockupView: View {
                 ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isScrollingSettings: $isScrollingSettings)
             })
             //MARK: Pill Buttons for importing images etc
-            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData)
+            importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
         }
         
         

@@ -14,12 +14,15 @@ struct GradientOverlayImageView: View {
     let screenHeight = UIScreen.main.bounds.height
   
     var body: some View {
-        if let imageOverlay = importedImageOverlay {
-            Image(uiImage: imageOverlay)
-                .resizable()
-                .aspectRatio(contentMode: .fill)
-                .frame(width: screenWidth, height: screenHeight)
-                .clipShape(Rectangle())
+        ZStack {
+            if let imageOverlay = importedImageOverlay {
+                Image(uiImage: imageOverlay)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: screenWidth, height: screenHeight)
+                    .clipShape(Rectangle())
+            }
         }
+        .background(Color.clear)
     }
 }
