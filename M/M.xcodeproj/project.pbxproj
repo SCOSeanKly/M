@@ -12,6 +12,7 @@
 		3E09B5F52B90A57A0010A47F /* UIDeviceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */; };
 		3E09B5F72B90A8660010A47F /* ImageTitleSubTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */; };
 		3E1927502B1DF1DC0029B011 /* UnlockPremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */; };
+		3E1F7C362BA06CF30004D09C /* ImageFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E1F7C352BA06CF30004D09C /* ImageFilters.swift */; };
 		3E23E90A2B0F5D1800DE4460 /* Tip Views.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E9092B0F5D1800DE4460 /* Tip Views.swift */; };
 		3E23E90C2B0F6C1000DE4460 /* FormatWalpaperCount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */; };
 		3E23E90E2B0F997700DE4460 /* ZoomGesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */; };
@@ -139,6 +140,7 @@
 		3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceIdentifier.swift; sourceTree = "<group>"; };
 		3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleSubTitleView.swift; sourceTree = "<group>"; };
 		3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPremiumView.swift; sourceTree = "<group>"; };
+		3E1F7C352BA06CF30004D09C /* ImageFilters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageFilters.swift; sourceTree = "<group>"; };
 		3E23E9092B0F5D1800DE4460 /* Tip Views.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Tip Views.swift"; sourceTree = "<group>"; };
 		3E23E90B2B0F6C1000DE4460 /* FormatWalpaperCount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormatWalpaperCount.swift; sourceTree = "<group>"; };
 		3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomGesture.swift; sourceTree = "<group>"; };
@@ -472,6 +474,7 @@
 				3EAB310C2B87970600B0D756 /* AdjustmentSettingsView.swift */,
 				3E7373C42B8CC04500F0C963 /* CustomToggleBlend.swift */,
 				3ECD71D02B9F09C70072C295 /* Checkerboard.swift */,
+				3E1F7C352BA06CF30004D09C /* ImageFilters.swift */,
 			);
 			path = "Gradient Creator";
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 				3E84DFC82B8E2C48000D139D /* LoadJSONView.swift in Sources */,
 				3E91943E2B567FA400B4EB2D /* CreatorProfiles.swift in Sources */,
 				3E69AFA22AF559B0007244C1 /* CustomImageView.swift in Sources */,
+				3E1F7C362BA06CF30004D09C /* ImageFilters.swift in Sources */,
 				3E2D61642B1B26D700C83E14 /* NewWallAddedView.swift in Sources */,
 				3E69AF972AF55913007244C1 /* LayerObjectAppearance.swift in Sources */,
 				3E67B31C2B6AA4E0003C6C73 /* FileNameView.swift in Sources */,
@@ -799,13 +803,13 @@
 		3E69AF872AF55876007244C1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM IconCamera";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM IconCamera IconPhoenix";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -828,7 +832,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.17;
+				MARKETING_VERSION = 2.0.18;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;
@@ -844,13 +848,13 @@
 		3E69AF882AF55876007244C1 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM IconCamera";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "IconBlueM IconBlueM_White IconWhiteM IconPinkM IconMultiM IconFoilMultiM IconAIM IconCamera IconPhoenix";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.4;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -873,7 +877,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/Frameworks";
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 14.0;
-				MARKETING_VERSION = 2.0.17;
+				MARKETING_VERSION = 2.0.18;
 				PRODUCT_BUNDLE_IDENTIFIER = show.m.app;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = auto;

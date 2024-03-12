@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GradientBlurView: View {
+struct BlurView: View {
     
     @Binding var blurBinding: CGFloat
 

@@ -36,6 +36,7 @@ struct OverlayButtonsView: View {
     @Binding var hideGradient: Bool
     @State private var savedImage: UIImage?
 
+  
     
     var body: some View {
         ZStack {
@@ -273,6 +274,41 @@ struct OverlayButtonsView: View {
         }
     }
     
+    /*
+   
+    //MARK: Save image function PNG
+      func saveImageToPhotoLibrary() {
+          guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
+                let window = windowScene.windows.first else {
+              return
+          }
+          
+          let format = UIGraphicsImageRendererFormat()
+          format.scale = UIScreen.main.scale // Use the screen scale for full resolution
+          format.opaque = false // Set opaque to false to preserve transparency
+          
+          let renderer = UIGraphicsImageRenderer(bounds: window.bounds, format: format)
+          let image = renderer.image { context in
+              // Add .withRenderingMode(.alwaysOriginal) to capture the original image
+              window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
+          }.withRenderingMode(.alwaysOriginal) // Apply .withRenderingMode(.alwaysOriginal) to the captured image
+          
+          PHPhotoLibrary.shared().performChanges({
+              let pngData = image.pngData() // Convert the image to PNG data
+              if let pngData = pngData {
+                  let creationRequest = PHAssetCreationRequest.forAsset()
+                  creationRequest.addResource(with: .photo, data: pngData, options: nil)
+              }
+          }) { _, error in
+              if let error = error {
+                  print("Failed to save image to photo library:", error)
+              } else {
+                  print("Image saved to photo library successfully.")
+              }
+          }
+      }
+     */
+    
     func saveImageToPhotoLibrary() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first else {
@@ -285,13 +321,14 @@ struct OverlayButtonsView: View {
         
         let renderer = UIGraphicsImageRenderer(bounds: window.bounds, format: format)
         let image = renderer.image { context in
-            window.layer.render(in: context.cgContext)
+            window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }.withRenderingMode(.alwaysOriginal)
         
         let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
         
         imageSaver.writeToPhotoAlbum(image: image)
     }
+
 
     func performDelayedAction(after interval: TimeInterval, action: @escaping () -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + interval, execute: action)

@@ -7,6 +7,10 @@
 
 import SwiftUI
 import Photos
+import CoreImage
+import CoreImage.CIFilterBuiltins
+
+
 
 struct GradientView: View {
     
@@ -57,6 +61,11 @@ struct GradientView: View {
     @State private var effectsOpacity: CGFloat = 1
     @State private var hideGradient: Bool = false
     @State private var importedBackgroundBlur: CGFloat = 0
+    @State private var importedBackgroundHue: CGFloat = 0
+    @State private var importedBackgroundSaturation: CGFloat = 1
+    @State private var importedBackgroundBrightness: CGFloat = 0
+    @State private var importedBackgroundContrast: CGFloat = 1
+    
     
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
@@ -73,6 +82,7 @@ struct GradientView: View {
     }
     
     @State private var showOverlaysView: Bool = false
+    
     
     var body: some View {
         
@@ -100,18 +110,22 @@ struct GradientView: View {
                 }
                 
                 //MARK: Adds a blurred overlay to gradient views
-                GradientBlurView(blurBinding: $gradientBlur)
+                BlurView(blurBinding: $gradientBlur)
                 
+                //MARK: Imported Background
                 if let background = importedBackground {
-                    ZStack {
-                        Image(uiImage: background)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .blendMode(blendModeImportedBackground)
-                        
-                        //MARK: Adds a blurred overlay to gradient views
-                        GradientBlurView(blurBinding: $importedBackgroundBlur)
-                    }
+                    Image(uiImage: background)
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .hueRotation(Angle(degrees: importedBackgroundHue))
+                        .saturation(importedBackgroundSaturation)
+                        .contrast(importedBackgroundContrast)
+                        .brightness(importedBackgroundBrightness)
+                        .blendMode(blendModeImportedBackground)
+                        .overlay {
+                            //MARK: Adds a blurred overlay to gradient views
+                            BlurView(blurBinding: $importedBackgroundBlur)
+                        }
                 }
             }
             
@@ -132,11 +146,11 @@ struct GradientView: View {
         .addPinchZoom(isZooming: $isZooming)
         .alert(alertConfig: $alert) {
             alertPreferences(title: !hideGradient ? "Saved Successfully!" : "Exported Successfully!",
-                                        imageName: "checkmark.circle")
+                             imageName: "checkmark.circle")
         }
         .alert(alertConfig: $alertError) {
             alertPreferences(title: "Error Saving!",
-                                        imageName: "exclamationmark.triangle")
+                             imageName: "exclamationmark.triangle")
         }
         .onTapGesture {
             withAnimation(.bouncy) {
@@ -151,7 +165,7 @@ struct GradientView: View {
         }
         .sheet(isPresented: $showGradientControl){
             //MARK: These are the buttons and control sliders
-            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, blendModeEffects: $blendModeEffects, allowPixellateEffect: $allowPixellateEffect, importedBackgroundOpacity: $importedBackgroundOpacity, effectsOpacity: $effectsOpacity, hideGradient: $hideGradient, importedBackgroundBlur: $importedBackgroundBlur)
+            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, blendModeEffects: $blendModeEffects, allowPixellateEffect: $allowPixellateEffect, importedBackgroundOpacity: $importedBackgroundOpacity, effectsOpacity: $effectsOpacity, hideGradient: $hideGradient, importedBackgroundBlur: $importedBackgroundBlur, importedBackgroundHue: $importedBackgroundHue, importedBackgroundSaturation: $importedBackgroundSaturation, importedBackgroundBrightness: $importedBackgroundBrightness,  importedBackgroundContrast: $importedBackgroundContrast)
         }
         .fullScreenCover(isPresented: $showGradientBgPickerSheet) {
             createFullScreenCover(for: $importedBackground) { BgImage in

@@ -41,8 +41,7 @@ struct GradientBackground: View {
     let screenHeight = UIScreen.main.bounds.height
     @Binding var allowPixellateEffect: Bool
     
-    
-    
+  
     var body: some View {
         let gradient: AnyView
         switch gradientStyle {
@@ -65,7 +64,6 @@ struct GradientBackground: View {
                 let time = $0.date.timeIntervalSince1970 - startDate.timeIntervalSince1970
                 ZStack {
                     gradient.animation(.linear(duration: animationDuration))
-                    
                 }
                 .background(Color.clear)
                 .distortionEffect(
@@ -93,14 +91,14 @@ struct GradientBackground: View {
         .if(allowPixellateEffect) { view in
             view
                 .distortionEffect(
-                .init(
-                    function: .init(library: .default, name: "pixellate"),
-                    arguments: [.float(pixellate)]
-                ),
-                maxSampleOffset: .zero
-            )
+                    .init(
+                        function: .init(library: .default, name: "pixellate"),
+                        arguments: [.float(pixellate)]
+                    ),
+                    maxSampleOffset: .zero
+                )
         }
-      
+        
         .scaleEffect(gradientScale)
         .if(invertGradient) { view in
             view.colorInvert()

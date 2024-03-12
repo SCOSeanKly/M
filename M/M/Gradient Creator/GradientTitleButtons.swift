@@ -36,6 +36,17 @@ struct GradientTitleButtons: View {
     @Binding var allowPixellateEffect: Bool
     @Binding var blendModeEffects: BlendMode
     @Binding var effectsOpacity: CGFloat
+    @Binding var importedBackgroundBlur: CGFloat
+    @Binding var importedBackgroundHue: CGFloat
+    @Binding var importedBackgroundSaturation: CGFloat
+    @Binding var importedBackgroundBrightness: CGFloat
+    @Binding var importedBackgroundContrast: CGFloat
+    @Binding var importedBackgroundOpacity: CGFloat
+    
+    @Binding var hideGradient: Bool
+    @Binding var invertGradient: Bool
+    @Binding var blendModeImportedBackground: BlendMode
+  
 
 
     var body: some View {
@@ -68,7 +79,6 @@ struct GradientTitleButtons: View {
                 showSheetBackground.toggle()
             }, sfSymbolName: "circle.dotted.and.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
            
-            
             // Reset button
             AnimatedButton(action: {
                 // Reset all values
@@ -87,9 +97,21 @@ struct GradientTitleButtons: View {
                 gradientSaturation = 1
                 gradientBrightness = 0
                 gradientContrast = 1
+                selectedColorCount = 4
+                bgColor = .black
                 allowPixellateEffect = false
                 blendModeEffects = .normal
                 effectsOpacity = 1
+                importedBackgroundBlur = 0
+                importedBackgroundHue = 0
+                importedBackgroundSaturation = 1
+                importedBackgroundBrightness = 0
+                importedBackgroundContrast = 1
+                importedBackgroundOpacity = 1
+                hideGradient = false
+                invertGradient = false
+                blendModeImportedBackground = .normal
+               
             }, sfSymbolName: "arrow.counterclockwise.circle", rotationAntiClockwise: true, rotationDegrees: 720, color: .primary, allowRotation: true, showOverlaySymbol: false, overlaySymbolName: "plus.circle", overlaySymbolColor: .primary)
           
             

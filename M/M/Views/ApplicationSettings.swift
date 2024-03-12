@@ -392,7 +392,7 @@ struct SelectIconView: View {
                 
                 ScrollView (.horizontal, showsIndicators: false) {
                     HStack {
-                        ForEach(["IconBlueM", "IconBlueM_White", "IconWhiteM", "IconPinkM", "IconMultiM", "IconAIM", "IconCamera"], id: \.self) { iconName in
+                        ForEach(["IconBlueM", "IconBlueM_White", "IconWhiteM", "IconPinkM", "IconMultiM", "IconAIM", "IconCamera", "IconPhoenix"], id: \.self) { iconName in
                             Button {
                                 changeAppIcon(to: iconName)
                                 selectedIcon = iconName

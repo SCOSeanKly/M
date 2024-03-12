@@ -76,14 +76,13 @@ struct CustomSlider<T: BinaryFloatingPoint>: View {
                     }
                     .frame(width: bounds.size.width, alignment: .center)
                 }
-                .animation(animation, value: isActive)
             }
             .frame(width: bounds.size.width, height: bounds.size.height, alignment: .center)
             .onChange(of: value) {
-                withAnimation(.bouncy) {
+
                     localRealProgress = getPrgPercentage(value)
                     onEditingChanged(isActive)
-                }
+
             }
             .onAppear {
              
@@ -93,14 +92,6 @@ struct CustomSlider<T: BinaryFloatingPoint>: View {
         }
         .frame(height: height)
         .padding(.leading, 10)
-    }
-
-    private var animation: Animation {
-        if isActive {
-            return .spring()
-        } else {
-            return .spring(response: 0.5, dampingFraction: 0.5, blendDuration: 0.6)
-        }
     }
 
     private func setSliderValue(_ newValue: T) {

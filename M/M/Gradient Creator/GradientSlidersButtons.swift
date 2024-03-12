@@ -46,6 +46,11 @@ struct GradientSlidersButtons: View {
     @Binding var effectsOpacity: CGFloat
     @Binding var hideGradient: Bool
     @Binding var importedBackgroundBlur: CGFloat
+    @Binding var importedBackgroundHue: CGFloat
+    @Binding var importedBackgroundSaturation: CGFloat
+    @Binding var importedBackgroundBrightness: CGFloat
+    @Binding var importedBackgroundContrast: CGFloat
+      
     
     
     
@@ -199,7 +204,8 @@ struct GradientSlidersButtons: View {
             .padding(.horizontal)
             .padding(.vertical, 5)
         
-        SlidersTitleView(titleText: "Imported Background")
+        SlidersTitleView(titleText:  "Imported Background")
+        
         
         //MARK: Imported background blend mode
         HStack (spacing: -5) {
@@ -266,16 +272,27 @@ struct GradientSlidersButtons: View {
                     Text("Overlay").tag(BlendMode.overlay)
                     Text("Screen").tag(BlendMode.screen)
                     Text("Plus Lighter").tag(BlendMode.plusLighter)
-                    
                 }
             }
             .shadow(radius: 3)
             .tint(.white)
         }
         
-        //MARK: Imported Backgreound Blur Slider
+        //MARK: Imported Background Blur Slider
         SliderView(systemName: "scribble.variable", sliderTitle: "BG Blur", blurSystemName: true, value: $importedBackgroundBlur, inValue: 0, outValue: 100, resetValue: 0)
         
+        //MARK: Hue Slider
+        SliderView(systemName: "camera.filters", sliderTitle: "Hue", blurSystemName: false, value: $importedBackgroundHue, inValue: -180, outValue: 180, resetValue: 0)
+        
+        //MARK: Sat Slider
+        SliderView(systemName: "drop.halffull", sliderTitle: "Saturation", blurSystemName: false, value: $importedBackgroundSaturation, inValue: 0, outValue: 5, resetValue: 1)
+        
+        //MARK: Contrast Slider
+        SliderView(systemName: "circle.lefthalf.striped.horizontal", sliderTitle: "Contrast", blurSystemName: false, value: $importedBackgroundContrast, inValue: 0.1, outValue: 3, resetValue: 1)
+        
+        //MARK: Brightneass Slider
+        SliderView(systemName: "sun.max", sliderTitle: "Brightness", blurSystemName: false, value: $importedBackgroundBrightness, inValue: -1, outValue: 1, resetValue: 0)
+      
         Divider()
             .padding(.horizontal)
             .padding(.vertical, 5)
@@ -363,9 +380,9 @@ struct GradientSlidersButtons: View {
             
             //MARK: Re-Order Gradient Button
             ReOrderGradientButton(selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, refreshButtonTapped: $refreshButtonTapped)
+                .padding(.bottom, 50)
     }
-        
-    }
+  }
 }
 
 
