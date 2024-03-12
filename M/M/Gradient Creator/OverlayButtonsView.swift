@@ -34,19 +34,15 @@ struct OverlayButtonsView: View {
     let buttonScaleEffect: CGFloat = 0.8
     @Binding var activeTab: Tab
     @Binding var hideGradient: Bool
-    
     @State private var savedImage: UIImage?
 
-    
     
     var body: some View {
         ZStack {
             if !isSavingImage {
                 VStack {
-                    
                     //MARK: Xmark
                     HStack {
-                        
                         UltraThinButton(action: {
                             isShowingGradientView.toggle()
                             activeTab = .mockup
@@ -70,7 +66,6 @@ struct OverlayButtonsView: View {
                     }
                     
                     Group {
-                        
                         //MARK: Blend Modes
                         HStack {
                             Spacer()
@@ -231,11 +226,11 @@ struct OverlayButtonsView: View {
     func saveURLOverlayImagesToPhotoLibrary() {
         let imageExporter = ImageExporter()
         
-        var loadedImages = [UIImage]()
+        var loadedImages = [UIImage?](repeating: nil, count: selectedURLOverlayImages.count) // Initialize an array to hold loaded images
         
         let dispatchGroup = DispatchGroup()
         
-        for image in selectedURLOverlayImages {
+        for (index, image) in selectedURLOverlayImages.enumerated() {
             guard let imageURL = URL(string: image.image) else {
                 continue
             }
@@ -249,13 +244,17 @@ struct OverlayButtonsView: View {
                 guard let data = data, error == nil else { return }
                 guard let loadedImage = UIImage(data: data) else { return }
                 
-                loadedImages.append(loadedImage)
+                loadedImages[index] = loadedImage // Store loaded image at the correct index
             }.resume()
         }
         
         dispatchGroup.notify(queue: .main) {
+            // Ensure all images are loaded before proceeding
+            
+            let orderedImages = loadedImages.compactMap { $0 } // Remove nil entries
+            
             // Call mergeImages function of ImageExporter class
-            imageExporter.mergeImages(loadedImages, outputSize: UIScreen.main.bounds.size)
+            imageExporter.mergeImages(orderedImages, outputSize: UIScreen.main.bounds.size)
             
             // Access the merged image from ImageExporter
             guard let mergedImage = imageExporter.image else {
@@ -272,10 +271,7 @@ struct OverlayButtonsView: View {
                 UIImageWriteToSavedPhotosAlbum(unwrappedImage, nil, nil, nil)
             }
         }
-
-
     }
-
     
     func saveImageToPhotoLibrary() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

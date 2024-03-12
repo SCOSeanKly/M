@@ -119,10 +119,10 @@ struct GradientView: View {
             OverlaysView(selectedURLOverlayImages: $selectedURLOverlayImages, importedImageOverlay: $importedImageOverlay, blendModeEffects: $blendModeEffects, effectsOpacity: $effectsOpacity)
             
             //MARK: Overlay image from photos
-          //  GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
+            GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
             
             //MARK: Adds a half blur on the left side
-          //  HalfBlurView(showHalfBlur: $showHalfBlur)
+            HalfBlurView(showHalfBlur: $showHalfBlur)
             
         }
         .background(.clear)
@@ -167,11 +167,6 @@ struct GradientView: View {
             LoadJSONView(viewModelHeader: viewModelHeader, selectedURLOverlayImages: $selectedURLOverlayImages, showOverlaysURLView: $showOverlaysURLView, obj: obj)
         }
     }
-    
-  
-  
-
-       
     
     func alertPreferences(title: String, imageName: String) -> some View {
         Text("\(Image(systemName: imageName)) \(title)")
