@@ -45,10 +45,14 @@ struct GradientSlidersButtons: View {
     @Binding var allowPixellateEffect: Bool
     @Binding var effectsOpacity: CGFloat
     @Binding var hideGradient: Bool
+    @Binding var importedBackgroundBlur: CGFloat
     
     
     
     var body: some View {
+        
+        
+        SlidersTitleView(titleText: "Gradient")
         
         //MARK: Disable Gradient
         HStack (spacing: -5) {
@@ -75,10 +79,11 @@ struct GradientSlidersButtons: View {
             CustomToggleBlend(showTitleText: true, titleText: "Hide Gradient Layers", bindingValue: $hideGradient, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
             
         }
-        .padding(.top)
+     //   .padding(.top)
         .offset(y: 6)
         
         if !hideGradient {
+            
             //MARK: Horizontal and Vertical Position Sliders
             HorizontalVerticalSliders(gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, gradientOffsetSliderMoved: $gradientOffsetSliderMoved)
             
@@ -94,8 +99,8 @@ struct GradientSlidersButtons: View {
             //MARK: Brightneass Slider
             SliderView(systemName: "sun.max", sliderTitle: "Brightness", blurSystemName: false, value: $gradientBrightness, inValue: -1, outValue: 1, resetValue: 0)
             
-            //MARK: Blur Slider
-            SliderView(systemName: "scribble.variable", sliderTitle: "Blur", blurSystemName: true, value: $gradientBlur, inValue: 0, outValue: 100, resetValue: 0)
+            //MARK: Gradient Blur Slider
+            SliderView(systemName: "scribble.variable", sliderTitle: "Grad Blur", blurSystemName: true, value: $gradientBlur, inValue: 0, outValue: 100, resetValue: 0)
             
             //MARK: Scale Slider
             SliderView(systemName: "arrow.up.left.and.arrow.down.right", sliderTitle: "Scale", blurSystemName: false, value: $gradientScale, inValue: 0, outValue: 3.5, resetValue: 1)
@@ -133,7 +138,6 @@ struct GradientSlidersButtons: View {
             SliderView(systemName: "rectangle.checkered", sliderTitle: "Pixellate", blurSystemName: false, value: $pixellate, inValue: 1, outValue: 75, resetValue: 1)
                 .disabled(!allowPixellateEffect)
                 .opacity(allowPixellateEffect ? 1 : 0.5)
-            
             
             //MARK: Wave effect Slider
             WaveEffectSlider(amplitude: $amplitude, frequency: $frequency, waveSliderMoved: $waveSliderMoved)
@@ -190,6 +194,12 @@ struct GradientSlidersButtons: View {
                     .padding(.vertical, 6)
             }
         }
+        
+        Divider()
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+        
+        SlidersTitleView(titleText: "Imported Background")
         
         //MARK: Imported background blend mode
         HStack (spacing: -5) {
@@ -259,8 +269,18 @@ struct GradientSlidersButtons: View {
                     
                 }
             }
+            .shadow(radius: 3)
             .tint(.white)
         }
+        
+        //MARK: Imported Backgreound Blur Slider
+        SliderView(systemName: "scribble.variable", sliderTitle: "BG Blur", blurSystemName: true, value: $importedBackgroundBlur, inValue: 0, outValue: 100, resetValue: 0)
+        
+        Divider()
+            .padding(.horizontal)
+            .padding(.vertical, 5)
+        
+        SlidersTitleView(titleText: "Effects")
         
         //MARK: Effects blend mode
         HStack (spacing: -5) {
@@ -330,6 +350,7 @@ struct GradientSlidersButtons: View {
                     
                 }
             }
+            .shadow(radius: 3)
             .tint(.white)
         }
         
@@ -350,8 +371,40 @@ struct GradientSlidersButtons: View {
 
 
 
-
-
+struct SlidersTitleView: View {
+    
+    let titleText: String
+    
+    var body: some View {
+        HStack {
+            Text(titleText)
+                .font(.headline)
+                .foregroundColor(.white)
+                .blendMode(.difference)
+                .overlay{
+                    Text(titleText)
+                        .font(.headline)
+                        .blendMode(.hue)
+                }
+                .overlay{
+                    Text(titleText)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                        .blendMode(.overlay)
+                }
+                .overlay{
+                    Text(titleText)
+                        .font(.headline)
+                        .foregroundColor(.black)
+                        .blendMode(.overlay)
+                }
+            
+            Spacer()
+        }
+        .padding(.leading)
+        .padding(.vertical, 5)
+    }
+}
 
 
 

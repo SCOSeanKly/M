@@ -66,12 +66,6 @@ struct GradientBackground: View {
                 ZStack {
                     gradient.animation(.linear(duration: animationDuration))
                     
-                    if let background = importedBackground {
-                        Image(uiImage: background)
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .blendMode(blendModeImportedBackground)  
-                    }
                 }
                 .background(Color.clear)
                 .distortionEffect(

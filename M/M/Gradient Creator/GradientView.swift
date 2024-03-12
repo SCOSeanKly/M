@@ -56,6 +56,7 @@ struct GradientView: View {
     @State private var importedBackgroundOpacity: CGFloat = 1
     @State private var effectsOpacity: CGFloat = 1
     @State private var hideGradient: Bool = false
+    @State private var importedBackgroundBlur: CGFloat = 0
     
     enum GradientStyle: String, CaseIterable, Identifiable {
         case linear, radial, angular
@@ -99,7 +100,19 @@ struct GradientView: View {
                 }
                 
                 //MARK: Adds a blurred overlay to gradient views
-                GradientBlurView(gradientBlur: $gradientBlur)
+                GradientBlurView(blurBinding: $gradientBlur)
+                
+                if let background = importedBackground {
+                    ZStack {
+                        Image(uiImage: background)
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .blendMode(blendModeImportedBackground)
+                        
+                        //MARK: Adds a blurred overlay to gradient views
+                        GradientBlurView(blurBinding: $importedBackgroundBlur)
+                    }
+                }
             }
             
             //MARK: URL Overlay effects
@@ -138,7 +151,7 @@ struct GradientView: View {
         }
         .sheet(isPresented: $showGradientControl){
             //MARK: These are the buttons and control sliders
-            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, blendModeEffects: $blendModeEffects, allowPixellateEffect: $allowPixellateEffect, importedBackgroundOpacity: $importedBackgroundOpacity, effectsOpacity: $effectsOpacity, hideGradient: $hideGradient)
+            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, blendModeEffects: $blendModeEffects, allowPixellateEffect: $allowPixellateEffect, importedBackgroundOpacity: $importedBackgroundOpacity, effectsOpacity: $effectsOpacity, hideGradient: $hideGradient, importedBackgroundBlur: $importedBackgroundBlur)
         }
         .fullScreenCover(isPresented: $showGradientBgPickerSheet) {
             createFullScreenCover(for: $importedBackground) { BgImage in

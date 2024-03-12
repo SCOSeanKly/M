@@ -9,16 +9,16 @@ import SwiftUI
 
 struct GradientBlurView: View {
     
-    @Binding var gradientBlur: CGFloat
+    @Binding var blurBinding: CGFloat
 
     var body: some View {
         ZStack {
-            if gradientBlur > 0.001 {
+            if blurBinding > 0.001 {
                 Rectangle()
                     .foregroundColor(.clear)
                     .background {
                         TransparentBlurView(removeAllFilters: true)
-                            .blur(radius: gradientBlur, opaque: true)
+                            .blur(radius: blurBinding, opaque: true)
                     }
             }
         }
