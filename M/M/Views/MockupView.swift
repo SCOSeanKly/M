@@ -15,6 +15,7 @@ struct MockupView: View {
     @StateObject var viewModelData: DataViewModel
     @AppStorage("saveCount") private var saveCount: Int = 0
     @ObservedObject var newCreatorsViewModel: NewImagesViewModel
+    @StateObject var imageURLStore: ImageURLStore
     
     var colorScheme: ColorScheme? {
         switch obj.appearance.selectedAppearance {
@@ -44,56 +45,61 @@ struct MockupView: View {
     var body: some View {
         ZStack {
           
-            // MARK: Wallpaper View
             CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
-                CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj)
+                //MARK: Mockup Image
+                CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj, imageURLStore: imageURLStore)
                     .customImageViewModifier(obj: obj, viewModel: viewModel, isZooming: $isZooming)
                  
-                ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount)
-                    .titleViewModifier(obj: obj, normalScale: 1.0)
+                //MARK: Button to save to photos or files
+                if viewModel.importedImage1 != nil {
+                    ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount, imageURLStore: imageURLStore)
+                        .titleViewModifier(obj: obj, normalScale: 1.0)
+                       
+                }
                   
                  
             } titleContent: { $item in
                 
-                //MARK: ADD TIOTLE CONTENT HERE
+                //MARK: Mockup Titles
                 TitleContent(itemTitle: item.title, itemSubTitle: item.subTitle)
                 .titleViewModifier(obj: obj, normalScale: 0.8)
             }
             .offset(y: screenOffset ? -30 : 0)
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
+                //MARK: Screenshot Image 1
                 fullScreenImagePickerCover(for: $viewModel.importedImage1) { images in
                     viewModel.importedImage1 = images.first
                 }
             }
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet2) {
+                //MARK: Screenshot Image 2
                 fullScreenImagePickerCover(for: $viewModel.importedImage2) { images in
                     viewModel.importedImage2 = images.first
                 }
             }
             .fullScreenCover(isPresented: $viewModel.showBgPickerSheet) {
+                //MARK: Imported Background Image
                 fullScreenImagePickerCover(for: $viewModel.importedBackground) { images in
                     viewModel.importedBackground = images.first
                 }
             }
             .fullScreenCover(isPresented: $viewModel.showLogoPickerSheet) {
+                //MARK: Imported User Logo or Avatar Image
                 fullScreenImagePickerCover(for: $viewModel.importedLogo) { images in
                     viewModel.importedLogo = images.first
                 }
             }
             .sheet(isPresented: $obj.appearance.showSettingsSheet, content: {
+                //MARK: Mockup View Settings
                 SettingsView(viewModel: viewModel, obj: obj)
             })
-            .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
-                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isScrollingSettings: $isScrollingSettings)
-            })
-            //MARK: Pill Buttons for importing images etc
+//            .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
+//                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isScrollingSettings: $isScrollingSettings)
+//            })
+            //MARK: Pill Buttons for importing user images etc
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
         }
-        
-        
-     
-        //MARK: Add system to mode toggle
         .preferredColorScheme(colorScheme)
         .onTapGesture {
                 if !obj.appearance.showPill {

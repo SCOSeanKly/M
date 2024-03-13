@@ -15,18 +15,19 @@ struct CustomImageView: View {
     @Binding var importedImage2: UIImage?
     @Binding var importedLogo: UIImage?
     @StateObject var obj: Object
+    @StateObject var imageURLStore: ImageURLStore
     
     
     var body: some View {
         
         ZStack {
-            BackgroundView(obj: obj, importedBackground: $importedBackground, item: item)
+            BackgroundView(obj: obj, importedBackground: $importedBackground, item: item, imageURLStore: imageURLStore)
               
-            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item)
+            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item, imageURLStore: imageURLStore)
                 .background{
                     Color.black
                         .mask{
-                            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item)
+                            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item, imageURLStore: imageURLStore)
                         }
                         .shadow(color: obj.appearance.shadowColor.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
                     
@@ -48,6 +49,7 @@ struct BackgroundView: View {
     @StateObject var obj: Object
     @Binding var importedBackground: UIImage?
     var item: Item
+    @StateObject var imageURLStore: ImageURLStore
     
     var body: some View {
         if obj.appearance.showBackground {
@@ -60,6 +62,15 @@ struct BackgroundView: View {
                         RoundedRectangle(cornerRadius: 0)
                             .fill(item.color.gradient)
                         
+                        RandomURLWallpaper(imageURLStore: imageURLStore)
+                            .scaledToFill()
+                            .contrast(1)
+                            .overlay{
+                                TransparentBlurView(removeAllFilters: true)
+                                    .blur(radius: 80, opaque: true)
+                            }
+                           
+                         
                         //User selected background colour
                         RoundedRectangle(cornerRadius: 0)
                             .fill(obj.appearance.backgroundColour.gradient)
@@ -106,6 +117,7 @@ struct MockupLayersView: View {
     @Binding var importedImage1: UIImage?
     @Binding var importedImage2: UIImage?
     var item: Item
+    @StateObject var imageURLStore: ImageURLStore
     
     var body: some View {
         ZStack {
@@ -117,6 +129,8 @@ struct MockupLayersView: View {
                         .foregroundColor(.black)
                         .clipShape(Rectangle())
                     
+                    RandomURLWallpaper(imageURLStore: imageURLStore)
+                       
                     // MARK: Screenshot Image 1
                     if let importedImage1 = importedImage1 {
                         Image(uiImage: importedImage1)
@@ -137,6 +151,8 @@ struct MockupLayersView: View {
                     RoundedRectangle(cornerRadius: 0)
                         .foregroundColor(.black)
                         .clipShape(Rectangle())
+                    
+                    RandomURLWallpaper(imageURLStore: imageURLStore)
                     
                     // MARK: Screenshot Image 2
                     if let importedImage2 = importedImage2 {

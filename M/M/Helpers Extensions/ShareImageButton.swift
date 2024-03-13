@@ -25,6 +25,7 @@ struct ShareImageButton: View {
     @AppStorage("requestReview") private var requestReviewCount: Int = 0
 
     @Environment(\.requestReview) var requestReview
+    @StateObject var imageURLStore: ImageURLStore
     
 
     var body: some View {
@@ -48,7 +49,7 @@ struct ShareImageButton: View {
 
                 if saveToPhotos {
 
-                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
+                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj, imageURLStore: imageURLStore)
                         .ignoresSafeArea(.all)
                         .snapshot()
 
@@ -63,7 +64,7 @@ struct ShareImageButton: View {
 
                 } else {
 
-                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj)
+                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj, imageURLStore: imageURLStore)
                         .ignoresSafeArea(.all)
                         .snapshot()
 

@@ -13,7 +13,7 @@ struct MockupMView: View {
     @StateObject var viewModelData = DataViewModel()
     @StateObject var obj: Object
     @ObservedObject var newCreatorsViewModel = NewImagesViewModel()
-    
+    @StateObject var imageURLStore = ImageURLStore()
     
     @State private var totalNewWallpapersCount = 0
     @State var buyClicked: Bool = false
@@ -47,14 +47,14 @@ struct MockupMView: View {
         ZStack {
             VStack(spacing: 0) {
                 TabView(selection: $activeTab) {
-                    /// YOUR TAB VIEWS
+                 
                     if activeTab == .wallpapers {
                         URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground, activeTab: $activeTab, isScrolling: $isScrolling, newCreatorsViewModel: newCreatorsViewModel)
                             .setUpTab(.wallpapers)
                     }
                     
                     if activeTab == .mockup {
-                        MockupView(viewModel: viewModel, obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, isScrollingSettings: $isScrollingSettings)
+                        MockupView(viewModel: viewModel, obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel, imageURLStore: imageURLStore, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, isScrollingSettings: $isScrollingSettings)
                             .setUpTab(.mockup)
                     }
                     
@@ -127,7 +127,6 @@ struct MockupMView: View {
                     .padding(.top, 15)
                     .padding(.bottom, 10)
                     .contentShape(.rect)
-                    /// You Can Also Use Button, If you Choose to
                     .onTapGesture {
                         isTapped.toggle()
                         withAnimation(.bouncy, completionCriteria: .logicallyComplete, {
@@ -159,7 +158,7 @@ struct MockupMView: View {
         
         let currentTime = Date()
         
-        // Check if last checked time is greater than 4 hours from the current time
+        // Check if last checked time is greater than 1 hour from the current time
         if let lastCheckedTime = self.lastCheckedTime,
            let timeInterval = Calendar.current.dateComponents([.hour], from: lastCheckedTime, to: currentTime).hour,
            timeInterval < 1 {
