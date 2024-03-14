@@ -10,15 +10,15 @@ import SDWebImageSwiftUI
 
 struct RandomURLWallpaper: View {
     @StateObject var imageURLStore: ImageURLStore
+    let fetchInterval: TimeInterval = 4 * 60 * 60 // 4 hours
 
     var body: some View {
         ZStack {
             if let imageURL = imageURLStore.imageURL {
-                WebImage(url: imageURL)
+                WebImage(url: imageURL, options: [.progressiveLoad])
                     .resizable()
                     .scaledToFill()
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .ignoresSafeArea()
+                    .animation(.default)
                 
                 Text(imageURL.lastPathComponent
                     .replacingOccurrences(of: ".jpg", with: "")
@@ -33,11 +33,25 @@ struct RandomURLWallpaper: View {
                     .offset(y: UIScreen.main.bounds.height * 0.3)
                 
             } else {
-               ProgressView()
+                ProgressView()
             }
         }
         .onAppear {
-            loadRandomImage()
+            if shouldFetchImage() {
+                loadRandomImage()
+            }
+        }
+    }
+
+    func shouldFetchImage() -> Bool {
+        if imageURLStore.imageURL == nil {
+            return true
+        }
+
+        if let lastFetchDate = UserDefaults.standard.object(forKey: "LastFetchDate") as? Date {
+            return Date().timeIntervalSince(lastFetchDate) >= fetchInterval
+        } else {
+            return true
         }
     }
 
@@ -58,6 +72,7 @@ struct RandomURLWallpaper: View {
 
                 DispatchQueue.main.async {
                     self.imageURLStore.imageURL = imageURL
+                    UserDefaults.standard.set(Date(), forKey: "LastFetchDate")
                 }
             } catch {
                 print("Error decoding JSON: \(error)")
@@ -65,6 +80,7 @@ struct RandomURLWallpaper: View {
         }.resume()
     }
 }
+
 
 class ImageURLStore: ObservableObject {
     @Published var imageURL: URL?

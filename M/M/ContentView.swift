@@ -14,6 +14,7 @@ struct MockupMView: View {
     @StateObject var obj: Object
     @ObservedObject var newCreatorsViewModel = NewImagesViewModel()
     @StateObject var imageURLStore = ImageURLStore()
+    @StateObject var keyboardObserver = KeyboardObserver()
     
     @State private var totalNewWallpapersCount = 0
     @State var buyClicked: Bool = false
@@ -43,13 +44,14 @@ struct MockupMView: View {
     }
     
     
+    
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
                 TabView(selection: $activeTab) {
                  
                     if activeTab == .wallpapers {
-                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground, activeTab: $activeTab, isScrolling: $isScrolling, newCreatorsViewModel: newCreatorsViewModel)
+                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground, activeTab: $activeTab, isScrolling: $isScrolling, newCreatorsViewModel: newCreatorsViewModel, keyboardObserver: keyboardObserver)
                             .setUpTab(.wallpapers)
                     }
                     
@@ -91,63 +93,65 @@ struct MockupMView: View {
     /// Custom Tab Bar
     @ViewBuilder
     func CustomTabBar() -> some View {
-        VStack {
-            Spacer()
-            HStack(spacing: 0) {
-                ForEach($allTabs) { $animatedTab in
-                    let tab = animatedTab.tab
-                    
-                    VStack(spacing: 4) {
-                        ZStack {
-                            Image(systemName: tab.rawValue)
-                                .font(.title2)
-                                .symbolEffect(.bounce.up.byLayer, value: animatedTab.isAnimating)
-                            
-                            if tab == .wallpapers && totalNewImagesCount > 0 {
-                              
-                                Text("\(totalNewImagesCount)")
-                                    .foregroundStyle(.white)
-                                    .font(.system(size: 8).weight(.bold))
-                                    .padding(.horizontal, 4)
-                                    .padding(.vertical, 2)
-                                    .background {
-                                        Color.red
-                                            .clipShape(RoundedRectangle(cornerRadius: 50))
-                                    }
-                                    .offset(x: 10, y: -10)
+        if !keyboardObserver.isKeyboardPresented {
+            VStack {
+                Spacer()
+                HStack(spacing: 0) {
+                    ForEach($allTabs) { $animatedTab in
+                        let tab = animatedTab.tab
+                        
+                        VStack(spacing: 4) {
+                            ZStack {
+                                Image(systemName: tab.rawValue)
+                                    .font(.title2)
+                                    .symbolEffect(.bounce.up.byLayer, value: animatedTab.isAnimating)
+                                
+                                if tab == .wallpapers && totalNewImagesCount > 0 {
+                                    
+                                    Text("\(totalNewImagesCount)")
+                                        .foregroundStyle(.white)
+                                        .font(.system(size: 8).weight(.bold))
+                                        .padding(.horizontal, 4)
+                                        .padding(.vertical, 2)
+                                        .background {
+                                            Color.red
+                                                .clipShape(RoundedRectangle(cornerRadius: 50))
+                                        }
+                                        .offset(x: 10, y: -10)
+                                }
                             }
+                            
+                            Text(tab.title)
+                                .font(.caption2)
+                                .textScale(.secondary)
                         }
-                            
-                        Text(tab.title)
-                            .font(.caption2)
-                            .textScale(.secondary)
-                    }
-                    .frame(maxWidth: .infinity)
-                    .foregroundStyle(activeTab == tab ? Color.blue : Color.gray.opacity(0.8))
-                    .padding(.top, 15)
-                    .padding(.bottom, 10)
-                    .contentShape(.rect)
-                    .onTapGesture {
-                        isTapped.toggle()
-                        withAnimation(.bouncy, completionCriteria: .logicallyComplete, {
-                            activeTab = tab
-                            animatedTab.isAnimating = true
-                        }, completion: {
-                            var trasnaction = Transaction()
-                            trasnaction.disablesAnimations = true
-                            withTransaction(trasnaction) {
-                                animatedTab.isAnimating = nil
-                            }
-                        })
+                        .frame(maxWidth: .infinity)
+                        .foregroundStyle(activeTab == tab ? Color.blue : Color.gray.opacity(0.8))
+                        .padding(.top, 15)
+                        .padding(.bottom, 10)
+                        .contentShape(.rect)
+                        .onTapGesture {
+                            isTapped.toggle()
+                            withAnimation(.bouncy, completionCriteria: .logicallyComplete, {
+                                activeTab = tab
+                                animatedTab.isAnimating = true
+                            }, completion: {
+                                var trasnaction = Transaction()
+                                trasnaction.disablesAnimations = true
+                                withTransaction(trasnaction) {
+                                    animatedTab.isAnimating = nil
+                                }
+                            })
+                        }
                     }
                 }
+                .background(.bar)
+                .offset(y: isShowingGradientView ? UIScreen.main.bounds.height * 0.25 : 0)
+                .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
+                .animation(.bouncy, value: isShowingGradientView || isScrolling || isScrollingSettings)
             }
-            .background(.bar)
-            .offset(y: isShowingGradientView ? UIScreen.main.bounds.height * 0.25 : 0)
-            .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
-            .animation(.bouncy, value: isShowingGradientView || isScrolling || isScrollingSettings)
+            .sensoryFeedback(.selection, trigger: isTapped)
         }
-        .sensoryFeedback(.selection, trigger: isTapped)
     }
     
     func fetchData() {

@@ -89,6 +89,8 @@
 		3E84DFC82B8E2C48000D139D /* LoadJSONView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E84DFC72B8E2C48000D139D /* LoadJSONView.swift */; };
 		3E8B33422B4707D5007536DB /* CrownView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8B33412B4707D5007536DB /* CrownView.swift */; };
 		3E8B3AB42BA1B75B0050529A /* RandomURLWallpaper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8B3AB32BA1B75B0050529A /* RandomURLWallpaper.swift */; };
+		3E8B3AB62BA3000E0050529A /* SearchBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8B3AB52BA3000E0050529A /* SearchBarView.swift */; };
+		3E8B3AB82BA300360050529A /* NofilteredImagesButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E8B3AB72BA300360050529A /* NofilteredImagesButton.swift */; };
 		3E91943E2B567FA400B4EB2D /* CreatorProfiles.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E91943D2B567FA400B4EB2D /* CreatorProfiles.swift */; };
 		3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */; };
 		3EAB31002B878AC400B0D756 /* UltraThinButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB30FF2B878AC400B0D756 /* UltraThinButton.swift */; };
@@ -219,6 +221,8 @@
 		3E84DFC72B8E2C48000D139D /* LoadJSONView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadJSONView.swift; sourceTree = "<group>"; };
 		3E8B33412B4707D5007536DB /* CrownView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownView.swift; sourceTree = "<group>"; };
 		3E8B3AB32BA1B75B0050529A /* RandomURLWallpaper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RandomURLWallpaper.swift; sourceTree = "<group>"; };
+		3E8B3AB52BA3000E0050529A /* SearchBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchBarView.swift; sourceTree = "<group>"; };
+		3E8B3AB72BA300360050529A /* NofilteredImagesButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NofilteredImagesButton.swift; sourceTree = "<group>"; };
 		3E91943D2B567FA400B4EB2D /* CreatorProfiles.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorProfiles.swift; sourceTree = "<group>"; };
 		3EAB30FF2B878AC400B0D756 /* UltraThinButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UltraThinButton.swift; sourceTree = "<group>"; };
 		3EAB31022B878B3D00B0D756 /* ProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProgressBar.swift; sourceTree = "<group>"; };
@@ -296,6 +300,8 @@
 				3E67B32F2B6B9D5B003C6C73 /* TabIndicatorView.swift */,
 				3EAB30FF2B878AC400B0D756 /* UltraThinButton.swift */,
 				3EAB31022B878B3D00B0D756 /* ProgressBar.swift */,
+				3E8B3AB52BA3000E0050529A /* SearchBarView.swift */,
+				3E8B3AB72BA300360050529A /* NofilteredImagesButton.swift */,
 			);
 			path = "URL Image";
 			sourceTree = "<group>";
@@ -588,10 +594,12 @@
 				3E69AFBF2AF55AF1007244C1 /* SnapShot.swift in Sources */,
 				3EEE00462B7E1933005CB2CD /* Fluid.swift in Sources */,
 				3E81CA4B2B271AE400D01A39 /* Shine.swift in Sources */,
+				3E8B3AB62BA3000E0050529A /* SearchBarView.swift in Sources */,
 				3E7373BF2B8CBE4E00F0C963 /* WaveEffectSlider.swift in Sources */,
 				3EAB31002B878AC400B0D756 /* UltraThinButton.swift in Sources */,
 				3E277FB82B9B505400C0F062 /* NewImagesModel.swift in Sources */,
 				3EAB31032B878B3D00B0D756 /* ProgressBar.swift in Sources */,
+				3E8B3AB82BA300360050529A /* NofilteredImagesButton.swift in Sources */,
 				3E67B3222B6AA7FF003C6C73 /* ImageMetadataViewModel.swift in Sources */,
 				3E2D61622B1B213100C83E14 /* New.swift in Sources */,
 				3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */,
@@ -813,7 +821,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.4;
+				CURRENT_PROJECT_VERSION = 0.0.6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -858,7 +866,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.4;
+				CURRENT_PROJECT_VERSION = 0.0.6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;

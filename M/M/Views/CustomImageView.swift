@@ -22,7 +22,7 @@ struct CustomImageView: View {
         
         ZStack {
             BackgroundView(obj: obj, importedBackground: $importedBackground, item: item, imageURLStore: imageURLStore)
-              
+            
             MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item, imageURLStore: imageURLStore)
                 .background{
                     Color.black
@@ -58,10 +58,13 @@ struct BackgroundView: View {
                 if importedBackground == nil {
                     //Initial background colour
                     ZStack {
-                        //Initial colour background
+                        /*
+                        // Initial colour background
                         RoundedRectangle(cornerRadius: 0)
                             .fill(item.color.gradient)
+                         */
                         
+                        // Random loaded image
                         RandomURLWallpaper(imageURLStore: imageURLStore)
                             .scaledToFill()
                             .contrast(1)
@@ -69,8 +72,7 @@ struct BackgroundView: View {
                                 TransparentBlurView(removeAllFilters: true)
                                     .blur(radius: 80, opaque: true)
                             }
-                           
-                         
+                        
                         //User selected background colour
                         RoundedRectangle(cornerRadius: 0)
                             .fill(obj.appearance.backgroundColour.gradient)
@@ -95,7 +97,7 @@ struct BackgroundView: View {
                         .saturation(obj.appearance.saturation)
                         .contrast(obj.appearance.wallContrast)
                         .brightness(obj.appearance.wallBrightness)
-                       
+                    
                     
                     RoundedRectangle(cornerRadius: 0)
                         .foregroundColor(.clear)
@@ -105,9 +107,8 @@ struct BackgroundView: View {
                         }
                         .opacity(obj.appearance.blur > 0 ? 1 : 0)
                 }
-                
             }
-            .frame(width: 1020, height: 1020)
+            .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameHeight)
         }
     }
 }
@@ -129,8 +130,6 @@ struct MockupLayersView: View {
                         .foregroundColor(.black)
                         .clipShape(Rectangle())
                     
-                    RandomURLWallpaper(imageURLStore: imageURLStore)
-                       
                     // MARK: Screenshot Image 1
                     if let importedImage1 = importedImage1 {
                         Image(uiImage: importedImage1)
@@ -138,12 +137,14 @@ struct MockupLayersView: View {
                             .if(obj.appearance.screenshotFitFill) { view in
                                 view.aspectRatio(contentMode: .fill)
                             }
-                          
+                    } else {
+                        
+                        RandomURLWallpaper(imageURLStore: imageURLStore)
+                         
                     }
                 }
                 .frame(width: item.width, height: item.height)
                 .applyImageTransformsMockupImage1(item)
-              
                 
                 // MARK: Mockup Screenshot 2
                 ZStack {
@@ -152,8 +153,6 @@ struct MockupLayersView: View {
                         .foregroundColor(.black)
                         .clipShape(Rectangle())
                     
-                    RandomURLWallpaper(imageURLStore: imageURLStore)
-                    
                     // MARK: Screenshot Image 2
                     if let importedImage2 = importedImage2 {
                         Image(uiImage: importedImage2)
@@ -161,11 +160,13 @@ struct MockupLayersView: View {
                             .if(obj.appearance.screenshotFitFill) { view in
                                 view.aspectRatio(contentMode: .fill)
                             }
+                    } else {
+                        RandomURLWallpaper(imageURLStore: imageURLStore)
                     }
                 }
                 .frame(width: item.width, height: item.height)
                 .applyImageTransformsMockupImage2(item)
-               
+                
             }
             
             // MARK: Mockup, Notch & Reflection image from Assets
@@ -195,7 +196,7 @@ struct MockupLayersView: View {
                     .opacity(obj.appearance.screenReflectionOpacity)
                 }
             }
-            .frame(width: 1020, height: 1020)
+            .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameHeight)
         }
         .frame(width: obj.appearance.frameWidth, height: obj.appearance.frameHeight)
         // MARK: Ground reflection of mockup layers

@@ -77,7 +77,6 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
     @ViewBuilder var titleContent: (Binding<Item.Element>) -> TitleContent
     let itemWidth = UIScreen.main.bounds.width
     
-    
     /// View Properties
     @State private var activeID: UUID?
     
@@ -103,7 +102,7 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
             } else {
                 //MARK: Slide style
                 ScrollView(.horizontal) {
-                    HStack(spacing: 150) {
+                    LazyHStack(spacing: 0) {
                         ForEach($data) { item in
                             VStack(spacing: 0) {
                                 titleContent(item)
@@ -121,27 +120,35 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
                     /// Adding Paging
                     .scrollTargetLayout()
                 }
-            }
-            
-            if UIScreen.main.bounds.height > 852{
-                //MARK: Scroll position indicators
-                PagingControl(numberOfPages: data.count, activePage: activePage) { value in
-                    /// Updating to current Page
-                    if let index = value as? Item.Index, data.indices.contains(index) {
-                        if let id = data[index].id as? UUID {
-                            withAnimation(.snappy(duration: 0.35, extraBounce: 0)) {
-                                activeID = id
+                .scrollTargetBehavior(.viewAligned)
+                .scrollIndicators(.hidden)
+                .scrollClipDisabled()
+                .overlay{
+                    //MARK: Scroll position indicators
+                    PagingControl(numberOfPages: data.count, activePage: activePage) { value in
+                        /// Updating to current Page
+                        if let index = value as? Item.Index, data.indices.contains(index) {
+                            if let id = data[index].id as? UUID {
+                                withAnimation(.snappy(duration: 0.35, extraBounce: 0)) {
+                                    activeID = id
+                                }
                             }
                         }
                     }
+                    .scaleEffect(0.8)
+                    .offset(y: UIScreen.main.bounds.width * 0.8)
+                    .disabled(false)
+                    .opacity(isZooming ? 0 : 1)
+                    .animation(.bouncy, value: isZooming)
+                  
+                
                 }
-                .disabled(false)
-                .scaleEffect(0.6)
-                .offset(y: showCoverFlow ? -65 : -20)
-                .opacity(isZooming ? 0 : 1)
-                .animation(.bouncy, value: isZooming)
-              
             }
+            
+        
+            
+              
+            
         }
         .scrollIndicators(.hidden)
         .scrollTargetBehavior(.viewAligned)
@@ -177,7 +184,7 @@ struct PagingControl: UIViewRepresentable {
         let view = UIPageControl()
         view.currentPage = activePage
         view.numberOfPages = numberOfPages
-        view.backgroundStyle = .prominent
+        view.backgroundStyle = .minimal
         view.currentPageIndicatorTintColor = UIColor(Color.primary)
         view.pageIndicatorTintColor = UIColor.placeholderText
         view.addTarget(context.coordinator, action: #selector(Coordinator.onPageUpdate(control:)), for: .valueChanged)

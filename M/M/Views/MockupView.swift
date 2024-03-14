@@ -17,17 +17,6 @@ struct MockupView: View {
     @ObservedObject var newCreatorsViewModel: NewImagesViewModel
     @StateObject var imageURLStore: ImageURLStore
     
-    var colorScheme: ColorScheme? {
-        switch obj.appearance.selectedAppearance {
-        case .light:
-            return .light
-        case .dark:
-            return .dark
-        case .system:
-            return nil
-        }
-    }
-    
     @Binding var showPremiumContent: Bool
     @Binding var buyClicked: Bool
     @ObservedObject var manager = MotionManager()
@@ -40,11 +29,22 @@ struct MockupView: View {
     var screenOffset: Bool {
            return UIScreen.main.bounds.height > 852
        }
+    
+    var colorScheme: ColorScheme? {
+        switch obj.appearance.selectedAppearance {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        case .system:
+            return nil
+        }
+    }
    
     
     var body: some View {
         ZStack {
-          
+            
             CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
                 //MARK: Mockup Image
@@ -52,13 +52,10 @@ struct MockupView: View {
                     .customImageViewModifier(obj: obj, viewModel: viewModel, isZooming: $isZooming)
                  
                 //MARK: Button to save to photos or files
-                if viewModel.importedImage1 != nil {
                     ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount, imageURLStore: imageURLStore)
                         .titleViewModifier(obj: obj, normalScale: 1.0)
-                       
-                }
-                  
-                 
+                        .disabled(viewModel.importedImage1 == nil)
+                        
             } titleContent: { $item in
                 
                 //MARK: Mockup Titles
@@ -94,9 +91,7 @@ struct MockupView: View {
                 //MARK: Mockup View Settings
                 SettingsView(viewModel: viewModel, obj: obj)
             })
-//            .sheet(isPresented: $obj.appearance.showApplicationSettings, content: {
-//                ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isScrollingSettings: $isScrollingSettings)
-//            })
+
             //MARK: Pill Buttons for importing user images etc
             importButtons(obj: obj, saveCount: $saveCount, viewModel: viewModel, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
         }
@@ -143,20 +138,20 @@ extension View {
                 .onTapGesture(count: 1) {
                     viewModel.showImagePickerSheet1 = true
                 }
+                .gesture( // MARK: Drag up gesture to show settings sheet
+                    DragGesture(minimumDistance: 30, coordinateSpace: .global)
+                        .onEnded { value in
+                            if value.translation.height < 0 {
+                                obj.appearance.showSettingsSheet.toggle()
+                                    if !obj.appearance.showPill {
+                                        obj.appearance.showPill = true
+                                    }
+                            }
+                        })
             }
             .offset(y: obj.appearance.showSettingsSheet ? -110 : 0)
             .animation(.bouncy, value: obj.appearance.showSettingsSheet)
             .padding(-60)
-            .gesture( // MARK: Drag up gesture to show settings sheet
-                DragGesture(minimumDistance: 30, coordinateSpace: .global)
-                    .onEnded { value in
-                        if value.translation.height < 0 {
-                            obj.appearance.showSettingsSheet.toggle()
-                                if !obj.appearance.showPill {
-                                    obj.appearance.showPill = true
-                                }
-                        }
-                    })
     }
 }
 
@@ -189,10 +184,36 @@ struct TitleContent: View {
     
     var body: some View {
         VStack(spacing: 5) {
-            Text(itemTitle)
-                .font(.largeTitle.bold())
-                .lineLimit(1)
-                .minimumScaleFactor(0.5)
+            ZStack {
+                Text(itemTitle)
+                    .font(.largeTitle.bold())
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(.white)
+                    .blendMode(.difference)
+                
+                Text(itemTitle)
+                    .font(.largeTitle.bold())
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .blendMode(.hue)
+                
+                Text(itemTitle)
+                    .font(.largeTitle.bold())
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(.white)
+                    .blendMode(.overlay)
+                
+                Text(itemTitle)
+                    .font(.largeTitle.bold())
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.5)
+                    .foregroundColor(.black)
+                    .blendMode(.overlay)
+                
+            }
+            
             
             Text(itemSubTitle)
                 .foregroundStyle(.gray)

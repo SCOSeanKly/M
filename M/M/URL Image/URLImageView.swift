@@ -9,7 +9,7 @@ import SwiftUI
 import SwiftUIX
 import SwiftUIIntrospect
 import IsScrolling
-
+import UIKit
 
 struct URLImages: View {
     @StateObject var viewModelData: DataViewModel
@@ -19,6 +19,11 @@ struct URLImages: View {
     @State private var saveState: SaveState = .idle
     @StateObject var obj: Object
     @Binding var isShowingGradientView: Bool
+    
+    // Add a state variable to hold the search query
+    @State private var searchTextTemp = ""
+    @State private var searchText = ""
+    @State private var isFiltering = false
     
     enum SaveState {
         case idle
@@ -44,61 +49,70 @@ struct URLImages: View {
     @Binding var activeTab: Tab
     @Binding var isScrolling: Bool
     @StateObject var newCreatorsViewModel: NewImagesViewModel
+    @StateObject var keyboardObserver: KeyboardObserver
     
+   
     
     var body: some View {
-            VStack {
+        VStack {
+            
+            ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, activeTab: $activeTab, newCreatorsViewModel: newCreatorsViewModel)
+
+            if !filteredImages.isEmpty {
                 
-                ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, activeTab: $activeTab, newCreatorsViewModel: newCreatorsViewModel)
+                SearchBarView(searchText: $searchText, isFiltering: $isFiltering, keyboardObserver: keyboardObserver)
                 
-                if !viewModelData.images.isEmpty {
-                 
-                        ScrollView(.vertical, showsIndicators: true) {
-                            LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
-                                ForEach(viewModelData.images.indices.reversed(), id: \.self) { index in
-                                    WallpaperImageView(
-                                        imageURL: URL(string: viewModelData.images[index].image)!,
-                                        isPremium: viewModelData.images[index].image.contains("p_"),
-                                        isNew: viewModelData.images[index].isNew,
-                                        onTap: {
-                                            if viewModelData.images[index].image.contains("p_") && !showPremiumContent {
-                                                premiumRequiredAlert.present()
-                                            } else {
-                                                selectedImage = viewModelData.images[index]
-                                                isSheetPresented = true
-                                                saveState = .idle
-                                            }
-                                        },
-                                        obj: obj,
-                                        premiumRequiredAlert: $premiumRequiredAlert
-                                    )
-                                    .scrollSensor()
-                                }
-                            }
-                            .scrollStatusMonitor($isScrolling, monitorMode: .common)
-                            .padding(10)
-                            
-                            Spacer()
-                                .frame(height: 100)
+                ScrollView(.vertical, showsIndicators: true) {
+                    LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
+                        ForEach(filteredImages.indices.reversed(), id: \.self) { index in
+                            WallpaperImageView(
+                                imageURL: URL(string: filteredImages[index].image)!,
+                                isPremium: filteredImages[index].image.contains("p_"),
+                                isNew: filteredImages[index].isNew,
+                                onTap: {
+                                    if filteredImages[index].image.contains("p_") && !showPremiumContent {
+                                        premiumRequiredAlert.present()
+                                    } else {
+                                        selectedImage = filteredImages[index]
+                                        isSheetPresented = true
+                                        saveState = .idle
+                                    }
+                                    
+                                    hideKeyboard()
+                                },
+                                obj: obj,
+                                premiumRequiredAlert: $premiumRequiredAlert
+                            )
+                            .scrollSensor()
                         }
-                        .onAppear {
-                            //MARK: Dismisses new wallpapers added notification
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
-                                newCreatorsViewModel.reloadData()
-                            }
-                        }
-                        .refreshable {
-                            // Handle pull-to-refresh here
-                            viewModelData.forceRefresh.toggle()
-                        }
-                } else {
-                    // Show loading images view when no images have been loaded yet
-                    LoadingImagesView(obj: obj)
+                    }
+                    .scrollStatusMonitor($isScrolling, monitorMode: .common)
+                    .padding(10)
+                    
+                    Spacer()
+                        .frame(height: 100)
                 }
-                
-                Spacer()
+                .onAppear {
+                    //MARK: Dismisses new wallpapers added notification
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
+                        newCreatorsViewModel.reloadData()
+                    }
+                }
+                .refreshable {
+                    // Handle pull-to-refresh here
+                    viewModelData.forceRefresh.toggle()
+                }
+            } else {
+                // Show loading images view when no images have been loaded yet
+                if searchText == "" {
+                    LoadingImagesView(obj: obj)
+                } else {
+                    NofilteredImagesButton(searchText: $searchText, isFiltering: $isFiltering)
+                }
             }
-        
+            
+            Spacer()
+        }
         .preferredColorScheme(colorScheme)
         .edgesIgnoringSafeArea(.bottom)
         .fullScreenCover(item: $selectedImage) { image in
@@ -142,30 +156,57 @@ struct URLImages: View {
         }
     }
     
+    // Filter images based on the search query
+    var filteredImages: [ImageModel] {
+        if searchText.isEmpty {
+            return viewModelData.images
+        } else {
+            var matchedImages = Set<String>() // Set to store matched image URLs
+            // Filter images by checking if the filename contains the search text
+            let filtered = viewModelData.images.filter { imageModel in
+                let imageName = getFileName(from: imageModel.image)
+                let imageNameWithoutExtension = (imageName as NSString).deletingPathExtension
+                let containsSearchText = imageNameWithoutExtension.localizedCaseInsensitiveContains(searchText)
+                
+                // Check if the extracted numbers exactly match the search text
+                let imageNumbers = imageNameWithoutExtension.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                let searchTextNumbers = searchText.components(separatedBy: CharacterSet.decimalDigits.inverted).joined()
+                let numberMatch = imageNumbers == searchTextNumbers
+                
+                if numberMatch && !matchedImages.contains(imageModel.image) {
+                    matchedImages.insert(imageModel.image) // Add matched image URL to the set
+                    print("Match found: \(imageModel.image)")
+                    return true
+                }
+                return false
+            }
+
+            // Print if no matches are found
+            if filtered.isEmpty {
+                print("No matches found for search: \(searchText)")
+            }
+
+            return filtered
+        }
+    }
+
+    
+
+    // Function to extract filename from URL
     private func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
-            return url.deletingPathExtension().lastPathComponent
+            return url.lastPathComponent
         }
         return ""
     }
-    
-    private func alertPreferences(title: String, imageName: String) -> some View {
-        VStack {
-            
-            Text("\(Image(systemName: imageName)) \(title)")
-            
-            Text("Open settings to unlock premium")
-                .font(.system(size: 12, design: .rounded))
-                .padding(.top, 5)
-            
-        }
-        .foregroundStyle(.black)
-        .padding(15)
-        .background {
-            RoundedRectangle(cornerRadius: 15)
-                .fill(Color.yellow)
-        }
-    }
-    
 }
+
+#if canImport(UIKit)
+extension View {
+    func hideKeyboard() {
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
+}
+#endif
+
 

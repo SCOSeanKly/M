@@ -23,8 +23,7 @@ struct importButtons: View {
         VStack {
             ZStack {
                 WallpaperButtonView(isTapped: $isTapped, obj: obj, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
-               
-
+            
                 Pill(viewModel: viewModel, obj: obj, saveCount: $saveCount, isTapped: $isTapped)
             }
             
@@ -260,14 +259,32 @@ private struct WallpaperButtonView: View {
         
       
             HStack {
-                Text("Mockup")
-                    .font(.largeTitle.bold())
+                ZStack {
+                    Text("Mockup")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(.white)
+                        .blendMode(.difference)
+                    
+                    Text("Mockup")
+                        .font(.largeTitle.bold())
+                        .blendMode(.hue)
+                    
+                    Text("Mockup")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(.white)
+                        .blendMode(.overlay)
+                    
+                    Text("Mockup")
+                        .font(.largeTitle.bold())
+                        .foregroundColor(.black)
+                        .blendMode(.overlay)
+                    
+                }
+                .font(.largeTitle.bold())
                     .onTapGesture(count: 10) {
-                        
                         viewModelData.resetSeenImages()
                         resetSeenImages()
                         refreshData()
-                        
                         feedback()
                     }
                 Spacer()
