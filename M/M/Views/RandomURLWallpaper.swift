@@ -5,12 +5,16 @@
 //  Created by Sean Kelly on 13/03/2024.
 //
 
+
 import SwiftUI
 import SDWebImageSwiftUI
 
 struct RandomURLWallpaper: View {
     @StateObject var imageURLStore: ImageURLStore
     let fetchInterval: TimeInterval = 4 * 60 * 60 // 4 hours
+
+    let baseUrl = WallpaperURLData.commonBaseUrl
+    let creatorUrls = WallpaperURLData.creatorURLs
 
     var body: some View {
         ZStack {
@@ -56,7 +60,11 @@ struct RandomURLWallpaper: View {
     }
 
     func loadRandomImage() {
-        guard let jsonURL = URL(string: "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/wallpaperImages.json") else {
+        var availableCreators = Array(creatorUrls.filter { $0.key != "widgy" }.keys)
+        guard let randomCreator = availableCreators.randomElement(),
+              let subPath = creatorUrls[randomCreator]?.subPath,
+              let jsonFile = creatorUrls[randomCreator]?.jsonFile,
+              let jsonURL = URL(string: "\(baseUrl)\(jsonFile)") else {
             return
         }
 
@@ -68,7 +76,7 @@ struct RandomURLWallpaper: View {
             do {
                 let imageNames = try JSONDecoder().decode([String].self, from: data)
                 let randomImageName = imageNames.randomElement() ?? ""
-                let imageURL = URL(string: "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/Wallpapers/\(randomImageName)")
+                let imageURL = URL(string: "\(baseUrl)\(subPath)\(randomImageName)")
 
                 DispatchQueue.main.async {
                     self.imageURLStore.imageURL = imageURL
@@ -79,8 +87,8 @@ struct RandomURLWallpaper: View {
             }
         }.resume()
     }
-}
 
+}
 
 class ImageURLStore: ObservableObject {
     @Published var imageURL: URL?
@@ -94,3 +102,7 @@ struct RandomURLWallpaper_Previews: PreviewProvider {
         return RandomURLWallpaper(imageURLStore: imageURLStore) // Pass it to RandomURLWallpaper
     }
 }
+
+
+
+

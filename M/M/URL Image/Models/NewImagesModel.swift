@@ -81,6 +81,7 @@ class NewImagesViewModel: ObservableObject {
     }
 }
 
+
 struct CreatorModel {
     let name: String
     var totalImagesCount: Int
@@ -105,3 +106,4 @@ struct CreatorModel {
         UserDefaults.standard.removeObject(forKey: "\(name)_seenImages")
     }
 }
+

@@ -4,6 +4,7 @@
 //
 //  Created by Sean Kelly on 31/01/2024.
 //
+
 import SwiftUI
 
 class ImageMetadataViewModel: ObservableObject {
@@ -56,3 +57,4 @@ class ImageMetadataViewModel: ObservableObject {
         }.resume()
     }
 }
+

@@ -45,6 +45,8 @@ struct MockupView: View {
     var body: some View {
         ZStack {
             
+            
+            
             CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
                 //MARK: Mockup Image
