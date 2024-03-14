@@ -45,7 +45,14 @@ struct MockupView: View {
     var body: some View {
         ZStack {
             
-            
+//            RandomURLWallpaper(imageURLStore: imageURLStore)
+//                .scaledToFill()
+//                .contrast(1)
+//                .overlay{
+//                    TransparentBlurView(removeAllFilters: true)
+//                        .blur(radius: 200, opaque: true)
+//                }
+//                .ignoresSafeArea()
             
             CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
@@ -183,6 +190,8 @@ struct TitleContent: View {
     
     let itemTitle: String
     let itemSubTitle: String
+ 
+    
     
     var body: some View {
         VStack(spacing: 5) {
@@ -217,10 +226,35 @@ struct TitleContent: View {
             }
             
             
-            Text(itemSubTitle)
-                .foregroundStyle(.gray)
-                .multilineTextAlignment(.center)
-                .frame(height: 45)
+//            Text(itemSubTitle)
+//                .foregroundStyle(.gray)
+//                .multilineTextAlignment(.center)
+//                .frame(height: 45)
+            ZStack {
+                Text(itemSubTitle)
+                    .multilineTextAlignment(.center)
+                
+                    .foregroundColor(.white)
+                    .blendMode(.difference)
+                
+                Text(itemSubTitle)
+                    .multilineTextAlignment(.center)
+                
+                    .blendMode(.hue)
+                
+                Text(itemSubTitle)
+                    .multilineTextAlignment(.center)
+                
+                    .foregroundColor(.white)
+                    .blendMode(.overlay)
+                
+                Text(itemSubTitle)
+                    .multilineTextAlignment(.center)
+                
+                    .foregroundColor(.black)
+                    .blendMode(.overlay)
+            }
+            .frame(height: 45)
         }
         .offset(y: 25)
         .scaleEffect(0.9)

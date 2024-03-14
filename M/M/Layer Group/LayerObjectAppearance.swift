@@ -24,7 +24,8 @@ struct LayerObjectAppearance {
     var showPill: Bool
     var showAppSettings: Bool
     @AppStorage("enableImportTapGestures") var enableImportTapGestures: Bool = false
-    var selectedAppearance: AppearanceMode
+    @AppStorage("selectedAppearance") var selectedAppearance: AppearanceMode = .system
+
     var showWallpapersView: Bool
     var imageFormatPNG: Bool
     var showWallpaperButton: Bool
@@ -37,7 +38,7 @@ struct LayerObjectAppearance {
     @AppStorage("showCoverFlow") var showCoverFlow: Bool = false
     @AppStorage("showFullResPreview") var showFullResPreview: Bool = false
     
-    enum AppearanceMode {
+    enum AppearanceMode: String, Codable {
         case light
         case dark
         case system
@@ -109,8 +110,8 @@ struct LayerObjectAppearance {
         self.showPill = true
         self.showAppSettings = false
         self.enableImportTapGestures = false
-        self.selectedAppearance = .system
-        self.showWallpapersView = false 
+        self.selectedAppearance = .dark
+        self.showWallpapersView = false
         self.imageFormatPNG = false
         self.showWallpaperButton = false
         self.showApplicationSettings = false

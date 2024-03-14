@@ -11,9 +11,9 @@ import SwiftUI
 struct Custom_MockupApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     
+    
     var body: some Scene {
         WindowGroup {
-//            ContentView(obj: Object())
               MockupMView(obj: Object())
                 .onAppear {
                     let _ = IAP.shared
