@@ -27,8 +27,20 @@ struct LoadJSONView: View {
         "Effect"
     ]
     
+    var colorScheme: ColorScheme? {
+        switch obj.appearance.selectedAppearance {
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        case .system:
+            return nil
+        }
+    }
+    
+    
     var body: some View {
-        NavigationView {
+    
             VStack {
                 
                 HStack {
@@ -90,7 +102,7 @@ struct LoadJSONView: View {
                 viewModelHeader.overlayType = selectedOverlayType
                 viewModelHeader.loadImages()
             }
-        }
+            .preferredColorScheme(colorScheme)
     }
 }
 
