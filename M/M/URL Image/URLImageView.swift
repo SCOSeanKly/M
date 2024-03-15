@@ -190,8 +190,6 @@ struct URLImages: View {
         }
     }
 
-    
-
     // Function to extract filename from URL
     private func getFileName(from urlString: String) -> String {
         if let url = URL(string: urlString) {
@@ -201,12 +199,10 @@ struct URLImages: View {
     }
 }
 
-#if canImport(UIKit)
 extension View {
     func hideKeyboard() {
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
 }
-#endif
 
 

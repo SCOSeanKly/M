@@ -50,7 +50,7 @@ struct OverlayButtonsView: View {
                             
                         }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: nil, overlaySymbolColor: nil)
                         .offset(x: showGradientControl ? -offsetValue : 0)
-                        .animation(.bouncy, value: showGradientControl)
+                        .animation(.snappy, value: showGradientControl)
                         
                         Spacer()
                         
@@ -62,7 +62,7 @@ struct OverlayButtonsView: View {
                         }
                         .shadow(radius: 3)
                         .offset(x: showGradientControl ? offsetValue : 0)
-                        .animation(.bouncy, value: showGradientControl)
+                        .animation(.snappy, value: showGradientControl)
                         
                     }
                     
@@ -151,7 +151,7 @@ struct OverlayButtonsView: View {
                             Spacer()
                             
                             UltraThinButton(action: {
-                                withAnimation(.bouncy) {
+                                withAnimation(.snappy) {
                                     showGradientControl.toggle()
                                 }
                             }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: buttonScaleEffect, showOverlaySymbol: false, overlaySymbol: nil, overlaySymbolColor: nil)
@@ -161,7 +161,7 @@ struct OverlayButtonsView: View {
                         
                     }
                     .offset(x: showGradientControl ? offsetValue : 0)
-                    .animation(.bouncy, value: showGradientControl)
+                    .animation(.snappy, value: showGradientControl)
                     
                     Spacer()
                     
@@ -211,7 +211,7 @@ struct OverlayButtonsView: View {
                     .padding(.bottom, 50)
                     .padding(.leading)
                     .offset(x: showGradientControl ? -offsetValue : 0)
-                    .animation(.bouncy, value: showGradientControl)
+                    .animation(.snappy, value: showGradientControl)
                 }
                 .padding(.top, 50)
                 .padding(.horizontal)
@@ -273,41 +273,6 @@ struct OverlayButtonsView: View {
             }
         }
     }
-    
-    /*
-   
-    //MARK: Save image function PNG
-      func saveImageToPhotoLibrary() {
-          guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
-                let window = windowScene.windows.first else {
-              return
-          }
-          
-          let format = UIGraphicsImageRendererFormat()
-          format.scale = UIScreen.main.scale // Use the screen scale for full resolution
-          format.opaque = false // Set opaque to false to preserve transparency
-          
-          let renderer = UIGraphicsImageRenderer(bounds: window.bounds, format: format)
-          let image = renderer.image { context in
-              // Add .withRenderingMode(.alwaysOriginal) to capture the original image
-              window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
-          }.withRenderingMode(.alwaysOriginal) // Apply .withRenderingMode(.alwaysOriginal) to the captured image
-          
-          PHPhotoLibrary.shared().performChanges({
-              let pngData = image.pngData() // Convert the image to PNG data
-              if let pngData = pngData {
-                  let creationRequest = PHAssetCreationRequest.forAsset()
-                  creationRequest.addResource(with: .photo, data: pngData, options: nil)
-              }
-          }) { _, error in
-              if let error = error {
-                  print("Failed to save image to photo library:", error)
-              } else {
-                  print("Image saved to photo library successfully.")
-              }
-          }
-      }
-     */
     
     func saveImageToPhotoLibrary() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,

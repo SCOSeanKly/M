@@ -38,7 +38,6 @@ struct LoadJSONView: View {
         }
     }
     
-    
     var body: some View {
     
             VStack {

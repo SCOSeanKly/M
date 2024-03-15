@@ -20,7 +20,6 @@
 		3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */; };
 		3E2D61622B1B213100C83E14 /* New.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2D61612B1B213100C83E14 /* New.swift */; };
 		3E2D61642B1B26D700C83E14 /* NewWallAddedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */; };
-		3E3D5C342B5AD0D9003B98C2 /* InAppNotificationExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3D5C332B5AD0D9003B98C2 /* InAppNotificationExtension.swift */; };
 		3E3DFA3E2B21F70600A4097E /* DataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3D2B21F70600A4097E /* DataModel.swift */; };
 		3E3DFA402B21F73700A4097E /* ImageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E3DFA3F2B21F73700A4097E /* ImageModel.swift */; };
 		3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */ = {isa = PBXBuildFile; productRef = 3E40F5B62B583F3700D1B581 /* SwiftUIX */; };
@@ -59,7 +58,6 @@
 		3E69AFAD2AF55A40007244C1 /* GroundReflectionViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFAC2AF55A40007244C1 /* GroundReflectionViewModifier.swift */; };
 		3E69AFAF2AF55A5A007244C1 /* IfExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFAE2AF55A5A007244C1 /* IfExtension.swift */; };
 		3E69AFB12AF55A67007244C1 /* ZoomModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFB02AF55A67007244C1 /* ZoomModifier.swift */; };
-		3E69AFB32AF55A7B007244C1 /* CustomUniversalAlertApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFB22AF55A7B007244C1 /* CustomUniversalAlertApp.swift */; };
 		3E69AFB52AF55A93007244C1 /* UniversalAlert.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFB42AF55A93007244C1 /* UniversalAlert.swift */; };
 		3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFB62AF55AA7007244C1 /* BundleInfo.swift */; };
 		3E69AFB92AF55AB5007244C1 /* CustomToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E69AFB82AF55AB5007244C1 /* CustomToggle.swift */; };
@@ -151,7 +149,6 @@
 		3E28819A2AFD046B0071E460 /* CustomToggle3Way.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggle3Way.swift; sourceTree = "<group>"; };
 		3E2D61612B1B213100C83E14 /* New.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = New.swift; sourceTree = "<group>"; };
 		3E2D61632B1B26D700C83E14 /* NewWallAddedView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWallAddedView.swift; sourceTree = "<group>"; };
-		3E3D5C332B5AD0D9003B98C2 /* InAppNotificationExtension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InAppNotificationExtension.swift; sourceTree = "<group>"; };
 		3E3DFA3D2B21F70600A4097E /* DataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModel.swift; sourceTree = "<group>"; };
 		3E3DFA3F2B21F73700A4097E /* ImageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModel.swift; sourceTree = "<group>"; };
 		3E5FF5922B078C0D0007AF8D /* URLImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLImageView.swift; sourceTree = "<group>"; };
@@ -191,7 +188,6 @@
 		3E69AFAC2AF55A40007244C1 /* GroundReflectionViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroundReflectionViewModifier.swift; sourceTree = "<group>"; };
 		3E69AFAE2AF55A5A007244C1 /* IfExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IfExtension.swift; sourceTree = "<group>"; };
 		3E69AFB02AF55A67007244C1 /* ZoomModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZoomModifier.swift; sourceTree = "<group>"; };
-		3E69AFB22AF55A7B007244C1 /* CustomUniversalAlertApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUniversalAlertApp.swift; sourceTree = "<group>"; };
 		3E69AFB42AF55A93007244C1 /* UniversalAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UniversalAlert.swift; sourceTree = "<group>"; };
 		3E69AFB62AF55AA7007244C1 /* BundleInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BundleInfo.swift; sourceTree = "<group>"; };
 		3E69AFB82AF55AB5007244C1 /* CustomToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomToggle.swift; sourceTree = "<group>"; };
@@ -393,7 +389,6 @@
 				3EB9F1B82B6C0B5600DDC58A /* PersistentOverlays.swift */,
 				3E67B3192B6AA207003C6C73 /* WiggleModifier.swift */,
 				3E67B3112B695F84003C6C73 /* CoverFlowView.swift */,
-				3E3D5C332B5AD0D9003B98C2 /* InAppNotificationExtension.swift */,
 				3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */,
 				3EB858BC2B4FEA24001C8A68 /* RollingText.swift */,
 				3E23E90D2B0F997700DE4460 /* ZoomGesture.swift */,
@@ -403,7 +398,6 @@
 				3E69AFAC2AF55A40007244C1 /* GroundReflectionViewModifier.swift */,
 				3E69AFAE2AF55A5A007244C1 /* IfExtension.swift */,
 				3E69AFB02AF55A67007244C1 /* ZoomModifier.swift */,
-				3E69AFB22AF55A7B007244C1 /* CustomUniversalAlertApp.swift */,
 				3E69AFB42AF55A93007244C1 /* UniversalAlert.swift */,
 				3E69AFB62AF55AA7007244C1 /* BundleInfo.swift */,
 				3E69AFB82AF55AB5007244C1 /* CustomToggle.swift */,
@@ -636,7 +630,6 @@
 				3ECD71D52B9F27A80072C295 /* OverlaysView.swift in Sources */,
 				3E67B3282B6AACB2003C6C73 /* customFrameBasedOnCondition.swift in Sources */,
 				3E7373C12B8CBE7E00F0C963 /* ColorPickerView.swift in Sources */,
-				3E69AFB32AF55A7B007244C1 /* CustomUniversalAlertApp.swift in Sources */,
 				3E7808752B7FA99A000A9F84 /* SliderView.swift in Sources */,
 				3EAB31092B87964800B0D756 /* HalfBlurView.swift in Sources */,
 				3E69AF7D2AF55875007244C1 /* ContentView.swift in Sources */,
@@ -666,7 +659,6 @@
 				3E67B32A2B6AB0F3003C6C73 /* WallpaperImageView.swift in Sources */,
 				3E7373B92B8CBE2700F0C963 /* GradientSlidersButtons.swift in Sources */,
 				3E72A08C2B17A01B00797359 /* MockupView.swift in Sources */,
-				3E3D5C342B5AD0D9003B98C2 /* InAppNotificationExtension.swift in Sources */,
 				3E7EC1F42B18CF05006CA403 /* IAP.swift in Sources */,
 				3E69AF932AF558DC007244C1 /* ImageObject.swift in Sources */,
 				3E69AFA72AF55A0A007244C1 /* CustomSlider.swift in Sources */,

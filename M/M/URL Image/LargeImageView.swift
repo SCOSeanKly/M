@@ -138,7 +138,7 @@ struct LargeImageView: View {
                                             Text("\(String(describing: value))")
                                                 .modifier(AICustomTextModifier(customPadding: 5, cornerRadius: 10, strokeOpacity: 0.4))
                                                 .scaleEffect(isTappedAnimation ? 0.9 : 1, anchor: .center)
-                                                .animation(.bouncy, value: isTappedAnimation)
+                                                .animation(.snappy, value: isTappedAnimation)
                                         }
                                         .buttonStyle(.plain)
                                     }

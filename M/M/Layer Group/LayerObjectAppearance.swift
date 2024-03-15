@@ -110,7 +110,7 @@ struct LayerObjectAppearance {
         self.showPill = true
         self.showAppSettings = false
         self.enableImportTapGestures = false
-        self.selectedAppearance = .dark
+        self.selectedAppearance = .system
         self.showWallpapersView = false
         self.imageFormatPNG = false
         self.showWallpaperButton = false

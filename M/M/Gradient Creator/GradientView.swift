@@ -38,6 +38,8 @@ struct GradientView: View {
     @State private var amplitude: CGFloat = 0
     @State private var frequency: CGFloat = 200
     @State private var showHalfBlur: Bool = false
+    @State private var halfBlurLeft: Bool = false
+    @State private var halfBlurShadowOpacity: CGFloat = 0.5
     @State private var gradientHue: CGFloat = 0
     @State private var gradientSaturation: CGFloat = 1
     @State private var gradientBrightness: CGFloat = 0
@@ -136,7 +138,7 @@ struct GradientView: View {
             GradientOverlayImageView(importedImageOverlay: $importedImageOverlay)
             
             //MARK: Adds a half blur on the left side
-            HalfBlurView(showHalfBlur: $showHalfBlur)
+            HalfBlurView(showHalfBlur: $showHalfBlur, halfBlurLeft: $halfBlurLeft, halfBlurShadowOpacity: $halfBlurShadowOpacity)
             
         }
         .background(.clear)
@@ -153,7 +155,7 @@ struct GradientView: View {
                              imageName: "exclamationmark.triangle")
         }
         .onTapGesture {
-            withAnimation(.bouncy) {
+            withAnimation(.snappy) {
                 showGradientControl.toggle()
             }
         }
@@ -165,7 +167,7 @@ struct GradientView: View {
         }
         .sheet(isPresented: $showGradientControl){
             //MARK: These are the buttons and control sliders
-            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, blendModeEffects: $blendModeEffects, allowPixellateEffect: $allowPixellateEffect, importedBackgroundOpacity: $importedBackgroundOpacity, effectsOpacity: $effectsOpacity, hideGradient: $hideGradient, importedBackgroundBlur: $importedBackgroundBlur, importedBackgroundHue: $importedBackgroundHue, importedBackgroundSaturation: $importedBackgroundSaturation, importedBackgroundBrightness: $importedBackgroundBrightness,  importedBackgroundContrast: $importedBackgroundContrast)
+            AdjustmentSettingsView(isSavingImage: $isSavingImage, gradientBlur: $gradientBlur, gradientScale: $gradientScale, gradientRotation: $gradientRotation, gradientOffsetX: $gradientOffsetX, gradientOffsetY: $gradientOffsetY, importedBackground: $importedBackground, importedImageOverlay: $importedImageOverlay, pixellate: $pixellate, amplitude: $amplitude, frequency: $frequency, showHalfBlur: $showHalfBlur, gradientHue: $gradientHue, gradientSaturation: $gradientSaturation, gradientBrightness: $gradientBrightness, gradientContrast: $gradientContrast, selectedColorCount: $selectedColorCount, gradientColors: $gradientColors, bgColor: $bgColor, showGradientControl: $showGradientControl, refreshButtonTapped: $refreshButtonTapped, showPopoverGradientWall: $showPopoverGradientWall, invertGradient: $invertGradient, blendModeImportedBackground: $blendModeImportedBackground, blendModeEffects: $blendModeEffects, allowPixellateEffect: $allowPixellateEffect, importedBackgroundOpacity: $importedBackgroundOpacity, effectsOpacity: $effectsOpacity, hideGradient: $hideGradient, importedBackgroundBlur: $importedBackgroundBlur, importedBackgroundHue: $importedBackgroundHue, importedBackgroundSaturation: $importedBackgroundSaturation, importedBackgroundBrightness: $importedBackgroundBrightness,  importedBackgroundContrast: $importedBackgroundContrast, halfBlurLeft: $halfBlurLeft, halfBlurShadowOpacity: $halfBlurShadowOpacity)
         }
         .fullScreenCover(isPresented: $showGradientBgPickerSheet) {
             createFullScreenCover(for: $importedBackground) { BgImage in

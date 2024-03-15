@@ -89,44 +89,7 @@ struct ApplicationSettings: View {
                     //MARK: Application settings
                     Group {
                         
-                        //MARK: Onboarding diabled for now
-                        /*
-                         VStack {
-                         HStack {
-                         Image(systemName: "questionmark.circle")
-                         .font(.title3)
-                         
-                         Text("Restart OnBoarding Help: ")
-                         .font(.system(size: obj.appearance.settingsSliderFontSize))
-                         
-                         Spacer()
-                         
-                         AnimatedButton(action: {
-                         
-                         obj.appearance.showApplicationSettings.toggle()
-                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                         showOnboarding.toggle()
-                         }
-                         
-                         }, sfSymbolName: "book.and.wrench", rotationAntiClockwise: false, rotationDegrees: 720, color: .primary, allowRotation: false, showOverlaySymbol: false, overlaySymbolName: "", overlaySymbolColor: .primary)
-                         .padding(5)
-                         .background(.ultraThinMaterial)
-                         .clipShape(Circle())
-                         }
-                         
-                         HStack {
-                         Text("Shows the onboarding help screens")
-                         .font(.system(size: obj.appearance.settingsSliderFontSize))
-                         .foregroundStyle(.gray)
-                         
-                         Spacer()
-                         
-                         }
-                         }
-                         .padding(.vertical, 2.5)
-                         */
-                        
-                        
+
                         VStack {
                             
                             HStack {

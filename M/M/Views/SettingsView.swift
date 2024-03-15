@@ -12,6 +12,7 @@ struct SettingsView: View {
     
     @StateObject var viewModel: ContentViewModel
     @StateObject var obj: Object
+ 
     
     var body: some View {
         
@@ -26,11 +27,25 @@ struct SettingsView: View {
                 MockupSettingsView(viewModel: viewModel, obj: obj)
                 
                 LogoSettingsView(viewModel: viewModel, obj: obj)
-                
             }
-            .customPresentationWithBlur(detent: .medium, blurRadius: 0, backgroundColorOpacity: 1.0)
         }
         .padding(.top, 30)
+        .modifier(SettingsPresentationModifier())
+    }
+}
+
+struct SettingsPresentationModifier: ViewModifier {
+    let presentationHeight = UIScreen.main.bounds.height * 0.37
+    func body(content: Content) -> some View {
+        content
+            .padding(.bottom)
+            .presentationDragIndicator(.visible)
+            .presentationContentInteraction(.scrolls)
+            .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .topLeading)
+            .presentationDetents([.height(presentationHeight), .large])
+            .presentationCornerRadius(20)
+            .presentationBackgroundInteraction(.enabled(upThrough: .large))
+            .ignoresSafeArea()
     }
 }
 
@@ -624,7 +639,6 @@ struct ScalePercentageText: View {
     }
 }
 
-
 extension View {
     func popOverInfo<Content: View>(isPresented: Binding<Bool>, onTapAction: (() -> Void)? = nil, @ViewBuilder content: @escaping () -> Content) -> some View {
         self
@@ -698,7 +712,6 @@ struct CustomSliderView: View {
         .padding()
     }
 }
-
 
 struct PopOverView: View {
     var body: some View {

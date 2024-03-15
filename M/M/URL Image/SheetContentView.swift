@@ -51,7 +51,7 @@ struct SheetContentView: View {
                     .padding(8)
                     .background(Color.primary.colorInvert())
                     .clipShape(RoundedRectangle(cornerRadius: 24))
-                    .animation(.bouncy, value: saveState)
+                    .animation(.snappy, value: saveState)
                     .sensoryFeedback(.selection, trigger: isTapped)
                     .opacity(isZooming ? 0 : 1)
                     .animation(.smooth, value: isZooming)
@@ -60,72 +60,7 @@ struct SheetContentView: View {
             }
         
     }
-/*
-    private func saveImage() {
-        saveState = .saving
-        
-        guard var urlComponents = URLComponents(string: image.image) else {
-            saveState = .idle
-            return
-        }
-        
-        if var pathComponents = urlComponents.path.components(separatedBy: "/") as [String]? {
-            if let imageName = pathComponents.last {
-                let modifiedImageName: String
-                if imageName.lowercased().hasSuffix(".jpg") {
-                    modifiedImageName = imageName.replacingOccurrences(of: ".jpg", with: "_fullRes.PNG", options: .caseInsensitive)
-                } else {
-                    modifiedImageName = imageName
-                }
-                
-                pathComponents[pathComponents.count - 1] = modifiedImageName
-                urlComponents.path = pathComponents.joined(separator: "/")
-                
-                guard let modifiedURL = urlComponents.url else {
-                    saveState = .idle
-                    return
-                }
-                
-                let delegate = ImageDownloadDelegate(saveState: $saveState, progressCallback: { progress in
-                    // Update the progress in your UI
-                    downloadProgress = progress
-                })
 
-                let delegateQueue = OperationQueue.main
-                let session = URLSession(configuration: .default, delegate: delegate, delegateQueue: delegateQueue)
-
-                let dataTask = session.dataTask(with: modifiedURL)
-                delegate.task = dataTask
-
-                // Resume the data task
-                dataTask.resume()
-
-                URLSession.shared.dataTask(with: modifiedURL) { data, response, error in
-                    if let data = data, let originalUIImage = UIImage(data: data) {
-                        // Save the original image as PNG
-                        if let pngData = originalUIImage.pngData() {
-                            UIImage(data: pngData)?.writeToPhotosAlbum()
-                        
-                            // Introduce a delay before transitioning to "saved"
-                            DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                                saveState = .saved
-                                if downloadProgress > 0.999 {
-                                    provideSuccessFeedback()
-                                }
-                            }
-                            viewModel.loadImages()
-                            print("Saved to photos")
-                        } else {
-                            saveState = .idle
-                        }
-                    } else {
-                        saveState = .idle
-                    }
-                }.resume()
-            }
-        }
-    }
- */
     private func saveImage() {
         saveState = .saving
         

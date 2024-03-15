@@ -24,8 +24,6 @@ struct URLPill: View {
                     .font(.largeTitle.bold())
                     .onChange(of: viewModelData.creatorName) {
                         viewModelData.forceRefresh.toggle()
-                     
-
                     }
                     .opacity(obj.appearance.showPill ? 1: 0)
                     .offset(x: obj.appearance.showPill ?  0 : -100)

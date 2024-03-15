@@ -10,12 +10,12 @@ import SwiftUI
 struct importButtons: View {
     
     @State private var isAnimationSlowed = false
-    @StateObject var obj: Object
+    @ObservedObject var obj: Object
     @Binding var saveCount: Int
-    @StateObject var viewModel:  ContentViewModel
+    @ObservedObject var viewModel:  ContentViewModel
     @State private var isTapped: Bool = false
     @Binding var isShowingGradientView: Bool
-    @StateObject var viewModelData: DataViewModel
+    @ObservedObject var viewModelData: DataViewModel
     @ObservedObject var newCreatorsViewModel: NewImagesViewModel
  
     
@@ -81,10 +81,8 @@ private struct Pill: View {
                     }
                 }
                 .onTapGesture {
-                    withAnimation(.bouncy){
                         isTapped.toggle()
                         obj.appearance.showPill.toggle()
-                    }
                 }
                 .pillModifier(obj: obj, normalScale: 1.0)
             }
@@ -121,36 +119,35 @@ private struct TextViewTwo: View {
     
     var body: some View {
         Group {
-            
             HStack {
                 
                 MockupButton(action: {
                     viewModel.showImagePickerSheet1 = true
-                    withAnimation(.bouncy){
+                 
                         obj.appearance.showPill.toggle()
-                    }
+                    
                 }, sfSymbolName: "iphone.gen2.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage1 == nil ? "1.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage1 == nil ? .primary : .red)
                 .padding(.leading, 5)
                 
                 MockupButton(action: {
                     viewModel.showImagePickerSheet2 = true
-                    withAnimation(.bouncy){
+                  
                         obj.appearance.showPill.toggle()
-                    }
+                   
                 }, sfSymbolName: "iphone.gen2.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedImage2 == nil ? "2.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedImage2 == nil ? .primary : .red)
               
                 MockupButton(action: {
                     viewModel.showBgPickerSheet = true
-                    withAnimation(.bouncy){
+                   
                         obj.appearance.showPill.toggle()
-                    }
+                
                 }, sfSymbolName: "photo.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedBackground == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedBackground == nil ? .primary : .red)
              
                 MockupButton(action: {
                     viewModel.showLogoPickerSheet = true
-                    withAnimation(.bouncy){
+                 
                         obj.appearance.showPill.toggle()
-                    }
+                
                 }, sfSymbolName: "person.circle", showOverlaySymbol: true, overlaySymbolName: viewModel.importedLogo == nil ? "plus.circle" : "xmark.circle.fill", overlaySymbolColor: viewModel.importedLogo == nil ? .primary : .red)
            
                     Divider()
@@ -158,9 +155,9 @@ private struct TextViewTwo: View {
                 MockupButton(action: {
                     obj.appearance.showSettingsSheet.toggle()
                     DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
-                        withAnimation(.bouncy){
+                       
                             obj.appearance.showPill.toggle()
-                        }
+                    
                     }
                 }, sfSymbolName: "slider.horizontal.3", showOverlaySymbol: false, overlaySymbolName: "", overlaySymbolColor: .clear)
               
@@ -209,7 +206,7 @@ extension View {
     func wallpaperButtonModifier(obj: Object, normalScale: CGFloat) -> some View {
         self
             .opacity(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings ? 0.3 : 1)
-            .animation(.bouncy, value: obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
+            .animation(.snappy, value: obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
             .disabled(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
             .opacity(obj.appearance.showPill ? 1: 0)
             .offset(x: obj.appearance.showPill ?  0 : -100)
@@ -226,38 +223,6 @@ private struct WallpaperButtonView: View {
     @ObservedObject var newCreatorsViewModel: NewImagesViewModel
     
     var body: some View {
-        /*
-        HStack {
-            Group { //MARK: Show Wallpaper Button
-                
-                UltraThinButton(action: {
-                    withAnimation(.bouncy) {
-                        obj.appearance.showPill = true
-                    }
-                    obj.appearance.showWallpapersView.toggle()
-                    showWallpaperTip.invalidate(reason: .actionPerformed)
-                    
-                }, systemName: "photo.circle", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
-            }
-            
-            Group { //MARK: Show Application Settings
-                
-                UltraThinButton(action: {
-                    withAnimation(.bouncy) {
-                        obj.appearance.showPill = true
-                    }
-                    obj.appearance.showApplicationSettings.toggle()
-                    
-                }, systemName: "gearshape", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: "", overlaySymbolColor:.clear)
-            }
-            
-            Spacer()
-        }
-        .wallpaperButtonModifier(obj: obj, normalScale: 1)
-         */
-        
-        
-      
             HStack {
                 ZStack {
                     Text("Mockup")
@@ -306,4 +271,27 @@ private struct WallpaperButtonView: View {
     
 }
 
+extension View {
+    func pillModifier(obj: Object, normalScale: CGFloat) -> some View {
+        self
+            .padding(8)
+            .padding(.trailing, 4)
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 24))
+            .opacity(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings ? 0.3 : 1)
+            .animation(.bouncy, value: obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings || obj.appearance.showPill)
+            .disabled(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
+    }
+}
+
+#Preview {
+  importButtons(
+    obj: Object(),
+    saveCount: .constant(10),
+    viewModel: ContentViewModel(),
+    isShowingGradientView: .constant(false),
+    viewModelData: DataViewModel(),
+    newCreatorsViewModel: NewImagesViewModel()
+  )
+}
 

@@ -58,12 +58,7 @@ struct BackgroundView: View {
                 if importedBackground == nil {
                     //Initial background colour
                     ZStack {
-                        /*
-                        // Initial colour background
-                        RoundedRectangle(cornerRadius: 0)
-                            .fill(item.color.gradient)
-                         */
-                        
+                      
                         // Random loaded image
                         RandomURLWallpaper(imageURLStore: imageURLStore)
                             .scaledToFill()

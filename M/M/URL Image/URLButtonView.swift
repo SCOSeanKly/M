@@ -35,7 +35,7 @@ struct ButtonView: View {
             .padding(.horizontal)
             .onAppear{
                 DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                    withAnimation(.bouncy) {
+                    withAnimation(.snappy) {
                         showCount = true
                     }
                 }

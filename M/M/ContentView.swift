@@ -132,7 +132,7 @@ struct MockupMView: View {
                         .contentShape(.rect)
                         .onTapGesture {
                             isTapped.toggle()
-                            withAnimation(.bouncy, completionCriteria: .logicallyComplete, {
+                            withAnimation(.snappy, completionCriteria: .logicallyComplete, {
                                 activeTab = tab
                                 animatedTab.isAnimating = true
                             }, completion: {
@@ -148,7 +148,7 @@ struct MockupMView: View {
                 .background(.bar)
                 .offset(y: isShowingGradientView ? UIScreen.main.bounds.height * 0.25 : 0)
                 .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
-                .animation(.bouncy, value: isShowingGradientView || isScrolling || isScrollingSettings)
+                .animation(.snappy, value: isShowingGradientView || isScrolling || isScrollingSettings)
             }
             .sensoryFeedback(.selection, trigger: isTapped)
         }

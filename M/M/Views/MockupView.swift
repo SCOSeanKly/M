@@ -10,16 +10,16 @@ import TipKit
 
 struct MockupView: View {
     
-    @StateObject var viewModel: ContentViewModel
-    @StateObject var obj: Object
-    @StateObject var viewModelData: DataViewModel
+    @ObservedObject var viewModel: ContentViewModel
+    @ObservedObject var obj: Object
+    @ObservedObject var viewModelData: DataViewModel
     @AppStorage("saveCount") private var saveCount: Int = 0
     @ObservedObject var newCreatorsViewModel: NewImagesViewModel
-    @StateObject var imageURLStore: ImageURLStore
+    @ObservedObject var imageURLStore: ImageURLStore
+    @ObservedObject var manager = MotionManager()
     
     @Binding var showPremiumContent: Bool
     @Binding var buyClicked: Bool
-    @ObservedObject var manager = MotionManager()
     @Binding var isZooming: Bool
     @Binding var showCoverFlow: Bool
     @Binding var showOnboarding: Bool
@@ -44,16 +44,7 @@ struct MockupView: View {
     
     var body: some View {
         ZStack {
-            
-//            RandomURLWallpaper(imageURLStore: imageURLStore)
-//                .scaledToFill()
-//                .contrast(1)
-//                .overlay{
-//                    TransparentBlurView(removeAllFilters: true)
-//                        .blur(radius: 200, opaque: true)
-//                }
-//                .ignoresSafeArea()
-            
+            Text("Test")
             CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
                 //MARK: Mockup Image
@@ -159,7 +150,7 @@ extension View {
                         })
             }
             .offset(y: obj.appearance.showSettingsSheet ? -110 : 0)
-            .animation(.bouncy, value: obj.appearance.showSettingsSheet)
+            .animation(.snappy, value: obj.appearance.showSettingsSheet)
             .padding(-60)
     }
 }
@@ -169,22 +160,11 @@ extension View {
         self
             .scaleEffect(obj.appearance.showSettingsSheet || obj.appearance.isZoomActive ? 0 : normalScale)
             .opacity(obj.appearance.showSettingsSheet || obj.appearance.isZoomActive ? 0 : 1)
-            .animation(.bouncy, value: obj.appearance.showSettingsSheet || obj.appearance.isZoomActive)
+            .animation(.snappy, value: obj.appearance.showSettingsSheet || obj.appearance.isZoomActive)
     }
 }
 
-extension View {
-    func pillModifier(obj: Object, normalScale: CGFloat) -> some View {
-        self
-            .padding(8)
-            .padding(.trailing, 4)
-            .background(.ultraThinMaterial)
-            .clipShape(RoundedRectangle(cornerRadius: 24))
-            .opacity(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings ? 0.3 : 1)
-            .animation(.bouncy, value: obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
-            .disabled(obj.appearance.showSettingsSheet || obj.appearance.showApplicationSettings)
-    }
-}
+
 
 struct TitleContent: View {
     
@@ -225,11 +205,7 @@ struct TitleContent: View {
                 
             }
             
-            
-//            Text(itemSubTitle)
-//                .foregroundStyle(.gray)
-//                .multilineTextAlignment(.center)
-//                .frame(height: 45)
+        
             ZStack {
                 Text(itemSubTitle)
                     .multilineTextAlignment(.center)

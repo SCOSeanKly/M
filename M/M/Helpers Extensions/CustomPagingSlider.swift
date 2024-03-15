@@ -139,7 +139,7 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
                     .offset(y: UIScreen.main.bounds.width * 0.8)
                     .disabled(false)
                     .opacity(isZooming ? 0 : 1)
-                    .animation(.bouncy, value: isZooming)
+                    .animation(.snappy, value: isZooming)
                   
                 
                 }

@@ -50,6 +50,8 @@ struct GradientSlidersButtons: View {
     @Binding var importedBackgroundSaturation: CGFloat
     @Binding var importedBackgroundBrightness: CGFloat
     @Binding var importedBackgroundContrast: CGFloat
+    @Binding var halfBlurLeft: Bool
+    @Binding var halfBlurShadowOpacity: CGFloat
       
     
     
@@ -198,6 +200,35 @@ struct GradientSlidersButtons: View {
                 CustomToggleBlend(showTitleText: true, titleText: "Show Half Blur", bindingValue: $showHalfBlur, bindingValue2: nil, onSymbol: "circle", offSymbol: "xmark", rotate: true, onColor: Color(.systemGreen), offColor: Color(.systemGray))
                     .padding(.vertical, 6)
             }
+            
+            //MARK: Add Half Blur Left or Right Toggle
+            HStack (spacing: -5) {
+                let imageName: String = "square.lefthalf.filled"
+                Image(systemName: imageName)
+                    .foregroundColor(.white)
+                    .blendMode(.difference)
+                    .overlay{
+                        Image(systemName: imageName)
+                            .blendMode(.hue)
+                    }
+                    .overlay{
+                        Image(systemName: imageName)
+                            .foregroundColor(.white)
+                            .blendMode(.overlay)
+                    }
+                    .overlay{
+                        Image(systemName: imageName)
+                            .foregroundColor(.black)
+                            .blendMode(.overlay)
+                    }
+                    .padding(.leading)
+                
+                CustomToggleBlend(showTitleText: true, titleText: "Half Blur Left or Right", bindingValue: $halfBlurLeft, bindingValue2: nil, onSymbol: "chevron.right", offSymbol: "chevron.backward", rotate: false, onColor: Color(.systemGray), offColor: Color(.systemGray))
+                    .padding(.vertical, 6)
+            }
+            
+            //MARK: Half Blur Shadow Opacity
+            SliderView(systemName: "circle.dotted.and.circle", sliderTitle: "Shadow Opacity", blurSystemName: false, value: $halfBlurShadowOpacity, inValue: 0, outValue: 1, resetValue: 0.5)
         }
         
         Divider()

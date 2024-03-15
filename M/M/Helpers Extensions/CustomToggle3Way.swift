@@ -78,7 +78,7 @@ struct CustomToggle3Way: View {
                 // Other onTapGesture code...
                 let updatedStates = getNextStates()
                 bindingValues.wrappedValue = updatedStates
-                withAnimation(.bouncy) {
+                withAnimation(.snappy) {
                     
                     // Adjust the xOffset based on the current state
                     xOffset = xOffset == 0 ? 10 : (xOffset == 10 ? -10 : 0)

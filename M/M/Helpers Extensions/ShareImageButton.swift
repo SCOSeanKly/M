@@ -43,7 +43,7 @@ struct ShareImageButton: View {
                 feedback()
                 showSymbolEffect.toggle()
 
-                withAnimation(.bouncy){
+                withAnimation(.snappy){
                     obj.appearance.showPill = true
                 }
 
@@ -175,38 +175,7 @@ func provideSuccessFeedback() {
     let feedbackGenerator = UINotificationFeedbackGenerator()
     feedbackGenerator.notificationOccurred(.success)
 }
-/*
-class ImageSaver: NSObject {
-    var alert: Binding<AlertConfig>
-    var alertError: Binding<AlertConfig>
-    
-    init(alert: Binding<AlertConfig>, alertError: Binding<AlertConfig>) {
-        self.alert = alert
-        self.alertError = alertError
-        super.init()
-    }
-    
-    func writeToPhotoAlbum(image: UIImage) {
-        UIImageWriteToSavedPhotosAlbum(image, self, #selector(saveCompleted(_:didFinishSavingWithError:contextInfo:)), nil)
-    }
-    
-    @objc func saveCompleted(_ image: UIImage, didFinishSavingWithError error: Error?, contextInfo: UnsafeRawPointer) {
-        if let error = error {
-            // Handle the error (e.g., show an error message) if the save operation failed.
-            print("Error saving image: \(error.localizedDescription)")
-            
-            // Present the error alert when there's an error.
-            provideErrorFeedback()
-            alertError.wrappedValue.present()
-            
-            
-        } else {
-            // The image was saved successfully; you can present the success alert here.
-            provideSuccessFeedback()
-            alert.wrappedValue.present()
-        }
-    }
-}*/
+
 
 class ImageSaver: NSObject {
     var alert: Binding<AlertConfig>
