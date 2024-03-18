@@ -222,11 +222,11 @@ struct OverlayButtonsView: View {
     
     func alertPreferences(title: String, imageName: String) -> some View {
            Text("\(Image(systemName: imageName)) \(title)")
-            .foregroundStyle(.white)
+            .foregroundStyle(.primary)
                .padding(15)
                .background {
                    RoundedRectangle(cornerRadius: 15)
-                       .fill(Color.black.gradient)
+                       .fill(Color.primary.colorInvert().gradient)
                }
                .onAppear(perform: {
                    DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
@@ -320,9 +320,6 @@ struct OverlayButtonsView: View {
         // Save the PNG image to the photo library
         imageSaver.writeToPhotoAlbum(image: pngImage)
     }
-
-
-
 
 
     func performDelayedAction(after interval: TimeInterval, action: @escaping () -> Void) {
