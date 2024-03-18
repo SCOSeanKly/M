@@ -11,10 +11,13 @@ struct SearchBarView: View {
     @Binding var searchText: String
     @Binding var isFiltering: Bool
     @StateObject var keyboardObserver: KeyboardObserver
+    @StateObject var viewModelData: DataViewModel
+
+    
     
     var body: some View {
         ZStack {
-            TextField("Search Wallpapers...", text: $searchText)
+            TextField("Search \(viewModelData.images.count) Wallpapers...", text: $searchText)
                 .padding(10)
                 .background(.ultraThinMaterial)
                 .cornerRadius(14)

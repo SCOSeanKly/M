@@ -51,7 +51,7 @@ struct URLImages: View {
     @StateObject var newCreatorsViewModel: NewImagesViewModel
     @StateObject var keyboardObserver: KeyboardObserver
     
-   
+    @Binding var wallpaperScollViewPosition: Int?
     
     var body: some View {
         VStack {
@@ -60,7 +60,7 @@ struct URLImages: View {
 
             if !filteredImages.isEmpty {
                 
-                SearchBarView(searchText: $searchText, isFiltering: $isFiltering, keyboardObserver: keyboardObserver)
+                SearchBarView(searchText: $searchText, isFiltering: $isFiltering, keyboardObserver: keyboardObserver, viewModelData: viewModelData)
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
@@ -86,12 +86,15 @@ struct URLImages: View {
                             .scrollSensor()
                         }
                     }
+                    .scrollTargetLayout()
                     .scrollStatusMonitor($isScrolling, monitorMode: .common)
                     .padding(10)
                     
+                  
                     Spacer()
                         .frame(height: 100)
                 }
+                .scrollPosition(id: $wallpaperScollViewPosition)
                 .onAppear {
                     //MARK: Dismisses new wallpapers added notification
                     DispatchQueue.main.asyncAfter(deadline: .now() + 60) {

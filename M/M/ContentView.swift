@@ -43,7 +43,7 @@ struct MockupMView: View {
         newCreatorsViewModel.creators.reduce(0) { $0 + $1.newImagesCount }
     }
     
-    
+    @State private var wallpaperScollViewPosition: Int?
     
     var body: some View {
         ZStack {
@@ -51,7 +51,7 @@ struct MockupMView: View {
                 TabView(selection: $activeTab) {
                  
                     if activeTab == .wallpapers {
-                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground, activeTab: $activeTab, isScrolling: $isScrolling, newCreatorsViewModel: newCreatorsViewModel, keyboardObserver: keyboardObserver)
+                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground, activeTab: $activeTab, isScrolling: $isScrolling, newCreatorsViewModel: newCreatorsViewModel, keyboardObserver: keyboardObserver, wallpaperScollViewPosition: $wallpaperScollViewPosition)
                             .setUpTab(.wallpapers)
                     }
                     
@@ -125,6 +125,7 @@ struct MockupMView: View {
                                 .font(.caption2)
                                 .textScale(.secondary)
                         }
+                        .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(activeTab == tab ? Color.blue : Color.gray.opacity(0.8))
                         .padding(.top, 15)
@@ -132,6 +133,14 @@ struct MockupMView: View {
                         .contentShape(.rect)
                         .onTapGesture {
                             isTapped.toggle()
+                            
+                            if tab == .wallpapers {
+                                //MARK: Returns wallpapers view to top of scrollview
+                                withAnimation(.snappy) {
+                                    wallpaperScollViewPosition = viewModelData.images.count - 1
+                                }
+                            }
+                            
                             withAnimation(.snappy, completionCriteria: .logicallyComplete, {
                                 activeTab = tab
                                 animatedTab.isAnimating = true
@@ -145,9 +154,9 @@ struct MockupMView: View {
                         }
                     }
                 }
-                .background(.bar)
+                .allowsHitTesting(true)
+                .background(.bar.opacity(isScrolling || isScrollingSettings ? 0.4 : 1))
                 .offset(y: isShowingGradientView ? UIScreen.main.bounds.height * 0.25 : 0)
-                .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
                 .animation(.snappy, value: isShowingGradientView || isScrolling || isScrollingSettings)
             }
             .sensoryFeedback(.selection, trigger: isTapped)

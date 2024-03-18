@@ -13,7 +13,6 @@ import CoreImage.CIFilterBuiltins
 
 
 struct GradientView: View {
-    
     @State private var showGradientBgPickerSheet = false
     @Binding var importedBackground: UIImage?
     @State private var showImageOverlayPickerSheet = false
