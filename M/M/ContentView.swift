@@ -125,7 +125,6 @@ struct MockupMView: View {
                                 .font(.caption2)
                                 .textScale(.secondary)
                         }
-                        .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
                         .frame(maxWidth: .infinity)
                         .foregroundStyle(activeTab == tab ? Color.blue : Color.gray.opacity(0.8))
                         .padding(.top, 15)
@@ -154,9 +153,9 @@ struct MockupMView: View {
                         }
                     }
                 }
-                .allowsHitTesting(true)
-                .background(.bar.opacity(isScrolling || isScrollingSettings ? 0.4 : 1))
+                .background(.bar)
                 .offset(y: isShowingGradientView ? UIScreen.main.bounds.height * 0.25 : 0)
+                .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
                 .animation(.snappy, value: isShowingGradientView || isScrolling || isScrollingSettings)
             }
             .sensoryFeedback(.selection, trigger: isTapped)

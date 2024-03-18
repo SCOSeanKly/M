@@ -179,18 +179,6 @@ struct OverlayButtonsView: View {
                                     } else {
                                         saveURLOverlayImagesToPhotoLibrary()
                                     }
-                                    
-                                    DispatchQueue.main.async {
-                                        alert.present()
-                                        
-                                        performDelayedAction(after: 2.0) {
-                                            alert.dismiss()
-                                            
-                                            performDelayedAction(after: 0.3) {
-                                                isSavingImage = false
-                                            }
-                                        }
-                                    }
                                 }
                             }, systemName: "square.and.arrow.up.circle.fill", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: false, overlaySymbol: nil, overlaySymbolColor: nil)
                             .padding(.bottom, 10)
@@ -219,10 +207,36 @@ struct OverlayButtonsView: View {
                 .tint(.white)
             }
         }
+        .alert(alertConfig: $alert) {
+            alertPreferences(title: "Saved Successfully!",
+                                        imageName: "checkmark.circle")
+        }
+        .alert(alertConfig: $alertError) {
+            alertPreferences(title: "Error Saving!",
+                                        imageName: "exclamationmark.triangle")
+        }
         .background(Color.clear)
         .frame(width: screenWidth, height: screenHeight)
         .sensoryFeedback(.selection, trigger: isTapped)
     }
+    
+    func alertPreferences(title: String, imageName: String) -> some View {
+           Text("\(Image(systemName: imageName)) \(title)")
+            .foregroundStyle(.white)
+               .padding(15)
+               .background {
+                   RoundedRectangle(cornerRadius: 15)
+                       .fill(Color.black.gradient)
+               }
+               .onAppear(perform: {
+                   DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                       alert.dismiss()
+                   }
+               })
+               .onTapGesture {
+                   alert.dismiss()
+               }
+       }
     
     func saveURLOverlayImagesToPhotoLibrary() {
         let imageExporter = ImageExporter()
@@ -289,10 +303,26 @@ struct OverlayButtonsView: View {
             window.drawHierarchy(in: window.bounds, afterScreenUpdates: true)
         }.withRenderingMode(.alwaysOriginal)
         
+        // Convert the captured image to PNG format
+        guard let pngData = image.pngData() else {
+            // Handle conversion failure
+            return
+        }
+        
+        // Create UIImage from PNG data
+        guard let pngImage = UIImage(data: pngData) else {
+            // Handle UIImage creation failure
+            return
+        }
+        
         let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
         
-        imageSaver.writeToPhotoAlbum(image: image)
+        // Save the PNG image to the photo library
+        imageSaver.writeToPhotoAlbum(image: pngImage)
     }
+
+
+
 
 
     func performDelayedAction(after interval: TimeInterval, action: @escaping () -> Void) {
