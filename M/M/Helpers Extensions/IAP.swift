@@ -7,12 +7,18 @@
 
 import UIKit
 import StoreKit
+import ConfettiSwiftUI
 
 typealias ProductCallback = (SKProduct?) -> Void
 typealias ProductsCallback = ([SKProduct]?) -> Void
 typealias ProductIDsCallback = ([String]?) -> Void
 typealias PurchaseCallback = (String) -> Void
 typealias BoolClosure = (Bool) -> Void
+
+
+extension Notification.Name {
+    static let IAPManagerDidPurchaseProduct = Notification.Name("IAPManagerDidPurchaseProduct")
+}
 
 class IAP: NSObject {
     static let shared = IAP()
@@ -29,7 +35,7 @@ class IAP: NSObject {
     private var restoreFailedCallback: ProductIDsCallback?
     private var failedCallback: PurchaseCallback?
     private let defaults = UserDefaults.standard
-
+    
     private func showPopup(title: String?, subtitle: String?) {
         DispatchQueue.main.async {
             let alertController = UIAlertController(title: title, message: subtitle, preferredStyle: .alert)
@@ -38,6 +44,7 @@ class IAP: NSObject {
         }
     }
     
+    
     func enablePurchase(_ productKey: String) {
         DispatchQueue.main.async { [weak self] in
             self?.defaults.set(true, forKey: productKey)
@@ -45,11 +52,13 @@ class IAP: NSObject {
         }
     }
     
+    
     public func purchase(_ productID: String, completion: BoolClosure?) {
         if SKPaymentQueue.canMakePayments() {
             purchaseProduct(productID) { [weak self] _ in
                 completion?(true)
                 self?.showPopup(title: NSLocalizedString("Purchased", comment: "In-App Purchase Messages"), subtitle: nil)
+                
             } failed: { [weak self] _ in
                 completion?(false)
                 self?.showPopup(title: NSLocalizedString("Purchase failed", comment: "In-App Purchase Messages"), subtitle: nil)
@@ -78,7 +87,7 @@ class IAP: NSObject {
             failed?(products)
         }
     }
-
+    
     public func requestProductData(_ key: String, callback: ProductCallback?, failed: ProductCallback?) {
         requestProductsData([key]) { products in
             callback?(products?.first)
@@ -126,7 +135,7 @@ class IAP: NSObject {
             failedCallback?(productId)
         }
     }
-
+    
     private func restore(success: ProductIDsCallback?, failed: ProductIDsCallback?) {
         restoreCallback = success
         restoreFailedCallback = failed
@@ -136,7 +145,7 @@ class IAP: NSObject {
     
     private override init() {
         super.init()
-
+        
         SKPaymentQueue.default().add(self)
         
         requestProductsData([IAP.purchaseID_silver, IAP.purchaseID_gold, IAP.purchaseID_bronze], callback: nil, failed: nil)
@@ -176,22 +185,28 @@ extension IAP: SKPaymentTransactionObserver {
     func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
         for transaction in transactions {
             switch transaction.transactionState {
-                case .purchased:
-                    enablePurchase(transaction.payment.productIdentifier)
-                    purchaseCallback?(transaction.payment.productIdentifier)
-                    SKPaymentQueue.default().finishTransaction(transaction)
-                case .restored:
-                    if let productIdentifier = transaction.original?.payment.productIdentifier {
-                        enablePurchase(productIdentifier)
-                        purchaseCallback?(productIdentifier)
-                    }
-                    SKPaymentQueue.default().finishTransaction(transaction)
-                case .failed:
-                    print(transaction.error?.localizedDescription ?? "")
-                    failedCallback?(transaction.payment.productIdentifier)
-                    SKPaymentQueue.default().finishTransaction(transaction)
-                default:
-                    break
+            case .purchased:
+                enablePurchase(transaction.payment.productIdentifier)
+                purchaseCallback?(transaction.payment.productIdentifier)
+                SKPaymentQueue.default().finishTransaction(transaction)
+                
+                //MARK: Shows Confettit
+                NotificationCenter.default.post(name: .IAPManagerDidPurchaseProduct, object: nil)
+            case .restored:
+                if let productIdentifier = transaction.original?.payment.productIdentifier {
+                    enablePurchase(productIdentifier)
+                    purchaseCallback?(productIdentifier)
+                    
+                    //MARK: Shows Confettit
+                    NotificationCenter.default.post(name: .IAPManagerDidPurchaseProduct, object: nil)
+                }
+                SKPaymentQueue.default().finishTransaction(transaction)
+            case .failed:
+                print(transaction.error?.localizedDescription ?? "")
+                failedCallback?(transaction.payment.productIdentifier)
+                SKPaymentQueue.default().finishTransaction(transaction)
+            default:
+                break
             }
         }
     }

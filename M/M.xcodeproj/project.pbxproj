@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */; };
 		3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */; };
+		3E08A3AE2BAAF79E00E4B863 /* WallpaperInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08A3AD2BAAF79E00E4B863 /* WallpaperInfo.swift */; };
+		3E08A3B02BAAFE7700E4B863 /* CreatorClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08A3AF2BAAFE7700E4B863 /* CreatorClass.swift */; };
 		3E09B5F52B90A57A0010A47F /* UIDeviceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */; };
 		3E09B5F72B90A8660010A47F /* ImageTitleSubTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */; };
 		3E1927502B1DF1DC0029B011 /* UnlockPremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */; };
@@ -109,6 +111,10 @@
 		3ECD71D52B9F27A80072C295 /* OverlaysView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD71D42B9F27A80072C295 /* OverlaysView.swift */; };
 		3ECD71D72B9F6D5E0072C295 /* ImageExporter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ECD71D62B9F6D5E0072C295 /* ImageExporter.swift */; };
 		3ED67EC22B1F677D008CFD61 /* CrownOverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED67EC12B1F677D008CFD61 /* CrownOverlayView.swift */; };
+		3EE2AFA12BA99DBC00E23FBD /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE2AFA02BA99DBC00E23FBD /* Kingfisher */; };
+		3EE2AFFA2BA9B66400E23FBD /* ConfettiSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE2AFF92BA9B66400E23FBD /* ConfettiSwiftUI */; };
+		3EE2AFFC2BA9D0FF00E23FBD /* ScrollStatusMonitorSK.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE2AFFB2BA9D0FF00E23FBD /* ScrollStatusMonitorSK.swift */; };
+		3EE2AFFE2BA9DC9900E23FBD /* Creator Class.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EE2AFFD2BA9DC9900E23FBD /* Creator Class.swift */; };
 		3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */; };
 		3EEE00462B7E1933005CB2CD /* Fluid.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00452B7E1933005CB2CD /* Fluid.swift */; };
 		3EEE00482B7E19CC005CB2CD /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EEE00472B7E19CC005CB2CD /* GradientView.swift */; };
@@ -138,6 +144,8 @@
 /* Begin PBXFileReference section */
 		3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShareImageButton.swift; sourceTree = "<group>"; };
 		3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImportButtons.swift; sourceTree = "<group>"; };
+		3E08A3AD2BAAF79E00E4B863 /* WallpaperInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WallpaperInfo.swift; sourceTree = "<group>"; };
+		3E08A3AF2BAAFE7700E4B863 /* CreatorClass.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreatorClass.swift; sourceTree = "<group>"; };
 		3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceIdentifier.swift; sourceTree = "<group>"; };
 		3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageTitleSubTitleView.swift; sourceTree = "<group>"; };
 		3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockPremiumView.swift; sourceTree = "<group>"; };
@@ -238,6 +246,8 @@
 		3ECD71D42B9F27A80072C295 /* OverlaysView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlaysView.swift; sourceTree = "<group>"; };
 		3ECD71D62B9F6D5E0072C295 /* ImageExporter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ImageExporter.swift; path = "../../../../../Developer/XCode Projects/ShowCreative/Smart Wallpaper Art/Image Export and Picker/ImageExporter.swift"; sourceTree = "<group>"; };
 		3ED67EC12B1F677D008CFD61 /* CrownOverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CrownOverlayView.swift; sourceTree = "<group>"; };
+		3EE2AFFB2BA9D0FF00E23FBD /* ScrollStatusMonitorSK.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollStatusMonitorSK.swift; sourceTree = "<group>"; };
+		3EE2AFFD2BA9DC9900E23FBD /* Creator Class.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Creator Class.swift"; sourceTree = "<group>"; };
 		3EEE00452B7E1933005CB2CD /* Fluid.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Fluid.swift; sourceTree = "<group>"; };
 		3EEE00472B7E19CC005CB2CD /* GradientView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		3EF4A60A2B7A48D10025D0F6 /* OnBoarding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnBoarding.swift; sourceTree = "<group>"; };
@@ -254,9 +264,11 @@
 			files = (
 				3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */,
 				3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */,
+				3EE2AFA12BA99DBC00E23FBD /* Kingfisher in Frameworks */,
 				3EFE440F2B9A072200646319 /* IsScrolling in Frameworks */,
 				3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */,
 				3EFE44082B9A06FD00646319 /* SwiftUIIntrospect in Frameworks */,
+				3EE2AFFA2BA9B66400E23FBD /* ConfettiSwiftUI in Frameworks */,
 				3EFE440C2B9A06FD00646319 /* SwiftUIIntrospect-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -264,6 +276,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3E08A3AC2BAAE2B500E4B863 /* User Classes */ = {
+			isa = PBXGroup;
+			children = (
+				3EE2AFFD2BA9DC9900E23FBD /* Creator Class.swift */,
+				3E08A3AF2BAAFE7700E4B863 /* CreatorClass.swift */,
+				3EA7EE4A2BA34BE300279344 /* WallpaperURLData.swift */,
+				3E08A3AD2BAAF79E00E4B863 /* WallpaperInfo.swift */,
+			);
+			path = "User Classes";
+			sourceTree = "<group>";
+		};
 		3E23E9082B0F5D0600DE4460 /* Tips Messages */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,6 +432,7 @@
 				3E81CA4A2B271AE400D01A39 /* Shine.swift */,
 				3E67B30F2B6952FC003C6C73 /* ParallaxMotionModifier.swift */,
 				3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */,
+				3EE2AFFB2BA9D0FF00E23FBD /* ScrollStatusMonitorSK.swift */,
 			);
 			path = "Helpers Extensions";
 			sourceTree = "<group>";
@@ -447,7 +471,7 @@
 				3E3DFA3D2B21F70600A4097E /* DataModel.swift */,
 				3E3DFA3F2B21F73700A4097E /* ImageModel.swift */,
 				3E277FB72B9B505400C0F062 /* NewImagesModel.swift */,
-				3EA7EE4A2BA34BE300279344 /* WallpaperURLData.swift */,
+				3E08A3AC2BAAE2B500E4B863 /* User Classes */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -515,6 +539,8 @@
 				3EFE44072B9A06FD00646319 /* SwiftUIIntrospect */,
 				3EFE440B2B9A06FD00646319 /* SwiftUIIntrospect-Static */,
 				3EFE440E2B9A072200646319 /* IsScrolling */,
+				3EE2AFA02BA99DBC00E23FBD /* Kingfisher */,
+				3EE2AFF92BA9B66400E23FBD /* ConfettiSwiftUI */,
 			);
 			productName = M;
 			productReference = 3E69AF772AF55875007244C1 /* M.app */;
@@ -550,6 +576,8 @@
 				3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
 				3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				3EFE440D2B9A072200646319 /* XCRemoteSwiftPackageReference "IsScrolling" */,
+				3EE2AF9F2BA99DBC00E23FBD /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				3EE2AFF82BA9B66400E23FBD /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
 			);
 			productRefGroup = 3E69AF782AF55875007244C1 /* Products */;
 			projectDirPath = "";
@@ -595,6 +623,7 @@
 				3EAB31032B878B3D00B0D756 /* ProgressBar.swift in Sources */,
 				3E8B3AB82BA300360050529A /* NofilteredImagesButton.swift in Sources */,
 				3E67B3222B6AA7FF003C6C73 /* ImageMetadataViewModel.swift in Sources */,
+				3EE2AFFC2BA9D0FF00E23FBD /* ScrollStatusMonitorSK.swift in Sources */,
 				3E2D61622B1B213100C83E14 /* New.swift in Sources */,
 				3E69AFB72AF55AA7007244C1 /* BundleInfo.swift in Sources */,
 				3E611ADA2B0E196B007A1714 /* URLButtonView.swift in Sources */,
@@ -640,6 +669,7 @@
 				3E69AFA02AF55998007244C1 /* SettingsView.swift in Sources */,
 				3E69AFAB2AF55A30007244C1 /* TransparentBlurView.swift in Sources */,
 				3EFE43F72B99C78400646319 /* WallpaperTitleView.swift in Sources */,
+				3E08A3AE2BAAF79E00E4B863 /* WallpaperInfo.swift in Sources */,
 				3E23E90E2B0F997700DE4460 /* ZoomGesture.swift in Sources */,
 				3E69AFAF2AF55A5A007244C1 /* IfExtension.swift in Sources */,
 				3E7373C32B8CBE8300F0C963 /* ReOrderGradientButton.swift in Sources */,
@@ -647,6 +677,7 @@
 				3E28819B2AFD046B0071E460 /* CustomToggle3Way.swift in Sources */,
 				3ECD71D72B9F6D5E0072C295 /* ImageExporter.swift in Sources */,
 				3E67B31E2B6AA508003C6C73 /* SheetContentView.swift in Sources */,
+				3E08A3B02BAAFE7700E4B863 /* CreatorClass.swift in Sources */,
 				3ECD71D12B9F09C70072C295 /* Checkerboard.swift in Sources */,
 				3EB9F1B92B6C0B5600DDC58A /* PersistentOverlays.swift in Sources */,
 				3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */,
@@ -671,6 +702,7 @@
 				3E67B3262B6AA849003C6C73 /* NoAIPromptView.swift in Sources */,
 				3EAB31052B87963100B0D756 /* OverlayButtonsView.swift in Sources */,
 				3E84DFC82B8E2C48000D139D /* LoadJSONView.swift in Sources */,
+				3EE2AFFE2BA9DC9900E23FBD /* Creator Class.swift in Sources */,
 				3E91943E2B567FA400B4EB2D /* CreatorProfiles.swift in Sources */,
 				3E69AFA22AF559B0007244C1 /* CustomImageView.swift in Sources */,
 				3E1F7C362BA06CF30004D09C /* ImageFilters.swift in Sources */,
@@ -813,7 +845,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.7;
+				CURRENT_PROJECT_VERSION = 0.0.9;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -858,7 +890,7 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.7;
+				CURRENT_PROJECT_VERSION = 0.0.9;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
@@ -934,6 +966,22 @@
 				minimumVersion = 3.9.0;
 			};
 		};
+		3EE2AF9F2BA99DBC00E23FBD /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 7.11.0;
+			};
+		};
+		3EE2AFF82BA9B66400E23FBD /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/simibac/ConfettiSwiftUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
 		3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SDWebImage/SDWebImageSwiftUI.git";
@@ -970,6 +1018,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */;
 			productName = SwiftUIKit;
+		};
+		3EE2AFA02BA99DBC00E23FBD /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EE2AF9F2BA99DBC00E23FBD /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
+		3EE2AFF92BA9B66400E23FBD /* ConfettiSwiftUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 3EE2AFF82BA9B66400E23FBD /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */;
+			productName = ConfettiSwiftUI;
 		};
 		3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */ = {
 			isa = XCSwiftPackageProductDependency;

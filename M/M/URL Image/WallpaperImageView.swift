@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SDWebImageSwiftUI
+import Kingfisher
 
 struct WallpaperImageView: View {
     var imageURL: URL
@@ -18,14 +19,15 @@ struct WallpaperImageView: View {
     
     var body: some View {
         VStack {
-            WebImage(url: imageURL)
+            
+            KFImage.url(imageURL)
                 .resizable()
                 .customFrameBasedOnCondition(obj: obj)
                 .overlay {
                     if isPremium {
                         CrownOverlayView()
                     }
-
+                    
                     if isNew {
                         NewWallAddedView()
                             .customFrameBasedOnCondition(obj: obj)
@@ -37,9 +39,9 @@ struct WallpaperImageView: View {
                 .alert(alertConfig: $premiumRequiredAlert) {
                     alertPreferences(title: "Premium Required!", imageName: "crown.fill")
                 }
-
+            
             let fileName = getFileName(from: imageURL.absoluteString)
-
+            
             FileNameView(fileName: fileName)
         }
     }

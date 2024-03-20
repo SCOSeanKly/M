@@ -22,7 +22,7 @@ struct OverlayButtonsView: View {
     @Binding var refreshButtonTapped: Bool
     @Binding var alert: AlertConfig
     @Binding var alertError: AlertConfig
-
+    
     @Binding var importedBackground: UIImage?
     @Binding var showOverlaysURLView: Bool
     let screenWidth = UIScreen.main.bounds.width
@@ -35,8 +35,7 @@ struct OverlayButtonsView: View {
     @Binding var activeTab: Tab
     @Binding var hideGradient: Bool
     @State private var savedImage: UIImage?
-
-  
+    
     
     var body: some View {
         ZStack {
@@ -208,12 +207,16 @@ struct OverlayButtonsView: View {
             }
         }
         .alert(alertConfig: $alert) {
-            alertPreferences(title: "Saved Successfully!",
-                                        imageName: "checkmark.circle")
+            alertPreferences(title: "Saved Successfully!", imageName: "checkmark.circle")
+            .onAppear{
+                isSavingImage = false
+            }
         }
         .alert(alertConfig: $alertError) {
-            alertPreferences(title: "Error Saving!",
-                                        imageName: "exclamationmark.triangle")
+            alertPreferences(title: selectedURLOverlayImages.isEmpty ? "Nothing to Save!" : "Error Saving!", imageName: "exclamationmark.triangle")
+            .onAppear{
+                isSavingImage = false
+            }
         }
         .background(Color.clear)
         .frame(width: screenWidth, height: screenHeight)
@@ -221,24 +224,35 @@ struct OverlayButtonsView: View {
     }
     
     func alertPreferences(title: String, imageName: String) -> some View {
-           Text("\(Image(systemName: imageName)) \(title)")
-            .foregroundStyle(.primary)
-               .padding(15)
-               .background {
-                   RoundedRectangle(cornerRadius: 15)
-                       .fill(Color.primary.colorInvert().gradient)
-               }
-               .onAppear(perform: {
-                   DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                       alert.dismiss()
-                   }
-               })
-               .onTapGesture {
-                   alert.dismiss()
-               }
-       }
+        Text("\(Image(systemName: imageName)) \(title)")
+            .foregroundStyle(Color.primary.colorInvert().gradient)
+            .padding(15)
+            .background {
+                RoundedRectangle(cornerRadius: 15)
+                    .fill(Color.primary)
+            }
+            .onAppear(perform: {
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                    alert.dismiss()
+                    alertError.dismiss()
+                }
+            })
+            .onTapGesture {
+                alert.dismiss()
+                alertError.dismiss()
+            }
+    }
     
     func saveURLOverlayImagesToPhotoLibrary() {
+        guard !selectedURLOverlayImages.isEmpty else {
+            // If the array is empty, return or handle the case as needed
+            print("No images to save")
+            isSavingImage = false
+            alertError.present()
+            
+            return
+        }
+        
         let imageExporter = ImageExporter()
         
         var loadedImages = [UIImage?](repeating: nil, count: selectedURLOverlayImages.count) // Initialize an array to hold loaded images
@@ -268,6 +282,14 @@ struct OverlayButtonsView: View {
             
             let orderedImages = loadedImages.compactMap { $0 } // Remove nil entries
             
+            // Check if there are images to merge
+            guard !orderedImages.isEmpty else {
+                print("No images loaded")
+                alertError.present()
+                isSavingImage = false
+                return
+            }
+            
             // Call mergeImages function of ImageExporter class
             imageExporter.mergeImages(orderedImages, outputSize: UIScreen.main.bounds.size)
             
@@ -281,13 +303,13 @@ struct OverlayButtonsView: View {
                 return
             }
             
-            // Unwrap the PNG data and save it to the photo library
-            if let unwrappedImage = UIImage(data: pngData) {
-                UIImageWriteToSavedPhotosAlbum(unwrappedImage, nil, nil, nil)
-            }
+            let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
+            
+            // Save the PNG image to the photo library
+            imageSaver.writeToPhotoAlbum(image: UIImage(data: pngData)!)
         }
     }
-    
+
     func saveImageToPhotoLibrary() {
         guard let windowScene = UIApplication.shared.connectedScenes.first as? UIWindowScene,
               let window = windowScene.windows.first else {
@@ -320,8 +342,7 @@ struct OverlayButtonsView: View {
         // Save the PNG image to the photo library
         imageSaver.writeToPhotoAlbum(image: pngImage)
     }
-
-
+    
     func performDelayedAction(after interval: TimeInterval, action: @escaping () -> Void) {
         DispatchQueue.main.asyncAfter(deadline: .now() + interval, execute: action)
     }

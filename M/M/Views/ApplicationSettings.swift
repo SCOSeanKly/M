@@ -58,6 +58,7 @@ struct ApplicationSettings: View {
     }
     
     @Binding var isScrollingSettings: Bool
+    @State private var iAPcounter: Int = 0
     
     
     var body: some View {
@@ -322,8 +323,7 @@ struct ApplicationSettings: View {
         }
         .preferredColorScheme(colorScheme)
         .sensoryFeedback(.selection, trigger: isTapped)
-     //   .customPresentationWithBlur(detent: .large, blurRadius: 0, backgroundColorOpacity: 1.0)
-       // .ignoresSafeArea()
+
     }
 }
 
@@ -375,7 +375,6 @@ struct SelectIconView: View {
                                         )
                                 }
                                 .frame(width: buttonSize, height: buttonSize)
-                                
                             }
                         }
                     }
@@ -426,7 +425,7 @@ struct InfoView: View {
                 Spacer()
             }
             
-            CreatorProfiles(obj: obj)
+            CreatorURLButtons()
             
             Divider()
                 .padding(.vertical)
@@ -474,7 +473,6 @@ struct InfoView: View {
         
         Spacer()
         
-    
     }
 }
 

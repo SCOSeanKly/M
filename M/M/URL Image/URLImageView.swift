@@ -86,10 +86,9 @@ struct URLImages: View {
                             .scrollSensor()
                         }
                     }
+                    .padding(10)
                     .scrollTargetLayout()
                     .scrollStatusMonitor($isScrolling, monitorMode: .common)
-                    .padding(10)
-                    
                   
                     Spacer()
                         .frame(height: 100)
@@ -108,8 +107,10 @@ struct URLImages: View {
             } else {
                 // Show loading images view when no images have been loaded yet
                 if searchText == "" {
+                    //MARK: Progress View
                     LoadingImagesView(obj: obj)
                 } else {
+                    //MARK: Shows a button to reset the images filter
                     NofilteredImagesButton(searchText: $searchText, isFiltering: $isFiltering)
                 }
             }

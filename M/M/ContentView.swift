@@ -35,6 +35,7 @@ struct MockupMView: View {
     let animationDuration: CGFloat = 0.2
     
     @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
+    
     @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
     @AppStorage("showOnboarding") private var showOnboarding: Bool = true
     @AppStorage("previousData") var previousData: Data?
@@ -44,6 +45,7 @@ struct MockupMView: View {
     }
     
     @State private var wallpaperScollViewPosition: Int?
+  
     
     var body: some View {
         ZStack {

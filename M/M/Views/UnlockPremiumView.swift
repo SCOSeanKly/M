@@ -162,6 +162,7 @@ struct UnlockPremiumSheet: View {
     @StateObject var obj: Object
     @Binding var buyClicked: Bool
     @Binding var unlockPremium: AlertConfig
+    @State private var iAPcounter: Int = 0
     
     var body: some View {
         ZStack {
@@ -202,6 +203,7 @@ struct UnlockPremiumSheet: View {
                     
                     IAP.shared.restorePurchases { _ in
                         buyClicked = false
+                    
                         
                     } failed: { _ in
                         buyClicked = false
@@ -225,6 +227,12 @@ struct UnlockPremiumSheet: View {
             }
             .padding()
         }
+        //MARK: Shows Confetti when IAP is successful or restored - listens to IAP class
+        .confettiCannon(counter: $iAPcounter)
+        .confettiCannon(counter: $iAPcounter)
+               .onReceive(NotificationCenter.default.publisher(for: .IAPManagerDidPurchaseProduct)) { _ in
+                   iAPcounter += 1
+               }
         .buttonStyle(.plain)
         .frame(width: UIScreen.main.bounds.width * 0.9, height: 180)
     }
