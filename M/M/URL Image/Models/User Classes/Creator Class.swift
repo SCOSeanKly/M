@@ -105,13 +105,13 @@ struct CreatorURLButtons: View {
                                 .buttonStyle(.plain)
                             case .failure(let error):
                                 // Handle failure
-                                Text("Failed to load image: \(error.localizedDescription)")
+                                CreatorPlaceholder()
                             case .empty:
                                 // Placeholder or loading indicator if needed
-                                Text("Loading...")
+                                CreatorPlaceholder()
                             @unknown default:
                                 // Handle unknown state
-                                Text("Unknown state")
+                                CreatorPlaceholder()
                             }
                         }
                     }

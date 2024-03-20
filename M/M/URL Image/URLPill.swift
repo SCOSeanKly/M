@@ -63,12 +63,11 @@ struct URLPill: View {
                                                                 .aspectRatio(contentMode: .fill)
                                                                 .clipShape(Circle())
                                                         case .failure(let error):
-                                                            Text("⚠️")
+                                                            CreatorPlaceholder()
                                                         case .empty:
-                                                          ProgressView()
-                                                                .scaleEffect(0.5)
+                                                            CreatorPlaceholder()
                                                         @unknown default:
-                                                            Text("⚠️")
+                                                            CreatorPlaceholder()
                                                         }
                                                     }
                                                 }
@@ -100,13 +99,28 @@ struct URLPill: View {
                                                                     .padding(.horizontal, 4)
                                                             }
                                                             .sensoryFeedback(.selection, trigger: isTapped)
+                                                            .overlay {
+                                                                if let creatorName = newCreatorsViewModel.creators.first(where: { $0.name == creatorInfo.name }),
+                                                                   creatorName.newImagesCount > 0 {
+                                                                    Text("\(creatorName.newImagesCount)")
+                                                                        .foregroundStyle(.white)
+                                                                        .font(.system(size: 6).weight(.bold))
+                                                                        .padding(.horizontal, 3)
+                                                                        .padding(.vertical, 1.5)
+                                                                        .background {
+                                                                            Color.red
+                                                                                .clipShape(RoundedRectangle(cornerRadius: 50))
+                                                                        }
+                                                                        .offset(x: 8, y: 10)
+                                                                }
+                                                            }
+                                                            .padding(.horizontal, 4)
                                                         case .failure(let error):
-                                                            Text("⚠️")
+                                                            CreatorPlaceholder()
                                                         case .empty:
-                                                          ProgressView()
-                                                                .scaleEffect(0.5)
+                                                            CreatorPlaceholder()
                                                         @unknown default:
-                                                            Text("⚠️")
+                                                            CreatorPlaceholder()
                                                         }
                                                     }
                                                 }

@@ -45,6 +45,7 @@ struct MockupMView: View {
     }
     
     @State private var wallpaperScollViewPosition: Int?
+    @StateObject var dataViewModel = DataViewModel()
   
     
     var body: some View {
