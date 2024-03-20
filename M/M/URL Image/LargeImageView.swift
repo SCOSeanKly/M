@@ -162,7 +162,7 @@ struct LargeImageView: View {
                 .animation(.smooth, value: isZooming)
             }
             .overlay{
-              
+                if !image.image.contains("w_") {
                     VStack {
                         
                         HStack{
@@ -190,7 +190,7 @@ struct LargeImageView: View {
                                 } else {
                                     premiumRequiredAlert.present()
                                 }
-                                 
+                                
                             }, systemName: "slider.horizontal.3", gradientFill: false, fillColor: Color.blue.opacity(0.5), showUltraThinMaterial: true, useSystemImage: true, scaleEffect: 1, showOverlaySymbol: showPremiumContent ? false : true, overlaySymbol: "crown.fill", overlaySymbolColor: .yellow)
                         }
                         
@@ -203,6 +203,7 @@ struct LargeImageView: View {
                     .padding()
                     .padding(.trailing)
                     .padding(.top, 40)
+                }
                 
             }
         }

@@ -27,8 +27,9 @@ class DataViewModel: ObservableObject {
     let creatorLoader = CreatorGitHubLoader() // Initialize the CreatorGitHubLoader
     
     init() {
-        // Fetch creators when DataViewModel is initialized
+        // Fetch creators and load images when DataViewModel is initialized
         creatorLoader.fetchCreators()
+        loadImages()
     }
     
     func loadImages() {
@@ -92,6 +93,7 @@ class DataViewModel: ObservableObject {
         seenImages = []
     }
 }
+
 
 /*
 import SwiftUI
