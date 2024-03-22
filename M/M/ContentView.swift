@@ -86,7 +86,6 @@ struct MockupMView: View {
         .onAppear {
             fetchData()
             newCreatorsViewModel.reloadData()
-            print("fetchData() &  newCreatorsViewModel.reloadData() exectuted. Total new \(totalNewImagesCount)")
         }
         .onChange(of: activeTab) {
             fetchData()
@@ -158,7 +157,7 @@ struct MockupMView: View {
                 }
                 .background(.bar)
                 .offset(y: isShowingGradientView ? UIScreen.main.bounds.height * 0.25 : 0)
-                .opacity(isScrolling || isScrollingSettings ? 0.4 : 1)
+                .opacity(isScrolling || isScrollingSettings ? 0.3 : 1)
                 .animation(.snappy, value: isShowingGradientView || isScrolling || isScrollingSettings)
             }
             .sensoryFeedback(.selection, trigger: isTapped)

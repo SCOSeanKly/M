@@ -13,10 +13,6 @@ struct GridOverlay : View {
     var horizontalSpacing2: CGFloat = 1020 / 4
     var verticalSpacing2: CGFloat = 1020 / 4
     
-   
-    
-   
-    
     let gridColor = Color(.systemBlue)
   
     

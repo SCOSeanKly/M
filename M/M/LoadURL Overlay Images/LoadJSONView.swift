@@ -159,8 +159,6 @@ class DataViewModelOverlays: ObservableObject {
     
     private lazy var overlayURLs: [String: String] = {
         let deviceIdentifier = UIDevice.current.modelName
-     //     let deviceIdentifier = "iPhone14,7"
-        
         let effectURL = "mEffect_\(deviceIdentifier.replacingOccurrences(of: "iPhone", with: "").replacingOccurrences(of: ",", with: "")).json"
         
         return [
@@ -207,7 +205,6 @@ class DataViewModelOverlays: ObservableObject {
     }
 }
 
-
 struct ImageData: Decodable {
     let image: String
     let title: String
@@ -229,6 +226,7 @@ struct OverlaysImageView: View {
                 case .success(let loadedImage):
                     loadedImage
                         .resizable()
+                        .aspectRatio(contentMode: .fill)
                         .frame(width: frameSize.width, height: frameSize.height, alignment: .center)
                         .clipShape(Rectangle())
                         .blendMode(blendModeEffects)

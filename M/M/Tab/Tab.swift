@@ -13,7 +13,6 @@ enum Tab: String, CaseIterable {
     case mockup = "apps.iphone.badge.plus"
     case creator = "paintbrush"
     case settings = "gearshape"
-  //  case news = "newspaper"
     
     var title: String {
         switch self {
@@ -25,7 +24,6 @@ enum Tab: String, CaseIterable {
             return "Creator"
         case .settings:
             return "Settings"
-
         }
     }
 }

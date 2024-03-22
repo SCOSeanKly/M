@@ -1,6 +1,15 @@
 {
-  "originHash" : "60cd9b118606f133b37c8a4e085735af1281e3e642b26cb3104cae9fee5a7327",
+  "originHash" : "c82ad25e87f416015dcd17ad93debcdfe79be0b7c8841d6ef04448481e47055f",
   "pins" : [
+    {
+      "identity" : "activityindicatorview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/exyte/ActivityIndicatorView.git",
+      "state" : {
+        "revision" : "9970fd0bb7a05dad0b6566ae1f56937716686b24",
+        "version" : "1.1.1"
+      }
+    },
     {
       "identity" : "confettiswiftui",
       "kind" : "remoteSourceControl",
@@ -17,15 +26,6 @@
       "state" : {
         "revision" : "7def8d8f789a326b6f725a76cee8ec3fa69511df",
         "version" : "1.1.2"
-      }
-    },
-    {
-      "identity" : "kingfisher",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/onevcat/Kingfisher.git",
-      "state" : {
-        "revision" : "5b92f029fab2cce44386d28588098b5be0824ef5",
-        "version" : "7.11.0"
       }
     },
     {

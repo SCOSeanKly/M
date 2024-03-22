@@ -26,6 +26,11 @@ class IAP: NSObject {
     static let purchaseID_silver = "MSilver"
     static let purchaseID_gold = "MGold"
     static let purchaseID_bronze = "MBronze"
+    static let purchaseID_M099 = "M099"
+    static let purchaseID_M199 = "M199"
+    static let purchaseID_M299 = "M299"
+    static let purchaseID_M399 = "M399"
+    static let purchaseID_M499 = "M499"
     public var cachedProducts = [String: SKProduct]()
     private var productsRequest: SKProductsRequest?
     private var productsCallback: ProductsCallback?
