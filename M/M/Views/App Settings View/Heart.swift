@@ -9,12 +9,12 @@ import SwiftUI
 
 struct HeartAnimationView: View {
     @State private var hearts: [Heart] = []
+    let symbolText: String
 
     var body: some View {
         ZStack {
             ForEach(hearts, id: \.id) { heart in
-             //  Text("❤️")
-                Text("⭐")
+                Text(symbolText)
                     .font(.system(size: 16))
                     .position(heart.position)
                     .opacity(heart.opacity)
@@ -68,8 +68,8 @@ struct Heart: Identifiable {
     var rotation: Double
 }
 
-struct HeartAnimationView_Previews: PreviewProvider {
-    static var previews: some View {
-        HeartAnimationView()
-    }
-}
+//struct HeartAnimationView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        HeartAnimationView()
+//    }
+//}

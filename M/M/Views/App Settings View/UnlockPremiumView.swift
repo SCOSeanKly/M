@@ -18,6 +18,7 @@ struct UnlockPremiumView: View {
     let premiumUnlockedImages = ["premiumUnlocked", "premiumUnlocked2", "premiumUnlocked3"]
     @Binding var showPremiumContent: Bool
     @Binding var buyClicked: Bool
+    @State private var shine: Bool = false
     
     
     var body: some View {
@@ -67,7 +68,7 @@ struct UnlockPremiumView: View {
                     .foregroundStyle(.primary)
                     .padding(.horizontal, 10)
                     .padding(.vertical, 5)
-                    .background(.ultraThinMaterial)
+                    .background(.yellow.gradient)
                     .clipShape(
                         RoundedRectangle(cornerRadius: 100))
                     
@@ -108,7 +109,7 @@ struct UnlockPremiumView: View {
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                     
-                    HeartAnimationView()
+                    HeartAnimationView(symbolText: "⭐")
                 }
                 .mask {
                     RoundedRectangle(cornerRadius: 20)
