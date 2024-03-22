@@ -15,6 +15,7 @@ struct MockupMView: View {
     @ObservedObject var newCreatorsViewModel = NewImagesViewModel()
     @StateObject var imageURLStore = ImageURLStore()
     @StateObject var keyboardObserver = KeyboardObserver()
+    @StateObject var dataViewModel = DataViewModel()
     
     @State private var totalNewWallpapersCount = 0
     @State var buyClicked: Bool = false
@@ -32,10 +33,11 @@ struct MockupMView: View {
         return .init(tab: tab)
     }
     @State private var tabOpacity: CGFloat = 1
+    @State private var wallpaperScollViewPosition: Int?
+    
     let animationDuration: CGFloat = 0.2
     
     @AppStorage(IAP.purchaseID_UnlockPremium) private var showPremiumContent = false
-    
     @AppStorage("showCoverFlow") private var showCoverFlow: Bool = false
     @AppStorage("showOnboarding") private var showOnboarding: Bool = true
     @AppStorage("previousData") var previousData: Data?
@@ -44,10 +46,7 @@ struct MockupMView: View {
         newCreatorsViewModel.creators.reduce(0) { $0 + $1.newImagesCount }
     }
     
-    @State private var wallpaperScollViewPosition: Int?
-    @StateObject var dataViewModel = DataViewModel()
-  
-    
+ 
     var body: some View {
         ZStack {
             VStack(spacing: 0) {

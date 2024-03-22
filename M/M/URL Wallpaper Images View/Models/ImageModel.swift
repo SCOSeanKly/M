@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-
+/*
 struct ImageModel: Identifiable, Hashable, Encodable {
     let id = UUID()
     let image: String
@@ -18,3 +18,5 @@ struct ImageModel: Identifiable, Hashable, Encodable {
     var isNew: Bool = false
 }
 
+
+*/

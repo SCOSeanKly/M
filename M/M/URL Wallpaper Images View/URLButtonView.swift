@@ -25,6 +25,7 @@ struct ButtonView: View {
     @Binding var activeTab: Tab
     @StateObject var newCreatorsViewModel: NewImagesViewModel
     @Binding var wallpaperScollViewPosition: Int?
+  
     
     var body: some View {
         VStack {

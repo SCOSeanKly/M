@@ -8,7 +8,17 @@
 
 import SwiftUI
 
-class DataViewModel: NSObject, ObservableObject, URLSessionDownloadDelegate {
+struct ImageModel: Identifiable, Hashable, Encodable {
+    let id = UUID()
+    let image: String
+    var baseName: String {
+        let fileName = URL(string: image)?.deletingPathExtension().lastPathComponent ?? ""
+        return fileName
+    }
+    var isNew: Bool = false
+}
+
+class DataViewModel: ObservableObject {
     @Published var images: [ImageModel] = []
     @Published var forceRefresh: Bool = false {
         didSet {
@@ -25,12 +35,7 @@ class DataViewModel: NSObject, ObservableObject, URLSessionDownloadDelegate {
     let baseUrl = "https://raw.githubusercontent.com/SCOSeanKly/"
     let creatorLoader = CreatorGitHubLoader() // Initialize the CreatorGitHubLoader
     
-    private var urlSession: URLSession!
-    private var creatorInfo: CreatorInfo? // Store creatorInfo as a property
-    
-    override init() {
-        super.init()
-        urlSession = URLSession(configuration: .default, delegate: self, delegateQueue: nil)
+    init() {
         // Fetch creators and load images when DataViewModel is initialized
         creatorLoader.fetchCreators()
         loadImages()
@@ -40,68 +45,64 @@ class DataViewModel: NSObject, ObservableObject, URLSessionDownloadDelegate {
         images = []
     }
     
-    func resetSeenImages() {
-        seenImages = []
-    }
-    
     func loadImages() {
-        
-        
         guard let creatorInfo = creatorLoader.creatorInfos.first(where: { $0.name == creatorName }) else {
             return
         }
         
-        self.creatorInfo = creatorInfo // Store creatorInfo
-        
         let url = URL(string: baseUrl + creatorInfo.jsonFile)!
         
-        let task = urlSession.downloadTask(with: url)
-        task.resume()
-    }
-    
-   
-    // MARK: - URLSessionDownloadDelegate Methods
-    
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        guard let creatorInfo = self.creatorInfo else {
-            return
-        }
+        let config = URLSessionConfiguration.default
+        config.timeoutIntervalForRequest = 10
+        config.timeoutIntervalForResource = 10
         
-        guard let data = try? Data(contentsOf: location),
-              let imageNames = try? JSONDecoder().decode([String].self, from: data) else {
-            return
-        }
+        let session = URLSession(configuration: config)
         
-        let newImages = imageNames.filter { imageName in
-            !seenImages.contains(imageName)
-        }
-        
-        
-        DispatchQueue.main.async {
-            self.newImagesCount = newImages.count
+        session.dataTask(with: url) { data, response, error in
+            guard let data = data else {
+                return
+            }
             
-            self.images = imageNames.map { imageName in
-                let imageUrlString = self.baseUrl + creatorInfo.subPath + imageName
-                var image = ImageModel(image: imageUrlString)
-                
-                let isNew = !self.seenImages.contains(image.baseName)
-                
-                if isNew {
-                    self.seenImages.append(image.baseName)
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
-                        // Reset isNew to false after 60 seconds
-                        if let index = self.images.firstIndex(where: { $0.id == image.id }) {
-                            self.images[index].isNew = false
+            do {
+                let imageNames = try JSONDecoder().decode([String].self, from: data)
+                DispatchQueue.global().async {
+                    let newImages = imageNames.filter { imageName in
+                        !self.seenImages.contains(imageName)
+                    }
+                    
+                    DispatchQueue.main.async {
+                        self.newImagesCount = newImages.count
+                        
+                        self.images = imageNames.map { imageName in
+                            let imageUrlString = self.baseUrl + creatorInfo.subPath + imageName
+                            var image = ImageModel(image: imageUrlString)
+                            
+                            let isNew = !self.seenImages.contains(image.baseName)
+                            
+                            if isNew {
+                                self.seenImages.append(image.baseName)
+                                DispatchQueue.main.asyncAfter(deadline: .now() + 60) {
+                                    // Reset isNew to false after 60 seconds
+                                    if let index = self.images.firstIndex(where: { $0.id == image.id }) {
+                                        self.images[index].isNew = false
+                                    }
+                                }
+                            }
+                            
+                            image.isNew = isNew
+                            
+                            return image
                         }
                     }
                 }
-                
-                image.isNew = isNew
-                
-                return image
+            } catch {
+                print(error.localizedDescription)
             }
         }
+        .resume()
+    }
+    
+    func resetSeenImages() {
+        seenImages = []
     }
 }
-
-
