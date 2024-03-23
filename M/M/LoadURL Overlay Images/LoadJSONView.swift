@@ -159,6 +159,9 @@ class DataViewModelOverlays: ObservableObject {
     
     private lazy var overlayURLs: [String: String] = {
         let deviceIdentifier = UIDevice.current.modelName
+      //  let deviceIdentifier = "154"
+        
+        
         let effectURL = "mEffect_\(deviceIdentifier.replacingOccurrences(of: "iPhone", with: "").replacingOccurrences(of: ",", with: "")).json"
         
         return [

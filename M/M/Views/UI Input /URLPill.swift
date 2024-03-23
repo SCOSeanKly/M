@@ -134,7 +134,7 @@ struct URLPill: View {
                                         .padding(.trailing, 20)
                                     }
                                     .opacity(obj.appearance.showPill ? 0 : 1)
-                                    .frame(width: UIScreen.main.bounds.width * 0.5, height: 30, alignment: .center)
+                                    .frame(width: UIScreen.main.bounds.width * 0.51, height: 30, alignment: .center)
                                     .cornerRadius(100)
                                 }
                                 .frame(width: 200, alignment: .leading)

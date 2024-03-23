@@ -23,6 +23,7 @@ class DataViewModel: ObservableObject {
     @Published var forceRefresh: Bool = false {
         didSet {
             if forceRefresh {
+                images = []
                 loadImages()
             }
         }
