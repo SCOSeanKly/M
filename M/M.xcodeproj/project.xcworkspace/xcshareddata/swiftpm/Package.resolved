@@ -1,15 +1,6 @@
 {
-  "originHash" : "c82ad25e87f416015dcd17ad93debcdfe79be0b7c8841d6ef04448481e47055f",
+  "originHash" : "96422a21a62bf6abf6bde54ea742e28b59ddd1ff7012940ba72395af5392f198",
   "pins" : [
-    {
-      "identity" : "activityindicatorview",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/exyte/ActivityIndicatorView.git",
-      "state" : {
-        "revision" : "9970fd0bb7a05dad0b6566ae1f56937716686b24",
-        "version" : "1.1.1"
-      }
-    },
     {
       "identity" : "confettiswiftui",
       "kind" : "remoteSourceControl",
@@ -44,15 +35,6 @@
       "state" : {
         "revision" : "5f025e54a03d3d33dff24d7a19331f446f00ed9d",
         "version" : "2.2.4"
-      }
-    },
-    {
-      "identity" : "swiftui-introspect",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/siteline/SwiftUI-Introspect.git",
-      "state" : {
-        "revision" : "0cd2a5a5895306bc21d54a2254302d24a9a571e4",
-        "version" : "1.1.3"
       }
     },
     {

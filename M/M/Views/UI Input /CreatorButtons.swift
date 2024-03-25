@@ -13,11 +13,12 @@ struct CreatorURLButtons: View {
     @StateObject var creatorLoader = CreatorGitHubLoader()
     @Environment(\.openURL) var openURL
     @State private var isButtonTapped: Bool = false
+    @StateObject var viewModelData = DataViewModel()
     
     var body: some View {
         ScrollView (.horizontal, showsIndicators: false) {
             HStack {
-                ForEach(creatorLoader.creatorInfos, id: \.self) { creatorInfo in
+                ForEach(creatorLoader.creatorInfos.sorted(by: { $0.name < $1.name }), id: \.self) { creatorInfo in
 
                     if let imageURL = URL(string: creatorInfo.imageURL) {
                         AsyncImage(url: imageURL) { phase in

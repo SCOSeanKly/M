@@ -10,7 +10,6 @@
 		3E01F7A32AF642B300DC7A4A /* ShareImageButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A22AF642B300DC7A4A /* ShareImageButton.swift */; };
 		3E01F7A52AF8EFF800DC7A4A /* ImportButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E01F7A42AF8EFF800DC7A4A /* ImportButtons.swift */; };
 		3E08A3B22BAB220300E4B863 /* CreatorPlaceholder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E08A3B12BAB220300E4B863 /* CreatorPlaceholder.swift */; };
-		3E08A3B52BAC535F00E4B863 /* ActivityIndicatorView in Frameworks */ = {isa = PBXBuildFile; productRef = 3E08A3B42BAC535F00E4B863 /* ActivityIndicatorView */; };
 		3E09B5F52B90A57A0010A47F /* UIDeviceIdentifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F42B90A57A0010A47F /* UIDeviceIdentifier.swift */; };
 		3E09B5F72B90A8660010A47F /* ImageTitleSubTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E09B5F62B90A8660010A47F /* ImageTitleSubTitleView.swift */; };
 		3E1927502B1DF1DC0029B011 /* UnlockPremiumView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E19274F2B1DF1DC0029B011 /* UnlockPremiumView.swift */; };
@@ -100,6 +99,7 @@
 		3EAB310B2B87965300B0D756 /* GradientOverlayImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB310A2B87965300B0D756 /* GradientOverlayImageView.swift */; };
 		3EAB310D2B87970600B0D756 /* AdjustmentSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAB310C2B87970600B0D756 /* AdjustmentSettingsView.swift */; };
 		3EAFEB3E2B23644900D57F5C /* Heart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EAFEB3D2B23644900D57F5C /* Heart.swift */; };
+		3EB01CA12BB1A9D100B80C39 /* PrivacyInfo.xcprivacy in Resources */ = {isa = PBXBuildFile; fileRef = 3EB01CA02BB1A9D100B80C39 /* PrivacyInfo.xcprivacy */; };
 		3EB858BD2B4FEA24001C8A68 /* RollingText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB858BC2B4FEA24001C8A68 /* RollingText.swift */; };
 		3EB858BF2B51A49F001C8A68 /* GridOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */; };
 		3EB9F1B92B6C0B5600DDC58A /* PersistentOverlays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EB9F1B82B6C0B5600DDC58A /* PersistentOverlays.swift */; };
@@ -121,8 +121,6 @@
 		3EFE43F32B98CFA700646319 /* Tab.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE43F22B98CFA700646319 /* Tab.swift */; };
 		3EFE43F52B98CFB500646319 /* Home.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE43F42B98CFB500646319 /* Home.swift */; };
 		3EFE43F72B99C78400646319 /* WallpaperTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EFE43F62B99C78400646319 /* WallpaperTitleView.swift */; };
-		3EFE44082B9A06FD00646319 /* SwiftUIIntrospect in Frameworks */ = {isa = PBXBuildFile; productRef = 3EFE44072B9A06FD00646319 /* SwiftUIIntrospect */; };
-		3EFE440C2B9A06FD00646319 /* SwiftUIIntrospect-Static in Frameworks */ = {isa = PBXBuildFile; productRef = 3EFE440B2B9A06FD00646319 /* SwiftUIIntrospect-Static */; };
 		3EFE440F2B9A072200646319 /* IsScrolling in Frameworks */ = {isa = PBXBuildFile; productRef = 3EFE440E2B9A072200646319 /* IsScrolling */; };
 /* End PBXBuildFile section */
 
@@ -232,6 +230,7 @@
 		3EAB310A2B87965300B0D756 /* GradientOverlayImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientOverlayImageView.swift; sourceTree = "<group>"; };
 		3EAB310C2B87970600B0D756 /* AdjustmentSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdjustmentSettingsView.swift; sourceTree = "<group>"; };
 		3EAFEB3D2B23644900D57F5C /* Heart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Heart.swift; sourceTree = "<group>"; };
+		3EB01CA02BB1A9D100B80C39 /* PrivacyInfo.xcprivacy */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = PrivacyInfo.xcprivacy; sourceTree = "<group>"; };
 		3EB858BC2B4FEA24001C8A68 /* RollingText.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RollingText.swift; sourceTree = "<group>"; };
 		3EB858BE2B51A49F001C8A68 /* GridOverlay.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GridOverlay.swift; sourceTree = "<group>"; };
 		3EB9F1B82B6C0B5600DDC58A /* PersistentOverlays.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PersistentOverlays.swift; sourceTree = "<group>"; };
@@ -260,12 +259,9 @@
 			files = (
 				3E40F5B72B583F3700D1B581 /* SwiftUIX in Frameworks */,
 				3EE33A572B0CF9190012BE14 /* SDWebImageSwiftUI in Frameworks */,
-				3E08A3B52BAC535F00E4B863 /* ActivityIndicatorView in Frameworks */,
 				3EFE440F2B9A072200646319 /* IsScrolling in Frameworks */,
 				3E9EE88A2B03C9BF001E6E50 /* SwiftUIKit in Frameworks */,
-				3EFE44082B9A06FD00646319 /* SwiftUIIntrospect in Frameworks */,
 				3EE2AFFA2BA9B66400E23FBD /* ConfettiSwiftUI in Frameworks */,
-				3EFE440C2B9A06FD00646319 /* SwiftUIIntrospect-Static in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -376,6 +372,7 @@
 		3E69AF6E2AF55875007244C1 = {
 			isa = PBXGroup;
 			children = (
+				3EB01CA02BB1A9D100B80C39 /* PrivacyInfo.xcprivacy */,
 				3E69AF792AF55875007244C1 /* M */,
 				3E69AF782AF55875007244C1 /* Products */,
 				3E87AB9F2B87788400B721A1 /* Frameworks */,
@@ -407,6 +404,7 @@
 				3E69AF7C2AF55875007244C1 /* ContentView.swift */,
 				3E69AF7E2AF55876007244C1 /* Assets.xcassets */,
 				3E69AF802AF55876007244C1 /* M.entitlements */,
+				3E69AF822AF55876007244C1 /* Preview Assets.xcassets */,
 				3E69AF812AF55876007244C1 /* Preview Content */,
 			);
 			path = M;
@@ -415,7 +413,6 @@
 		3E69AF812AF55876007244C1 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
-				3E69AF822AF55876007244C1 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
 			sourceTree = "<group>";
@@ -570,11 +567,8 @@
 				3E9EE8892B03C9BF001E6E50 /* SwiftUIKit */,
 				3EE33A562B0CF9190012BE14 /* SDWebImageSwiftUI */,
 				3E40F5B62B583F3700D1B581 /* SwiftUIX */,
-				3EFE44072B9A06FD00646319 /* SwiftUIIntrospect */,
-				3EFE440B2B9A06FD00646319 /* SwiftUIIntrospect-Static */,
 				3EFE440E2B9A072200646319 /* IsScrolling */,
 				3EE2AFF92BA9B66400E23FBD /* ConfettiSwiftUI */,
-				3E08A3B42BAC535F00E4B863 /* ActivityIndicatorView */,
 			);
 			productName = M;
 			productReference = 3E69AF772AF55875007244C1 /* M.app */;
@@ -608,10 +602,8 @@
 				3E9EE8882B03C9BF001E6E50 /* XCRemoteSwiftPackageReference "SwiftUIKit" */,
 				3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */,
 				3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */,
-				3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 				3EFE440D2B9A072200646319 /* XCRemoteSwiftPackageReference "IsScrolling" */,
 				3EE2AFF82BA9B66400E23FBD /* XCRemoteSwiftPackageReference "ConfettiSwiftUI" */,
-				3E08A3B32BAC535F00E4B863 /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */,
 			);
 			productRefGroup = 3E69AF782AF55875007244C1 /* Products */;
 			projectDirPath = "";
@@ -629,6 +621,7 @@
 			files = (
 				3E69AF8B2AF55884007244C1 /* Launch Screen.storyboard in Resources */,
 				3E69AF832AF55876007244C1 /* Preview Assets.xcassets in Resources */,
+				3EB01CA12BB1A9D100B80C39 /* PrivacyInfo.xcprivacy in Resources */,
 				3E69AF7F2AF55876007244C1 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -877,13 +870,14 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow us to save the Mockup to your photo library";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -922,13 +916,14 @@
 				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_ENTITLEMENTS = M/M.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 0.0.1;
+				CURRENT_PROJECT_VERSION = 0.0.6;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"M/Preview Content\"";
 				DEVELOPMENT_TEAM = V53QHKZTNF;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "";
 				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Allow us to save the Mockup to your photo library";
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphoneos*]" = YES;
 				"INFOPLIST_KEY_UIApplicationSceneManifest_Generation[sdk=iphonesimulator*]" = YES;
@@ -982,14 +977,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		3E08A3B32BAC535F00E4B863 /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/exyte/ActivityIndicatorView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.1;
-			};
-		};
 		3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SwiftUIX/SwiftUIX.git";
@@ -1022,14 +1009,6 @@
 				minimumVersion = 2.2.4;
 			};
 		};
-		3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.1.3;
-			};
-		};
 		3EFE440D2B9A072200646319 /* XCRemoteSwiftPackageReference "IsScrolling" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/fatbobman/IsScrolling.git";
@@ -1041,11 +1020,6 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		3E08A3B42BAC535F00E4B863 /* ActivityIndicatorView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3E08A3B32BAC535F00E4B863 /* XCRemoteSwiftPackageReference "ActivityIndicatorView" */;
-			productName = ActivityIndicatorView;
-		};
 		3E40F5B62B583F3700D1B581 /* SwiftUIX */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 3E40F5B52B583F3700D1B581 /* XCRemoteSwiftPackageReference "SwiftUIX" */;
@@ -1065,16 +1039,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 3EE33A552B0CF9190012BE14 /* XCRemoteSwiftPackageReference "SDWebImageSwiftUI" */;
 			productName = SDWebImageSwiftUI;
-		};
-		3EFE44072B9A06FD00646319 /* SwiftUIIntrospect */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = SwiftUIIntrospect;
-		};
-		3EFE440B2B9A06FD00646319 /* SwiftUIIntrospect-Static */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 3EFE44062B9A06FD00646319 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
-			productName = "SwiftUIIntrospect-Static";
 		};
 		3EFE440E2B9A072200646319 /* IsScrolling */ = {
 			isa = XCSwiftPackageProductDependency;

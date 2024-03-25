@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import SwiftUIIntrospect
 import IsScrolling
 
 struct ApplicationSettings: View {

@@ -92,8 +92,7 @@ struct DonationView: View {
                             showDonation.dismiss()
                         } label: {
                             Image(systemName: "xmark.circle")
-                                .font(.title3)
-                        }
+                                .font(.title3)                        }
                         
                     }
                     .padding(.bottom, 20)
