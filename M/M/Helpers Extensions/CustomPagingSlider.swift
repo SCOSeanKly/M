@@ -136,24 +136,33 @@ struct CustomPagingSlider<Content: View, TitleContent: View, Item: RandomAccessC
                         }
                     }
                     .scaleEffect(0.8)
-                    .offset(y: UIScreen.main.bounds.width * 0.8)
+                    .offset(y: self.calculateYOffsetPagingControl())
                     .disabled(false)
                     .opacity(isZooming ? 0 : 1)
                     .animation(.snappy, value: isZooming)
                   
-                
                 }
-            }
-            
-        
-            
-              
-            
+            }  
         }
         .scrollIndicators(.hidden)
         .scrollTargetBehavior(.viewAligned)
         .scrollPosition(id: $activeID)
     }
+    
+    func calculateYOffsetPagingControl() -> CGFloat {
+          let screenHeight = UIScreen.main.bounds.height
+          
+          switch screenHeight {
+          case 0...499:
+              return 100 // Example offset value for smaller screens
+          case 500...800:
+              return UIScreen.main.bounds.height
+          case 801...900:
+              return 280 // iPhone 15
+          default:
+              return 330 // iPhone 15PM
+          }
+      }
     
     var activePage: Int {
         if let index = data.firstIndex(where: { $0.id as? UUID == activeID }) as? Int {

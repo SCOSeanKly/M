@@ -44,7 +44,6 @@ struct MockupView: View {
     
     var body: some View {
         ZStack {
-            Text("Test")
             CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
                 //MARK: Mockup Image
@@ -55,12 +54,18 @@ struct MockupView: View {
                     ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount, imageURLStore: imageURLStore)
                         .titleViewModifier(obj: obj, normalScale: 1.0)
                         .disabled(viewModel.importedImage1 == nil)
+                        .offset(y: self.calculateYOffsetButton())
                         
             } titleContent: { $item in
                 
                 //MARK: Mockup Titles
                 TitleContent(itemTitle: item.title, itemSubTitle: item.subTitle)
                 .titleViewModifier(obj: obj, normalScale: 0.8)
+                .offset(y: self.calculateYOffsetTitle())
+              
+            }
+            .onAppear{
+                print(UIScreen.main.bounds.height)
             }
             .offset(y: screenOffset ? -30 : 0)
             .fullScreenCover(isPresented: $viewModel.showImagePickerSheet1) {
@@ -102,6 +107,36 @@ struct MockupView: View {
                 }
         }
     }
+    
+    func calculateYOffsetTitle() -> CGFloat {
+          let screenHeight = UIScreen.main.bounds.height
+          
+          switch screenHeight {
+          case 0...499:
+              return 100 // Example offset value for smaller screens
+          case 500...800:
+              return 60 
+          case 801...900:
+              return 25 // Example offset value for medium-sized screens
+          default:
+              return 0 // Example offset value for larger screens
+          }
+      }
+    
+    func calculateYOffsetButton() -> CGFloat {
+          let screenHeight = UIScreen.main.bounds.height
+          
+          switch screenHeight {
+          case 0...499:
+              return -100 // Example offset value for smaller screens
+          case 500...800:
+              return -50 
+          case 801...900:
+              return -40 // Example offset value for medium-sized screens
+          default:
+              return 0 // Example offset value for larger screens
+          }
+      }
     
     private func fullScreenImagePickerCover(for binding: Binding<UIImage?>, completion: @escaping ([UIImage]) -> Void) -> some View {
         PhotoPicker(filter: .images, limit: 1) { results in

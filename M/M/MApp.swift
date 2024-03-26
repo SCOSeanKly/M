@@ -11,7 +11,6 @@ import SwiftUI
 struct Custom_MockupApp: App {
     @UIApplicationDelegateAdaptor(AppDelegate.self) private var delegate
     
-    
     var body: some Scene {
         WindowGroup {
               MockupMView(obj: Object())
