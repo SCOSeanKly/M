@@ -46,6 +46,9 @@ struct MockupMView: View {
         newCreatorsViewModel.creators.reduce(0) { $0 + $1.newImagesCount }
     }
     
+    @State private var randomURLWallpaperImageName: String = "" // New property to store selected image name
+    @State private var searchText = ""
+    
  
     var body: some View {
         ZStack {
@@ -53,12 +56,12 @@ struct MockupMView: View {
                 TabView(selection: $activeTab) {
                  
                     if activeTab == .wallpapers {
-                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground, activeTab: $activeTab, isScrolling: $isScrolling, newCreatorsViewModel: newCreatorsViewModel, keyboardObserver: keyboardObserver, wallpaperScollViewPosition: $wallpaperScollViewPosition)
+                        URLImages(viewModelData: viewModelData, viewModelContent: viewModel, obj: obj, isShowingGradientView: $isShowingGradientView, searchText: $searchText, showPremiumContent: $showPremiumContent, isZooming: $isZooming, importedBackground: $importedBackground, activeTab: $activeTab, isScrolling: $isScrolling, newCreatorsViewModel: newCreatorsViewModel, keyboardObserver: keyboardObserver, wallpaperScollViewPosition: $wallpaperScollViewPosition, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                             .setUpTab(.wallpapers)
                     }
                     
                     if activeTab == .mockup {
-                        MockupView(viewModel: viewModel, obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel, imageURLStore: imageURLStore, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, isScrollingSettings: $isScrollingSettings)
+                        MockupView(viewModel: viewModel, obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel, imageURLStore: imageURLStore, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, isZooming: $isZooming, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isShowingGradientView: $isShowingGradientView, isScrollingSettings: $isScrollingSettings, activeTab: $activeTab, randomURLWallpaperImageName: $randomURLWallpaperImageName, searchText: $searchText)
                             .setUpTab(.mockup)
                     }
                     

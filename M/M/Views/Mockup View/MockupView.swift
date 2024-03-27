@@ -40,6 +40,10 @@ struct MockupView: View {
             return nil
         }
     }
+    
+    @Binding var activeTab: Tab
+    @Binding var randomURLWallpaperImageName: String
+    @Binding var searchText: String
    
     
     var body: some View {
@@ -47,13 +51,12 @@ struct MockupView: View {
             CustomPagingSlider(showCoverFlow: $showCoverFlow, isZooming: $isZooming, data: $viewModel.items) { $item in
                 
                 //MARK: Mockup Image
-                CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj, imageURLStore: imageURLStore)
+                CustomImageView(item: item, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, obj: obj, imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                     .customImageViewModifier(obj: obj, viewModel: viewModel, isZooming: $isZooming)
                  
                 //MARK: Button to save to photos or files
-                    ShareImageButton(showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount, imageURLStore: imageURLStore)
+                ShareImageButton(viewModel: viewModel, viewModelData: viewModelData, showSymbolEffect: $obj.appearance.showSymbolEffect, importedBackground: $viewModel.importedBackground, importedImage1: $viewModel.importedImage1, importedImage2: $viewModel.importedImage2, importedLogo: $viewModel.importedLogo, item: item, obj: obj, saveCount: $saveCount, imageURLStore: imageURLStore, activeTab: $activeTab, randomURLWallpaperImageName: $randomURLWallpaperImageName, searchText: $searchText)
                         .titleViewModifier(obj: obj, normalScale: 1.0)
-                        .disabled(viewModel.importedImage1 == nil)
                         .offset(y: self.calculateYOffsetButton())
                         
             } titleContent: { $item in

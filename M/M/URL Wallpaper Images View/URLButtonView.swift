@@ -25,13 +25,14 @@ struct ButtonView: View {
     @Binding var activeTab: Tab
     @StateObject var newCreatorsViewModel: NewImagesViewModel
     @Binding var wallpaperScollViewPosition: Int?
+    @Binding var searchText: String
   
     
     var body: some View {
         VStack {
             ZStack {
                 //MARK: URL Pill view showing wallpapewr creators
-                URLPill(obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel, wallpaperScollViewPosition: $wallpaperScollViewPosition)
+                URLPill(obj: obj, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel, wallpaperScollViewPosition: $wallpaperScollViewPosition, searchText: $searchText)
             }
             .sensoryFeedback(.selection, trigger: isTapped)
             .padding(.horizontal)
@@ -44,8 +45,6 @@ struct ButtonView: View {
             }
             
             WallpaperCountView(obj: obj, viewModelData: viewModelData)
-            
-         // WallpaperTitleView(viewModelData: viewModelData)
             
         }
     }

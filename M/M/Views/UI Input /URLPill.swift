@@ -15,6 +15,7 @@ struct URLPill: View {
     @StateObject var newCreatorsViewModel: NewImagesViewModel
     @StateObject var creatorLoader = CreatorGitHubLoader()
     @Binding var wallpaperScollViewPosition: Int?
+    @Binding var searchText: String
     
     
     var body: some View {
@@ -88,9 +89,10 @@ struct URLPill: View {
                                                         case .success(let image):
                                                             Button {
                                                                 isTapped.toggle()
+                                                                searchText = ""
                                                                 viewModelData.creatorName = creatorInfo.name
                                                                 viewModelData.loadImages()
-                                                               
+                                                              
                                                                 withAnimation(.bouncy) {
                                                                     obj.appearance.showPill.toggle()
                                                                 }

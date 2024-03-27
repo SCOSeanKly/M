@@ -16,18 +16,20 @@ struct CustomImageView: View {
     @Binding var importedLogo: UIImage?
     @StateObject var obj: Object
     @StateObject var imageURLStore: ImageURLStore
+    @Binding var randomURLWallpaperImageName: String
+    
     
     
     var body: some View {
         
         ZStack {
-            BackgroundView(obj: obj, importedBackground: $importedBackground, item: item, imageURLStore: imageURLStore)
+            BackgroundView(obj: obj, importedBackground: $importedBackground, item: item, imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
             
-            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item, imageURLStore: imageURLStore)
+            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item, imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                 .background{
                     Color.black
                         .mask{
-                            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item, imageURLStore: imageURLStore)
+                            MockupLayersView(obj: obj, importedImage1: $importedImage1, importedImage2: $importedImage2, item: item, imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                         }
                         .shadow(color: obj.appearance.shadowColor.opacity(obj.appearance.shadowOpacity), radius: obj.appearance.shadowRadius, x: obj.appearance.shadowOffsetX, y: obj.appearance.shadowOffsetY)
                     
@@ -50,6 +52,7 @@ struct BackgroundView: View {
     @Binding var importedBackground: UIImage?
     var item: Item
     @StateObject var imageURLStore: ImageURLStore
+    @Binding var randomURLWallpaperImageName: String
     
     var body: some View {
         if obj.appearance.showBackground {
@@ -60,7 +63,7 @@ struct BackgroundView: View {
                     ZStack {
                       
                         // Random loaded image
-                        RandomURLWallpaper(imageURLStore: imageURLStore)
+                        RandomURLWallpaper(imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                             .scaledToFill()
                             .contrast(1)
                             .overlay{
@@ -114,6 +117,7 @@ struct MockupLayersView: View {
     @Binding var importedImage2: UIImage?
     var item: Item
     @StateObject var imageURLStore: ImageURLStore
+    @Binding var randomURLWallpaperImageName: String
     
     var body: some View {
         ZStack {
@@ -134,7 +138,7 @@ struct MockupLayersView: View {
                             }
                     } else {
                         
-                        RandomURLWallpaper(imageURLStore: imageURLStore)
+                        RandomURLWallpaper(imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                          
                     }
                 }
@@ -156,7 +160,7 @@ struct MockupLayersView: View {
                                 view.aspectRatio(contentMode: .fill)
                             }
                     } else {
-                        RandomURLWallpaper(imageURLStore: imageURLStore)
+                        RandomURLWallpaper(imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                     }
                 }
                 .frame(width: item.width, height: item.height)

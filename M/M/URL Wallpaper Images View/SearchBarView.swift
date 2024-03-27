@@ -12,6 +12,7 @@ struct SearchBarView: View {
     @Binding var isFiltering: Bool
     @StateObject var keyboardObserver: KeyboardObserver
     @StateObject var viewModelData: DataViewModel
+    @Binding var randomURLWallpaperImageName: String
 
     
     
@@ -33,7 +34,7 @@ struct SearchBarView: View {
             
             HStack {
                 Spacer()
-                if isFiltering {
+                if isFiltering || searchText != "" {
                     Button(action: {
                         hideKeyboard()
                         feedback()

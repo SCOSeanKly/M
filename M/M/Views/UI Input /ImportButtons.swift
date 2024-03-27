@@ -221,6 +221,7 @@ private struct WallpaperButtonView: View {
     @Binding var isShowingGradientView: Bool
     @StateObject var viewModelData: DataViewModel
     @ObservedObject var newCreatorsViewModel: NewImagesViewModel
+    @AppStorage("showMagnifyingPromptInt") private var showMagnifyingPromptInt: Int = 0
     
     var body: some View {
             HStack {
@@ -248,9 +249,13 @@ private struct WallpaperButtonView: View {
                 .font(.largeTitle.bold())
                     .onTapGesture(count: 10) {
                         viewModelData.resetSeenImages()
+                        print("viewModelData.resetSeenImages()")
                         resetSeenImages()
                         refreshData()
+                        print("refreshData()")
                         feedback()
+                        showMagnifyingPromptInt = 0
+                        print("showMagnifyingPromptInt reset to: \(showMagnifyingPromptInt)")
                     }
                 Spacer()
             }

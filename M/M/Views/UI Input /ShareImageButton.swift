@@ -9,6 +9,8 @@ import SwiftUI
 import StoreKit
 
 struct ShareImageButton: View {
+    @ObservedObject var viewModel: ContentViewModel
+    @StateObject var viewModelData: DataViewModel
     @Binding var showSymbolEffect: Bool
     @Binding var importedBackground: UIImage?
     @Binding var importedImage1: UIImage?
@@ -26,110 +28,171 @@ struct ShareImageButton: View {
 
     @Environment(\.requestReview) var requestReview
     @StateObject var imageURLStore: ImageURLStore
+    @Binding var activeTab: Tab
+    @Binding var randomURLWallpaperImageName: String
+    @Binding var searchText: String
+    @AppStorage("showMagnifyingPrompt") private var showMagnifyingPrompt: Bool = false
+    @AppStorage("showMagnifyingPromptInt") private var showMagnifyingPromptInt: Int = 0
     
 
     var body: some View {
-
-        Image(systemName: "square.and.arrow.up.circle.fill")
-            .font(.system(size: 30, weight: .medium))
-            .symbolEffect(.pulse, value: showSymbolEffect)
-            .foregroundColor(.primary)
-            .rotationEffect(saveToPhotos ? .degrees(180) : .degrees(0))
-            .animation(.linear, value: saveToPhotos)
-            .padding(6)
-            .background(.ultraThinMaterial)
-            .clipShape(Circle())
-            .onTapGesture {
-                feedback()
-                showSymbolEffect.toggle()
-
-                withAnimation(.snappy){
-                    obj.appearance.showPill = true
-                }
-
-                if saveToPhotos {
-
-                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj, imageURLStore: imageURLStore)
-                        .ignoresSafeArea(.all)
-                        .snapshot()
-
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
-                        let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
-                        imageSaver.writeToPhotoAlbum(image: image)
-                    }
-
-                    saveCount += 1
-
-                    requestReviewPrompt()
-
-                } else {
-
-                    let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj, imageURLStore: imageURLStore)
-                        .ignoresSafeArea(.all)
-                        .snapshot()
-
-                    let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-
-                    activityViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
-                        if completed {
-                            // The user successfully shared the image
-                            provideSuccessFeedback()
-                            alert.present()
-                            saveCount += 1
-                        } else if let error = error {
-                            // An error occurred
-                            print("Error sharing image: \(error.localizedDescription)")
-                            provideErrorFeedback()
-                            alertError.present()
-                        } else {
-                            // The user cancelled
-                        }
-                    }
-
-                    if let keyWindowScene = UIApplication.shared.connectedScenes
-                        .compactMap({ $0 as? UIWindowScene })
-                        .first(where: { $0.activationState == .foregroundActive }) {
-                        if let keyWindow = keyWindowScene.windows.first(where: { $0.isKeyWindow }) {
-                            keyWindow.rootViewController?.present(activityViewController, animated: true, completion: nil)
-                        }
-                    }
-                }
-            }
-            .onLongPressGesture(minimumDuration: 0.5){
-                feedback()
-                saveToPhotos.toggle()
-                saveImage_showSheet.present()
-                DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                    saveImage_showSheet.dismiss()
-                }
-            }
-            .padding()
-            .offset(x: 0, y: -20)
-            .alert(alertConfig: $saveImage_showSheet) {
-                Text(saveToPhotos ? "\(Image(systemName: "info.circle")) Saving to Photos Album" : "\(Image(systemName: "info.circle")) Changed to Share Sheet")
-                    .foregroundStyle(item.alertTextColor)
-                    .padding(15)
-                    .background {
-                        RoundedRectangle(cornerRadius: 15)
-                            .fill(item.color.gradient)
-                    }
-                    .onAppear(perform: {
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
-                            alert.dismiss()
-                        }
-                    })
-                    .onTapGesture {
-                        alert.dismiss()
-                    }
-            }
-            .alert(alertConfig: $alert) {
-                alertPreferences(title: saveToPhotos ? "Saved Successfully!" : "Shared Successfully!",
-                                            imageName: "checkmark.circle")
-            }
-            .alert(alertConfig: $alertError) {
-                alertPreferences(title: saveToPhotos ? "Error Saving!" : "Error Sharing!",
-                                            imageName: "exclamationmark.triangle")
-            }
+      
+         if viewModel.importedImage1 == nil {
+             Button {
+                 feedback()
+                 viewModelData.images = []
+                 activeTab = .wallpapers
+                 viewModelData.creatorName = "SeanKly"
+                 searchText = randomURLWallpaperImageName
+    
+             } label: {
+                     Image(systemName: "magnifyingglass.circle")
+                         .font(.system(size: 30, weight: .medium))
+                         .foregroundColor(.primary)
+                         .padding(6)
+                         .background(.ultraThinMaterial)
+                         .clipShape(Circle())
+                         .padding()
+                         .offset(x: 0, y: -20)
+                         .onAppear{
+                             DispatchQueue.main.asyncAfter(deadline: .now() + 2){
+                                 if showMagnifyingPromptInt == 0 {
+                                     showMagnifyingPrompt = true
+                                 }
+                             }
+                         }
+             }
+             .buttonStyle(.plain)
+             .popover(isPresented: $showMagnifyingPrompt){
+            
+                     Text("Tap the magnifying glass to search for the wallpaper shown above, or tap the top right menu to import a screenshot or background image")
+                         .frame(width: UIScreen.main.bounds.width * 0.8)
+                         .lineLimit(2)
+                         .minimumScaleFactor(0.5)
+                         .font(.subheadline)
+                         .multilineTextAlignment(.center)
+                         .padding(.horizontal)
+                         .padding(.vertical, 6)
+                         .presentationCompactAdaptation((.popover))
+                         .onDisappear{
+                             showMagnifyingPromptInt += 1
+                         }
+             }
+          
+         
+         } else {
+             Image(systemName: "square.and.arrow.up.circle.fill")
+                 .font(.system(size: 30, weight: .medium))
+                 .symbolEffect(.pulse, value: showSymbolEffect)
+                 .foregroundColor(.primary)
+                 .rotationEffect(saveToPhotos ? .degrees(180) : .degrees(0))
+                 .animation(.linear, value: saveToPhotos)
+                 .padding(6)
+                 .background(.ultraThinMaterial)
+                 .clipShape(Circle())
+                 .onTapGesture {
+                     feedback()
+                     if viewModel.importedImage1 != nil {
+                         showSymbolEffect.toggle()
+                         
+                         withAnimation(.snappy){
+                             obj.appearance.showPill = true
+                         }
+                         
+                         if saveToPhotos {
+                             
+                             let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj, imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
+                                 .ignoresSafeArea(.all)
+                                 .snapshot()
+                             
+                             DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                                 let imageSaver = ImageSaver(alert: $alert, alertError: $alertError)
+                                 imageSaver.writeToPhotoAlbum(image: image)
+                             }
+                             
+                             saveCount += 1
+                             
+                             requestReviewPrompt()
+                             
+                         } else {
+                             
+                             let image = CustomImageView(item: item, importedBackground: $importedBackground, importedImage1: $importedImage1, importedImage2: $importedImage2, importedLogo: $importedLogo, obj: obj, imageURLStore: imageURLStore, randomURLWallpaperImageName: $randomURLWallpaperImageName)
+                                 .ignoresSafeArea(.all)
+                                 .snapshot()
+                             
+                             let activityViewController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
+                             
+                             activityViewController.completionWithItemsHandler = { (activityType, completed, returnedItems, error) in
+                                 if completed {
+                                     // The user successfully shared the image
+                                     provideSuccessFeedback()
+                                     alert.present()
+                                     saveCount += 1
+                                 } else if let error = error {
+                                     // An error occurred
+                                     print("Error sharing image: \(error.localizedDescription)")
+                                     provideErrorFeedback()
+                                     alertError.present()
+                                 } else {
+                                     // The user cancelled
+                                 }
+                             }
+                             
+                             if let keyWindowScene = UIApplication.shared.connectedScenes
+                                 .compactMap({ $0 as? UIWindowScene })
+                                 .first(where: { $0.activationState == .foregroundActive }) {
+                                 if let keyWindow = keyWindowScene.windows.first(where: { $0.isKeyWindow }) {
+                                     keyWindow.rootViewController?.present(activityViewController, animated: true, completion: nil)
+                                 }
+                             }
+                         }
+                     }
+                     else {
+                         viewModelData.images = []
+                         activeTab = .wallpapers
+                         viewModelData.creatorName = "SeanKly"
+                         searchText = randomURLWallpaperImageName
+                     }
+                 }
+                 .onLongPressGesture(minimumDuration: 0.5){
+                     feedback()
+                     if viewModel.importedImage1 != nil {
+                         saveToPhotos.toggle()
+                         saveImage_showSheet.present()
+                         DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                             saveImage_showSheet.dismiss()
+                         }
+                     }
+                 }
+                 .padding()
+                 .offset(x: 0, y: -20)
+                 .alert(alertConfig: $saveImage_showSheet) {
+                     Text(saveToPhotos ? "\(Image(systemName: "info.circle")) Saving to Photos Album" : "\(Image(systemName: "info.circle")) Changed to Share Sheet")
+                         .foregroundStyle(item.alertTextColor)
+                         .padding(15)
+                         .background {
+                             RoundedRectangle(cornerRadius: 15)
+                                 .fill(item.color.gradient)
+                         }
+                         .onAppear(perform: {
+                             DispatchQueue.main.asyncAfter(deadline: .now() + 2.5) {
+                                 alert.dismiss()
+                             }
+                         })
+                         .onTapGesture {
+                             alert.dismiss()
+                         }
+                 }
+                 .alert(alertConfig: $alert) {
+                     alertPreferences(title: saveToPhotos ? "Saved Successfully!" : "Shared Successfully!",
+                                      imageName: "checkmark.circle")
+                 }
+                 .alert(alertConfig: $alertError) {
+                     alertPreferences(title: saveToPhotos ? "Error Saving!" : "Error Sharing!",
+                                      imageName: "exclamationmark.triangle")
+                 }
+         }
+    
     }
 
     func alertPreferences(title: String, imageName: String) -> some View {

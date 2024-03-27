@@ -21,7 +21,7 @@ struct URLImages: View {
     
     // Add a state variable to hold the search query
     @State private var searchTextTemp = ""
-    @State private var searchText = ""
+    @Binding var searchText: String
     @State private var isFiltering = false
     
     enum SaveState {
@@ -51,48 +51,52 @@ struct URLImages: View {
     @StateObject var keyboardObserver: KeyboardObserver
 
     @Binding var wallpaperScollViewPosition: Int?
+    @Binding var randomURLWallpaperImageName: String
     
     var body: some View {
         VStack {
             
-            ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, activeTab: $activeTab, newCreatorsViewModel: newCreatorsViewModel, wallpaperScollViewPosition: $wallpaperScollViewPosition)
+            ButtonView(obj: obj, viewModelData: viewModelData, showPremiumContent: $showPremiumContent, isShowingGradientView: $isShowingGradientView, importedBackground: $importedBackground, activeTab: $activeTab, newCreatorsViewModel: newCreatorsViewModel, wallpaperScollViewPosition: $wallpaperScollViewPosition, searchText: $searchText)
             
             if !filteredImages.isEmpty {
                 
-                SearchBarView(searchText: $searchText, isFiltering: $isFiltering, keyboardObserver: keyboardObserver, viewModelData: viewModelData)
+                SearchBarView(searchText: $searchText, isFiltering: $isFiltering, keyboardObserver: keyboardObserver, viewModelData: viewModelData, randomURLWallpaperImageName: $randomURLWallpaperImageName)
                 
                 ScrollView(.vertical, showsIndicators: true) {
                     LazyVGrid(columns: Array(repeating: GridItem(), count: obj.appearance.showTwoWallpapers ? 2 : 3), spacing: 30) {
                         ForEach(filteredImages.indices.reversed(), id: \.self) { index in
-                            WallpaperImageView(
-                                imageURL: URL(string: filteredImages[index].image)!,
-                                isPremium: filteredImages[index].image.contains("p_"),
-                                //MARK: IAP Re-enable when ready
-                                /*
-                                isPaid: filteredImages[index].image.contains("M099_") ||
-                                filteredImages[index].image.contains("M199_") ||
-                                filteredImages[index].image.contains("M299_") ||
-                                filteredImages[index].image.contains("M399_") ||
-                                filteredImages[index].image.contains("M499_"),
-                                 */
-                                
-                                isNew: filteredImages[index].isNew,
-                                onTap: {
-                                    if filteredImages[index].image.contains("p_") && !showPremiumContent {
-                                        premiumRequiredAlert.present()
-                                    } else {
-                                        selectedImage = filteredImages[index]
-                                        isSheetPresented = true
-                                        saveState = .idle
-                                    }
-                                    
-                                    hideKeyboard()
-                                },
-                                obj: obj,
-                                premiumRequiredAlert: $premiumRequiredAlert
-                            )
-                            .scrollSensor()
+                            if index < filteredImages.count {
+                                WallpaperImageView(
+                                    imageURL: URL(string: filteredImages[index].image)!,
+                                    isPremium: filteredImages[index].image.contains("p_"),
+                                    //MARK: IAP Re-enable when ready
+                                    /*
+                                     isPaid: filteredImages[index].image.contains("M099_") ||
+                                     filteredImages[index].image.contains("M199_") ||
+                                     filteredImages[index].image.contains("M299_") ||
+                                     filteredImages[index].image.contains("M399_") ||
+                                     filteredImages[index].image.contains("M499_"),
+                                     */
+
+                                    isNew: filteredImages[index].isNew,
+                                    onTap: {
+                                        if filteredImages[index].image.contains("p_") && !showPremiumContent {
+                                            premiumRequiredAlert.present()
+                                        } else {
+                                            selectedImage = filteredImages[index]
+                                            isSheetPresented = true
+                                            saveState = .idle
+                                        }
+
+                                        hideKeyboard()
+                                    },
+                                    obj: obj,
+                                    premiumRequiredAlert: $premiumRequiredAlert
+                                )
+                                .scrollSensor()
+                            }
                         }
+
                     }
                     .padding(10)
                     .scrollTargetLayout()
@@ -119,7 +123,7 @@ struct URLImages: View {
                     LoadingImagesView(obj: obj)
                 } else {
                     //MARK: Shows a button to reset the images filter
-                    NofilteredImagesButton(searchText: $searchText, isFiltering: $isFiltering)
+                    NofilteredImagesButton(viewModelData: viewModelData, searchText: $searchText, isFiltering: $isFiltering)
                 }
             }
             
