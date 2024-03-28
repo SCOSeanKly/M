@@ -133,23 +133,23 @@ class DataViewModelZip: NSObject, ObservableObject, URLSessionDownloadDelegate {
 
 struct DownloadZipView: View {
     @StateObject var viewModelZipHeader = DataViewModelZip()
-    @ObservedObject var obj: Object
+    @StateObject var obj: Object
     @Binding var isScrolling: Bool
+    @State private var showAlert = false
+    @State private var selectedZipModel: ZipModel?
+
     
     var body: some View {
         ZStack {
-            
-            HeaderButtons(obj: obj)
-            
-            
+             HeaderButtons(obj: obj)
+
             if !viewModelZipHeader.zipImages.isEmpty {
-                ScrollView (showsIndicators: true) {
+                ScrollView(showsIndicators: true) {
                     LazyVGrid(columns: Array(repeating: GridItem(), count: 2), spacing: 30) {
                         ForEach(viewModelZipHeader.zipImages) { image in
                             Button {
-                                print("Button tapped for URL:", image.fileURL)
-                                guard let url = URL(string: image.fileURL) else { return }
-                                viewModelZipHeader.downloadZipFile(from: url)
+                                selectedZipModel = image
+                                showAlert = true // Set showAlert to true to show the alert
                             } label: {
                                 ZipView(image: image)
                                     .cornerRadius(5)
@@ -177,16 +177,47 @@ struct DownloadZipView: View {
             print("Appeared")
         }
         .overlay(
+            Group {
+                if viewModelZipHeader.downloadProgress > 0.0 && viewModelZipHeader.downloadProgress < 1.0 {
+                    // Progress view overlay
+                }
+            }
+        )
+        .alert(item: $selectedZipModel) { zipModel in
+            Alert(
+                title: Text("Confirmation"),
+                message: getMessage(for: zipModel),
+                primaryButton: .default(Text("Proceed")) {
+                    if let url = URL(string: zipModel.fileURL) {
+                        viewModelZipHeader.downloadZipFile(from: url)
+                    }
+                },
+                secondaryButton: .cancel(Text("Cancel"))
+            )
+        }
+        .overlay(
             // Display download progress as an overlay
             Group {
                 if viewModelZipHeader.downloadProgress > 0.0 && viewModelZipHeader.downloadProgress < 1.0 {
-                    HStack {
-                        ProgressView(value: viewModelZipHeader.downloadProgress)
-                            .progressViewStyle(LinearProgressViewStyle())
-                            .frame(width: 150)
-                        Text("\(Int(viewModelZipHeader.downloadProgress * 100))%")
+                    
+                    VStack {
+                        
+                      //MARK: ADD FILE NAME HERE
+                        
+                        HStack {
+//                            ProgressView(value: viewModelZipHeader.downloadProgress)
+//                                .progressViewStyle(LinearProgressViewStyle())
+//                                .frame(width: 150)
+                            
+                            ProgressView(value: viewModelZipHeader.downloadProgress,
+                                         label: { Text("Downloading...") },
+                                         currentValueLabel: {  Text("\(Int(viewModelZipHeader.downloadProgress * 100))%") })
                             .font(.system(size: 12, weight: .regular, design: .rounded))
-                            .frame(width: 30)
+                            .frame(width: 150)
+//                            Text("\(Int(viewModelZipHeader.downloadProgress * 100))%")
+//                                .font(.system(size: 12, weight: .regular, design: .rounded))
+//                                .frame(width: 30)
+                        }
                     }
                     .padding()
                     .background(Color.primary.colorInvert())
@@ -197,6 +228,29 @@ struct DownloadZipView: View {
                 }
             }
         )
+    }
+    
+
+    // Helper function to construct the message for the alert
+    private func getMessage(for zipModel: ZipModel) -> Text {
+        let fileName = zipModel.fileName ?? "Unknown"
+        let fileSize = formattedFileSize(zipModel.fileSize)
+        return Text("Do you want to download '\(fileName)' (\(fileSize))?")
+    }
+    
+
+    // Helper function to format file size
+    private func formattedFileSize(_ fileSize: Int?) -> String {
+        guard let fileSize = fileSize else {
+            return "Unknown"
+        }
+
+        if fileSize < 1000 {
+            return "\(fileSize) KB"
+        } else {
+            let fileSizeInMB = Double(fileSize) / (1024.0 * 1024.0)
+            return String(format: "%.1f MB", fileSizeInMB)
+        }
     }
 }
 
@@ -298,10 +352,9 @@ struct ZipData: Decodable {
     let fileURL: String
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        HeaderButtons(
-        obj: Object()
-      )
-    }
-}
+//struct ContentView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        DownloadZipView()
+//      
+//    }
+//}
