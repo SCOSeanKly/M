@@ -7,6 +7,8 @@
 
 import SwiftUI
 import IsScrolling
+import SDWebImageSwiftUI
+
 
 class DataViewModelZip: NSObject, ObservableObject, URLSessionDownloadDelegate {
     @Published var zipImages: [ZipModel] = []
@@ -204,20 +206,10 @@ struct DownloadZipView: View {
                         
                       //MARK: ADD FILE NAME HERE
                         
-                        HStack {
-//                            ProgressView(value: viewModelZipHeader.downloadProgress)
-//                                .progressViewStyle(LinearProgressViewStyle())
-//                                .frame(width: 150)
-                            
                             ProgressView(value: viewModelZipHeader.downloadProgress,
                                          label: { Text("Downloading...") },
                                          currentValueLabel: {  Text("\(Int(viewModelZipHeader.downloadProgress * 100))%") })
-                            .font(.system(size: 12, weight: .regular, design: .rounded))
-                            .frame(width: 150)
-//                            Text("\(Int(viewModelZipHeader.downloadProgress * 100))%")
-//                                .font(.system(size: 12, weight: .regular, design: .rounded))
-//                                .frame(width: 30)
-                        }
+                            .frame(width: UIScreen.main.bounds.width * 0.6)
                     }
                     .padding()
                     .background(Color.primary.colorInvert())
@@ -274,7 +266,19 @@ struct ZipView: View {
     
     var body: some View {
         ZStack {
-            AsyncImage(url: URL(string: image.image)) { phase in
+            
+            WebImage(url: URL(string: image.image))
+                .resizable()
+                .placeholder {
+                   ProgressViewBlend()
+                }
+                .cornerRadius(10)
+                .aspectRatio(contentMode: .fit)
+                .frame(width: UIScreen.main.bounds.width * 0.4, alignment: .center)
+                .cornerRadius(20)
+              
+            /*
+            WebImage(url: URL(string: image.image)) { phase in
                 switch phase {
                 case .empty:
                     ProgressView()
@@ -291,6 +295,7 @@ struct ZipView: View {
                     EmptyView()
                 }
             }
+            */
         }
         .overlay {
             VStack {
