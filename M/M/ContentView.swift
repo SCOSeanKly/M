@@ -72,6 +72,12 @@ struct MockupMView: View {
                                 isShowingGradientView.toggle()
                             }
                     }
+                    
+                    if activeTab == .shop {
+                        DownloadZipView(obj: obj, isScrolling: $isScrolling)
+                            .setUpTab(.shop)
+                    }
+                    
                     if activeTab == .settings {
                         ApplicationSettings(obj: obj, showPremiumContent: $showPremiumContent, buyClicked: $buyClicked, showCoverFlow: $showCoverFlow, showOnboarding: $showOnboarding, isScrollingSettings: $isScrollingSettings)
                             .setUpTab(.settings)

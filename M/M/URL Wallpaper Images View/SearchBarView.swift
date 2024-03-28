@@ -35,15 +35,15 @@ struct SearchBarView: View {
             HStack {
                 Spacer()
                 if isFiltering || searchText != "" {
-                    Button(action: {
+                    
+                    UltraThinButton(action: {
                         hideKeyboard()
                         feedback()
                         searchText = ""
-                    }) {
-                        Image(systemName: "xmark.circle.fill")
-                            .font(.system(size: 24))
-                            .padding()
-                    }
+                        
+                    }, systemName: "xmark.circle", gradientFill: false, fillColor: Color.red, showUltraThinMaterial: false, useSystemImage: true, scaleEffect: 0.8, showOverlaySymbol: false, overlaySymbol: nil, overlaySymbolColor: nil)
+                    .padding(.trailing, 5)
+                    
                 }
             }
             .padding(.trailing, 10)

@@ -72,6 +72,7 @@ struct ApplicationSettings: View {
             }
          //   .padding([.leading, .top])
             .padding(.leading)
+            .padding(.top, 2)
 
             
             //MARK: Donation View

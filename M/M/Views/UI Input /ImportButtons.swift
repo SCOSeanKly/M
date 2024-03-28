@@ -22,7 +22,7 @@ struct importButtons: View {
     var body: some View {
         VStack {
             ZStack {
-                WallpaperButtonView(isTapped: $isTapped, obj: obj, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
+                WallpaperButtonView(text: "Mockup", isTapped: $isTapped, obj: obj, isShowingGradientView: $isShowingGradientView, viewModelData: viewModelData, newCreatorsViewModel: newCreatorsViewModel)
             
                 Pill(viewModel: viewModel, obj: obj, saveCount: $saveCount, isTapped: $isTapped)
             }
@@ -30,7 +30,7 @@ struct importButtons: View {
             Spacer()
         }
         .sensoryFeedback(.selection, trigger: isTapped)
-        .padding(.top, 45)
+        .padding(.top, 42)
         .ignoresSafeArea()
     }
 }
@@ -215,6 +215,7 @@ extension View {
 }
 
 private struct WallpaperButtonView: View {
+    let text: String
     @Binding var isTapped: Bool
     @StateObject var obj: Object
     let showWallpaperTip = NewWallpapersSectionTip()
@@ -223,24 +224,25 @@ private struct WallpaperButtonView: View {
     @ObservedObject var newCreatorsViewModel: NewImagesViewModel
     @AppStorage("showMagnifyingPromptInt") private var showMagnifyingPromptInt: Int = 0
     
+    
     var body: some View {
             HStack {
                 ZStack {
-                    Text("Mockup")
+                    Text(text)
                         .font(.largeTitle.bold())
                         .foregroundColor(.white)
                         .blendMode(.difference)
                     
-                    Text("Mockup")
+                    Text(text)
                         .font(.largeTitle.bold())
                         .blendMode(.hue)
                     
-                    Text("Mockup")
+                    Text(text)
                         .font(.largeTitle.bold())
                         .foregroundColor(.white)
                         .blendMode(.overlay)
                     
-                    Text("Mockup")
+                    Text(text)
                         .font(.largeTitle.bold())
                         .foregroundColor(.black)
                         .blendMode(.overlay)

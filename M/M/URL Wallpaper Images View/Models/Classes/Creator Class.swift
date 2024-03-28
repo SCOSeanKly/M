@@ -28,6 +28,7 @@ class CreatorGitHubLoader: ObservableObject {
     func fetchCreators() {
         // Assuming you have a URL where your JSON data is hosted
         let url = URL(string: "https://raw.githubusercontent.com/SCOSeanKly/M_Resources/main/JSON/creatorURLs.json")!
+    
 
         // Create a URLSession
         URLSession.shared.dataTask(with: url) { data, _, error in
